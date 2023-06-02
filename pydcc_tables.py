@@ -22,7 +22,7 @@ def __init__(self,
     self.measurandType = measurandType
     self.unit = unit
     self.humanHeading = humanHeading
-    self.columnData = columntData
+    self.columnData = columnData
 
 class DccTabel():
     """ """
