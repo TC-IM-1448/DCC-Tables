@@ -6,6 +6,7 @@ class DccTableColumn():
     relationType = ""
     measurandType = ""
     unit = ""
+    humanHeading = ""
     columnData = []
 
 def __init__(self,  
@@ -13,12 +14,14 @@ def __init__(self,
              relationType="",
              measurandType="", 
              unit="", 
+             humanHeading = "",
              columnData=[]):
     """ """
     self.columnType = columnType
     self.relationType = relationType
     self.measurandType = measurandType
     self.unit = unit
+    self.humanHeading = humanHeading
     self.columnData = columntData
 
 class DccTabel():
