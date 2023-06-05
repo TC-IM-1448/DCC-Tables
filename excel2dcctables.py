@@ -56,10 +56,11 @@ def _test_get_tables_from_sheet():
         # d[
         tbl = DccTabel(tableID, itemID, columns)
     wb.close()
-    return tbl, tableID, itemID, columns, content, mapping
+    return tbl
 
 
 
 if __name__ == "__main__": 
-    tbl, tableID, itemID, columns, content, mapping = _test_get_tables_from_sheet()
+    tbl = _test_get_tables_from_sheet()
+    columns = tbl.columns
     columns[4].print()
