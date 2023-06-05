@@ -1,24 +1,24 @@
 
 
 class DccTableColumn():
-    """ """ 
+    """ """
+    scopeType = ""
     columnType = ""
-    relationType = ""
     measurandType = ""
     unit = ""
     humanHeading = ""
     columnData = []
 
-    def __init__(self,  
-                columnType="", 
-                relationType="",
-                measurandType="", 
-                unit="", 
+    def __init__(self,
+                scopeType="",
+                columnType="",
+                measurandType="",
+                unit="",
                 humanHeading = "",
                 columnData=[]):
         """ """
         self.columnType = columnType
-        self.relationType = relationType
+        self.scopeType = scopeType
         self.measurandType = measurandType
         self.unit = unit
         self.humanHeading = humanHeading
@@ -32,7 +32,7 @@ class DccTableColumn():
     def print(self):
         attr = self.get_attributes()
         str = ""
-        for a in attr: 
+        for a in attr:
             print(a, ": \t", getattr(self, a))
 
 
@@ -40,9 +40,14 @@ class DccTabel():
     """ """
     tableID = ""
     itemID = ""
+    numRows = ""
+    numColumns = ""
     columns = []
 
-    def __init__(self, tableID="", itemID="", columns=""): 
+    def __init__(self, tableID="", itemID="",
+                 numRows = "", numColumns = "",columns=""):
         self.tableID = tableID
         self.itemID = itemID
+        self.numRows = numRows
+        self.numColumns = numColumns
         self.columns = columns

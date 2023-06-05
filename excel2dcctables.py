@@ -1,66 +1,50 @@
 from pydcc_tables import DccTabel, DccTableColumn
-import openpyxl as pyxl 
+import openpyxl as pyxl
 import pandas as pd
 
 def transpose_2d_list(matrix):
     return [list(row) for row in zip(*matrix)]
 
-def _test_get_tables_from_sheet():
+def _test_get_tables_from_sheet(sheetName="Table2"):
     """ Function that finds all the tables in a given sheet """
-    
+
     wb = pyxl.load_workbook("DCC-Table_example3.xlsx", data_only=True)
 
-    #access specific sheet
-    ws = wb["Table2"]
+    ws = wb[sheetName]
 
-    rngs = {key: value for key, value in ws.tables.items()}
 
-    # mapping = {}
-    # for entry, data_boundary in ws.tables.items():
-    mapping = {}
     columns = []
 
-    for entry, data_boundary in ws.tables.items():
-        d = {}
-        tableID = ws["B2"].value
-        itemID = ws["B3"].value
+    tableID = ws["B2"].value
+    itemID = ws["B3"].value
+    numRows = ws["B4"].value
+    numColumns = ws["B5"].value
 
-        #parse the data within the ref boundary
-        data = ws[data_boundary]
-        #extract the data
-        #the inner list comprehension gets the values for each cell in the table
-        content = [[cell.value for cell in ent] for ent in data]
-        content = transpose_2d_list(content)
+    nRows = int(numRows)+6
+    nCols = int(numColumns)
 
-        header = content[0]
-        for c in content:
-            col = DccTableColumn(   relationType=c[1],
-                                    columnType=c[2], 
-                                    measurandType=c[3], 
-                                    unit=c[4], 
-                                    humanHeading = c[5],
-                                    columnData=c[6:])
-            columns.append(col)
-        
-        #the contents ... excluding the header
-        # rest = content[1:]
+    cell = ws["B6"]
 
-        #create dataframe with the column names
-        #and pair table name with dataframe
-        
-        # df = pd.DataFrame(rest, columns = header)
-        # mapping[entry] = df
+    content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
+    # content = transpose_2d_list(content)
 
-        # d['header'] = header
-        # d['data'] = data
-        # d[
-        tbl = DccTabel(tableID, itemID, columns)
+    for c in content:
+        col = DccTableColumn(   scopeType=c[0],
+                                columnType=c[1],
+                                measurandType=c[2],
+                                unit=c[3],
+                                humanHeading = c[4],
+                                columnData=c[5:])
+        columns.append(col)
+
+    tbl = DccTabel(tableID, itemID, numRows, numColumns, columns)
     wb.close()
     return tbl
 
 
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     tbl = _test_get_tables_from_sheet()
     columns = tbl.columns
-    columns[4].print()
+    columns[5].print()
+    print(columns[9].columnData)
