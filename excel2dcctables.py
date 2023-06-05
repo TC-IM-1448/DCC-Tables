@@ -1,6 +1,7 @@
 from pydcc_tables import DccTabel, DccTableColumn
 import openpyxl as pyxl
-import pandas as pd
+
+# typeDefs = ("scopeType",
 
 def transpose_2d_list(matrix):
     return [list(row) for row in zip(*matrix)]
@@ -20,7 +21,7 @@ def _test_get_tables_from_sheet(sheetName="Table2"):
     numRows = ws["B4"].value
     numColumns = ws["B5"].value
 
-    nRows = int(numRows)+6
+    nRows = int(numRows)+5
     nCols = int(numColumns)
 
     cell = ws["B6"]
@@ -34,12 +35,24 @@ def _test_get_tables_from_sheet(sheetName="Table2"):
                                 measurandType=c[2],
                                 unit=c[3],
                                 humanHeading = c[4],
-                                columnData=c[5:])
+                                columnData= list(map(str, c[5:])))
         columns.append(col)
 
     tbl = DccTabel(tableID, itemID, numRows, numColumns, columns)
     wb.close()
     return tbl
+
+# def write_DCC_table_to_excel_sheet(dccTbl: DccTabel, workbookName = ""):
+#     tbl = dccTbl
+#     wb = pyxl.load_workbook(workbookName)
+#     ws = wb[tbl.tableID]
+
+#     ws["B2"] = tbl.tableID
+#     ws["B3"] = tbl.itemID
+#     ws["B4"] = tbl.numRows
+#     ws["B5"] = tbl.numColumns
+
+#     def put_column(row, col, value):
 
 
 
@@ -47,4 +60,5 @@ if __name__ == "__main__":
     tbl = _test_get_tables_from_sheet()
     columns = tbl.columns
     columns[5].print()
-    print(columns[9].columnData)
+    for i in range(tbl.numColumns):
+        print(columns[i].columnData)
