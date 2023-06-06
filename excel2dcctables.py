@@ -1,7 +1,9 @@
 from pydcc_tables import DccTabel, DccTableColumn
 import openpyxl as pyxl
+import shutil
 
-# typeDefs = ("scopeType",
+colAttrDefs = ("scopeType", "columnType", "measurandType", "unit", "humanHeading")
+tblAttrDefs =("tableID", "itemID", "numRows", "numColumns")
 
 def transpose_2d_list(matrix):
     return [list(row) for row in zip(*matrix)]
@@ -42,17 +44,32 @@ def _test_get_tables_from_sheet(sheetName="Table2"):
     wb.close()
     return tbl
 
-# def write_DCC_table_to_excel_sheet(dccTbl: DccTabel, workbookName = ""):
-#     tbl = dccTbl
-#     wb = pyxl.load_workbook(workbookName)
-#     ws = wb[tbl.tableID]
+def write_DCC_table_to_excel_sheet(dccTbl: DccTabel, workbookName = ""):
+    tbl = dccTbl
+    shutil.copy("DCC-Table_empty_template.xlsx", workbookName)
+    wb = pyxl.load_workbook(workbookName)
+    ws = wb["TableTemplate"]
+    newws = wb.copy_worksheet(ws)
+    newws.title = dccTbl.tableID
+    ws = wb[dccTbl.tableID]
+    wb.active = wb[dccTbl.tableID]
+    print(wb.sheetnames)
 
-#     ws["B2"] = tbl.tableID
-#     ws["B3"] = tbl.itemID
-#     ws["B4"] = tbl.numRows
-#     ws["B5"] = tbl.numColumns
+    ws["B2"] = tbl.tableID
+    ws["B3"] = tbl.itemID
+    ws["B4"] = tbl.numRows
+    ws["B5"] = tbl.numColumns
 
-#     def put_column(row, col, value):
+    cell = ws["B6"]
+    columns = tbl.columns
+
+    for c in range(tbl.numColumns):
+        for r in range(len(colAttrDefs)):
+            cell.offset(r, c).value = getattr(columns[c], colAttrDefs[r])
+        for r in range(tbl.numRows):
+            cell.offset(r+5, c).value = columns[c].columnData[r]
+
+    wb.save(workbookName)
 
 
 
@@ -62,3 +79,4 @@ if __name__ == "__main__":
     columns[5].print()
     for i in range(tbl.numColumns):
         print(columns[i].columnData)
+    write_DCC_table_to_excel_sheet(tbl, "DCC-Table_example_output.xlsx")
