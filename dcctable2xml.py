@@ -6,6 +6,73 @@ import sys
 sys.path.append(r'I:\MS\4006-03 AI metrologi\Software\DCCfunctions\develop')
 from DCCfunctions import add_name
 
+import numpy as np
+import os
+
+DCCf_installdir=r'I:/MS/4006-03 AI metrologi/Software/DCCfunctions/develop/'
+import sys
+sys.path.append(DCCf_installdir)
+import DCCfunctions as DCCf
+import DCCadministrative as DCCa
+
+import xml.etree.ElementTree as et
+from xml.dom import minidom
+from docx import Document
+
+#################### Make a minimal DCC and fill out the administrative data ##############################
+DCC='{https://ptb.de/dcc}'
+SI='{https://ptb.de/si}'
+et.register_namespace("si", SI.strip('{}'))
+et.register_namespace("dcc", DCC.strip('{}'))
+
+#%% 
+from importlib import reload
+reload(DCCa)
+reload(DCCf)
+
+#%%
+
+root=DCCa.minimal_DCC()
+
+
+administrativeData=root.find(DCC+'administrativeData')
+coreData=administrativeData.find(DCC+'coreData')
+coreData.find(DCC+'uniqueIdentifier').text='T2304'
+DCCf.add_identification(coreData,value="NN42",issuer='calibrationLaboratory', name_dk="kundenr",name_en="customer ID")
+DCCf.add_identification(coreData,value="jpx2340988",issuer="customer",name_dk="PO",name_en="PO")
+coreData.find(DCC+'receiptDate').text="2022-08-13"
+coreData.find(DCC+'beginPerformanceDate').text="2022-08-14"
+coreData.find(DCC+'endPerformanceDate').text="2022-08-15"
+
+lab=administrativeData.find(DCC+'calibrationLaboratory')
+contact=et.SubElement(lab, DCC+'contact')
+DCCa.fill_address(contact,name="DFM", eMail="srk@dfm.dk", phone="+45 2545 9040", city="Hørsholm",  postCode="2970", street="Kogle Allé", streetNo="5", further="www.dfm.dk")
+
+respPersons=administrativeData.find(DCC+'respPersons')
+DCCa.add_respPerson(respPersons,name="Erling Målermand", mainSigner=True)
+DCCa.add_respPerson(respPersons,name="Simon  Hansen", mainSigner=False)
+
+customer=administrativeData.find(DCC+'customer')
+DCCa.fill_address(customer,name="NN", eMail="pqrt@nn.com", phone="+45 6160 7019", city="Søborg", postCode="2860", street="Svanevej", streetNo="12", further="kundenummer: 1234")
+
+
+################ User input for item ##########################
+ItemID="item_ID1"
+Manufacturer='Mettler-Toledo'
+Model='Platinum Super'
+customerID="NN66"
+SerialNo="2341-LKJQ-1324LKLJJAAFLKK33"
+
+#Make an item XML-element
+item=DCCf.item(ID=ItemID, manufacturer=Manufacturer,model=Model)
+DCCf.add_name(item, 'en', 'Set of 7 weights')
+DCCf.add_identification(item,customerID,issuer='customer', name_dk="MålerID", name_en="SensorID")
+DCCf.add_identification(item,SerialNo,issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
+
+Items=root[0][2]
+Items.append(item)
+
+######################### END of administrative data ####################################################
 
 def realListXMLList(value,unit,label=None,uncertainty=None,coverageFactor=['2'],coverageProbability=['0.95']):
 # realListXMLList is a data_element that allows for arays of data.
@@ -24,31 +91,21 @@ def realListXMLList(value,unit,label=None,uncertainty=None,coverageFactor=['2'],
       element.append(expandedUnc)
    return element
 
-DCC='{https://ptb.de/dcc}'
-SI='{https://ptb.de/si}'
 LANG='en'
-et.register_namespace("si", SI.strip('{}'))
-et.register_namespace("dcc", DCC.strip('{}'))
 
+from excel2dcctables import read_tables_from_Excel
+tab1 = read_tables_from_Excel(workbookName="DCC-mass_example.xlsx",sheetName="Table2")
 
-#columns=[]
-#col=pydcc.DccTableColumn(scopeType="itemBias", columnType="Value",measurandType="temperature",unit="\kelvin",humanHeading="Temperature in kelvin", columnData=["0.1", "15.3","25.1", "0.1"])
-#columns.append(col)
-#tab1=pydcc.DccTabel(itemID="nn11", tableID="table1",columns=columns)
-
-tab1=tbl
-
-
-
-xmlresults=et.Element(DCC+'results')
-xmltable1=et.Element(DCC+"table",attrib={'itmeId':tab1.itemID,'refId':tab1.tableID})
+#xmlresults=et.Element(DCC+'results')
+xmlresults=root[1][0][1]
+xmltable1=et.Element(DCC+"table",attrib={'itemId':tab1.itemID,'refId':tab1.tableID})
 
 columns=tab1.columns
 for col in columns:
-    xmlcol=et.Element(DCC+'column',attrib={'scopeType':col.scopeType, 'colType':col.columnType, 'measurandType':col.measurandType})
+    xmlcol=et.Element(DCC+'column',attrib={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType})
     if type(col.unit)!=type(None):
       et.SubElement(xmlcol,SI+'unit').text=' '.join([col.unit])
-    add_name(xmlcol,lang="EN",text=col.humanHeading)
+    add_name(xmlcol,lang="en",text=col.humanHeading)
     #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
     et.SubElement(xmlcol,SI+"ValueXMLList").text=' '.join(col.columnData)
     #xmlcol.append(xmllist)
@@ -72,4 +129,25 @@ def printelement(element):
     xmlstring=minidom.parseString(et.tostring(element)).toprettyxml(indent="   ")
     print(xmlstring)
     return
+
+#DCCf.printelement(coreData)
+#NOTE: with the namespace reprecentation ns:elementname the printelement function does not work
+xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
+with open('mass_certificate.xml','wb') as f:
+    f.write(xmlstr.encode('utf-8'))
+
+
+def xml2dcctable(xmltable):
+    dcccolumns=[]
+    for col in xmltable.findall(DCC+'column'):
+        unit=""
+        if type(col.find(SI+'unit')) !=type(None):
+            unit=col.find(SI+'unit').text
+        dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'], measurandType=col.attrib['measurand'], unit=unit, humanHeading=col.find(DCC+'name').find(DCC+'content').text, columnData=col.find(SI+'ValueXMLList').text.split())
+        dcccolumns.append(dcccol)
+    length=len(col.find(SI+'ValueXMLList').text.split())
+    dcctbl=DccTabel(xmltable.attrib['refId'],xmltable.attrib['itemId'],length,len(dcccolumns),dcccolumns)
+    return dcctbl
+
+
 
