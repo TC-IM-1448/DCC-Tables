@@ -8,10 +8,10 @@ tblAttrDefs =("tableID", "itemID", "numRows", "numColumns")
 def transpose_2d_list(matrix):
     return [list(row) for row in zip(*matrix)]
 
-def _test_get_tables_from_sheet(sheetName="Table2"):
+def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2"):
     """ Function that finds all the tables in a given sheet """
 
-    wb = pyxl.load_workbook("DCC-Table_example3.xlsx", data_only=True)
+    wb = pyxl.load_workbook(workbookName, data_only=True)
 
     ws = wb[sheetName]
 
