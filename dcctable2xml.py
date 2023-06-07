@@ -151,3 +151,14 @@ def xml2dcctable(xmltable):
 
 
 
+#Open an existing DCC 
+#example_xml='2022-10-17_GP_Temperature.xml'
+def getTableFromXML(xml='admin.xml'):
+   root=DCCf.get_root(xml)
+   #Append the new item to the items section
+   Items=root[0][2]
+   Items.append(item)
+   #Append the new result to the measutrementResults section
+   measResult=root.find(DCC+'measurementResults').find(DCC+'measurementResult')
+   xmltable=measResult.find(DCC+'results').find(DCC+'table')
+   return xmltable
