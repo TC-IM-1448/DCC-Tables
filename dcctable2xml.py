@@ -150,5 +150,3 @@ def xml2dcctable(xmltable):
     dcctbl=DccTabel(xmltable.attrib['refId'],xmltable.attrib['itemId'],length,len(dcccolumns),dcccolumns)
     return dcctbl
 
-
-
