@@ -2,6 +2,7 @@ import xml.etree.ElementTree as et
 import numpy as np
 from xml.dom import minidom
 import pydcc_tables as pydcc
+from pydcc_tables import DccTableColumn, DccTabel
 import sys
 sys.path.append(r'I:\MS\4006-03 AI metrologi\Software\DCCfunctions\develop')
 from DCCfunctions import add_name
@@ -25,7 +26,7 @@ SI='{https://ptb.de/si}'
 et.register_namespace("si", SI.strip('{}'))
 et.register_namespace("dcc", DCC.strip('{}'))
 
-#%% 
+#%%
 from importlib import reload
 reload(DCCa)
 reload(DCCf)
