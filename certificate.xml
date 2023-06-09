@@ -1,0 +1,217 @@
+<?xml version="1.0" ?>
+<ns0:digitalCalibrationCertificate schemaVersion="3.1.2" xmlns:dcc="{https://ptb.de/dcc}" xmlns:ns0="https://ptb.de/dcc" xmlns:ns1="https://ptb.de/si" xmlns:si="{https://ptb.de/si}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://ptb.de/dcc https://ptb.de/dcc/v3.1.2/dcc.xsd">
+   <ns0:administrativeData>
+      <ns0:dccSoftware>
+         <ns0:software>
+            <ns0:name>
+               <ns0:content>DCCfunctions.py</ns0:content>
+            </ns0:name>
+            <ns0:release>0.0</ns0:release>
+         </ns0:software>
+      </ns0:dccSoftware>
+      <ns0:coreData>
+         <ns0:countryCodeISO3166_1>DK</ns0:countryCodeISO3166_1>
+         <ns0:usedLangCodeISO639_1>da</ns0:usedLangCodeISO639_1>
+         <ns0:usedLangCodeISO639_1>en</ns0:usedLangCodeISO639_1>
+         <ns0:mandatoryLangCodeISO639_1>en</ns0:mandatoryLangCodeISO639_1>
+         <ns0:uniqueIdentifier>T2304</ns0:uniqueIdentifier>
+         <ns0:identifications>
+            <ns0:identification>
+               <ns0:issuer>calibrationLaboratory</ns0:issuer>
+               <ns0:value>NN42</ns0:value>
+               <ns0:name>
+                  <ns0:content>kundenr</ns0:content>
+               </ns0:name>
+            </ns0:identification>
+            <ns0:identification>
+               <ns0:issuer>customer</ns0:issuer>
+               <ns0:value>jpx2340988</ns0:value>
+               <ns0:name>
+                  <ns0:content>PO</ns0:content>
+               </ns0:name>
+            </ns0:identification>
+         </ns0:identifications>
+         <ns0:receiptDate>2022-08-13</ns0:receiptDate>
+         <ns0:beginPerformanceDate>2022-08-14</ns0:beginPerformanceDate>
+         <ns0:endPerformanceDate>2022-08-15</ns0:endPerformanceDate>
+         <ns0:performanceLocation>laboratory</ns0:performanceLocation>
+      </ns0:coreData>
+      <ns0:items>
+         <ns0:item id="Item3">
+            <ns0:name>
+               <ns0:content lang="en">Temperature sensor</ns0:content>
+            </ns0:name>
+            <ns0:manufacturer>
+               <ns0:name>
+                  <ns0:content>Amitek</ns0:content>
+               </ns0:name>
+            </ns0:manufacturer>
+            <ns0:model>Platinum Super</ns0:model>
+            <ns0:identifications>
+               <ns0:identification>
+                  <ns0:issuer>customer</ns0:issuer>
+                  <ns0:value>NN66</ns0:value>
+                  <ns0:name>
+                     <ns0:content>MålerID</ns0:content>
+                  </ns0:name>
+               </ns0:identification>
+               <ns0:identification>
+                  <ns0:issuer>manufacturer</ns0:issuer>
+                  <ns0:value>2341-LKJQ-1324LKLJJAAFLKK33</ns0:value>
+                  <ns0:name>
+                     <ns0:content>Serienummer</ns0:content>
+                  </ns0:name>
+               </ns0:identification>
+            </ns0:identifications>
+         </ns0:item>
+      </ns0:items>
+      <ns0:calibrationLaboratory>
+         <ns0:contact>
+            <ns0:name>
+               <ns0:content>DFM</ns0:content>
+            </ns0:name>
+            <ns0:eMail>srk@dfm.dk</ns0:eMail>
+            <ns0:phone>+45 2545 9040</ns0:phone>
+            <ns0:location>
+               <ns0:city>Hørsholm</ns0:city>
+               <ns0:postCode>2970</ns0:postCode>
+               <ns0:street>Kogle Allé</ns0:street>
+               <ns0:streetNo>5</ns0:streetNo>
+               <ns0:further>
+                  <ns0:content>www.dfm.dk</ns0:content>
+               </ns0:further>
+            </ns0:location>
+         </ns0:contact>
+      </ns0:calibrationLaboratory>
+      <ns0:customer>
+         <ns0:name>
+            <ns0:content>NN</ns0:content>
+         </ns0:name>
+         <ns0:eMail>pqrt@nn.com</ns0:eMail>
+         <ns0:phone>+45 6160 7019</ns0:phone>
+         <ns0:location>
+            <ns0:city>Søborg</ns0:city>
+            <ns0:postCode>2860</ns0:postCode>
+            <ns0:street>Svanevej</ns0:street>
+            <ns0:streetNo>12</ns0:streetNo>
+            <ns0:further>
+               <ns0:content>kundenummer: 1234</ns0:content>
+            </ns0:further>
+         </ns0:location>
+      </ns0:customer>
+      <ns0:respPersons>
+         <ns0:respPerson>
+            <ns0:person>
+               <ns0:name>
+                  <ns0:content>Erling Tørnes Nielsen</ns0:content>
+               </ns0:name>
+            </ns0:person>
+            <ns0:mainSigner>true</ns0:mainSigner>
+         </ns0:respPerson>
+         <ns0:respPerson>
+            <ns0:person>
+               <ns0:name>
+                  <ns0:content>Scott Kenney Hansen</ns0:content>
+               </ns0:name>
+            </ns0:person>
+            <ns0:mainSigner>false</ns0:mainSigner>
+         </ns0:respPerson>
+      </ns0:respPersons>
+   </ns0:administrativeData>
+   <ns0:measurementResults>
+      <ns0:measurementResult>
+         <ns0:name>
+            <ns0:content>Measurement results</ns0:content>
+         </ns0:name>
+         <ns0:results>
+            <ns0:table itmeId="item_ID1" refId="NN_temperature1">
+               <ns0:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
+                  <ns0:name>
+                     <ns0:content lang="en"/>
+                  </ns0:name>
+                  <ns1:ValueXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="TargetValue" measurand="temperatureAbsolute" scope="reference">
+                  <ns0:name>
+                     <ns0:content lang="en">Calibration Point</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>0 15 25 15 0</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
+                  <ns0:name>
+                     <ns0:content lang="en">Reference Temperature</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\kelvin</ns1:unit>
+                  <ns1:ValueXMLList>273.16 288.16 298.17 288.16 273.16</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
+                  <ns0:name>
+                     <ns0:content lang="en">Reference Temperature in instrument units</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>0.01 15.01 25.02 15.01 0.01</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="Value" measurand="temperatureAbsolute" scope="itemIndication">
+                  <ns0:name>
+                     <ns0:content lang="en">Instrument indication  </ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>-0.1 15.1 25.2 15.3 0</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="Value" measurand="temperatureDifference" scope="itemBias">
+                  <ns0:name>
+                     <ns0:content lang="en">Instrument Error</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>-0.1 0.1 0.2 0.3 0</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="ExpandedUncertainty" measurand="temperatureAbsolute" scope="itemBias">
+                  <ns0:name>
+                     <ns0:content lang="en">Uncertainty</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>0.05 0.05 0.05 0.05 0.05</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="UncertaintyCoverageFactor_k" measurand="temperatureAbsolute" scope="itemBias">
+                  <ns0:name>
+                     <ns0:content lang="en">k</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>2 2 2 2 2</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="AcceptanceLimitUpper" measurand="temperatureAbsolute" scope="itemBias">
+                  <ns0:name>
+                     <ns0:content lang="en">Upper acceptance limit for item bias</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelcius</ns1:unit>
+                  <ns1:ValueXMLList>0.2 0.2 0.2 0.2 0.2</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="Conformity" measurand="temperatureDifference" scope="itemBias">
+                  <ns0:name>
+                     <ns0:content lang="en">Conformaty statement</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\degreecelsius</ns1:unit>
+                  <ns1:ValueXMLList>pass pass pass fail pass</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="Value" measurand="resistance" scope="itemIndication">
+                  <ns0:name>
+                     <ns0:content lang="en">Indicated resistance of the calibration item</ns0:content>
+                  </ns0:name>
+                  <ns1:unit>\ohm</ns1:unit>
+                  <ns1:ValueXMLList>1 2 3 4 5</ns1:ValueXMLList>
+               </ns0:column>
+               <ns0:column dataCategory="accreditationApplies" measurand="metaData" scope="dataInfo">
+                  <ns0:name>
+                     <ns0:content lang="en">Accreditation applies</ns0:content>
+                  </ns0:name>
+                  <ns1:ValueXMLList>y y n y y</ns1:ValueXMLList>
+               </ns0:column>
+            </ns0:table>
+         </ns0:results>
+      </ns0:measurementResult>
+   </ns0:measurementResults>
+</ns0:digitalCalibrationCertificate>
+
+
+
