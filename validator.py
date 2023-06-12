@@ -1,5 +1,6 @@
 from lxml import etree
 from urllib.request import urlopen
+import sys
 
 def validate(xml_path: str, xsd_path: str) -> bool:
     if xsd_path[0:5]=="https":
@@ -15,6 +16,10 @@ def validate(xml_path: str, xsd_path: str) -> bool:
     xml_doc = etree.parse(xml_path)
     result = xmlschema.validate(xml_doc)
     print(result)
-    
+
     return xmlschema.error_log.filter_from_errors()
 
+if __name__ == "__main__":
+    validate( "mass_certificate.xml", "dcc.xsd")
+#    if not sys.argv[0] == "":
+#        validate(sys.argv[0], "dcc.xsd")
