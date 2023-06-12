@@ -5,7 +5,7 @@ from xml.dom import minidom
 import sys
 import os
 
-import DCChelpfunctions as DCCh
+import DCChelpfunctions as DCCh, DccTableColumn, DccTabel
 
 #from docx import Document
 
@@ -81,14 +81,14 @@ for col in columns:
       et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
     DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
     #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
-    if attributes['dataCategory']=='Conformity': 
+    if attributes['dataCategory']=='Conformity':
         et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
-    elif attributes['dataCategory']=='customerTag': 
+    elif attributes['dataCategory']=='customerTag':
         et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
-    elif attributes['dataCategory']=='accreditationApplies': 
+    elif attributes['dataCategory']=='accreditationApplies':
         et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
         #NOTE: should be accreditationAppliesXMLList. (the type needs fix in the dcc.xsd-schema)
-    else: 
+    else:
         et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
     xmltable1.append(xmlcol)
 
@@ -149,3 +149,4 @@ def xml2dcctable(xmltable):
     dcctbl=DccTabel(xmltable.attrib['refId'],xmltable.attrib['itemId'],length,len(dcccolumns),dcccolumns)
     return dcctbl
 
+if __name__ == "__main__":

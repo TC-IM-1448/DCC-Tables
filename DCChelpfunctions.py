@@ -6,7 +6,65 @@ SI='{https://ptb.de/si}'
 LANG='en'
 et.register_namespace("si", SI.strip('{}'))
 et.register_namespace("dcc", DCC.strip('{}'))
- 
+
+
+
+class DccTableColumn():
+    """ """
+    scopeType = ""
+    columnType = ""
+    measurandType = ""
+    unit = ""
+    humanHeading = ""
+    columnData = []
+
+    def __init__(self,
+                scopeType="",
+                columnType="",
+                measurandType="",
+                unit="",
+                humanHeading = "",
+                columnData=[]):
+        """ """
+        self.columnType = columnType
+        self.scopeType = scopeType
+        self.measurandType = measurandType
+        self.unit = unit
+        self.humanHeading = humanHeading
+        self.columnData = columnData
+
+    def get_attributes(self):
+        attr = [attr for attr in dir(self) if not callable(getattr(self, attr)) and not attr.startswith("__")]
+        # local_attributes = {k: v for k, v in vars(self).items() if k in locals()}
+        return attr
+
+    def print(self):
+        attr = self.get_attributes()
+        str = ""
+        for a in attr:
+            print(a, ": \t", getattr(self, a))
+
+
+class DccTabel():
+    """ """
+    tableID = ""
+    itemID = ""
+    numRows = ""
+    numColumns = ""
+    columns = []
+
+    def __init__(self, tableID="", itemID="",
+                 numRows = "", numColumns = "",columns=""):
+        self.tableID = tableID
+        self.itemID = itemID
+        self.numRows = numRows
+        self.numColumns = numColumns
+        self.columns = columns
+
+def transpose_2d_list(matrix):
+    return [list(row) for row in zip(*matrix)]
+
+
 def add_name(element,lang="",text="",append=0):
     #A human readable name may be given to various elements such as quantitie, result, item, identification
     #printelement(element)
@@ -92,12 +150,13 @@ def item(ID, manufacturer,model):
 
 def minimal_DCC():
     version="3.2.0"
+    # xsilocation="dcc.xsd" #
     xsilocation="https://ptb.de/dcc https://ptb.de/dcc/v"+version+"/dcc.xsd"
     xsi="http://www.w3.org/2001/XMLSchema-instance"
     #et.register_namespace("si", SI)
     #et.register_namespace("dcc", DCC)
     #root=et.Element(DCC+'digitalCalibrationCertificate', attrib={"schemaVersion":version, "xmlns:dcc":DCC, "xmlns:si":SI, "xmlns:xsi":xsi, "xsi:schemaLocation":xsilocation})
-    root=et.Element(DCC+'digitalCalibrationCertificate', 
+    root=et.Element(DCC+'digitalCalibrationCertificate',
             attrib={"schemaVersion":version,   "xmlns:xsi":xsi, "xsi:schemaLocation":xsilocation})
     administrativeData=et.SubElement(root,DCC+'administrativeData')
     ################## Software ##############################
@@ -133,3 +192,5 @@ def minimal_DCC():
     results=et.SubElement(measurementResult,DCC+'results')
     add_name(measurementResult,text='Measurement results')
     return root
+
+

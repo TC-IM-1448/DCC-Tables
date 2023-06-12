@@ -74,7 +74,7 @@ def write_DCC_table_to_excel_sheet(dccTbl: DccTabel, workbookName = ""):
 
 
 if __name__ == "__main__":
-    tbl = _test_get_tables_from_sheet()
+    tbl = read_tables_from_Excel()
     columns = tbl.columns
     columns[5].print()
     for i in range(tbl.numColumns):
