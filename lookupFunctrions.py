@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as et
 from xml.dom import minidom
 import pydcc_tables as pydcc
-from dcctable2xml import xml2dcctable
+from dcctable2xml import xml2dcctable, xml2dccColumn
 
 DCC='{https://ptb.de/dcc}'
 SI='{https://ptb.de/si}'
@@ -93,7 +93,11 @@ if __name__=="__main__":
     if col:
         printelement(col)
 
+    dcccol = xml2dccColumn(col, columnUnit)
+    dcccol.print()
     dcctbl = xml2dcctable(tbl)
-    dcctbl.print()
+
+
+
 
 
