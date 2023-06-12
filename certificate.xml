@@ -1,5 +1,10 @@
 <?xml version="1.0" ?>
-<ns0:digitalCalibrationCertificate schemaVersion="3.1.2" xmlns:dcc="{https://ptb.de/dcc}" xmlns:ns0="https://ptb.de/dcc" xmlns:ns1="https://ptb.de/si" xmlns:si="{https://ptb.de/si}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://ptb.de/dcc https://ptb.de/dcc/v3.1.2/dcc.xsd">
+<ns0:digitalCalibrationCertificate 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:ns0="https://ptb.de/dcc" 
+       xmlns:ns1="https://ptb.de/si" 
+       xsi:schemaLocation="https://ptb.de/dcc https://ptb.de/dcc/v3.1.2/dcc.xsd"
+       schemaVersion="3.2.0">
    <ns0:administrativeData>
       <ns0:dccSoftware>
          <ns0:software>
@@ -124,88 +129,88 @@
             <ns0:content>Measurement results</ns0:content>
          </ns0:name>
          <ns0:results>
-            <ns0:table itmeId="item_ID1" refId="NN_temperature1">
+            <ns0:table itemId="item_ID1" refId="NN_temperature1">
                <ns0:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
                   <ns0:name>
                      <ns0:content lang="en"/>
                   </ns0:name>
-                  <ns1:ValueXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</ns1:ValueXMLList>
+                  <ns0:valueXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="TargetValue" measurand="temperatureAbsolute" scope="reference">
                   <ns0:name>
                      <ns0:content lang="en">Calibration Point</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>0 15 25 15 0</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>0 15 25 15 0</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
                   <ns0:name>
                      <ns0:content lang="en">Reference Temperature</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\kelvin</ns1:unit>
-                  <ns1:ValueXMLList>273.16 288.16 298.17 288.16 273.16</ns1:ValueXMLList>
+                  <ns0:unit>\kelvin</ns0:unit>
+                  <ns0:valueXMLList>273.16 288.16 298.17 288.16 273.16</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
                   <ns0:name>
                      <ns0:content lang="en">Reference Temperature in instrument units</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>0.01 15.01 25.02 15.01 0.01</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>0.01 15.01 25.02 15.01 0.01</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="Value" measurand="temperatureAbsolute" scope="itemIndication">
                   <ns0:name>
                      <ns0:content lang="en">Instrument indication  </ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>-0.1 15.1 25.2 15.3 0</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>-0.1 15.1 25.2 15.3 0</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="Value" measurand="temperatureDifference" scope="itemBias">
                   <ns0:name>
                      <ns0:content lang="en">Instrument Error</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>-0.1 0.1 0.2 0.3 0</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>-0.1 0.1 0.2 0.3 0</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="ExpandedUncertainty" measurand="temperatureAbsolute" scope="itemBias">
                   <ns0:name>
                      <ns0:content lang="en">Uncertainty</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>0.05 0.05 0.05 0.05 0.05</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>0.05 0.05 0.05 0.05 0.05</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="UncertaintyCoverageFactor_k" measurand="temperatureAbsolute" scope="itemBias">
                   <ns0:name>
                      <ns0:content lang="en">k</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>2 2 2 2 2</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>2 2 2 2 2</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="AcceptanceLimitUpper" measurand="temperatureAbsolute" scope="itemBias">
                   <ns0:name>
                      <ns0:content lang="en">Upper acceptance limit for item bias</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelcius</ns1:unit>
-                  <ns1:ValueXMLList>0.2 0.2 0.2 0.2 0.2</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelcius</ns0:unit>
+                  <ns0:valueXMLList>0.2 0.2 0.2 0.2 0.2</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="Conformity" measurand="temperatureDifference" scope="itemBias">
                   <ns0:name>
                      <ns0:content lang="en">Conformaty statement</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\degreecelsius</ns1:unit>
-                  <ns1:ValueXMLList>pass pass pass fail pass</ns1:ValueXMLList>
+                  <ns0:unit>\degreecelsius</ns0:unit>
+                  <ns0:valueXMLList>pass pass pass fail pass</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="Value" measurand="resistance" scope="itemIndication">
                   <ns0:name>
                      <ns0:content lang="en">Indicated resistance of the calibration item</ns0:content>
                   </ns0:name>
-                  <ns1:unit>\ohm</ns1:unit>
-                  <ns1:ValueXMLList>1 2 3 4 5</ns1:ValueXMLList>
+                  <ns0:unit>\ohm</ns0:unit>
+                  <ns0:valueXMLList>1 2 3 4 5</ns0:valueXMLList>
                </ns0:column>
                <ns0:column dataCategory="accreditationApplies" measurand="metaData" scope="dataInfo">
                   <ns0:name>
                      <ns0:content lang="en">Accreditation applies</ns0:content>
                   </ns0:name>
-                  <ns1:ValueXMLList>y y n y y</ns1:ValueXMLList>
+                  <ns0:valueXMLList>y y n y y</ns0:valueXMLList>
                </ns0:column>
             </ns0:table>
          </ns0:results>
