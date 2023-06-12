@@ -95,7 +95,7 @@ def realListXMLList(value,unit,label=None,uncertainty=None,coverageFactor=['2'],
 LANG='en'
 
 from excel2dcctables import read_tables_from_Excel
-tab1 = read_tables_from_Excel(workbookName="DCC-mass_example.xlsx",sheetName="Table2")
+tab1 = read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2")
 
 #xmlresults=et.Element(DCC+'results')
 xmlresults=root[1][0][1]
@@ -103,30 +103,27 @@ xmltable1=et.Element(DCC+"table",attrib={'itemId':tab1.itemID,'refId':tab1.table
 
 columns=tab1.columns
 for col in columns:
-    xmlcol=et.Element(DCC+'column',attrib={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType})
+    attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType}
+    xmlcol=et.Element(DCC+'column',attrib=attributes)
     if type(col.unit)!=type(None):
-      et.SubElement(xmlcol,SI+'unit').text=' '.join([col.unit])
+      et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
     add_name(xmlcol,lang="en",text=col.humanHeading)
     #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
-    et.SubElement(xmlcol,SI+"ValueXMLList").text=' '.join(col.columnData)
+    if attributes['dataCategory']=='Conformity': 
+        et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
+    elif attributes['dataCategory']=='customerTag': 
+        et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
+    elif attributes['dataCategory']=='accreditationApplies': 
+        et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
+        #NOTE: should be accreditationAppliesXMLList. (the type needs fix in the dcc.xsd-schema)
+    else: 
+        et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
     #xmlcol.append(xmllist)
     xmltable1.append(xmlcol)
 
 xmlresults.append(xmltable1)
 
 def printelement(element):
-    #DCC='https://ptb.de/dcc'
-    #SI='https://ptb.de/si'
-    #version="3.1.2"
-    #xsilocation="https://ptb.de/dcc https://ptb.de/dcc/v"+version+"/dcc.xsd"
-    #xsi="http://www.w3.org/2001/XMLSchema-instance"
-    ##et.register_namespace("si", SI)
-    ##et.register_namespace("dcc", DCC)
-    #root=et.Element(DCC+'digitalCalibrationCertificate', attrib={"schemaVersion":version, "xmlns:dcc":DCC, "xmlns:si":SI, "xmlns:xsi":xsi, "xsi:schemaLocation":xsilocation})
-    #DCC='{https://ptb.de/dcc}'
-    #SI='{https://ptb.de/si}'
-    #root.append(element)
-    #xmlstring=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
     xmlstring=minidom.parseString(et.tostring(element)).toprettyxml(indent="   ")
     print(xmlstring)
     return
@@ -134,7 +131,7 @@ def printelement(element):
 #DCCf.printelement(coreData)
 #NOTE: with the namespace reprecentation ns:elementname the printelement function does not work
 xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
-with open('mass_certificate.xml','wb') as f:
+with open('certificate2.xml','wb') as f:
     f.write(xmlstr.encode('utf-8'))
 
 
