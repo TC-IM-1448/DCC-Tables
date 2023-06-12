@@ -7,7 +7,6 @@ import os
 
 import DCChelpfunctions as DCCh
 
-import xml.etree.ElementTree as et
 #from docx import Document
 
 #################### Make a minimal DCC and fill in the administrative data ##############################
@@ -70,7 +69,7 @@ from excel2dcctables import read_tables_from_Excel
 tab1 = read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2")
 
 
-#Create empty table
+#Create empty table with table attributes
 xmltable1=et.Element(DCC+"table",attrib={'itemId':tab1.itemID,'refId':tab1.tableID})
 
 #Fill the table with data from table object
