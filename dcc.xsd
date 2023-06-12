@@ -964,17 +964,19 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:textType"/>
+            <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="unit" type="si:unitType" minOccurs="0"/>
             <xs:choice>
                 <xs:element ref="si:realListXMLList"/>
+		<xs:element name="valueXMLList" type="si:decimalXMLListType"/>
                 <xs:element name="conformityXMLList" type="dcc:stringConformityStatementStatusXMLListType"/>
                 <xs:element name="stringXMLList" type="si:stringXMLListType"/>
                 <xs:element name="accreditationAppliesXMLList" type="dcc:accreditationAppliesXMLListType"/>
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
-        <xs:attribute name="colType" type="dcc:colTypeType" use="required"/>
-        <xs:attribute name="measurandType" type="dcc:measurandTypeType" use="required"/>
+        <xs:attribute name="dataCategory" type="dcc:dataCategoryType" use="required"/>
+        <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
@@ -996,6 +998,9 @@
         </xs:annotation>
             <xs:restriction base="xs:string">
                 <xs:enumeration value="Value" />
+                <xs:enumeration value="TargetValue" />
+                <xs:enumeration value="ExpandedUncertainty" />
+                <xs:enumeration value="UncertaintyCoverageFactor_k" />
                 <xs:enumeration value="TargetValue" />
                 <xs:enumeration value="ToleranceLimitLower" />
                 <xs:enumeration value="ToleranceLimitUpper" />
@@ -1033,6 +1038,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
+                <xs:enumeration value="metaData" />
                 <xs:enumeration value="temperatureAbsolute" />
                 <xs:enumeration value="temperatureDifference" />
                 <xs:enumeration value="pressureInternal" />
@@ -1047,6 +1053,7 @@
                 <xs:enumeration value="volumeAbsolute" />
                 <xs:enumeration value="volumeRelative" />
                 <xs:enumeration value="identification" />
+                <xs:enumeration value="resistance" />
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
@@ -1064,8 +1071,8 @@
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="table_id" type="xs:ID" use="optional"/>
-        <xs:attribute name="item_id" type="dcc:refTypesType" use="optional"/>
+        <xs:attribute name="itemId" type="xs:ID" use="optional"/>
+        <xs:attribute name="refId" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="refTypesType">
