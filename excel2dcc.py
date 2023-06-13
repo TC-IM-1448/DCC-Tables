@@ -59,7 +59,7 @@ def add_administrative_data(root):
 
 
     ################ User input for item ##########################
-    ItemID="item_ID1"
+    ItemID="itemID1"
     Manufacturer='Mettler-Toledo'
     Model='Platinum Super'
     customerID="NN66"
@@ -172,5 +172,4 @@ if __name__ == "__main__":
         f.write(xmlstr.encode('utf-8'))
     ############### END Output to xml-file ####################################
 
-    from validator import validate
-    validate("certificate2.xml", "dcc.xsd")
+    DCCh.validate("certificate2.xml", "dcc.xsd")

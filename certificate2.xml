@@ -37,7 +37,7 @@
          <dcc:performanceLocation>laboratory</dcc:performanceLocation>
       </dcc:coreData>
       <dcc:items>
-         <dcc:item id="item_ID1">
+         <dcc:item id="itemID1">
             <dcc:name>
                <dcc:content lang="en">Set of 7 weights</dcc:content>
             </dcc:name>
@@ -124,10 +124,10 @@
             <dcc:content>Measurement results</dcc:content>
          </dcc:name>
          <dcc:results>
-            <dcc:table itemId="item_ID1" refId="NN_temperature1">
+            <dcc:table itemId="itemID1" refId="TempCal">
                <dcc:column scope="dataInfo" dataCategory="customerTag" measurand="metaData">
                   <dcc:name>
-                     <dcc:content lang="en"/>
+                     <dcc:content lang="en">Customer Tags</dcc:content>
                   </dcc:name>
                   <dcc:unit>nan</dcc:unit>
                   <dcc:stringXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</dcc:stringXMLList>

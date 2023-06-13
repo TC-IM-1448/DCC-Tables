@@ -3,7 +3,7 @@ import openpyxl as pyxl
 from xml.dom import minidom
 import xml.etree.ElementTree as et
 
-from DCChelpfunctions import DccTabel, DccTableColumn
+from DCChelpfunctions import validate, DccTabel, DccTableColumn
 
 DCC='{https://ptb.de/dcc}'
 SI='{https://ptb.de/si}'
@@ -150,30 +150,30 @@ def xml2dcctable(xmltable):
 if __name__ == "__main__":
     xmlFile='mass_certificate.xml'
 
-    from validator import validate
     validate("certificate2.xml", "dcc.xsd")
 
 
     xmlFile='certificate2.xml'
-    tableAttrib={'itemId': 'item_ID1', 'refId': 'NN_temperature1'}
-    columnAttrib={'dataCategory': 'Value', 'measurand': 'massConventional', 'scope': 'itemBias'}
-    columnUnit="\mili\gram"
+    tableAttrib={'itemId': 'itemID1', 'refId': 'TemperatureCalibration'}
+    columnAttrib={'scope': 'reference', 'dataCategory': 'Value', 'measurand': 'temperatureAbsolute'}
+    columnUnit="\degreecelcius"
 
     #Lookup functions
     xmlTable=getTableFromXML(xmlfile=xmlFile,searchattributes=tableAttrib)
     col=getColumnFromTable(table=xmlTable, searchattributes=columnAttrib, searchunit=columnUnit)
 
     tbl, col = LookupColumn('mass_certificate.xml', 'NN_temperature1', 'item_ID1', 'itemBias', 'Value', 'massConventional', '\mili\gram')
+    tbl, col = LookupColumn('certificate2.xml', 'TemperatureCalibration', 'itemID1', 'itemBias', 'Value', 'temperatureDifference', '\degreecelcius')
 
-    #Print result
-    if col:
-        printelement(col)
+    # #Print result
+    # if col:
+    #     printelement(col)
 
-    dcccol = xml2dccColumn(col, columnUnit)
-    dcccol.print()
-    dcctbl = xml2dcctable(tbl)
+    # dcccol = xml2dccColumn(col, columnUnit)
+    # dcccol.print()
+    # dcctbl = xml2dcctable(xmlTable)
 
-    write_DCC_table_to_excel_sheet(dcctbl, "DCC-Table_example_output.xlsx")
+    # write_DCC_table_to_excel_sheet(dcctbl, "DCC-Table_example_output.xlsx")
 
 
 

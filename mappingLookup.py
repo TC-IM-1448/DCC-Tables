@@ -109,18 +109,18 @@ if __name__=="__main__":
     massTable=getTableFromXML(xmlfile=xmlFile,searchattributes=tableAttrib)
     col=getColumnFromTable(table=massTable, searchattributes=columnAttrib, searchunit=columnUnit)
 
-    tbl, col = LookupColumn('mass_certificate.xml', 'NN_temperature1', 'item_ID1', 'itemBias', 'Value', 'massConventional', '\mili\gram')
-    tbl, col = LookupColumn('certificate2.xml', 'NN_temperature1', 'item_ID1', 'reference', 'Value', 'temperatureAbsolute', '\degreecelcius')
+    # tbl, col = LookupColumn('mass_certificate.xml', 'NN_temperature1', 'item_ID1', 'itemBias', 'Value', 'massConventional', '\mili\gram')
+    # tbl, col = LookupColumn('certificate2.xml', 'TemperatureCalibration', 'item_ID1', 'reference', 'Value', 'temperatureAbsolute', '\degreecelcius')
 
     #Print result
-    if col:
-        printelement(col)
+    # if col:
+        # printelement(col)
 
-    dcccol = xml2dccColumn(col, columnUnit)
-    dcccol.print()
-    dcctbl = xml2dcctable(tbl)
+    # dcccol = xml2dccColumn(col, columnUnit)
+    # dcccol.print()
+    # dcctbl = xml2dcctable(tbl)
 
-    lookupFromLookupListInFile('massLookupList.csv','mass_certificate.xml')
+    # lookupFromLookupListInFile('massLookupList.csv','mass_certificate.xml')
     lookupFromLookupListInFile('cert2LookupList.csv','certificate2.xml')
 
 
