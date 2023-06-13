@@ -1,0 +1,10 @@
+tableID,itemID,scope,category,Meas,unit,value
+NN_temperature1,item_ID1,reference,Value,temperatureAbsolute,\kelvin,
+NN_temperature1,item_ID1,reference,Value,temperatureAbsolute,\degreecelcius,
+NN_temperature1,item_ID1,itemIndication,Value,temperatureAbsolute,\degreecelcius,
+NN_temperature1,item_ID1,itemBias,Value,temperatureDifference,\degreecelcius,
+NN_temperature1,item_ID1,itemBias,ExpandedUncertainty,temperatureAbsolute,\degreecelcius,
+NN_temperature1,item_ID1,itemBias,UncertaintyCoverageFactor_k,temperatureAbsolute,\degreecelcius,
+NN_temperature1,item_ID1,itemBias,AcceptanceLimitUpper,temperatureAbsolute,\degreecelcius,
+NN_temperature1,item_ID1,itemBias,Conformity,temperatureDifference,\degreecelsius,
+NN_temperature1,item_ID1,itemIndication,Value,resistance,\ohm,

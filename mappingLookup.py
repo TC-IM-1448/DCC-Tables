@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as et
 from xml.dom import minidom
-import pydcc_tables as pydcc
-from dcctable2xml import xml2dcctable, xml2dccColumn
+import openpyxl as pyxl
+from dcc2excel import xml2dcctable, xml2dccColumn
 
 DCC='{https://ptb.de/dcc}'
 SI='{https://ptb.de/si}'
@@ -74,6 +74,28 @@ def LookupColumn(xmlFile, tableID, itemID, scope, dataCategory, measurand, unit)
     return tbl, col
 
 
+def lookupFromLookupListInFile(filename:str, dccFile:str):
+    # filename = 'LookupList.csv'
+    values = []
+    outs = []
+    with open(filename,"r") as f:
+        print(f.readline())
+        lines = f.readlines()
+        for l in lines:
+            temp = l.split(',')
+            args = temp[:-1]
+            unit = temp[-2]
+            print(args)
+            tbl, col = LookupColumn(dccFile, *args)
+            dcccol = xml2dccColumn(col, unit)
+            values.append(dcccol.columnData)
+            outs.append(''.join(l[:-1])+','+','.join(dcccol.columnData)+'\n')
+
+    with open(filename[:-4]+'Out.csv', "w") as f:
+        f.write('TableID, itemID, scope, category, measurand, unit, value\n')
+        f.writelines(outs)
+
+
 
 
 if __name__=="__main__":
@@ -96,6 +118,11 @@ if __name__=="__main__":
     dcccol = xml2dccColumn(col, columnUnit)
     dcccol.print()
     dcctbl = xml2dcctable(tbl)
+
+    lookupFromLookupListInFile('massLookupList.csv','mass_certificate.xml')
+    lookupFromLookupListInFile('cert2LookupList.csv','certificate2.xml')
+
+
 
 
 
