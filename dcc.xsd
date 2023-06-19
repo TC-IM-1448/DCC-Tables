@@ -13,9 +13,9 @@
             namespace="https://ptb.de/si"
             schemaLocation="SI_Format.xsd"/>
 
-    <xs:import
+    <!--xs:import
         namespace="http://www.w3.org/2000/09/xmldsig#"
-        schemaLocation="https://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+        schemaLocation="https://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/-->
 
     <xs:annotation>
         <xs:documentation>
@@ -318,7 +318,7 @@
             <xs:element name="identifications" type="dcc:identificationListType"/>
             <xs:element name="itemQuantities" type="dcc:itemQuantityListType" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="itemId" type="xs:ID" use="required"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
     
@@ -692,18 +692,24 @@
 
     <xs:complexType name="accreditationType">
         <xs:sequence>
-            <xs:element name="accreditationId" minOccurs="1"/>
+            <xs:element name="accreditationLabId" minOccurs="1"/>
             <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
-            <xs:element name="accreditationCoverage" minOccurs="1" type="dcc:accreditationCoverageType"/>
+            <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
     </xs:complexType>
 
-    <xs:simpleType name="accreditationCoverageType">
+    <xs:simpleType name="accreditationApplicabilityType">
+        <xs:annotation>
+            <xs:documentation>
+             "1: results outside accreditation occurs and these are clearly marked. Use column with dataScope=accreditationApplies attribute to indicate this
+              2: all results are under accreditation."
+            </xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="all results"/>
-            <xs:enumeration value="partially"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -1197,14 +1203,13 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="accreditationApplies" minOccurs="0" type="dcc:accreditationAppliesType"/>
-            <xs:element name="customerTag" type="xs:string" minOccurs="0"/> <!-- In the request form, the customer may wish to tag this table to be able to retrieve data from the certificate -->
+            <!--xs:element name="customerTag" type="xs:string" minOccurs="0"/> < In the request form, the customer may wish to tag this table to be able to retrieve data from the certificate -->
             <xs:element name="name" type="dcc:textType" minOccurs="0"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="itemId" type="xs:ID" use="optional"/>
-        <xs:attribute name="refId" type="dcc:refTypesType" use="optional"/>
+        <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="tableId" type="xs:ID" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="refTypesType">

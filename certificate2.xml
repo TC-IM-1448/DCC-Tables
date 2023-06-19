@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<dcc:digitalCalibrationCertificate xmlns:dcc="https://ptb.de/dcc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="3.2.0" xsi:schemaLocation="https://ptb.de/dcc https://ptb.de/dcc/v3.2.0/dcc.xsd">
+<dcc:digitalCalibrationCertificate schemaVersion="3.2.0" xmlns:dcc="https://ptb.de/dcc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://ptb.de/dcc dcc.xsd">
    <dcc:administrativeData>
       <dcc:dccSoftware>
          <dcc:software>
@@ -37,7 +37,7 @@
          <dcc:performanceLocation>laboratory</dcc:performanceLocation>
       </dcc:coreData>
       <dcc:items>
-         <dcc:item id="itemID1">
+         <dcc:item itemId="itemID1">
             <dcc:name>
                <dcc:content lang="en">Set of 7 weights</dcc:content>
             </dcc:name>
@@ -117,6 +117,12 @@
             <dcc:mainSigner>false</dcc:mainSigner>
          </dcc:respPerson>
       </dcc:respPersons>
+      <dcc:accreditation accrId="accdfm">
+         <dcc:accreditationLabId>255</dcc:accreditationLabId>
+         <dcc:accreditationBody>DANAK</dcc:accreditationBody>
+         <dcc:accreditationCountry>DK</dcc:accreditationCountry>
+         <dcc:accreditationApplicability>2</dcc:accreditationApplicability>
+      </dcc:accreditation>
    </dcc:administrativeData>
    <dcc:measurementResults>
       <dcc:measurementResult>
@@ -124,85 +130,85 @@
             <dcc:content>Measurement results</dcc:content>
          </dcc:name>
          <dcc:results>
-            <dcc:table itemId="itemID1" refId="TempCal">
-               <dcc:column scope="dataInfo" dataCategory="customerTag" measurand="metaData">
+            <dcc:table itemRef="accdf" tableId="TempCal">
+               <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
                   <dcc:name>
                      <dcc:content lang="en">Customer Tags</dcc:content>
                   </dcc:name>
                   <dcc:unit>nan</dcc:unit>
                   <dcc:stringXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</dcc:stringXMLList>
                </dcc:column>
-               <dcc:column scope="reference" dataCategory="TargetValue" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="TargetValue" measurand="temperatureAbsolute" scope="reference">
                   <dcc:name>
                      <dcc:content lang="en">Calibration Point</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>0 15 25 15 0</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="reference" dataCategory="Value" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
                   <dcc:name>
                      <dcc:content lang="en">Reference Temperature</dcc:content>
                   </dcc:name>
                   <dcc:unit>\kelvin</dcc:unit>
                   <dcc:valueXMLList>273.16 288.16 298.17 288.16 273.16</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="reference" dataCategory="Value" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
                   <dcc:name>
                      <dcc:content lang="en">Reference Temperature in instrument units</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>0.01 15.01 25.02 15.01 0.01</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="itemIndication" dataCategory="Value" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="Value" measurand="temperatureAbsolute" scope="itemIndication">
                   <dcc:name>
                      <dcc:content lang="en">Instrument indication  </dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>-0.1 15.1 25.2 15.3 0</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="itemBias" dataCategory="Value" measurand="temperatureDifference">
+               <dcc:column dataCategory="Value" measurand="temperatureDifference" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Instrument Error</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>-0.1 0.1 0.2 0.3 0</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="itemBias" dataCategory="ExpandedUncertainty" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="ExpandedUncertainty" measurand="temperatureAbsolute" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Uncertainty</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>0.05 0.05 0.05 0.05 0.05</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="itemBias" dataCategory="UncertaintyCoverageFactor_k" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="temperatureAbsolute" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">k</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>2 2 2 2 2</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="itemBias" dataCategory="AcceptanceLimitUpper" measurand="temperatureAbsolute">
+               <dcc:column dataCategory="AcceptanceLimitUpper" measurand="temperatureAbsolute" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Upper acceptance limit for item bias</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelcius</dcc:unit>
                   <dcc:valueXMLList>0.2 0.2 0.2 0.2 0.2</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="itemBias" dataCategory="Conformity" measurand="temperatureDifference">
+               <dcc:column dataCategory="Conformity" measurand="temperatureDifference" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Conformaty statement</dcc:content>
                   </dcc:name>
                   <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:conformityXMLList>pass pass pass fail pass</dcc:conformityXMLList>
                </dcc:column>
-               <dcc:column scope="itemIndication" dataCategory="Value" measurand="resistance">
+               <dcc:column dataCategory="Value" measurand="resistance" scope="itemIndication">
                   <dcc:name>
                      <dcc:content lang="en">Indicated resistance of the calibration item</dcc:content>
                   </dcc:name>
                   <dcc:unit>\ohm</dcc:unit>
                   <dcc:valueXMLList>1 2 3 4 5</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column scope="dataInfo" dataCategory="accreditationApplies" measurand="metaData">
+               <dcc:column dataCategory="accreditationApplies" measurand="metaData" scope="dataInfo">
                   <dcc:name>
                      <dcc:content lang="en">Accreditation applies</dcc:content>
                   </dcc:name>

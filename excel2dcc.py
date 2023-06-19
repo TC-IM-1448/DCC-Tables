@@ -57,6 +57,12 @@ def add_administrative_data(root):
     customer=administrativeData.find(DCC+'customer')
     DCCh.fill_address(customer,name="NN", eMail="pqrt@nn.com", phone="+45 6160 7019", city="Søborg", postCode="2860", street="Svanevej", streetNo="12", further="kundenummer: 1234")
 
+    accreditation=et.SubElement(administrativeData,DCC+'accreditation', attrib={'accrId':'accdfm'})
+    et.SubElement(accreditation,DCC+'accreditationLabId').text="255"
+    et.SubElement(accreditation,DCC+'accreditationBody').text="DANAK"
+    et.SubElement(accreditation,DCC+'accreditationCountry').text="DK"
+    et.SubElement(accreditation,DCC+'accreditationApplicability').text="2"
+
 
     ################ User input for item ##########################
     ItemID="itemID1"
@@ -78,7 +84,7 @@ def add_administrative_data(root):
 
 def insertTable2Xml(root, tab1):
     #Create empty table with table attributes
-    xmltable1=et.Element(DCC+"table",attrib={'itemId':tab1.itemID,'refId':tab1.tableID})
+    xmltable1=et.Element(DCC+"table",attrib={'itemRef':tab1.itemID,'tableId':tab1.tableID})
 
     #Fill the table with data from table object
     columns=tab1.columns
@@ -172,4 +178,4 @@ if __name__ == "__main__":
         f.write(xmlstr.encode('utf-8'))
     ############### END Output to xml-file ####################################
 
-    DCCh.validate("certificate2.xml", "dcc.xsd")
+    print(DCCh.validate("certificate2.xml", "dcc.xsd"))
