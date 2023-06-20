@@ -130,7 +130,7 @@
             <dcc:content>Measurement results</dcc:content>
          </dcc:name>
          <dcc:results>
-            <dcc:table itemRef="accdf" tableId="TempCal">
+            <dcc:table itemRef="itemID1" tableId="TempCal">
                <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
                   <dcc:name>
                      <dcc:content lang="en">Customer Tags</dcc:content>
@@ -213,7 +213,7 @@
                      <dcc:content lang="en">Accreditation applies</dcc:content>
                   </dcc:name>
                   <dcc:unit>nan</dcc:unit>
-                  <dcc:stringXMLList>y y n y y</dcc:stringXMLList>
+                  <dcc:accreditationAppliesXMLList accrRef="accdfm">y yes n y y</dcc:accreditationAppliesXMLList>
                </dcc:column>
             </dcc:table>
          </dcc:results>

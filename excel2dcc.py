@@ -100,8 +100,7 @@ def insertTable2Xml(root, tab1):
         elif attributes['dataCategory']=='customerTag':
             et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
         elif attributes['dataCategory']=='accreditationApplies':
-            et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
-            #NOTE: should be accreditationAppliesXMLList. (the type needs fix in the dcc.xsd-schema)
+            et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
         else:
             et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
         xmltable1.append(xmlcol)

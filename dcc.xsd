@@ -556,7 +556,15 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <xs:unique name="column">
+                <xs:selector xpath="dcc:column"/>
+                <xs:field xpath="@scope"/>
+                <xs:field xpath="@dataCategory"/>
+                <xs:field xpath="@measurand"/>
+                <xs:field xpath="dcc:unit"/>
+            </xs:unique>
+            </xs:element>
             <xs:element name="result" type="dcc:resultType" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
@@ -695,6 +703,7 @@
             <xs:element name="accreditationLabId" minOccurs="1"/>
             <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
+            <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
@@ -703,7 +712,7 @@
     <xs:simpleType name="accreditationApplicabilityType">
         <xs:annotation>
             <xs:documentation>
-             "1: results outside accreditation occurs and these are clearly marked. Use column with dataScope=accreditationApplies attribute to indicate this
+                "1: results outside accreditation occurs and these are clearly marked. Use column with attribute dataCategory=accreditationApplies attribute to indicate this
               2: all results are under accreditation."
             </xs:documentation>
         </xs:annotation>
@@ -987,13 +996,23 @@
     </xs:complexType>
 
 
+    <xs:simpleType name="yesnolist">
+        <xs:list itemType="dcc:yesno"/>
+    </xs:simpleType>
 
-    <xs:simpleType name="accreditationAppliesXMLListType">
+    <xs:complexType name="accreditationAppliesXMLListType">
+        <xs:simpleContent>
+        <xs:extension base="dcc:yesnolist">
+            <xs:attribute name="accrRef" type="xs:IDREFS" use="required"/>
+        </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="yesno">
         <xs:restriction base="xs:string">
             <xs:enumeration value="y"/>
             <xs:enumeration value="n"/>
         </xs:restriction>
-        <!--xs:attribute name="accrRef" type="xs:IDREFS" use="required"/-->
     </xs:simpleType>
 
     <xs:simpleType name="dataCategoryType">
@@ -1206,7 +1225,8 @@
             <!--xs:element name="customerTag" type="xs:string" minOccurs="0"/> < In the request form, the customer may wish to tag this table to be able to retrieve data from the certificate -->
             <xs:element name="name" type="dcc:textType" minOccurs="0"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
+        </xs:element>
         </xs:sequence>
         <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="tableId" type="xs:ID" use="optional"/>
