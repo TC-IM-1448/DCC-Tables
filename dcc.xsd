@@ -1229,6 +1229,7 @@
         </xs:element>
         </xs:sequence>
         <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="tableId" type="xs:ID" use="optional"/>
     </xs:complexType>
 

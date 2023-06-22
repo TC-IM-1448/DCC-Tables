@@ -64,6 +64,33 @@
                </dcc:identification>
             </dcc:identifications>
          </dcc:item>
+         <dcc:item itemId="setting1">
+            <dcc:name>
+               <dcc:content lang="en">This is the first setting</dcc:content>
+            </dcc:name>
+            <dcc:manufacturer>
+               <dcc:name>
+                  <dcc:content>Mettler-Toledo</dcc:content>
+               </dcc:name>
+            </dcc:manufacturer>
+            <dcc:model>Platinum Super</dcc:model>
+            <dcc:identifications>
+               <dcc:identification>
+                  <dcc:issuer>customer</dcc:issuer>
+                  <dcc:value>NN66</dcc:value>
+                  <dcc:name>
+                     <dcc:content>MålerID</dcc:content>
+                  </dcc:name>
+               </dcc:identification>
+               <dcc:identification>
+                  <dcc:issuer>manufacturer</dcc:issuer>
+                  <dcc:value>2341-LKJQ-1324LKLJJAAFLKK33</dcc:value>
+                  <dcc:name>
+                     <dcc:content>Serienummer</dcc:content>
+                  </dcc:name>
+               </dcc:identification>
+            </dcc:identifications>
+         </dcc:item>
       </dcc:items>
       <dcc:calibrationLaboratory>
          <dcc:contact>
@@ -130,7 +157,7 @@
             <dcc:content>Measurement results</dcc:content>
          </dcc:name>
          <dcc:results>
-            <dcc:table itemRef="itemID1" tableId="TempCal">
+            <dcc:table settingRef="setting1" itemRef="itemID1" tableId="TempCal">
                <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
                   <dcc:name>
                      <dcc:content lang="en">Customer Tags</dcc:content>
@@ -213,7 +240,7 @@
                      <dcc:content lang="en">Accreditation applies</dcc:content>
                   </dcc:name>
                   <dcc:unit>nan</dcc:unit>
-                  <dcc:accreditationAppliesXMLList accrRef="accdfm">y yes n y y</dcc:accreditationAppliesXMLList>
+                  <dcc:accreditationAppliesXMLList accrRef="accdfm">y y n y y</dcc:accreditationAppliesXMLList>
                </dcc:column>
             </dcc:table>
          </dcc:results>
