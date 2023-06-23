@@ -1036,6 +1036,7 @@
                 <xs:enumeration value="UsedMethodId" />
                 <xs:enumeration value="UsedEquipmentId" />
                 <xs:enumeration value="repeatability" /> 
+                <xs:enumeration value="Correction" /> 
                 <xs:enumeration value="accreditationApplies" /> 
                 <xs:enumeration value="customerTag" /> 
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
@@ -1207,8 +1208,9 @@
                 <xs:enumeration value="geometryXcoord" />
                 <xs:enumeration value="geometryYcoord" />
                 <xs:enumeration value="geometryZcoord" />
-                <xs:enumeration value="volumeAbsolute" />
-                <xs:enumeration value="volumeRelative" />
+                <xs:enumeration value="volume" />
+                <xs:enumeration value="centreOfGravity" />
+                <xs:enumeration value="massVolumeCorrelation" />
                 <xs:enumeration value="identification" />
                 <xs:enumeration value="resistance" />
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->

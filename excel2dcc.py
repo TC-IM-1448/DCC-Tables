@@ -11,6 +11,58 @@ from xml.dom import minidom
 from DCChelpfunctions import DccTableColumn, DccTabel
 import DCChelpfunctions as DCCh
 
+def read_item_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Items"):
+    wb = pyxl.load_workbook(workbookName, data_only=True)
+
+    ws = wb[sheetName]
+    item={}
+    item['id']=ws['A2'].value
+    item['custromerId']=ws['B2'].value
+    item['equipmentClass']=ws['C2'].value
+    item['description']=ws['D2'].value
+    item['swRef']=ws['E2'].value
+    item['manufacturer']=ws['F2'].value
+    item['productName']=ws['G2'].value
+    item['productNumber']=ws['E2'].value
+    item['serialNumber']=ws['F2'].value
+    return item
+    
+def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2"):
+    """ Function that finds all the tables in a given sheet """
+
+    wb = pyxl.load_workbook(workbookName, data_only=True)
+
+    ws = wb[sheetName]
+
+
+    columns = []
+
+    tableID = ws["B2"].value
+    itemID = ws["B3"].value
+    settingID = ws["B4"].value
+    numRows = ws["B5"].value
+    numColumns = ws["B6"].value
+
+    nRows = int(numRows)+5
+    nCols = int(numColumns)
+
+    cell = ws["B7"]
+
+    content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
+    # content = transpose_2d_list(content)
+
+    for c in content:
+        col = DccTableColumn(   scopeType=c[0],
+                                columnType=c[1],
+                                measurandType=c[2],
+                                unit=c[3],
+                                humanHeading = c[4],
+                                columnData= list(map(str, c[5:])))
+        columns.append(col)
+
+    tbl = DccTabel(tableID, itemID, numRows, numColumns, columns)
+    wb.close()
+    return tbl
 #from docx import Document
 
 colAttrDefs = ("scopeType", "columnType", "measurandType", "unit", "humanHeading")
@@ -23,7 +75,7 @@ et.register_namespace("si", SI.strip('{}'))
 et.register_namespace("dcc", DCC.strip('{}'))
 LANG='en'
 
-def add_administrative_data(root):
+def add_administrative_data(root,inputItem):
     """
     Temporary function for adding administrative data
 
@@ -65,15 +117,29 @@ def add_administrative_data(root):
 
 
     ################ User input for item ##########################
+    """
     ItemID="itemID1"
-    Manufacturer='Mettler-Toledo'
+    Manufacturer='Amitek'
     Model='Platinum Super'
     customerID="NN66"
     SerialNo="2341-LKJQ-1324LKLJJAAFLKK33"
+    Description='Temperature sensor'
+    """
+
+
+    ItemID=inputItem['id']
+    Manufacturer=inputItem['manufacturer']
+    Model=inputItem['productName']
+    customerID=inputItem['custromerId']
+    SerialNo=inputItem['serialNumber']
+    Description=inputItem['description']
+    #item['equipmentClass']=ws['C2']
+    #item['swRef']=ws['E2']
+    #item['productNumber']=ws['E2']
 
     #Make an item XML-element
     item=DCCh.item(ID=ItemID, manufacturer=Manufacturer,model=Model)
-    DCCh.add_name(item, 'en', 'Set of 7 weights')
+    DCCh.add_name(item, 'en', Description)
     DCCh.add_identification(item,customerID,issuer='customer', name_dk="MålerID", name_en="SensorID")
     DCCh.add_identification(item,SerialNo,issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
 
@@ -117,50 +183,19 @@ def printelement(element):
     print(xmlstring)
     return
 
-def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2"):
-    """ Function that finds all the tables in a given sheet """
-
-    wb = pyxl.load_workbook(workbookName, data_only=True)
-
-    ws = wb[sheetName]
-
-
-    columns = []
-
-    tableID = ws["B2"].value
-    itemID = ws["B3"].value
-    numRows = ws["B4"].value
-    numColumns = ws["B5"].value
-
-    nRows = int(numRows)+5
-    nCols = int(numColumns)
-
-    cell = ws["B6"]
-
-    content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
-    # content = transpose_2d_list(content)
-
-    for c in content:
-        col = DccTableColumn(   scopeType=c[0],
-                                columnType=c[1],
-                                measurandType=c[2],
-                                unit=c[3],
-                                humanHeading = c[4],
-                                columnData= list(map(str, c[5:])))
-        columns.append(col)
-
-    tbl = DccTabel(tableID, itemID, numRows, numColumns, columns)
-    wb.close()
-    return tbl
-
 if __name__ == "__main__":
     from importlib import reload
     reload(DCCh)
+    examplefile="DCC-Table_example3.xlsx"
+    examplefile="DCC-mass_example.xlsx"
 
     root=DCCh.minimal_DCC()
-    root = add_administrative_data(root)
+    inputItem=read_item_from_Excel(workbookName=examplefile,sheetName="Items")
+    root = add_administrative_data(root, inputItem)
     ######################### Add table with calibration data to the xml ##########################
-    tbl = read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2")
+    tbl = read_tables_from_Excel(workbookName=examplefile,sheetName="Table2")
+
+    print(inputItem)
     insertTable2Xml(root,tbl)
 
     #Print the tbl and column 5

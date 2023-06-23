@@ -37,54 +37,27 @@
          <dcc:performanceLocation>laboratory</dcc:performanceLocation>
       </dcc:coreData>
       <dcc:items>
-         <dcc:item itemId="itemID1">
+         <dcc:item itemId="item1">
             <dcc:name>
                <dcc:content lang="en">Set of 7 weights</dcc:content>
             </dcc:name>
             <dcc:manufacturer>
                <dcc:name>
-                  <dcc:content>Mettler-Toledo</dcc:content>
+                  <dcc:content>Mettler Toledo</dcc:content>
                </dcc:name>
             </dcc:manufacturer>
-            <dcc:model>Platinum Super</dcc:model>
+            <dcc:model>Top weights</dcc:model>
             <dcc:identifications>
                <dcc:identification>
                   <dcc:issuer>customer</dcc:issuer>
-                  <dcc:value>NN66</dcc:value>
+                  <dcc:value>weightset12</dcc:value>
                   <dcc:name>
                      <dcc:content>MålerID</dcc:content>
                   </dcc:name>
                </dcc:identification>
                <dcc:identification>
                   <dcc:issuer>manufacturer</dcc:issuer>
-                  <dcc:value>2341-LKJQ-1324LKLJJAAFLKK33</dcc:value>
-                  <dcc:name>
-                     <dcc:content>Serienummer</dcc:content>
-                  </dcc:name>
-               </dcc:identification>
-            </dcc:identifications>
-         </dcc:item>
-         <dcc:item itemId="setting1">
-            <dcc:name>
-               <dcc:content lang="en">This is the first setting</dcc:content>
-            </dcc:name>
-            <dcc:manufacturer>
-               <dcc:name>
-                  <dcc:content>Mettler-Toledo</dcc:content>
-               </dcc:name>
-            </dcc:manufacturer>
-            <dcc:model>Platinum Super</dcc:model>
-            <dcc:identifications>
-               <dcc:identification>
-                  <dcc:issuer>customer</dcc:issuer>
-                  <dcc:value>NN66</dcc:value>
-                  <dcc:name>
-                     <dcc:content>MålerID</dcc:content>
-                  </dcc:name>
-               </dcc:identification>
-               <dcc:identification>
-                  <dcc:issuer>manufacturer</dcc:issuer>
-                  <dcc:value>2341-LKJQ-1324LKLJJAAFLKK33</dcc:value>
+                  <dcc:value>Mettler Toledo</dcc:value>
                   <dcc:name>
                      <dcc:content>Serienummer</dcc:content>
                   </dcc:name>
@@ -157,90 +130,75 @@
             <dcc:content>Measurement results</dcc:content>
          </dcc:name>
          <dcc:results>
-            <dcc:table settingRef="setting1" itemRef="itemID1" tableId="TempCal">
+            <dcc:table itemRef="item1" tableId="masscalib">
                <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
                   <dcc:name>
-                     <dcc:content lang="en">Customer Tags</dcc:content>
+                     <dcc:content lang="en"/>
                   </dcc:name>
-                  <dcc:unit>nan</dcc:unit>
-                  <dcc:stringXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</dcc:stringXMLList>
+                  <dcc:stringXMLList>1613WX-023 1613WX-024 1613WX-022 1613WX-019 1613WX-020 1613WX-017 1613WX-009</dcc:stringXMLList>
                </dcc:column>
-               <dcc:column dataCategory="TargetValue" measurand="temperatureAbsolute" scope="reference">
+               <dcc:column dataCategory="Value" measurand="Measure.Mass.True" scope="itemIndication">
                   <dcc:name>
-                     <dcc:content lang="en">Calibration Point</dcc:content>
+                     <dcc:content lang="en">Nominal mass</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>0 15 25 15 0</dcc:valueXMLList>
+                  <dcc:unit>\kilo\gram</dcc:unit>
+                  <dcc:valueXMLList>20 20 5 1 1 0.1 0.0005</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
+               <dcc:column dataCategory="Value" measurand="volume" scope="itemIndication">
                   <dcc:name>
-                     <dcc:content lang="en">Reference Temperature</dcc:content>
+                     <dcc:content lang="en">Volume at 20 deg in cubic cm</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\kelvin</dcc:unit>
-                  <dcc:valueXMLList>273.16 288.16 298.17 288.16 273.16</dcc:valueXMLList>
+                  <dcc:unit>\centi\metre\tothe{3}</dcc:unit>
+                  <dcc:valueXMLList>2515 2516 625 125 125 12.5 0.0625</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="Value" measurand="temperatureAbsolute" scope="reference">
+               <dcc:column dataCategory="ExpandedUncertainty" measurand="volume" scope="itemIndication">
                   <dcc:name>
-                     <dcc:content lang="en">Reference Temperature in instrument units</dcc:content>
+                     <dcc:content lang="en">Expanded uncertainty of volume</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>0.01 15.01 25.02 15.01 0.01</dcc:valueXMLList>
+                  <dcc:unit>\centi\metre\tothe{3}</dcc:unit>
+                  <dcc:valueXMLList>44 44 2.3 0.47 0.47 0.047 0.00023</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="Value" measurand="temperatureAbsolute" scope="itemIndication">
+               <dcc:column dataCategory="Value" measurand="Measure.Mass.Conventional" scope="itemBias">
                   <dcc:name>
-                     <dcc:content lang="en">Instrument indication  </dcc:content>
+                     <dcc:content lang="en">Item indication error</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>-0.1 15.1 25.2 15.3 0</dcc:valueXMLList>
+                  <dcc:unit>\mili\gram</dcc:unit>
+                  <dcc:valueXMLList>-210 -211 -7.4 -1.14 -2.42 -0.045 -0.0037</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="Value" measurand="temperatureDifference" scope="itemBias">
+               <dcc:column dataCategory="Correction" measurand="Measure.Mass.Conventional" scope="itemBias">
                   <dcc:name>
-                     <dcc:content lang="en">Instrument Error</dcc:content>
+                     <dcc:content lang="en">Conventional mass, Calibration uncertainty</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>-0.1 0.1 0.2 0.3 0</dcc:valueXMLList>
+                  <dcc:unit>\mili\gram</dcc:unit>
+                  <dcc:valueXMLList>210 211 7.4 1.14 2.42 0.045 0.0037</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="ExpandedUncertainty" measurand="temperatureAbsolute" scope="itemBias">
+               <dcc:column dataCategory="ExpandedUncertainty" measurand="Measure.Mass.Conventional" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Uncertainty</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>0.05 0.05 0.05 0.05 0.05</dcc:valueXMLList>
+                  <dcc:unit>\mili\gram</dcc:unit>
+                  <dcc:valueXMLList>3.1 3.1 0.7 0.05 0.05 0.01 0.0014</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="temperatureAbsolute" scope="itemBias">
+               <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="metaData" scope="dataInfo">
                   <dcc:name>
                      <dcc:content lang="en">k</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>2 2 2 2 2</dcc:valueXMLList>
+                  <dcc:unit>\one</dcc:unit>
+                  <dcc:valueXMLList>2 2 2 2 2 2 2</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="AcceptanceLimitUpper" measurand="temperatureAbsolute" scope="itemBias">
+               <dcc:column dataCategory="Value" measurand="centreOfGravity" scope="itemIndication">
                   <dcc:name>
-                     <dcc:content lang="en">Upper acceptance limit for item bias</dcc:content>
+                     <dcc:content lang="en">Center of gravity (z) in mm</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
-                  <dcc:valueXMLList>0.2 0.2 0.2 0.2 0.2</dcc:valueXMLList>
+                  <dcc:unit>\mm</dcc:unit>
+                  <dcc:valueXMLList>83 83 64 36.5 36.5 17.6 0.5</dcc:valueXMLList>
                </dcc:column>
-               <dcc:column dataCategory="Conformity" measurand="temperatureDifference" scope="itemBias">
+               <dcc:column dataCategory="Value" measurand="massVolumeCorrelation" scope="itemIndication">
                   <dcc:name>
-                     <dcc:content lang="en">Conformaty statement</dcc:content>
+                     <dcc:content lang="en">Correlation between mass and volume</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelsius</dcc:unit>
-                  <dcc:conformityXMLList>pass pass pass fail pass</dcc:conformityXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Value" measurand="resistance" scope="itemIndication">
-                  <dcc:name>
-                     <dcc:content lang="en">Indicated resistance of the calibration item</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\ohm</dcc:unit>
-                  <dcc:valueXMLList>1 2 3 4 5</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="accreditationApplies" measurand="metaData" scope="dataInfo">
-                  <dcc:name>
-                     <dcc:content lang="en">Accreditation applies</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>nan</dcc:unit>
-                  <dcc:accreditationAppliesXMLList accrRef="accdfm">y y n y y</dcc:accreditationAppliesXMLList>
+                  <dcc:unit>\one</dcc:unit>
+                  <dcc:valueXMLList>0.9983 0.9983 0.971 0.996 0.9961 0.985 0.2</dcc:valueXMLList>
                </dcc:column>
             </dcc:table>
          </dcc:results>
