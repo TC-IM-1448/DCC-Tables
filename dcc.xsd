@@ -254,7 +254,7 @@
             <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
             <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
             <xs:element name="uniqueIdentifier" type="dcc:notEmptyStringType"/>
-            <xs:element name="identifications" type="dcc:identificationListType" minOccurs="0"/>
+            <xs:element name="customerIdentification" type="dcc:identificationType" minOccurs="0"/>
             <xs:element name="receiptDate" type="xs:date" minOccurs="0"/>
             <xs:element name="beginPerformanceDate" type="xs:date"/>
             <xs:element name="endPerformanceDate" type="xs:date"/>
@@ -352,7 +352,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="issuer">
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="issuer" minOccurs="0">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="manufacturer"/>
@@ -364,7 +365,6 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="value" type="dcc:notEmptyStringType"/>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
@@ -851,6 +851,7 @@
     <xs:complexType name="contactType">
         <xs:sequence>
             <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="attPerson" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="fax" type="dcc:notEmptyStringType" minOccurs="0"/>

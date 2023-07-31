@@ -26,17 +26,46 @@ def read_item_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Items
     item['productNumber']=ws['E2'].value
     item['serialNumber']=ws['F2'].value
     return item
+def read_admin_from_Excel(root, workbookName="DCC-Table_example3.xlsx",sheetName="AdministrativeData"):
+    wb = pyxl.load_workbook(workbookName, data_only=True)
+    ws = wb[sheetName]
+    DFM_names=ws['B']
+    values=ws['C']
+    xpaths=ws['D']
+    for i, path in enumerate(xpaths):
+        try:
+            levels=path.value.split("/dcc:")[2:]
+        except:
+            levels=[]
+        element=root
+        for level in levels:
+            subelement=element.find(DCC+level)
+            if type(subelement)!=type(None):
+                element=subelement
+                print("1")
+                print(element)
+            else:
+                element=et.SubElement(element,DCC+level)
+                print("2")
+                print(element)
+        element.text=values[i].value
+
+    administrativeData=root.find(DCC+'administrativeData')
+    accreditation=et.SubElement(administrativeData,DCC+'accreditation', attrib={'accrId':'accdfm'})
+    et.SubElement(accreditation,DCC+'accreditationLabId').text="255"
+    et.SubElement(accreditation,DCC+'accreditationBody').text="DANAK"
+    et.SubElement(accreditation,DCC+'accreditationCountry').text="DK"
+    et.SubElement(accreditation,DCC+'accreditationApplicability').text="2"
+
+    return root
+
     
 def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2"):
     """ Function that finds all the tables in a given sheet """
 
     wb = pyxl.load_workbook(workbookName, data_only=True)
-
     ws = wb[sheetName]
-
-
     columns = []
-
     tableID = ws["B2"].value
     itemID = ws["B3"].value
     settingID = ws["B4"].value
@@ -75,57 +104,18 @@ et.register_namespace("si", SI.strip('{}'))
 et.register_namespace("dcc", DCC.strip('{}'))
 LANG='en'
 
-def add_administrative_data(root,inputItem):
+def add_item_data(root,inputItem):
     """
-    Temporary function for adding administrative data
-
     Parameters
     ----------
     root : etree element
         DESCRIPTION.
 
     Returns
+    root element updated with items section
     -------
     None.
-
     """
-    administrativeData=root.find(DCC+'administrativeData')
-    coreData=administrativeData.find(DCC+'coreData')
-    coreData.find(DCC+'uniqueIdentifier').text='T2304'
-    DCCh.add_identification(coreData,value="NN42",issuer='calibrationLaboratory', name_dk="kundenr",name_en="customer ID")
-    DCCh.add_identification(coreData,value="jpx2340988",issuer="customer",name_dk="PO",name_en="PO")
-    coreData.find(DCC+'receiptDate').text="2022-08-13"
-    coreData.find(DCC+'beginPerformanceDate').text="2022-08-14"
-    coreData.find(DCC+'endPerformanceDate').text="2022-08-15"
-
-    lab=administrativeData.find(DCC+'calibrationLaboratory')
-    contact=et.SubElement(lab, DCC+'contact')
-    DCCh.fill_address(contact,name="DFM", eMail="srk@dfm.dk", phone="+45 2545 9040", city="Hørsholm",  postCode="2970", street="Kogle Allé", streetNo="5", further="www.dfm.dk")
-
-    respPersons=administrativeData.find(DCC+'respPersons')
-    DCCh.add_respPerson(respPersons,name="Erling Målermand", mainSigner=True)
-    DCCh.add_respPerson(respPersons,name="Simon  Hansen", mainSigner=False)
-
-    customer=administrativeData.find(DCC+'customer')
-    DCCh.fill_address(customer,name="NN", eMail="pqrt@nn.com", phone="+45 6160 7019", city="Søborg", postCode="2860", street="Svanevej", streetNo="12", further="kundenummer: 1234")
-
-    accreditation=et.SubElement(administrativeData,DCC+'accreditation', attrib={'accrId':'accdfm'})
-    et.SubElement(accreditation,DCC+'accreditationLabId').text="255"
-    et.SubElement(accreditation,DCC+'accreditationBody').text="DANAK"
-    et.SubElement(accreditation,DCC+'accreditationCountry').text="DK"
-    et.SubElement(accreditation,DCC+'accreditationApplicability').text="2"
-
-
-    ################ User input for item ##########################
-    """
-    ItemID="itemID1"
-    Manufacturer='Amitek'
-    Model='Platinum Super'
-    customerID="NN66"
-    SerialNo="2341-LKJQ-1324LKLJJAAFLKK33"
-    Description='Temperature sensor'
-    """
-
 
     ItemID=inputItem['id']
     Manufacturer=inputItem['manufacturer']
@@ -146,7 +136,6 @@ def add_administrative_data(root,inputItem):
     Items=root[0][2]
     Items.append(item)
     return root
-    ######################### END of administrative data ####################################################
 
 def insertTable2Xml(root, tab1):
     #Create empty table with table attributes
@@ -187,11 +176,13 @@ if __name__ == "__main__":
     from importlib import reload
     reload(DCCh)
     examplefile="DCC-Table_example3.xlsx"
-    examplefile="DCC-mass_example.xlsx"
+    #examplefile="DCC-mass_example.xlsx"
 
     root=DCCh.minimal_DCC()
     inputItem=read_item_from_Excel(workbookName=examplefile,sheetName="Items")
-    root = add_administrative_data(root, inputItem)
+    #inputAdm=read_admin_from_Excel(workbookName=examplefile,sheetName="AdministrativeData")
+    root=read_admin_from_Excel(root, workbookName=examplefile,sheetName="AdministrativeData")
+    root = add_item_data(root, inputItem)
     ######################### Add table with calibration data to the xml ##########################
     tbl = read_tables_from_Excel(workbookName=examplefile,sheetName="Table2")
 
@@ -206,7 +197,7 @@ if __name__ == "__main__":
 
     ############### Output to xml-file ####################################
 
-    #FIXME: with the namespace reprecentation ns:elementname the printelement function does not work
+    #FIXME: with the namespace representation ns:elementname the printelement function does not work
     xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
     with open('certificate2.xml','wb') as f:
         f.write(xmlstr.encode('utf-8'))
