@@ -26,6 +26,7 @@ def read_item_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Items
     item['productNumber']=ws['E2'].value
     item['serialNumber']=ws['F2'].value
     return item
+
 def read_admin_from_Excel(root, workbookName="DCC-Table_example3.xlsx",sheetName="AdministrativeData"):
     wb = pyxl.load_workbook(workbookName, data_only=True)
     ws = wb[sheetName]
@@ -42,12 +43,12 @@ def read_admin_from_Excel(root, workbookName="DCC-Table_example3.xlsx",sheetName
             subelement=element.find(DCC+level)
             if type(subelement)!=type(None):
                 element=subelement
-                print("1")
-                print(element)
+                #print("1")
+                #print(element)
             else:
                 element=et.SubElement(element,DCC+level)
-                print("2")
-                print(element)
+                #print("2")
+                #print(element)
         element.text=values[i].value
 
     administrativeData=root.find(DCC+'administrativeData')
@@ -66,16 +67,20 @@ def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Tab
     wb = pyxl.load_workbook(workbookName, data_only=True)
     ws = wb[sheetName]
     columns = []
-    tableID = ws["B2"].value
-    itemID = ws["B3"].value
-    settingID = ws["B4"].value
-    numRows = ws["B5"].value
-    numColumns = ws["B6"].value
+    attrib={}
+    attribnames=ws['A'][1:5]
+    attribvalues=ws['B'][1:5]
+    for (name, value) in zip(attribnames,attribvalues):
+        if type(name.value) != type(None) and type(value.value) != type(None):
+            attrib[name.value]=value.value
+    statementRef = ws["B5"].value
+    numRows = ws["B7"].value
+    numColumns = ws["B8"].value
 
     nRows = int(numRows)+5
     nCols = int(numColumns)
 
-    cell = ws["B7"]
+    cell = ws["B9"]
 
     content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
     # content = transpose_2d_list(content)
@@ -89,9 +94,30 @@ def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Tab
                                 columnData= list(map(str, c[5:])))
         columns.append(col)
 
-    tbl = DccTabel(tableID, itemID, numRows, numColumns, columns)
+    #tbl = DccTabel(tableID, itemID, settingRef, numRows, numColumns, columns)
     wb.close()
-    return tbl
+    #Create empty table with table attributes
+    xmltable1=et.Element(DCC+"table",attrib=attrib)
+
+    #Fill the table with data from table object
+    columns=columns
+    for col in columns:
+        attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType}
+        xmlcol=et.Element(DCC+'column',attrib=attributes)
+        if type(col.unit)!=type(None):
+          et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
+        DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
+        #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
+        if attributes['dataCategory']=='Conformity':
+            et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
+        elif attributes['dataCategory']=='customerTag':
+            et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
+        elif attributes['dataCategory']=='accreditationApplies':
+            et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
+        else:
+            et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
+        xmltable1.append(xmlcol)
+    return xmltable1
 #from docx import Document
 
 colAttrDefs = ("scopeType", "columnType", "measurandType", "unit", "humanHeading")
@@ -137,32 +163,32 @@ def add_item_data(root,inputItem):
     Items.append(item)
     return root
 
-def insertTable2Xml(root, tab1):
+def insertTable2Xml(root, xmltable):
     #Create empty table with table attributes
-    xmltable1=et.Element(DCC+"table",attrib={'itemRef':tab1.itemID,'tableId':tab1.tableID})
+    #xmltable1=et.Element(DCC+"table",attrib={'itemRef':tab1.itemID,'tableId':tab1.tableID, 'statementRef':tab1.statementRef})
 
     #Fill the table with data from table object
-    columns=tab1.columns
-    for col in columns:
-        attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType}
-        xmlcol=et.Element(DCC+'column',attrib=attributes)
-        if type(col.unit)!=type(None):
-          et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
-        DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
-        #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
-        if attributes['dataCategory']=='Conformity':
-            et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
-        elif attributes['dataCategory']=='customerTag':
-            et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
-        elif attributes['dataCategory']=='accreditationApplies':
-            et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
-        else:
-            et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
-        xmltable1.append(xmlcol)
+    #columns=tab1.columns
+    #for col in columns:
+        #attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType}
+        #xmlcol=et.Element(DCC+'column',attrib=attributes)
+        #if type(col.unit)!=type(None):
+          #et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
+        #DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
+        ##xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
+        #if attributes['dataCategory']=='Conformity':
+            #et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
+        #elif attributes['dataCategory']=='customerTag':
+            #et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
+        #elif attributes['dataCategory']=='accreditationApplies':
+            #et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
+        #else:
+            #et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
+        #xmltable1.append(xmlcol)
 
     #Append table to results section of the xml
     xmlresults=root[1][0][1]
-    xmlresults.append(xmltable1)
+    xmlresults.append(xmltable)
 
     ################# END add calibration data #####################################
 
@@ -190,10 +216,10 @@ if __name__ == "__main__":
     insertTable2Xml(root,tbl)
 
     #Print the tbl and column 5
-    columns = tbl.columns
-    columns[5].print()
-    for i in range(tbl.numColumns):
-        print(columns[i].columnData)
+    #columns = tbl.columns
+    #columns[5].print()
+    #for i in range(tbl.numColumns):
+        #print(columns[i].columnData)
 
     ############### Output to xml-file ####################################
 

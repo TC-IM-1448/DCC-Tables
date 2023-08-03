@@ -447,8 +447,25 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="statement" type="dcc:statementMetaDataType" maxOccurs="unbounded"/>
+            <xs:element name="statement" type="dcc:statementType" maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="statementType">
+        <xs:sequence>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
+            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="convention" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="norm" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="reference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="declaration" type="dcc:richContentType" minOccurs="0"/>
+		</xs:sequence>
+        <xs:attribute name="statementId" type="xs:ID" use="optional"/>
+        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="measurementResultListType">
@@ -705,6 +722,7 @@
             <xs:element name="accreditationCountry" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
+            <xs:element name="accreditationException" minOccurs="0" type="xs:ID"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -971,8 +989,6 @@
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
-
-
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
@@ -988,6 +1004,7 @@
                 <xs:element name="conformityXMLList" type="dcc:stringConformityStatementStatusXMLListType"/>
                 <xs:element name="stringXMLList" type="si:stringXMLListType"/>
                 <xs:element name="accreditationAppliesXMLList" type="dcc:accreditationAppliesXMLListType"/>
+                <xs:element name="exceptionList" type="xs:IDREFS"/>
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
@@ -1008,6 +1025,18 @@
         </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <!--xs:simpleType name="exceptionXMLListType">
+        <xs:list itemType="xs:IDREFS"/>
+    </xs:simpleType>
+
+    <xs:complexType name="exceptionXMLListType">
+        <xs:simpleContent>
+        <xs:extension base="dcc:exceptionRef">
+            <xs:attribute name="accrRef" type="xs:IDREFS" use="required"/>
+        </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType-->
 
     <xs:simpleType name="yesno">
         <xs:restriction base="xs:string">
@@ -1233,6 +1262,7 @@
         </xs:sequence>
         <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="tableId" type="xs:ID" use="optional"/>
     </xs:complexType>
 

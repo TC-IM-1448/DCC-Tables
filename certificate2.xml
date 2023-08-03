@@ -108,7 +108,7 @@
             <dcc:content>Measurement results</dcc:content>
          </dcc:name>
          <dcc:results>
-            <dcc:table itemRef="itemID1" tableId="TempCal">
+            <dcc:table itemRef="itemID1 itemID2" settingRef="setting01" tableId="TempCal">
                <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
                   <dcc:name>
                      <dcc:content lang="en">Customer Tags</dcc:content>
@@ -134,7 +134,7 @@
                   <dcc:name>
                      <dcc:content lang="en">Reference Temperature in instrument units</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\kelvin</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>0.01 15.01 25.02 15.01 0.01</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="itemIndication">
