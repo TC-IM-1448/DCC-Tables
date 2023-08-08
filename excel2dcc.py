@@ -217,8 +217,11 @@ def insertTable2Xml(root, xmltable):
         #xmltable1.append(xmlcol)
 
     #Append table to results section of the xml
-    xmlresults=root[1][0][1]
-    xmlresults.append(xmltable)
+    #xmlresults=root[1][0][1]
+    measurementResults=root.find(DCC+"measurementResults")
+    measurementResult=et.SubElement(measurementResults,DCC+'measurementResult', attrib={'resId':'result1'})
+
+    measurementResult.append(xmltable)
 
     ################# END add calibration data #####################################
 
@@ -242,7 +245,6 @@ if __name__ == "__main__":
     ######################### Add table with calibration data to the xml ##########################
     tbl = read_tables_from_Excel(workbookName=examplefile,sheetName="Table2")
 
-    print(inputItem)
     insertTable2Xml(root,tbl)
 
     #Print the tbl and column 5

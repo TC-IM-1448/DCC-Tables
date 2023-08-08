@@ -475,7 +475,13 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded"/>
+            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded">
+            <xs:unique name="table">
+                <xs:selector xpath="dcc:table"/>
+                <xs:field xpath="@itemRef"/>
+                <xs:field xpath="@settingRef"/>
+            </xs:unique>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
@@ -487,16 +493,25 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="usedMethods" type="dcc:usedMethodListType" minOccurs="0"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
             <xs:element name="measuringEquipments" type="dcc:measuringEquipmentListType" minOccurs="0"/>
             <xs:element name="influenceConditions" type="dcc:influenceConditionListType" minOccurs="0"/>
-            <xs:element name="results" type="dcc:resultListType"/>
+            <xs:element name="results" type="dcc:resultListType" minOccurs="0"/>
             <xs:element name="measurementMetaData" type="dcc:measurementMetaDataListType" minOccurs="0"/>
+            <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <xs:unique name="column">
+                <xs:selector xpath="dcc:column"/>
+                <xs:field xpath="@scope"/>
+                <xs:field xpath="@dataCategory"/>
+                <xs:field xpath="@measurand"/>
+                <xs:field xpath="dcc:unit"/>
+            </xs:unique>
+            </xs:element>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="resId" type="xs:ID" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
@@ -573,7 +588,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <!--xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="column">
                 <xs:selector xpath="dcc:column"/>
                 <xs:field xpath="@scope"/>
@@ -581,7 +596,7 @@
                 <xs:field xpath="@measurand"/>
                 <xs:field xpath="dcc:unit"/>
             </xs:unique>
-            </xs:element>
+            </xs:element-->
             <xs:element name="result" type="dcc:resultType" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>

@@ -211,9 +211,9 @@ def minimal_DCC():
 
     ################## measurementResults ##########################
     measurementResults=et.SubElement(root,DCC+'measurementResults')
-    measurementResult=et.SubElement(measurementResults,DCC+'measurementResult')
-    results=et.SubElement(measurementResult,DCC+'results')
-    add_name(measurementResult,text='Measurement results')
+    #measurementResult=et.SubElement(measurementResults,DCC+'measurementResult')
+    #results=et.SubElement(measurementResult,DCC+'results')
+    #add_name(measurementResult,text='Measurement results')
     return root
 
 
