@@ -120,7 +120,7 @@
                   <dcc:name>
                      <dcc:content lang="en">Calibration Point</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>0 15 25 15 0</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="reference">
@@ -141,35 +141,35 @@
                   <dcc:name>
                      <dcc:content lang="en">Instrument indication  </dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>-0.1 15.1 25.2 15.3 0</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Instrument Error</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>-0.1 0.1 0.2 0.3 0</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="ExpandedUncertainty" measurand="Measure.Temperature" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Uncertainty</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>0.05 0.05 0.05 0.05 0.05</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="Measure.Temperature" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">k</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>2 2 2 2 2</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="AcceptanceLimitUpper" measurand="Measure.Temperature" scope="itemBias">
                   <dcc:name>
                      <dcc:content lang="en">Upper acceptance limit for item bias</dcc:content>
                   </dcc:name>
-                  <dcc:unit>\degreecelcius</dcc:unit>
+                  <dcc:unit>\degreecelsius</dcc:unit>
                   <dcc:valueXMLList>0.2 0.2 0.2 0.2 0.2</dcc:valueXMLList>
                </dcc:column>
                <dcc:column dataCategory="Conformity" measurand="Measure.Temperature" scope="itemBias">
@@ -192,6 +192,13 @@
                   </dcc:name>
                   <dcc:unit>nan</dcc:unit>
                   <dcc:accreditationAppliesXMLList accrRef="accdfm">y y n y y</dcc:accreditationAppliesXMLList>
+               </dcc:column>
+               <dcc:column dataCategory="Exception" measurand="metaData" scope="dataInfo">
+                  <dcc:name>
+                     <dcc:content lang="en">Exception applies</dcc:content>
+                  </dcc:name>
+                  <dcc:unit>nan</dcc:unit>
+                  <dcc:exceptionXMLList>e03 n n e01 e02</dcc:exceptionXMLList>
                </dcc:column>
             </dcc:table>
          </dcc:results>

@@ -454,7 +454,7 @@
     <xs:complexType name="statementType">
         <xs:sequence>
             <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
+            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0"/>
             <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="convention" type="dcc:notEmptyStringType" minOccurs="0"/>
@@ -1004,7 +1004,7 @@
                 <xs:element name="conformityXMLList" type="dcc:stringConformityStatementStatusXMLListType"/>
                 <xs:element name="stringXMLList" type="si:stringXMLListType"/>
                 <xs:element name="accreditationAppliesXMLList" type="dcc:accreditationAppliesXMLListType"/>
-                <xs:element name="exceptionList" type="xs:IDREFS"/>
+                <xs:element name="exceptionXMLList" type="xs:IDREFS"/>
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
@@ -1069,6 +1069,7 @@
                 <xs:enumeration value="Correction" /> 
                 <xs:enumeration value="accreditationApplies" /> 
                 <xs:enumeration value="customerTag" /> 
+                <xs:enumeration value="Exception" /> 
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>

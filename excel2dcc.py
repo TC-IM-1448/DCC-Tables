@@ -11,6 +11,34 @@ from xml.dom import minidom
 from DCChelpfunctions import DccTableColumn, DccTabel
 import DCChelpfunctions as DCCh
 
+
+def read_statements_from_Excel(root, workbookName="DCC-Table_example3.xlsx",sheetName="Statements"):
+    wb = pyxl.load_workbook(workbookName, data_only=True)
+    ws = wb[sheetName]
+    linetypes=ws['A']
+    columntypes=ws['1']
+    statements=[]
+    lineno=0
+    for linetype in linetypes:
+        lineno+=1
+        if linetype.value=="statement":
+           statement={}
+           for (name, content) in zip(columntypes, ws[lineno]):
+               statement[name.value]=content.value
+           statements.append(statement)
+    adm=root.find(DCC+"administrativeData")
+    statementselement=et.SubElement(adm,DCC+"statements")
+    for statement in statements:
+        statementelement=et.SubElement(statementselement,DCC+"statement", attrib={'id':statement['id']})
+        et.SubElement(statementelement, DCC+"description", attrib={'lang':'en'}).text=statement['description']
+        et.SubElement(statementelement, DCC+"description", attrib={'lang':'da'}).text=statement['description da']
+        DCCh.add_name(statementelement,lang="en",text=statement['name en'])
+        DCCh.add_name(statementelement,lang="da",text=statement['name da'])
+
+    return root
+           
+
+
 def read_item_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Items"):
     wb = pyxl.load_workbook(workbookName, data_only=True)
 
@@ -112,6 +140,8 @@ def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Tab
             et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
         elif attributes['dataCategory']=='customerTag':
             et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
+        elif attributes['dataCategory']=='Exception':
+            et.SubElement(xmlcol,DCC+"exceptionXMLList").text=' '.join(col.columnData)
         elif attributes['dataCategory']=='accreditationApplies':
             et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
         else:
