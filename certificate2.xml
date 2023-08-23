@@ -101,6 +101,32 @@
          <dcc:accreditationCountry>DK</dcc:accreditationCountry>
          <dcc:accreditationApplicability>2</dcc:accreditationApplicability>
       </dcc:accreditation>
+      <dcc:statements>
+         <dcc:statement statementId="statement01">
+            <dcc:name>
+               <dcc:content lang="en">Moonphase</dcc:content>
+               <dcc:content lang="da">Månefase</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">Unless otherwise stated, the measurements were caried out at full moon. I.e. $M&gt;=0.95M_{max}$.</dcc:description>
+            <dcc:description lang="da">Med mindre andet er oplyst er alle målinger udført ved fuldmåne. Dvs: $M&gt;=0.95M_{max}$.</dcc:description>
+         </dcc:statement>
+         <dcc:statement statementId="statement02">
+            <dcc:name>
+               <dcc:content lang="en">Reprint</dcc:content>
+               <dcc:content lang="da">Gengivelse af rapport i uddrag</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcc:description>
+            <dcc:description lang="da"/>
+         </dcc:statement>
+         <dcc:statement statementId="statement03">
+            <dcc:name>
+               <dcc:content lang="en"/>
+               <dcc:content lang="da"/>
+            </dcc:name>
+            <dcc:description lang="en"/>
+            <dcc:description lang="da"/>
+         </dcc:statement>
+      </dcc:statements>
    </dcc:administrativeData>
    <dcc:measurementResults>
       <dcc:measurementResult resId="result1">

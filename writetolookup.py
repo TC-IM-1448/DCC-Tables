@@ -57,21 +57,3 @@ ExApp.Range("E5").Value=warning
 ExApp.Range("E6").Value=colwarning
 ExApp.Range("E7").Value=usertagwarning
 
-"""
-#Find the column containing the user Tags
-tagcol=lookup.getColumnFromTable(tab,{'scope':'dataInfo','dataCategory':'customerTag','measurand':'metaData'},'nan')
-try:
-    #Iterate through the tags to find the row number of the specified tag
-    tags=tagcol[2].text.split()
-    found=False
-    for i, tag in enumerate(tags):
-        if tag==customerTag:
-            found=True
-            break
-    if found:    
-       searchValue=col[2].text.split()[i]
-    else: 
-       raise Exception("The requested customer tag was not found")
-except Exception as e:
-    usertagwarning=e.args[0]
-    """

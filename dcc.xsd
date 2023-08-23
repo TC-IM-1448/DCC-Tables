@@ -454,7 +454,7 @@
     <xs:complexType name="statementType">
         <xs:sequence>
             <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0"/>
+            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="convention" type="dcc:notEmptyStringType" minOccurs="0"/>
@@ -1040,18 +1040,6 @@
         </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
-
-    <!--xs:simpleType name="exceptionXMLListType">
-        <xs:list itemType="xs:IDREFS"/>
-    </xs:simpleType>
-
-    <xs:complexType name="exceptionXMLListType">
-        <xs:simpleContent>
-        <xs:extension base="dcc:exceptionRef">
-            <xs:attribute name="accrRef" type="xs:IDREFS" use="required"/>
-        </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType-->
 
     <xs:simpleType name="yesno">
         <xs:restriction base="xs:string">
