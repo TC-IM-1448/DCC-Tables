@@ -108,26 +108,28 @@ def add_name(element,lang="",text="",append=0):
         et.SubElement(name,DCC+'content').text=text
     return name
 
-def fill_address(element, name, eMail="", phone="", fax="", city="", country="", postCode="", street="", streetNo="", further=""):
+def fill_address(element, name, attPerson="",eMail="", phone="", fax="", city="", country="", postCode="", street="", streetNo="", further=""):
     add_name(element,text=name)
-    if eMail!="":
+    if attPerson!="" and type(attPerson)!=type(None):
+        et.SubElement(element, DCC+'attPerson').text=attPerson
+    if eMail!="" and type(eMail)!=type(None):
         et.SubElement(element, DCC+'eMail').text=eMail
-    if phone!="":
+    if phone!="" and type(phone)!=type(None):
         et.SubElement(element, DCC+'phone').text=phone
-    if fax!="":
+    if fax!="" and type(fax)!=type(None):
         et.SubElement(element, DCC+'fax').text=fax
     location=et.SubElement(element,DCC+'location')
-    if city!="":
+    if city!="" and type(city)!=type(None):
         et.SubElement(location, DCC+'city').text=city
-    if country!="":
+    if country!="" and type(country)!=type(None):
         et.SubElement(location, DCC+'country').text=country
-    if postCode!="":
+    if postCode!="" and type(postCode)!=type(None):
         et.SubElement(location, DCC+'postCode').text=postCode
-    if street!="":
+    if street!="" and type(street)!=type(None):
         et.SubElement(location, DCC+'street').text=street
-    if streetNo!="":
+    if streetNo!="" and type(streetNo)!=type(None):
         et.SubElement(location, DCC+'streetNo').text=streetNo
-    if further!="":
+    if further!="" and type(further)!=type(None):
         f=et.SubElement(location, DCC+'further')
         et.SubElement(f,DCC+'content').text=further
 
@@ -154,7 +156,7 @@ def add_identification(item_element,value,issuer, name_dk="",name_en=""):
     identification=et.Element(DCC+'identification')
     et.SubElement(identification,DCC+'issuer').text=issuer
     et.SubElement(identification,DCC+'value').text=value
-    add_name(identification,text=name_dk,append=1)
+    add_name(identification,text=name_dk,append=0)
     #add_name(identification,'en',name_en,append=1)
     item_element.find(DCC+'identifications').append(identification)
     return identification
@@ -193,11 +195,11 @@ def minimal_DCC():
     et.SubElement(coreData,DCC+'usedLangCodeISO639_1').text='en'
     et.SubElement(coreData,DCC+'mandatoryLangCodeISO639_1').text=LANG
     et.SubElement(coreData,DCC+'uniqueIdentifier')
-    et.SubElement(coreData,DCC+'identifications')
-    et.SubElement(coreData,DCC+'receiptDate')
-    et.SubElement(coreData,DCC+'beginPerformanceDate')
-    et.SubElement(coreData,DCC+'endPerformanceDate')
-    et.SubElement(coreData,DCC+'performanceLocation').text=performanceLocation
+    #et.SubElement(coreData,DCC+'identifications')
+    #et.SubElement(coreData,DCC+'receiptDate')
+    #et.SubElement(coreData,DCC+'beginPerformanceDate')
+    #et.SubElement(coreData,DCC+'endPerformanceDate')
+    #et.SubElement(coreData,DCC+'performanceLocation').text=performanceLocation
     ####################### items #############################
     et.SubElement(administrativeData,  DCC+'items')
     ###################### calibrationLaboratory ############
@@ -209,9 +211,9 @@ def minimal_DCC():
 
     ################## measurementResults ##########################
     measurementResults=et.SubElement(root,DCC+'measurementResults')
-    measurementResult=et.SubElement(measurementResults,DCC+'measurementResult')
-    results=et.SubElement(measurementResult,DCC+'results')
-    add_name(measurementResult,text='Measurement results')
+    #measurementResult=et.SubElement(measurementResults,DCC+'measurementResult')
+    #results=et.SubElement(measurementResult,DCC+'results')
+    #add_name(measurementResult,text='Measurement results')
     return root
 
 

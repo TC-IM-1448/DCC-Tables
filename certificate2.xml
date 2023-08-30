@@ -4,9 +4,9 @@
       <dcc:dccSoftware>
          <dcc:software>
             <dcc:name>
-               <dcc:content>DCCfunctions.py</dcc:content>
+               <dcc:content>DFM substituter</dcc:content>
             </dcc:name>
-            <dcc:release>0.0</dcc:release>
+            <dcc:release>v0.0.1</dcc:release>
          </dcc:software>
       </dcc:dccSoftware>
       <dcc:coreData>
@@ -14,53 +14,41 @@
          <dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
          <dcc:usedLangCodeISO639_1>en</dcc:usedLangCodeISO639_1>
          <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
-         <dcc:uniqueIdentifier>T2304</dcc:uniqueIdentifier>
-         <dcc:identifications>
-            <dcc:identification>
-               <dcc:issuer>calibrationLaboratory</dcc:issuer>
-               <dcc:value>NN42</dcc:value>
-               <dcc:name>
-                  <dcc:content>kundenr</dcc:content>
-               </dcc:name>
-            </dcc:identification>
-            <dcc:identification>
-               <dcc:issuer>customer</dcc:issuer>
-               <dcc:value>jpx2340988</dcc:value>
-               <dcc:name>
-                  <dcc:content>PO</dcc:content>
-               </dcc:name>
-            </dcc:identification>
-         </dcc:identifications>
-         <dcc:receiptDate>2022-08-13</dcc:receiptDate>
-         <dcc:beginPerformanceDate>2022-08-14</dcc:beginPerformanceDate>
-         <dcc:endPerformanceDate>2022-08-15</dcc:endPerformanceDate>
+         <dcc:uniqueIdentifier>DFM-T220000</dcc:uniqueIdentifier>
+         <dcc:customerIdentification>
+            <dcc:value>8000650430</dcc:value>
+         </dcc:customerIdentification>
+         <dcc:receiptDate>2022-02-18</dcc:receiptDate>
+         <dcc:beginPerformanceDate>2022-02-21</dcc:beginPerformanceDate>
+         <dcc:endPerformanceDate>2022-02-22</dcc:endPerformanceDate>
          <dcc:performanceLocation>laboratory</dcc:performanceLocation>
+         <dcc:issueDate>2022-02-23</dcc:issueDate>
       </dcc:coreData>
       <dcc:items>
-         <dcc:item itemId="item1">
+         <dcc:item itemId="itemID1">
             <dcc:name>
-               <dcc:content lang="en">Set of 7 weights</dcc:content>
+               <dcc:content lang="en">Temperature sensor</dcc:content>
             </dcc:name>
             <dcc:manufacturer>
                <dcc:name>
-                  <dcc:content>Mettler Toledo</dcc:content>
+                  <dcc:content>Amitek</dcc:content>
                </dcc:name>
             </dcc:manufacturer>
-            <dcc:model>Top weights</dcc:model>
+            <dcc:model>Platinum Super</dcc:model>
             <dcc:identifications>
                <dcc:identification>
-                  <dcc:issuer>customer</dcc:issuer>
-                  <dcc:value>weightset12</dcc:value>
                   <dcc:name>
                      <dcc:content>MålerID</dcc:content>
                   </dcc:name>
+                  <dcc:issuer>customer</dcc:issuer>
+                  <dcc:value>NN32</dcc:value>
                </dcc:identification>
                <dcc:identification>
-                  <dcc:issuer>manufacturer</dcc:issuer>
-                  <dcc:value>Mettler Toledo</dcc:value>
                   <dcc:name>
                      <dcc:content>Serienummer</dcc:content>
                   </dcc:name>
+                  <dcc:issuer>manufacturer</dcc:issuer>
+                  <dcc:value>Amitek</dcc:value>
                </dcc:identification>
             </dcc:identifications>
          </dcc:item>
@@ -68,14 +56,15 @@
       <dcc:calibrationLaboratory>
          <dcc:contact>
             <dcc:name>
-               <dcc:content>DFM</dcc:content>
+               <dcc:content>DFM A/S</dcc:content>
             </dcc:name>
-            <dcc:eMail>srk@dfm.dk</dcc:eMail>
-            <dcc:phone>+45 2545 9040</dcc:phone>
+            <dcc:eMail>Administration@dfm.dk</dcc:eMail>
+            <dcc:phone>+45 7730 5800</dcc:phone>
             <dcc:location>
                <dcc:city>Hørsholm</dcc:city>
+               <dcc:countryCode>DK</dcc:countryCode>
                <dcc:postCode>2970</dcc:postCode>
-               <dcc:street>Kogle Allé</dcc:street>
+               <dcc:street>Kogle Alle</dcc:street>
                <dcc:streetNo>5</dcc:streetNo>
                <dcc:further>
                   <dcc:content>www.dfm.dk</dcc:content>
@@ -85,36 +74,25 @@
       </dcc:calibrationLaboratory>
       <dcc:customer>
          <dcc:name>
-            <dcc:content>NN</dcc:content>
+            <dcc:content>Danish Measurement Company Ltd.</dcc:content>
          </dcc:name>
-         <dcc:eMail>pqrt@nn.com</dcc:eMail>
-         <dcc:phone>+45 6160 7019</dcc:phone>
+         <dcc:attPerson>Mads Målermand</dcc:attPerson>
+         <dcc:eMail>mm@dmc.dk</dcc:eMail>
          <dcc:location>
-            <dcc:city>Søborg</dcc:city>
-            <dcc:postCode>2860</dcc:postCode>
-            <dcc:street>Svanevej</dcc:street>
-            <dcc:streetNo>12</dcc:streetNo>
-            <dcc:further>
-               <dcc:content>kundenummer: 1234</dcc:content>
-            </dcc:further>
+            <dcc:city>Måløv</dcc:city>
+            <dcc:countryCode>DK</dcc:countryCode>
+            <dcc:postCode>9899</dcc:postCode>
+            <dcc:street>Målervej</dcc:street>
+            <dcc:streetNo>16, 1. sal</dcc:streetNo>
          </dcc:location>
       </dcc:customer>
       <dcc:respPersons>
          <dcc:respPerson>
             <dcc:person>
                <dcc:name>
-                  <dcc:content>Erling Målermand</dcc:content>
+                  <dcc:content>J. S. Nielsen</dcc:content>
                </dcc:name>
             </dcc:person>
-            <dcc:mainSigner>true</dcc:mainSigner>
-         </dcc:respPerson>
-         <dcc:respPerson>
-            <dcc:person>
-               <dcc:name>
-                  <dcc:content>Simon  Hansen</dcc:content>
-               </dcc:name>
-            </dcc:person>
-            <dcc:mainSigner>false</dcc:mainSigner>
          </dcc:respPerson>
       </dcc:respPersons>
       <dcc:accreditation accrId="accdfm">
@@ -123,85 +101,128 @@
          <dcc:accreditationCountry>DK</dcc:accreditationCountry>
          <dcc:accreditationApplicability>2</dcc:accreditationApplicability>
       </dcc:accreditation>
+      <dcc:statements>
+         <dcc:statement statementId="statement01">
+            <dcc:name>
+               <dcc:content lang="en">Moonphase</dcc:content>
+               <dcc:content lang="da">Månefase</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">Unless otherwise stated, the measurements were caried out at full moon. I.e. $M&gt;=0.95M_{max}$.</dcc:description>
+            <dcc:description lang="da">Med mindre andet er oplyst er alle målinger udført ved fuldmåne. Dvs: $M&gt;=0.95M_{max}$.</dcc:description>
+         </dcc:statement>
+         <dcc:statement statementId="statement02">
+            <dcc:name>
+               <dcc:content lang="en">Reprint</dcc:content>
+               <dcc:content lang="da">Gengivelse af rapport i uddrag</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcc:description>
+            <dcc:description lang="da"/>
+         </dcc:statement>
+         <dcc:statement statementId="statement03">
+            <dcc:name>
+               <dcc:content lang="en"/>
+               <dcc:content lang="da"/>
+            </dcc:name>
+            <dcc:description lang="en"/>
+            <dcc:description lang="da"/>
+         </dcc:statement>
+      </dcc:statements>
    </dcc:administrativeData>
    <dcc:measurementResults>
-      <dcc:measurementResult>
-         <dcc:name>
-            <dcc:content>Measurement results</dcc:content>
-         </dcc:name>
-         <dcc:results>
-            <dcc:table itemRef="item1" tableId="masscalib">
-               <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
-                  <dcc:name>
-                     <dcc:content lang="en"/>
-                  </dcc:name>
-                  <dcc:stringXMLList>1613WX-023 1613WX-024 1613WX-022 1613WX-019 1613WX-020 1613WX-017 1613WX-009</dcc:stringXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Value" measurand="Measure.Mass.True" scope="itemIndication">
-                  <dcc:name>
-                     <dcc:content lang="en">Nominal mass</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\kilo\gram</dcc:unit>
-                  <dcc:valueXMLList>20 20 5 1 1 0.1 0.0005</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Value" measurand="volume" scope="itemIndication">
-                  <dcc:name>
-                     <dcc:content lang="en">Volume at 20 deg in cubic cm</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\centi\metre\tothe{3}</dcc:unit>
-                  <dcc:valueXMLList>2515 2516 625 125 125 12.5 0.0625</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="ExpandedUncertainty" measurand="volume" scope="itemIndication">
-                  <dcc:name>
-                     <dcc:content lang="en">Expanded uncertainty of volume</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\centi\metre\tothe{3}</dcc:unit>
-                  <dcc:valueXMLList>44 44 2.3 0.47 0.47 0.047 0.00023</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Value" measurand="Measure.Mass.Conventional" scope="itemBias">
-                  <dcc:name>
-                     <dcc:content lang="en">Item indication error</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\mili\gram</dcc:unit>
-                  <dcc:valueXMLList>-210 -211 -7.4 -1.14 -2.42 -0.045 -0.0037</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Correction" measurand="Measure.Mass.Conventional" scope="itemBias">
-                  <dcc:name>
-                     <dcc:content lang="en">Conventional mass, Calibration uncertainty</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\mili\gram</dcc:unit>
-                  <dcc:valueXMLList>210 211 7.4 1.14 2.42 0.045 0.0037</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="ExpandedUncertainty" measurand="Measure.Mass.Conventional" scope="itemBias">
-                  <dcc:name>
-                     <dcc:content lang="en">Uncertainty</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\mili\gram</dcc:unit>
-                  <dcc:valueXMLList>3.1 3.1 0.7 0.05 0.05 0.01 0.0014</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="metaData" scope="dataInfo">
-                  <dcc:name>
-                     <dcc:content lang="en">k</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\one</dcc:unit>
-                  <dcc:valueXMLList>2 2 2 2 2 2 2</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Value" measurand="centreOfGravity" scope="itemIndication">
-                  <dcc:name>
-                     <dcc:content lang="en">Center of gravity (z) in mm</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\mm</dcc:unit>
-                  <dcc:valueXMLList>83 83 64 36.5 36.5 17.6 0.5</dcc:valueXMLList>
-               </dcc:column>
-               <dcc:column dataCategory="Value" measurand="massVolumeCorrelation" scope="itemIndication">
-                  <dcc:name>
-                     <dcc:content lang="en">Correlation between mass and volume</dcc:content>
-                  </dcc:name>
-                  <dcc:unit>\one</dcc:unit>
-                  <dcc:valueXMLList>0.9983 0.9983 0.971 0.996 0.9961 0.985 0.2</dcc:valueXMLList>
-               </dcc:column>
-            </dcc:table>
-         </dcc:results>
+      <dcc:measurementResult resId="result1">
+         <dcc:table itemRef="itemID1 itemID2" settingRef="setting01" tableId="TempCal">
+            <dcc:column dataCategory="customerTag" measurand="metaData" scope="dataInfo">
+               <dcc:name>
+                  <dcc:content lang="en">Customer Tags</dcc:content>
+               </dcc:name>
+               <dcc:unit>nan</dcc:unit>
+               <dcc:stringXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</dcc:stringXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="TargetValue" measurand="Measure.Temperature" scope="reference">
+               <dcc:name>
+                  <dcc:content lang="en">Calibration Point</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0 15 25 15 0</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="reference">
+               <dcc:name>
+                  <dcc:content lang="en">Reference Temperature</dcc:content>
+               </dcc:name>
+               <dcc:unit>\kelvin</dcc:unit>
+               <dcc:valueXMLList>273.16 288.16 298.17 288.16 273.16</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="reference">
+               <dcc:name>
+                  <dcc:content lang="en">Reference Temperature in instrument units</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0.01 15.01 25.02 15.01 0.01</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="itemIndication">
+               <dcc:name>
+                  <dcc:content lang="en">Instrument indication  </dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>-0.1 15.1 25.2 15.3 0</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Instrument Error</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>-0.1 0.1 0.2 0.3 0</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="ExpandedUncertainty" measurand="Measure.Temperature" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Uncertainty</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0.05 0.05 0.05 0.05 0.05</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="Measure.Temperature" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">k</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>2 2 2 2 2</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="AcceptanceLimitUpper" measurand="Measure.Temperature" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Upper acceptance limit for item bias</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0.2 0.2 0.2 0.2 0.2</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Conformity" measurand="Measure.Temperature" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Conformaty statement</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:conformityXMLList>pass pass pass fail pass</dcc:conformityXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="repeatability" measurand="Measure.Resistance" scope="itemIndication">
+               <dcc:name>
+                  <dcc:content lang="en">Indicated resistance of the calibration item</dcc:content>
+               </dcc:name>
+               <dcc:unit>\ohm</dcc:unit>
+               <dcc:valueXMLList>1 2 3 4 5</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="accreditationApplies" measurand="metaData" scope="dataInfo">
+               <dcc:name>
+                  <dcc:content lang="en">Accreditation applies</dcc:content>
+               </dcc:name>
+               <dcc:unit>nan</dcc:unit>
+               <dcc:accreditationAppliesXMLList accrRef="accdfm">y y n y y</dcc:accreditationAppliesXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Exception" measurand="metaData" scope="dataInfo">
+               <dcc:name>
+                  <dcc:content lang="en">Exception applies</dcc:content>
+               </dcc:name>
+               <dcc:unit>nan</dcc:unit>
+               <dcc:exceptionXMLList>e03 n n e01 e02</dcc:exceptionXMLList>
+            </dcc:column>
+         </dcc:table>
       </dcc:measurementResult>
    </dcc:measurementResults>
 </dcc:digitalCalibrationCertificate>

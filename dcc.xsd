@@ -254,7 +254,7 @@
             <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
             <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
             <xs:element name="uniqueIdentifier" type="dcc:notEmptyStringType"/>
-            <xs:element name="identifications" type="dcc:identificationListType" minOccurs="0"/>
+            <xs:element name="customerIdentification" type="dcc:identificationType" minOccurs="0"/>
             <xs:element name="receiptDate" type="xs:date" minOccurs="0"/>
             <xs:element name="beginPerformanceDate" type="xs:date"/>
             <xs:element name="endPerformanceDate" type="xs:date"/>
@@ -352,7 +352,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="issuer">
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="issuer" minOccurs="0">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="manufacturer"/>
@@ -364,7 +365,6 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="value" type="dcc:notEmptyStringType"/>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
@@ -447,8 +447,25 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="statement" type="dcc:statementMetaDataType" maxOccurs="unbounded"/>
+            <xs:element name="statement" type="dcc:statementType" maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="statementType">
+        <xs:sequence>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="convention" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="norm" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="reference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="declaration" type="dcc:richContentType" minOccurs="0"/>
+		</xs:sequence>
+        <xs:attribute name="statementId" type="xs:ID" use="optional"/>
+        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="measurementResultListType">
@@ -458,7 +475,13 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded"/>
+            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded">
+            <xs:unique name="table">
+                <xs:selector xpath="dcc:table"/>
+                <xs:field xpath="@itemRef"/>
+                <xs:field xpath="@settingRef"/>
+            </xs:unique>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
@@ -470,16 +493,25 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="usedMethods" type="dcc:usedMethodListType" minOccurs="0"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
             <xs:element name="measuringEquipments" type="dcc:measuringEquipmentListType" minOccurs="0"/>
             <xs:element name="influenceConditions" type="dcc:influenceConditionListType" minOccurs="0"/>
-            <xs:element name="results" type="dcc:resultListType"/>
+            <xs:element name="results" type="dcc:resultListType" minOccurs="0"/>
             <xs:element name="measurementMetaData" type="dcc:measurementMetaDataListType" minOccurs="0"/>
+            <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <xs:unique name="column">
+                <xs:selector xpath="dcc:column"/>
+                <xs:field xpath="@scope"/>
+                <xs:field xpath="@dataCategory"/>
+                <xs:field xpath="@measurand"/>
+                <xs:field xpath="dcc:unit"/>
+            </xs:unique>
+            </xs:element>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="resId" type="xs:ID" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
@@ -556,7 +588,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <!--xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="column">
                 <xs:selector xpath="dcc:column"/>
                 <xs:field xpath="@scope"/>
@@ -564,7 +596,7 @@
                 <xs:field xpath="@measurand"/>
                 <xs:field xpath="dcc:unit"/>
             </xs:unique>
-            </xs:element>
+            </xs:element-->
             <xs:element name="result" type="dcc:resultType" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
@@ -705,6 +737,7 @@
             <xs:element name="accreditationCountry" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
+            <xs:element name="accreditationException" minOccurs="0" type="xs:ID"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -851,6 +884,7 @@
     <xs:complexType name="contactType">
         <xs:sequence>
             <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="attPerson" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="fax" type="dcc:notEmptyStringType" minOccurs="0"/>
@@ -970,8 +1004,6 @@
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
-
-
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
@@ -987,6 +1019,7 @@
                 <xs:element name="conformityXMLList" type="dcc:stringConformityStatementStatusXMLListType"/>
                 <xs:element name="stringXMLList" type="si:stringXMLListType"/>
                 <xs:element name="accreditationAppliesXMLList" type="dcc:accreditationAppliesXMLListType"/>
+                <xs:element name="exceptionXMLList" type="xs:IDREFS"/>
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
@@ -1039,6 +1072,7 @@
                 <xs:enumeration value="Correction" /> 
                 <xs:enumeration value="accreditationApplies" /> 
                 <xs:enumeration value="customerTag" /> 
+                <xs:enumeration value="Exception" /> 
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
@@ -1232,6 +1266,7 @@
         </xs:sequence>
         <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="tableId" type="xs:ID" use="optional"/>
     </xs:complexType>
 

@@ -1,20 +1,50 @@
-import os
-import sys
-import shutil
 import openpyxl as pyxl
 import xml.etree.ElementTree as et
 from xml.dom import minidom
-#import pydcc_tables as pydcc
-#from pydcc_tables import DccTableColumn, DccTabel
-# from pydcc_tables import DccTabel, DccTableColumn
-
-from DCChelpfunctions import DccTableColumn, DccTabel
 import DCChelpfunctions as DCCh
+#Used from DCChelpfunctions :
+#item, add_name, add_identification, minimal, validate, DCC_tablecolumn, 
 
-def read_item_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Items"):
-    wb = pyxl.load_workbook(workbookName, data_only=True)
+DCC='{https://ptb.de/dcc}'
+et.register_namespace("dcc", DCC.strip('{}'))
+LANG='en'
 
-    ws = wb[sheetName]
+def read_statements_from_Excel(root, ws):
+    linetypes=ws['A']
+    columntypes=ws['1']
+    statements=[]
+    lineno=0
+    for linetype in linetypes:
+        lineno+=1
+        if linetype.value=="statement":
+           statement={}
+           for (name, content) in zip(columntypes, ws[lineno]):
+               statement[name.value]=content.value
+           statements.append(statement)
+    adm=root.find(DCC+"administrativeData")
+    statementselement=et.SubElement(adm,DCC+"statements")
+    for statement in statements:
+        statementelement=et.SubElement(statementselement,DCC+"statement", attrib={'statementId':statement['id']})
+        et.SubElement(statementelement, DCC+"description", attrib={'lang':'en'}).text=statement['description']
+        et.SubElement(statementelement, DCC+"description", attrib={'lang':'da'}).text=statement['description da']
+        DCCh.add_name(statementelement,lang="en",text=statement['name en'])
+        DCCh.add_name(statementelement,lang="da",text=statement['name da'])
+
+    return root
+
+def read_item_from_Excel(root, ws):
+    """
+    Parameters
+    ----------
+    root : etree element
+    ws : openpyxl worksheet object
+        DESCRIPTION.
+
+    Returns
+    root element updated with items section
+    -------
+    None.
+    """
     item={}
     item['id']=ws['A2'].value
     item['custromerId']=ws['B2'].value
@@ -25,114 +55,13 @@ def read_item_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Items
     item['productName']=ws['G2'].value
     item['productNumber']=ws['E2'].value
     item['serialNumber']=ws['F2'].value
-    return item
-    
-def read_tables_from_Excel(workbookName="DCC-Table_example3.xlsx",sheetName="Table2"):
-    """ Function that finds all the tables in a given sheet """
 
-    wb = pyxl.load_workbook(workbookName, data_only=True)
-
-    ws = wb[sheetName]
-
-
-    columns = []
-
-    tableID = ws["B2"].value
-    itemID = ws["B3"].value
-    settingID = ws["B4"].value
-    numRows = ws["B5"].value
-    numColumns = ws["B6"].value
-
-    nRows = int(numRows)+5
-    nCols = int(numColumns)
-
-    cell = ws["B7"]
-
-    content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
-    # content = transpose_2d_list(content)
-
-    for c in content:
-        col = DccTableColumn(   scopeType=c[0],
-                                columnType=c[1],
-                                measurandType=c[2],
-                                unit=c[3],
-                                humanHeading = c[4],
-                                columnData= list(map(str, c[5:])))
-        columns.append(col)
-
-    tbl = DccTabel(tableID, itemID, numRows, numColumns, columns)
-    wb.close()
-    return tbl
-#from docx import Document
-
-colAttrDefs = ("scopeType", "columnType", "measurandType", "unit", "humanHeading")
-tblAttrDefs =("tableID", "itemID", "numRows", "numColumns")
-
-#################### Make a minimal DCC and fill in the administrative data ##############################
-DCC='{https://ptb.de/dcc}'
-SI='{https://ptb.de/si}'
-et.register_namespace("si", SI.strip('{}'))
-et.register_namespace("dcc", DCC.strip('{}'))
-LANG='en'
-
-def add_administrative_data(root,inputItem):
-    """
-    Temporary function for adding administrative data
-
-    Parameters
-    ----------
-    root : etree element
-        DESCRIPTION.
-
-    Returns
-    -------
-    None.
-
-    """
-    administrativeData=root.find(DCC+'administrativeData')
-    coreData=administrativeData.find(DCC+'coreData')
-    coreData.find(DCC+'uniqueIdentifier').text='T2304'
-    DCCh.add_identification(coreData,value="NN42",issuer='calibrationLaboratory', name_dk="kundenr",name_en="customer ID")
-    DCCh.add_identification(coreData,value="jpx2340988",issuer="customer",name_dk="PO",name_en="PO")
-    coreData.find(DCC+'receiptDate').text="2022-08-13"
-    coreData.find(DCC+'beginPerformanceDate').text="2022-08-14"
-    coreData.find(DCC+'endPerformanceDate').text="2022-08-15"
-
-    lab=administrativeData.find(DCC+'calibrationLaboratory')
-    contact=et.SubElement(lab, DCC+'contact')
-    DCCh.fill_address(contact,name="DFM", eMail="srk@dfm.dk", phone="+45 2545 9040", city="Hørsholm",  postCode="2970", street="Kogle Allé", streetNo="5", further="www.dfm.dk")
-
-    respPersons=administrativeData.find(DCC+'respPersons')
-    DCCh.add_respPerson(respPersons,name="Erling Målermand", mainSigner=True)
-    DCCh.add_respPerson(respPersons,name="Simon  Hansen", mainSigner=False)
-
-    customer=administrativeData.find(DCC+'customer')
-    DCCh.fill_address(customer,name="NN", eMail="pqrt@nn.com", phone="+45 6160 7019", city="Søborg", postCode="2860", street="Svanevej", streetNo="12", further="kundenummer: 1234")
-
-    accreditation=et.SubElement(administrativeData,DCC+'accreditation', attrib={'accrId':'accdfm'})
-    et.SubElement(accreditation,DCC+'accreditationLabId').text="255"
-    et.SubElement(accreditation,DCC+'accreditationBody').text="DANAK"
-    et.SubElement(accreditation,DCC+'accreditationCountry').text="DK"
-    et.SubElement(accreditation,DCC+'accreditationApplicability').text="2"
-
-
-    ################ User input for item ##########################
-    """
-    ItemID="itemID1"
-    Manufacturer='Amitek'
-    Model='Platinum Super'
-    customerID="NN66"
-    SerialNo="2341-LKJQ-1324LKLJJAAFLKK33"
-    Description='Temperature sensor'
-    """
-
-
-    ItemID=inputItem['id']
-    Manufacturer=inputItem['manufacturer']
-    Model=inputItem['productName']
-    customerID=inputItem['custromerId']
-    SerialNo=inputItem['serialNumber']
-    Description=inputItem['description']
+    ItemID=item['id']
+    Manufacturer=item['manufacturer']
+    Model=item['productName']
+    customerID=item['custromerId']
+    SerialNo=item['serialNumber']
+    Description=item['description']
     #item['equipmentClass']=ws['C2']
     #item['swRef']=ws['E2']
     #item['productNumber']=ws['E2']
@@ -146,14 +75,73 @@ def add_administrative_data(root,inputItem):
     Items=root[0][2]
     Items.append(item)
     return root
-    ######################### END of administrative data ####################################################
 
-def insertTable2Xml(root, tab1):
+def read_admin_from_Excel(root, ws):
+    DFM_names=ws['B']
+    values=ws['C']
+    xpaths=ws['D']
+    for i, path in enumerate(xpaths):
+        try:
+            levels=path.value.split("/dcc:")[2:]
+        except:
+            levels=[]
+        element=root
+        for level in levels:
+            subelement=element.find(DCC+level)
+            if type(subelement)!=type(None):
+                element=subelement
+            else:
+                element=et.SubElement(element,DCC+level)
+        element.text=values[i].value
+
+    administrativeData=root.find(DCC+'administrativeData')
+    accreditation=et.SubElement(administrativeData,DCC+'accreditation', attrib={'accrId':'accdfm'})
+    et.SubElement(accreditation,DCC+'accreditationLabId').text="255"
+    et.SubElement(accreditation,DCC+'accreditationBody').text="DANAK"
+    et.SubElement(accreditation,DCC+'accreditationCountry').text="DK"
+    et.SubElement(accreditation,DCC+'accreditationApplicability').text="2"
+
+    return root
+
+def read_tables_from_Excel(root, ws):
+    return 0
+
+def read_table_from_Excel(root, ws):
+
+    """ TODO: Add function that finds all the tables in a given sheet """
+
+    columns = []
+    attrib={}
+    attribnames=ws['A'][1:5]
+    attribvalues=ws['B'][1:5]
+    for (name, value) in zip(attribnames,attribvalues):
+        if type(name.value) != type(None) and type(value.value) != type(None):
+            attrib[name.value]=value.value
+    statementRef = ws["B5"].value
+    numRows = ws["B7"].value
+    numColumns = ws["B8"].value
+
+    nRows = int(numRows)+5
+    nCols = int(numColumns)
+
+    cell = ws["B9"]
+
+    content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
+
+    for c in content:
+        col = DCCh.DccTableColumn(   scopeType=c[0],
+                                columnType=c[1],
+                                measurandType=c[2],
+                                unit=c[3],
+                                humanHeading = c[4],
+                                columnData= list(map(str, c[5:])))
+        columns.append(col)
+
     #Create empty table with table attributes
-    xmltable1=et.Element(DCC+"table",attrib={'itemRef':tab1.itemID,'tableId':tab1.tableID})
+    xmltable1=et.Element(DCC+"table",attrib=attrib)
 
     #Fill the table with data from table object
-    columns=tab1.columns
+    columns=columns
     for col in columns:
         attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType}
         xmlcol=et.Element(DCC+'column',attrib=attributes)
@@ -165,17 +153,18 @@ def insertTable2Xml(root, tab1):
             et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
         elif attributes['dataCategory']=='customerTag':
             et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
+        elif attributes['dataCategory']=='Exception':
+            et.SubElement(xmlcol,DCC+"exceptionXMLList").text=' '.join(col.columnData)
         elif attributes['dataCategory']=='accreditationApplies':
             et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
         else:
             et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
         xmltable1.append(xmlcol)
+    measurementResults=root.find(DCC+"measurementResults")
+    measurementResult=et.SubElement(measurementResults,DCC+'measurementResult', attrib={'resId':'result1'})
+    measurementResult.append(xmltable1)
 
-    #Append table to results section of the xml
-    xmlresults=root[1][0][1]
-    xmlresults.append(xmltable1)
-
-    ################# END add calibration data #####################################
+    return root
 
 
 def printelement(element):
@@ -186,30 +175,27 @@ def printelement(element):
 if __name__ == "__main__":
     from importlib import reload
     reload(DCCh)
-    examplefile="DCC-Table_example3.xlsx"
-    examplefile="DCC-mass_example.xlsx"
 
-    root=DCCh.minimal_DCC()
-    inputItem=read_item_from_Excel(workbookName=examplefile,sheetName="Items")
-    root = add_administrative_data(root, inputItem)
-    ######################### Add table with calibration data to the xml ##########################
-    tbl = read_tables_from_Excel(workbookName=examplefile,sheetName="Table2")
+    workbookName="DCC-Table_example3.xlsx"
+    outputxml   ="certificate2.xml"
+    schema      ="dcc.xsd"
 
-    print(inputItem)
-    insertTable2Xml(root,tbl)
+    #load workbook
+    wb = pyxl.load_workbook(workbookName, data_only=True)
+    #Create root element with minimal content
+    root = DCCh.minimal_DCC()
 
-    #Print the tbl and column 5
-    columns = tbl.columns
-    columns[5].print()
-    for i in range(tbl.numColumns):
-        print(columns[i].columnData)
+    #Update root element with content from worksheets in the workbook
+    root = read_item_from_Excel(      root, ws=wb["Items"])
+    root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
+    root = read_statements_from_Excel(root, ws=wb["Statements"])
+    root = read_table_from_Excel(    root, ws=wb["Table2"])
+    wb.close()
 
     ############### Output to xml-file ####################################
-
-    #FIXME: with the namespace reprecentation ns:elementname the printelement function does not work
     xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
     with open('certificate2.xml','wb') as f:
         f.write(xmlstr.encode('utf-8'))
-    ############### END Output to xml-file ####################################
 
-    print(DCCh.validate("certificate2.xml", "dcc.xsd"))
+    #Validate the ouptut file against the schema and output the result.
+    print(DCCh.validate(outputxml, schema))
