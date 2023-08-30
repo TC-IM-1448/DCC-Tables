@@ -100,10 +100,10 @@ def lookupFromLookupListInFile(filename:str, dccFile:str):
 
 if __name__=="__main__":
      #Sample userinput:
-    xmlFile='mass_certificate.xml'
-    tableAttrib={'itemId': 'item_ID1', 'refId': 'NN_temperature1'}
-    columnAttrib={'dataCategory': 'Value', 'measurand': 'massConventional', 'scope': 'itemBias'}
-    columnUnit="\mili\gram"
+    xmlFile='certificate2.xml'
+    tableAttrib={'itemId': 'itemID1', 'tableID': 'TempCal'}
+    columnAttrib={'dataCategory': 'Value', 'measurand': 'Measure.Temperature', 'scope': 'reference'}
+    columnUnit="\\kelvin"
 
     #Lookup functions
     massTable=getTableFromXML(xmlfile=xmlFile,searchattributes=tableAttrib)
