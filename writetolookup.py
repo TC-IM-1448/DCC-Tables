@@ -4,7 +4,7 @@ import lookupFunktions as lookup
 """Open an active excel sheet"""
 ExApp=win32com.client.GetActiveObject("Excel.Application")
 ExApp.Visible="True"
-wb=ExApp.Workbooks.Open("DCC-lookup5.xlsm")
+wb=ExApp.Workbooks.Open("DCC-lookup5c.xlsm")
 
 """Get serch criteria from sheet"""
 xmlfile=ExApp.Range("B1").Value
