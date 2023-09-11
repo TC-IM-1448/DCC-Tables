@@ -3,7 +3,7 @@ import xml.etree.ElementTree as et
 from xml.dom import minidom
 import DCChelpfunctions as DCCh
 #Used from DCChelpfunctions :
-#item, add_name, add_identification, minimal, validate, DCC_tablecolumn, 
+#item, add_name, add_identification, minimal, validate, DCC_tablecolumn,
 
 DCC='{https://ptb.de/dcc}'
 et.register_namespace("dcc", DCC.strip('{}'))
@@ -202,8 +202,8 @@ if __name__ == "__main__":
     from importlib import reload
     reload(DCCh)
 
-    workbookName="DCC-Table_example3.xlsx"
-    outputxml   ="certificate3.xml"
+    workbookName="CalLab-DCC-writer.xlsx"
+    # outputxml   ="certificate3.xml"
     schema      ="dcc.xsd"
 
     #load workbook
@@ -220,6 +220,7 @@ if __name__ == "__main__":
     wb.close()
 
     ############### Output to xml-file ####################################
+    outputxml = root.find(DCC+"administrativeData").find(DCC+"coreData").find(DCC+"uniqueIdentifier").text+".xml"
     xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
     with open(outputxml,'wb') as f:
         f.write(xmlstr.encode('utf-8'))
