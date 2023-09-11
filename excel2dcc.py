@@ -32,6 +32,33 @@ def read_statements_from_Excel(root, ws):
 
     return root
 
+def read_settings_from_Excel(root, ws):
+    linetypes=ws['A']
+    columntypes=ws['1']
+    settings=[]
+    lineno=0
+    for linetype in linetypes:
+        lineno+=1
+        if linetype.value=="setting":
+           setting={}
+           for (name, content) in zip(columntypes, ws[lineno]):
+               setting[name.value]=content.value
+           settings.append(setting)
+    adm=root.find(DCC+"administrativeData")
+    settingselement=et.SubElement(adm,DCC+"settings")
+    for setting in settings:
+        settingelement=et.SubElement(settingselement,DCC+"setting", attrib={'settingId':setting['id']})
+        et.SubElement(settingelement, DCC+"description", attrib={'lang':'en'}).text=setting['description']
+        et.SubElement(settingelement, DCC+"description", attrib={'lang':'da'}).text=setting['description da']
+        DCCh.add_name(settingelement,lang="en",text=setting['name en'])
+        DCCh.add_name(settingelement,lang="da",text=setting['name da'])
+        if type(setting['value'])!=type(None):
+           et.SubElement(settingelement, DCC+"value").text=str(setting['value'])
+        if type(setting['unit'])!=type(None):
+           et.SubElement(settingelement, DCC+"unit").text=setting['unit']
+
+    return root
+
 def read_item_from_Excel(root, ws):
     """
     Parameters
@@ -123,7 +150,6 @@ def read_table_from_Excel(root, ws):
 
     nRows = int(numRows)+5
     nCols = int(numColumns)
-
     cell = ws["B9"]
 
     content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
@@ -177,7 +203,7 @@ if __name__ == "__main__":
     reload(DCCh)
 
     workbookName="DCC-Table_example3.xlsx"
-    outputxml   ="certificate2.xml"
+    outputxml   ="certificate3.xml"
     schema      ="dcc.xsd"
 
     #load workbook
@@ -189,12 +215,13 @@ if __name__ == "__main__":
     root = read_item_from_Excel(      root, ws=wb["Items"])
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
+    root = read_settings_from_Excel(root, ws=wb["Settings"])
     root = read_table_from_Excel(    root, ws=wb["Table2"])
     wb.close()
 
     ############### Output to xml-file ####################################
     xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
-    with open('certificate2.xml','wb') as f:
+    with open(outputxml,'wb') as f:
         f.write(xmlstr.encode('utf-8'))
 
     #Validate the ouptut file against the schema and output the result.

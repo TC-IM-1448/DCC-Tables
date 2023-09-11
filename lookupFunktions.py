@@ -40,7 +40,7 @@ def getTableFromResult(result, itemRef="", settingRef=""):
            count+=1
 
    if count==0:
-       raise ValueError('Warning: DCC contains no tables with the required Id.')
+       raise ValueError('Warning: DCC contains no tables with the required combination of setting and item Ids.')
    if count>1:
        raise ValueError('Warning: DCC contains ' + str(count) + ' tables with the required Id.\n Returning only the first instance')
    return xmltable
