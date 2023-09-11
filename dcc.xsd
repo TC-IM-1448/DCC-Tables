@@ -94,6 +94,7 @@
             <xs:element name="refTypeDefinitions" type="dcc:refTypeDefinitionListType" minOccurs="0"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
             <xs:element name="items" type="dcc:itemListType"/>
+            <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
             <xs:element name="calibrationLaboratory" type="dcc:calibrationLaboratoryType"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
             <xs:element name="customer" type="dcc:contactType"/>
@@ -440,6 +441,32 @@
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
+
+    <xs:complexType name="settingListType">
+        <xs:annotation>
+            <xs:documentation>
+                List of settings attached to a DCC.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="setting" type="dcc:settingType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="settingType">
+        <xs:sequence>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
+                        maxOccurs="unbounded"/>
+            <xs:element name="value" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="unit" type="dcc:notEmptyStringType" minOccurs="0"/>
+	</xs:sequence>
+        <xs:attribute name="settingId" type="xs:ID" use="optional"/>
+        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
+    </xs:complexType>
+
     <xs:complexType name="statementListType">
         <xs:annotation>
             <xs:documentation>
@@ -499,8 +526,6 @@
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
             <xs:element name="measuringEquipments" type="dcc:measuringEquipmentListType" minOccurs="0"/>
             <xs:element name="influenceConditions" type="dcc:influenceConditionListType" minOccurs="0"/>
-            <xs:element name="results" type="dcc:resultListType" minOccurs="0"/>
-            <xs:element name="measurementMetaData" type="dcc:measurementMetaDataListType" minOccurs="0"/>
             <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="column">
                 <xs:selector xpath="dcc:column"/>
