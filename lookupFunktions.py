@@ -20,12 +20,12 @@ def getResultFromRoot(root, resId):
     #resId: attribute value as string 
     #Returns: xml-result element
     for result in root.find(DCC+'measurementResults'):
-        if result.attrib['resId']==resId:
+        #if result.attrib['resId']==resId:
             return result
     raise ValueError("No result found with the required id")
     return None
 
-def getTableFromResult(result, itemRef="", settingRef=""):
+def getTableFromResult(result, tableAttrib):
    #INPUT xml-result element 
    #INPUT itemId and settingId list of strings
    #OUTPUT xml-element of type dcc:table
@@ -34,11 +34,13 @@ def getTableFromResult(result, itemRef="", settingRef=""):
    count=0
    #Search all measurement results for a table with the required attributes
    searchResults=result.findall(DCC+"table")
+   print('hej')
    for table in searchResults:
-       if all(Id in table.attrib['itemRef'] for Id in itemRef.split()) and all(Id in table.attrib['settingRef'] for Id in settingRef.split()) and count==0:
+       if all(Id in table.attrib['itemRef'] for Id in tableAttrib['itemRef'].split()) and all(Id in table.attrib['settingRef'] for Id in tableAttrib['settingRef'].split()) and table.attrib['tableId']==tableAttrib['tableId'] and count==0:
            xmltable=table
            count+=1
 
+   print('hej2')
    if count==0:
        raise ValueError('Warning: DCC contains no tables with the required combination of setting and item Ids.')
    if count>1:
@@ -81,6 +83,50 @@ def getRowFromColumn(column, table, customerTag):
     else: 
        raise Exception("The requested customer tag was not found")
     return searchValue
+
+def search(root, tableAttrib, colAttrib, unit, customerTag=None):
+   """
+   INPUT: 
+   root: etree root element 
+   tableAttributes itemRef, settingRef and tableId as dictionary of string values
+   coAttributes scope, dataCategory and measurand  as dictionary of string values
+   unit as string
+   customerTag (optional)  as string
+   OUTPUT:
+   search result as string (or list of strings if customerTag is not specified)
+   warnings as strings 
+   """
+
+   searchValue="-"
+   warning="-"
+   usertagwarning="-"
+   colwarning="-"
+
+       try:
+           """Find the right result using resId"""
+           res=getResultFromRoot(root, resId="")
+           try:
+               """Find the right table using itemRef and settingRef"""
+               tab=getTableFromResult(res, tableAttrib)
+               try:
+                   """Find the rigt column using attributes and unit"""
+                   col=getColumnFromTable(tab,colAttrib,unit)
+                   try:
+                       if type(customerTag)!=type(None):
+                          searchValue=lookup.getRowFromColumn(col,tab,customerTag)
+                       else:
+                           searchValue=col[2].text.split()
+                   except Exception as e:
+                       usertagwarning=e.args[0]
+               except Exception as e:
+                   colwarning=e.args[0]
+           except Exception as e:
+               warning=e.args[0]
+       except Exception as e:
+           warning=e.args[0]
+
+   return [searchValue, usertagwarning, colwarning, warning]
+
 
 def printelement(element):
     #INPUT xml-element

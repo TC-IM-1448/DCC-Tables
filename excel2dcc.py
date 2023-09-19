@@ -9,19 +9,29 @@ DCC='{https://ptb.de/dcc}'
 et.register_namespace("dcc", DCC.strip('{}'))
 LANG='en'
 
+def dictionaries_from_table(ws, rowtype):
+    """
+    Input: openpyxl worksheet object with column headers and row headers.
+    Input: rowheader to look for (string)
+    for each row of the given type make a dictionary with keys defined by the column headings and values defined in the cells of that row.
+    Return the dictionaries as a list
+    """
+    columnheaders=ws['1']
+    rowheaders=ws['A']
+    dictionaries=[]
+    rowno=0
+    for rowheader in rowheaders:
+        rowno+=1
+        if rowheader.value==rowtype:
+            dictionary={}
+            for (name, content) in zip(columnheaders, ws[rowno]):
+                dictionary[name.value]=content.value
+            dictionaries.append(dictionary)
+    return(dictionaries)
+
 def read_statements_from_Excel(root, ws):
-    linetypes=ws['A']
-    columntypes=ws['1']
-    statements=[]
-    lineno=0
-    for linetype in linetypes:
-        lineno+=1
-        if linetype.value=="statement":
-           statement={}
-           for (name, content) in zip(columntypes, ws[lineno]):
-               statement[name.value]=content.value
-           statements.append(statement)
     adm=root.find(DCC+"administrativeData")
+    statements=dictionaries_from_table(ws,'statement')
     statementselement=et.SubElement(adm,DCC+"statements")
     for statement in statements:
         statementelement=et.SubElement(statementselement,DCC+"statement", attrib={'statementId':statement['id']})
@@ -29,21 +39,10 @@ def read_statements_from_Excel(root, ws):
         et.SubElement(statementelement, DCC+"description", attrib={'lang':'da'}).text=statement['description da']
         DCCh.add_name(statementelement,lang="en",text=statement['name en'])
         DCCh.add_name(statementelement,lang="da",text=statement['name da'])
-
     return root
 
 def read_settings_from_Excel(root, ws):
-    linetypes=ws['A']
-    columntypes=ws['1']
-    settings=[]
-    lineno=0
-    for linetype in linetypes:
-        lineno+=1
-        if linetype.value=="setting":
-           setting={}
-           for (name, content) in zip(columntypes, ws[lineno]):
-               setting[name.value]=content.value
-           settings.append(setting)
+    settings=dictionaries_from_table(ws,'setting')
     adm=root.find(DCC+"administrativeData")
     settingselement=et.SubElement(adm,DCC+"settings")
     for setting in settings:
@@ -56,7 +55,6 @@ def read_settings_from_Excel(root, ws):
            et.SubElement(settingelement, DCC+"value").text=str(setting['value'])
         if type(setting['unit'])!=type(None):
            et.SubElement(settingelement, DCC+"unit").text=setting['unit']
-
     return root
 
 def read_item_from_Excel(root, ws):
@@ -72,35 +70,16 @@ def read_item_from_Excel(root, ws):
     -------
     None.
     """
-    item={}
-    item['id']=ws['A2'].value
-    item['custromerId']=ws['B2'].value
-    item['equipmentClass']=ws['C2'].value
-    item['description']=ws['D2'].value
-    item['swRef']=ws['E2'].value
-    item['manufacturer']=ws['F2'].value
-    item['productName']=ws['G2'].value
-    item['productNumber']=ws['E2'].value
-    item['serialNumber']=ws['F2'].value
-
-    ItemID=item['id']
-    Manufacturer=item['manufacturer']
-    Model=item['productName']
-    customerID=item['custromerId']
-    SerialNo=item['serialNumber']
-    Description=item['description']
-    #item['equipmentClass']=ws['C2']
-    #item['swRef']=ws['E2']
-    #item['productNumber']=ws['E2']
+    items=dictionaries_from_table(ws,'item')
 
     #Make an item XML-element
-    item=DCCh.item(ID=ItemID, manufacturer=Manufacturer,model=Model)
-    DCCh.add_name(item, 'en', Description)
-    DCCh.add_identification(item,customerID,issuer='customer', name_dk="MålerID", name_en="SensorID")
-    DCCh.add_identification(item,SerialNo,issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
-
-    Items=root[0][2]
-    Items.append(item)
+    Itemslist=root[0][2]
+    for item in items:
+       itemelement=DCCh.item(ID=item['id'], manufacturer=item['manufacturer'],model=item['productName'])
+       DCCh.add_name(itemelement, 'en', item['description'])
+       DCCh.add_identification(itemelement,item['customerId'],issuer='customer', name_dk="MålerID", name_en="SensorID")
+       DCCh.add_identification(itemelement,item['serialNumber'],issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
+       Itemslist.append(itemelement)
     return root
 
 def read_admin_from_Excel(root, ws):

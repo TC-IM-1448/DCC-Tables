@@ -19,6 +19,9 @@ def validate(xml_path: str, xsd_path: str) -> bool:
 
     return xmlschema.error_log.filter_from_errors()
 
+
+
+
 if __name__ == "__main__":
     validate( "certificate2.xml", "dcc.xsd")
 #    if not sys.argv[0] == "":
