@@ -112,24 +112,24 @@ def read_admin_from_Excel(root, ws):
 def read_tables_from_Excel(root, ws):
     return 0
 
-def read_table_from_Excel(root, ws):
+def read_table_from_Excel(root, ws, cell0):
 
     """ TODO: Add function that finds all the tables in a given sheet """
 
     columns = []
     attrib={}
-    attribnames=ws['A'][1:5]
-    attribvalues=ws['B'][1:5]
+
+    attribnames=[cell0.offset(r,0) for r in range(1,5)]
+    attribvalues=[cell0.offset(r,1) for r in range(1,5)]
     for (name, value) in zip(attribnames,attribvalues):
         if type(name.value) != type(None) and type(value.value) != type(None):
             attrib[name.value]=value.value
-    statementRef = ws["B5"].value
-    numRows = ws["B7"].value
-    numColumns = ws["B8"].value
+    numRows = cell0.offset(6,1).value
+    numColumns = cell0.offset(7,1).value
 
     nRows = int(numRows)+5
     nCols = int(numColumns)
-    cell = ws["B9"]
+    cell = cell0.offset(8,1)
 
     content = [[cell.offset(r,c).value for r in range(nRows)] for c in range(nCols)]
 
@@ -190,12 +190,16 @@ if __name__ == "__main__":
     #Create root element with minimal content
     root = DCCh.minimal_DCC()
 
+
     #Update root element with content from worksheets in the workbook
     root = read_item_from_Excel(      root, ws=wb["Items"])
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
-    root = read_table_from_Excel(    root, ws=wb["Table2"])
+    for cell in wb['Table2']['A']:
+        if cell.value=='DCCTable':
+           print("hej")
+           root = read_table_from_Excel(root, ws=wb["Table2"], cell0=cell)
     wb.close()
 
     ############### Output to xml-file ####################################

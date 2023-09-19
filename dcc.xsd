@@ -505,6 +505,7 @@
             <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded">
             <xs:unique name="table">
                 <xs:selector xpath="dcc:table"/>
+                <xs:field xpath="@tableId"/>
                 <xs:field xpath="@itemRef"/>
                 <xs:field xpath="@settingRef"/>
             </xs:unique>
@@ -536,7 +537,7 @@
             </xs:unique>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="resId" type="xs:ID" use="required"/>
+        <xs:attribute name="resId" type="xs:string" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
@@ -1292,7 +1293,7 @@
         <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="tableId" type="xs:ID" use="optional"/>
+        <xs:attribute name="tableId" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="refTypesType">

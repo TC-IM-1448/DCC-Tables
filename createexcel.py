@@ -7,10 +7,11 @@ WB.create_sheet('Table')
 root=et.parse('DFM-T220000.xml')
 xmlfile="DFM-T220000.xml"
 
+
 attributes=[['scope'],['dataCategory'],['measurand'],['unit'],['humanHeading']]
 tab=root.find(DCC+'measurementResults').find(DCC+'measurementResult').find(DCC+'table')
 
-acols=[]
+cols=[]
 for col in tab.findall(DCC+'column'):
     attributes[0].append(col.attrib['scope'])
     attributes[1].append(col.attrib['dataCategory'])
@@ -18,20 +19,17 @@ for col in tab.findall(DCC+'column'):
     attributes[3].append(col.find(DCC+'unit').text)
     attributes[4].append(col.find(DCC+'name').find(DCC+'content').text)
     col=search(root, tab.attrib,col.attrib,col.find(DCC+'unit').text)[0]
-    cols.append(acol)
+    cols.append(col)
 
-#n=len(attributes[0])
-#tabAttrib={'tableId':'TempCal', 'settingRef':'setting6', 'itemRef':'itemID1 itemID2'}
-#cols=[]
-#keys= colAttrib=[a[0] for a in attributes][0:3]
-#for i in range(1,n):
-    #colAttribValues=[a[i] for a in attributes][0:3]
-    #colAttrib=dict(zip(keys,colAttribValues))
-    #unit=[a[i] for a in attributes][3]
-    #col=search(root,tab.attrib,colAttrib,unit)[0]
-    #cols.append(col)
 
 ws=WB['Table']
+ws.append(["DCCTable"])
+for item in tab.attrib.items():
+    ws.append([item[0],item[1]])
+
+ws.append(['numRows',len(cols[0])])
+ws.append(['numColumns',len(cols)])
+
 for row in attributes:
     ws.append(row)
 for n in range(0,len(cols[0])):
