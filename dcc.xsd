@@ -495,6 +495,25 @@
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
+
+    <xs:complexType name="tableType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is for arranging any measurement data that can be arranged into a table with rows and columns
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
+            <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
+        </xs:element>
+        </xs:sequence>
+        <xs:attribute name="itemRef" type="xs:IDREFS" use="required"/>
+        <xs:attribute name="settingRef" type="xs:IDREFS" use="required"/>
+        <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="tableId" type="xs:string" use="required"/>
+    </xs:complexType>
+
     <xs:complexType name="measurementResultListType">
         <xs:annotation>
             <xs:documentation>
@@ -502,7 +521,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded">
+            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="table">
                 <xs:selector xpath="dcc:table"/>
                 <xs:field xpath="@tableId"/>
@@ -1276,26 +1295,6 @@
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
-
-    <xs:complexType name="tableType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is for arranging any measurement data that can be arranged into a table with rows and columns
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <!--xs:element name="customerTag" type="xs:string" minOccurs="0"/> < In the request form, the customer may wish to tag this table to be able to retrieve data from the certificate -->
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
-        </xs:element>
-        </xs:sequence>
-        <xs:attribute name="itemRef" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="tableId" type="xs:string" use="optional"/>
-    </xs:complexType>
-
     <xs:simpleType name="refTypesType">
         <xs:annotation>
             <xs:documentation>

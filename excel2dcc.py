@@ -166,7 +166,9 @@ def read_table_from_Excel(root, ws, cell0):
             et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
         xmltable1.append(xmlcol)
     measurementResults=root.find(DCC+"measurementResults")
-    measurementResult=et.SubElement(measurementResults,DCC+'measurementResult', attrib={'resId':'result1'})
+    measurementResult=measurementResults.find(DCC+"measurementResult")
+    if type(measurementResult)==type(None):
+        measurementResult=et.SubElement(measurementResults,DCC+'measurementResult', attrib={'resId':'result1'})
     measurementResult.append(xmltable1)
 
     return root
