@@ -216,6 +216,41 @@ def minimal_DCC():
     #add_name(measurementResult,text='Measurement results')
     return root
 
+def xml2dccColumn(col, unit: str):
+    """
+
+
+    Parameters
+    ----------
+    col : TYPE
+        DESCRIPTION.
+    unit : str
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    """
+    dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'],
+                          measurandType=col.attrib['measurand'], unit=unit,
+                          humanHeading=col.find(DCC+'name').find(DCC+'content').text,
+                          columnData=col.find(SI+'ValueXMLList').text.split())
+    return dcccol
+
+
+def xml2dcctable(xmltable):
+    dcccolumns=[]
+    for col in xmltable.findall(DCC+'column'):
+        unit=""
+        if type(col.find(SI+'unit')) !=type(None):
+            unit=col.find(SI+'unit').text
+        # dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'], measurandType=col.attrib['measurand'], unit=unit, humanHeading=col.find(DCC+'name').find(DCC+'content').text, columnData=col.find(SI+'ValueXMLList').text.split())
+        dcccol = xml2dccColumn(col, unit)
+        dcccolumns.append(dcccol)
+    length=len(col.find(SI+'ValueXMLList').text.split())
+    dcctbl=DccTabel(xmltable.attrib['refId'],xmltable.attrib['itemId'],length,len(dcccolumns),dcccolumns)
+    return dcctbl
 
 if __name__ == "__main__":
     validate( "certificate2.xml", "dcc.xsd")

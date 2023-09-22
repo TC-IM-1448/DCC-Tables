@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as et
 from xml.dom import minidom
 import openpyxl as pyxl
-from dcc2excel import xml2dcctable, xml2dccColumn
+from DCChelpfunctions import xml2dcctable, xml2dccColumn
 
 DCC='{https://ptb.de/dcc}'
 SI='{https://ptb.de/si}'
@@ -164,7 +164,6 @@ def getTableFromXML(xmlfile='example.xml', tableId='string'):
 """
 """
 def LookupColumn(xmlFile, tableID, itemID, scope, dataCategory, measurand, unit):
-    """ """
     tbl = getTableFromXML(xmlfile=xmlFile, searchattributes={'itemId':itemID, 'refId':tableID})
     print(tbl)
     col = getColumnFromTable(table=tbl, searchattributes={'dataCategory':dataCategory,
@@ -209,7 +208,7 @@ def find_child(parent,child_type, search_key, search_value):
 
 """
 
-
+"""
 if __name__=="__main__" and 0 :
      #Sample userinput:
     xmlFile='mass_certificate.xml'
@@ -238,6 +237,6 @@ if __name__=="__main__" and 0 :
 
 
 
-
+"""
 
 
