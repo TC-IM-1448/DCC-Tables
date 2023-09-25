@@ -5,7 +5,7 @@ import DCChelpfunctions as DCCh
 #Used from DCChelpfunctions :
 #item, add_name, add_identification, minimal, validate, DCC_tablecolumn,
 
-DCC='{https://ptb.de/dcc}'
+DCC='{https://dfm.dk}'
 et.register_namespace("dcc", DCC.strip('{}'))
 LANG='en'
 

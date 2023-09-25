@@ -6,7 +6,7 @@ from DCChelpfunctions import search
 TODO : make main function with input /outpu arguments
 """
 
-DCC='{https://ptb.de/dcc}'
+DCC='{https://dfm.dk}'
 WB=pyxl.Workbook()
 WB.create_sheet('Table')
 root=et.parse('DFM-T220000.xml')

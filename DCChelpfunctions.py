@@ -5,7 +5,7 @@ from xml.dom import minidom
 import openpyxl as pyxl
 import openpyxl as pyxl
 
-DCC='{https://ptb.de/dcc}'
+DCC='{https://dfm.dk}'
 SI='{https://ptb.de/si}'
 LANG='en'
 et.register_namespace("si", SI.strip('{}'))
@@ -179,7 +179,8 @@ def item(ID, manufacturer,model):
 def minimal_DCC():
     version="3.2.0"
     # xsilocation="dcc.xsd" #
-    xsilocation="https://ptb.de/dcc dcc.xsd"
+    #xsilocation="https://ptb.de/dcc dcc.xsd"
+    xsilocation= DCC.strip('{}') + " dcc.xsd"
     xsi="http://www.w3.org/2001/XMLSchema-instance"
     #et.register_namespace("si", SI)
     #et.register_namespace("dcc", DCC)

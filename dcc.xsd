@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema version="3.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:dcc="https://ptb.de/dcc"
-           xmlns:si="https://ptb.de/si"
+           xmlns:dcc="https://dfm.dk"
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-           targetNamespace="https://ptb.de/dcc"
+           targetNamespace="https://dfm.dk"
            elementFormDefault="qualified">
 
     <!--xs:import
             namespace="https://ptb.de/si"
             schemaLocation="https://ptb.de/si/v2.1.0/SI_Format.xsd"/-->
+    <!--
+           xmlns:si="https://ptb.de/si"
     <xs:import
             namespace="https://ptb.de/si"
-            schemaLocation="SI_Format.xsd"/>
+            schemaLocation="SI_Format.xsd"/-->
 
     <!--xs:import
         namespace="http://www.w3.org/2000/09/xmldsig#"
@@ -642,11 +643,11 @@
             <xs:element name="street" type="dcc:notEmptyStringType"/>
             <xs:element name="streetNo" type="dcc:notEmptyStringType"/>
             <xs:element name="further" type="dcc:richContentType"/>
-            <xs:element name="positionCoordinates" type="dcc:positionCoordinatesType"/>
+            <!--xs:element name="positionCoordinates" type="dcc:positionCoordinatesType"/-->
         </xs:choice>
     </xs:complexType>
 
-    <xs:complexType name="positionCoordinatesType">
+    <!--xs:complexType name="positionCoordinatesType">
         <xs:sequence>
             <xs:element name="positionCoordinateSystem" type="dcc:notEmptyStringType"/>
             <xs:element name="reference" type="dcc:notEmptyStringType" minOccurs="0"/>
@@ -658,7 +659,7 @@
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
-    </xs:complexType>
+    </xs:complexType-->
 
     <xs:complexType name="contactType">
         <xs:sequence>
@@ -791,12 +792,11 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="name" type="dcc:textType"/>
-            <xs:element name="unit" type="si:unitType" minOccurs="0"/>
+            <xs:element name="unit" type="dcc:unitType" minOccurs="0"/>
             <xs:choice>
-                <xs:element ref="si:realListXMLList"/>
-		<xs:element name="valueXMLList" type="si:decimalXMLListType"/>
+		<xs:element name="valueXMLList" type="dcc:decimalXMLListType"/>
                 <xs:element name="conformityXMLList" type="dcc:stringConformityStatementStatusXMLListType"/>
-                <xs:element name="stringXMLList" type="si:stringXMLListType"/>
+                <xs:element name="stringXMLList" type="dcc:stringXMLListType"/>
                 <xs:element name="accreditationAppliesXMLList" type="dcc:accreditationAppliesXMLListType"/>
                 <xs:element name="exceptionXMLList" type="xs:IDREFS"/>
             </xs:choice>
@@ -808,9 +808,50 @@
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
+    <xs:simpleType name="unitType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                BIPM SI brochure unit (9th edition).
+                Based on xs:string.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
 
+    <xs:simpleType name="decimalType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Scientific decimal format for numerical values.
+                Based on type xs:double.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:double">
+            <xs:pattern value="[-+]?((\d*\.\d+)|(\d+\.\d*)|(\d+\.?))([Ee][-+]?\d+)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="decimalXMLListType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Type providing listing of values (si:decimalType) 
+                with separation by blank spaces.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:list itemType="dcc:decimalType"/>
+    </xs:simpleType>
     <xs:simpleType name="yesnolist">
         <xs:list itemType="dcc:yesno"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="stringXMLListType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Type providing listing of strings (xs:string) 
+                with separation by blank spaces.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:list itemType="xs:string"/>
     </xs:simpleType>
 
     <xs:complexType name="accreditationAppliesXMLListType">
