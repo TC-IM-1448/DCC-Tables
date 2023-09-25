@@ -7,7 +7,8 @@ import DCChelpfunctions as DCCh
 
 DCC='{https://dfm.dk}'
 et.register_namespace("dcc", DCC.strip('{}'))
-LANG='en'
+lang1='en'
+lang2='da'
 
 def dictionaries_from_table(ws, rowtype):
     """
@@ -35,11 +36,16 @@ def read_statements_from_Excel(root, ws):
     statementselement=et.SubElement(adm,DCC+"statements")
     for statement in statements:
         statementelement=et.SubElement(statementselement,DCC+"statement", attrib={'statementId':statement['id']})
-        et.SubElement(statementelement, DCC+"description", attrib={'lang':'en'}).text=statement['description']
-        et.SubElement(statementelement, DCC+"description", attrib={'lang':'da'}).text=statement['description da']
-        DCCh.add_name(statementelement,lang="en",text=statement['name en'])
-        DCCh.add_name(statementelement,lang="da",text=statement['name da'])
+        et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
+        et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
+        et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
+        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['text lang1']
+        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['text lang2']
+        #DCCh.add_name(statementelement,lang=lang1,text=statement['name lang1'])
+        #DCCh.add_name(statementelement,lang=lang2,text=statement['name lang2'])
     return root
+
+
 
 def read_settings_from_Excel(root, ws):
     settings=dictionaries_from_table(ws,'setting')
@@ -201,7 +207,7 @@ if __name__ == "__main__":
     #Update root element with content from worksheets in the workbook
     root = read_item_from_Excel(      root, ws=wb["Items"])
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
-    root = read_statements_from_Excel(root, ws=wb["Statements"])
+    root = read_statements_from_Excel(root, ws=wb["NewStatements"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
     for cell in wb['Table2']['A']:
         if cell.value=='DCCTable':

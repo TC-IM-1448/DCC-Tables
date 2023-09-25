@@ -344,19 +344,28 @@
 
     <xs:complexType name="statementType">
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
-                        maxOccurs="unbounded"/>
-            <xs:element name="convention" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="norm" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="reference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="declaration" type="dcc:richContentType" minOccurs="0"/>
+            <xs:element name="statementCategory" type="dcc:statementCategoryType" minOccurs="0"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="text" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
-        <xs:attribute name="statementId" type="xs:ID" use="optional"/>
-        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="statementId" type="xs:ID" use="required"/>
     </xs:complexType>
+
+    <xs:simpleType name="statementCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="method" /> 
+                <xs:enumeration value="general" /> 
+                <xs:enumeration value="exception" /> 
+                <xs:enumeration value="traceability" /> 
+                <xs:enumeration value="attention" /> 
+                <xs:enumeration value="comment" /> 
+                <xs:enumeration value="norm" /> 
+            </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="tableType">
         <xs:annotation>
@@ -507,7 +516,8 @@
             <xs:element name="accreditationCountry" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
-            <xs:element name="accreditationException" minOccurs="0" type="xs:ID"/>
+            <xs:element name="accreditationStatement" minOccurs="1" type="dcc:statementType"/>
+            <xs:element name="accreditationException" minOccurs="0" type="dcc:statementType"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -515,7 +525,7 @@
     <xs:simpleType name="accreditationApplicabilityType">
         <xs:annotation>
             <xs:documentation>
-                "1: results outside accreditation occurs and these are clearly marked. Use column with attribute dataCategory=accreditationApplies attribute to indicate this
+                "1: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException attribute to indicate this
               2: all results are under accreditation."
             </xs:documentation>
         </xs:annotation>
