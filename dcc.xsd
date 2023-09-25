@@ -552,6 +552,7 @@
                 <xs:field xpath="@scope"/>
                 <xs:field xpath="@dataCategory"/>
                 <xs:field xpath="@measurand"/>
+                <xs:field xpath="@metaDataCategory"/>
                 <xs:field xpath="dcc:unit"/>
             </xs:unique>
             </xs:element>
@@ -1070,6 +1071,7 @@
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategory" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
+        <xs:attribute name="metaDataCategory" type="dcc:metaDataCategoryType" use="required"/>
         <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
@@ -1100,6 +1102,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
+                <xs:enumeration value="*" />
                 <xs:enumeration value="Value" />
                 <xs:enumeration value="TargetValue" />
                 <xs:enumeration value="ExpandedUncertainty" />
@@ -1110,14 +1113,26 @@
                 <xs:enumeration value="AcceptanceLimitLower" />
                 <xs:enumeration value="AcceptanceLimitUpper" />
                 <xs:enumeration value="Conformity" />
+                <xs:enumeration value="repeatability" /> 
+                <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
+            </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="metaDataCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+                The metaDataCategoryType is for machine readable labeling of columns in a table. 
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
                 <xs:enumeration value="UsedReferenceId" />
                 <xs:enumeration value="UsedMethodId" />
                 <xs:enumeration value="UsedEquipmentId" />
-                <xs:enumeration value="repeatability" /> 
                 <xs:enumeration value="Correction" /> 
                 <xs:enumeration value="accreditationApplies" /> 
                 <xs:enumeration value="customerTag" /> 
                 <xs:enumeration value="Exception" /> 
+                <xs:enumeration value="Statement" /> 
+                <xs:enumeration value="Data" />  <!--The column is not considered as meta data. The data type is specified in the dataCategory attribute-->
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
@@ -1128,7 +1143,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="dataInfo" />  <!--In the request form, the customer may wish to tag each row in the table to be able to retrieve relevant data from the certificate -->
+                <xs:enumeration value="*" />  <!--Used for metaData to refer to all scopes -->
                 <xs:enumeration value="reference" /> <!-- Value of the measurand according to the reference equipment -->
                 <xs:enumeration value="itemIndication" /> <!-- Value of the measurand according to the device under test. E.g. nominal value of an artefact or display  of an active instrument-->
                 <xs:enumeration value="itemBias" /> <!-- itemBias = itemIndicationValue - referenceResult -->
@@ -1143,6 +1158,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
+				<xs:enumeration value="*" />
 				<xs:enumeration value="Measure.Capacitance" />
 				<xs:enumeration value="Measure.Conductance" />
 				<xs:enumeration value="Measure.Conductivity" />

@@ -127,7 +127,8 @@ def read_table_from_Excel(root, ws, cell0):
     numRows = cell0.offset(6,1).value
     numColumns = cell0.offset(7,1).value
 
-    nRows = int(numRows)+5
+    numHeadings=6
+    nRows = int(numRows)+numHeadings
     nCols = int(numColumns)
     cell = cell0.offset(8,1)
 
@@ -138,8 +139,9 @@ def read_table_from_Excel(root, ws, cell0):
                                 columnType=c[1],
                                 measurandType=c[2],
                                 unit=c[3],
-                                humanHeading = c[4],
-                                columnData= list(map(str, c[5:])))
+                                metaDataCategory=c[4],
+                                humanHeading = c[5],
+                                columnData= list(map(str, c[numHeadings:])))
         columns.append(col)
 
     #Create empty table with table attributes
@@ -148,22 +150,25 @@ def read_table_from_Excel(root, ws, cell0):
     #Fill the table with data from table object
     columns=columns
     for col in columns:
-        attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType}
+        attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType, 'metaDataCategory':col.metaDataCategory}
         xmlcol=et.Element(DCC+'column',attrib=attributes)
         if type(col.unit)!=type(None):
           et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
         DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
         #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
-        if attributes['dataCategory']=='Conformity':
-            et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
-        elif attributes['dataCategory']=='customerTag':
+        if attributes['metaDataCategory']=='Data':
+           if attributes['dataCategory']=='Conformity':
+               et.SubElement(xmlcol,DCC+"conformityXMLList").text=' '.join(col.columnData)
+           else:
+               et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
+        elif attributes['metaDataCategory']=='customerTag':
             et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
-        elif attributes['dataCategory']=='Exception':
+        elif attributes['metaDataCategory']=='Exception':
             et.SubElement(xmlcol,DCC+"exceptionXMLList").text=' '.join(col.columnData)
-        elif attributes['dataCategory']=='accreditationApplies':
+        elif attributes['metaDataCategory']=='accreditationApplies':
             et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
         else:
-            et.SubElement(xmlcol,DCC+"valueXMLList").text=' '.join(col.columnData)
+            et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
         xmltable1.append(xmlcol)
     measurementResults=root.find(DCC+"measurementResults")
     measurementResult=measurementResults.find(DCC+"measurementResult")

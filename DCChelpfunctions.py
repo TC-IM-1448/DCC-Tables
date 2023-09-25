@@ -17,6 +17,7 @@ class DccTableColumn():
     columnType = ""
     measurandType = ""
     unit = ""
+    metaDataCategory=""
     humanHeading = ""
     columnData = []
 
@@ -25,6 +26,7 @@ class DccTableColumn():
                 columnType="",
                 measurandType="",
                 unit="",
+                metaDataCategory="",
                 humanHeading = "",
                 columnData=[]):
         """ """
@@ -32,6 +34,7 @@ class DccTableColumn():
         self.scopeType = scopeType
         self.measurandType = measurandType
         self.unit = unit
+        self.metaDataCategory = metaDataCategory
         self.humanHeading = humanHeading
         self.columnData = columnData
 
