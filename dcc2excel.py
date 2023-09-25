@@ -13,7 +13,7 @@ root=et.parse('DFM-T220000.xml')
 xmlfile="DFM-T220000.xml"
 
 
-attributes=[['scope'],['dataCategory'],['measurand'],['unit'],['humanHeading']]
+attributes=[['scope'],['dataCategory'],['measurand'],['unit'],['metaDataCategory'],['humanHeading']]
 tab=root.find(DCC+'measurementResults').find(DCC+'measurementResult').find(DCC+'table')
 
 cols=[]
@@ -22,7 +22,8 @@ for col in tab.findall(DCC+'column'):
     attributes[1].append(col.attrib['dataCategory'])
     attributes[2].append(col.attrib['measurand'])
     attributes[3].append(col.find(DCC+'unit').text)
-    attributes[4].append(col.find(DCC+'name').find(DCC+'content').text)
+    attributes[4].append(col.attrib['metaDataCategory'])
+    attributes[5].append(col.find(DCC+'name').find(DCC+'content').text)
     col=search(root, tab.attrib,col.attrib,col.find(DCC+'unit').text)[0]
     cols.append(col)
 
