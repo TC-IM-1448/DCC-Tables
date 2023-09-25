@@ -67,7 +67,6 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="document" type="dcc:byteDataType" minOccurs="0"/>
 
             <!--xs:element ref="ds:Signature" minOccurs="0" maxOccurs="unbounded"/-->
 
@@ -92,7 +91,6 @@
         </xs:annotation>
         <xs:all>
             <xs:element name="dccSoftware" type="dcc:softwareListType"/>
-            <xs:element name="refTypeDefinitions" type="dcc:refTypeDefinitionListType" minOccurs="0"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
             <xs:element name="items" type="dcc:itemListType"/>
             <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
@@ -141,38 +139,8 @@
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="refTypeDefinitionListType">
-        <xs:annotation>
-            <xs:documentation>
-                This type allows the give information about the used refTypes in a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="refTypeDefinition" type="dcc:refTypeDefinitionType"
-                maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="refTypeDefinitionType">
-        <xs:annotation>
-            <xs:documentation>
-                This type contains the information about the wording of the refTypes used in a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="namespace" type="dcc:notEmptyStringType"/>
-            <xs:element name="link" type="dcc:notEmptyStringType"/>
-            <xs:element name="release" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="value" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="procedure" type="dcc:notEmptyStringType" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
-    </xs:complexType>
 
     <xs:complexType name="coreDataType">
         <xs:annotation>
@@ -229,12 +197,11 @@
             <xs:element name="name" type="dcc:textType"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="installedSoftwares" type="dcc:softwareListType" minOccurs="0" />
-            <xs:element name="manufacturer" type="dcc:contactNotStrictType"/>
+            <xs:element name="manufacturer" type="dcc:contactType"/>
             <xs:element name="model" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="identifications" type="dcc:identificationListType"/>
         </xs:sequence>
         <xs:attribute name="itemId" type="xs:ID" use="required"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
     
     <xs:complexType name="identificationListType">
@@ -270,7 +237,6 @@
             <xs:element name="value" type="dcc:notEmptyStringType"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="performanceLocationType">
@@ -283,7 +249,6 @@
             <xs:extension base="dcc:stringPerformanceLocationType">
                 <xs:attribute name="id" type="xs:ID" use="optional"/>
                 <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-                <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -331,7 +296,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="person" type="dcc:contactNotStrictType"/>
+            <xs:element name="person" type="dcc:contactType"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="role" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="mainSigner" type="xs:boolean" minOccurs="0"/>
@@ -340,7 +305,6 @@
             <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="settingListType">
@@ -365,7 +329,6 @@
 	</xs:sequence>
         <xs:attribute name="settingId" type="xs:ID" use="optional"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="statementListType">
@@ -393,7 +356,6 @@
 		</xs:sequence>
         <xs:attribute name="statementId" type="xs:ID" use="optional"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="tableType">
@@ -458,7 +420,6 @@
         </xs:sequence>
         <xs:attribute name="resId" type="xs:string" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="usedMethodListType">
@@ -485,7 +446,6 @@
             <xs:element name="reference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="influenceConditionListType">
@@ -522,7 +482,6 @@
             <xs:element name="certificate" type="dcc:hashType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType  name="charsXMLListType">
@@ -628,7 +587,6 @@
                 <xs:attribute name="lang" type="dcc:stringISO639Type" use="optional"/>
                 <xs:attribute name="id" type="xs:ID" use="optional"/>
                 <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-                <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -658,7 +616,6 @@
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType-->
 
     <xs:complexType name="contactType">
@@ -668,24 +625,9 @@
             <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="fax" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="location" type="dcc:locationType"/>
-            <xs:element name="descriptionData" type="dcc:byteDataType" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="contactNotStrictType">
-        <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
-            <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="fax" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
-            <xs:element name="descriptionData" type="dcc:byteDataType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="hashType">
@@ -700,7 +642,6 @@
             <xs:element name="linkedReport" type="dcc:hashType" minOccurs="0"/>            
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="textType">
@@ -727,62 +668,13 @@
             <xs:element name="name" type="dcc:textType" minOccurs="0"/>
             <xs:sequence maxOccurs="unbounded">
                 <xs:element name="content" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element name="file" type="dcc:byteDataType" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element name="formula" type="dcc:formulaType" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="byteDataType">
-        <xs:annotation>
-            <xs:documentation>
-                The byteDataType defines a type which allows to add binary encoded files to the measurement result
-                section.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="fileName" type="dcc:notEmptyStringType"/>
-            <xs:element name="mimeType" type="dcc:notEmptyStringType"/>
-            <xs:element name="dataBase64" type="xs:base64Binary"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
-    </xs:complexType>
 
-    <xs:complexType name="formulaType">
-        <xs:annotation>
-            <xs:documentation>
-                This data block is used to add formulas and equations to the measurement result section of the DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="latex" type="xs:string"/>
-            <xs:element name="mathml" type="dcc:xmlType"/>
-        </xs:choice>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="xmlType">
-        <xs:annotation>
-            <xs:documentation>
-                This data block is used to add user or application specific XML content.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:any namespace="##other" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
-    </xs:complexType>
 
     <xs:complexType name="columnType">
         <xs:annotation>
@@ -805,7 +697,6 @@
         <xs:attribute name="dataCategory" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
         <xs:attribute name="metaDataCategory" type="dcc:metaDataCategoryType" use="required"/>
-        <xs:attribute name="refType" type="dcc:refTypesType" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="unitType">
@@ -1085,17 +976,5 @@
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="refTypesType">
-        <xs:annotation>
-            <xs:documentation>
-                Allow multiple refTypes for one element as attribute.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction>
-            <xs:simpleType>
-                <xs:list itemType="xs:string"/>
-            </xs:simpleType>
-            <xs:minLength value="1"/>
-        </xs:restriction>
-    </xs:simpleType>
+
 </xs:schema>
