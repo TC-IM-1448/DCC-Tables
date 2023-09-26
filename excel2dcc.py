@@ -39,8 +39,8 @@ def read_statements_from_Excel(root, ws):
         et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
         et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
         et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
-        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['text lang1']
-        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['text lang2']
+        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['body lang1']
+        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['body lang2']
         #DCCh.add_name(statementelement,lang=lang1,text=statement['name lang1'])
         #DCCh.add_name(statementelement,lang=lang2,text=statement['name lang2'])
     return root
@@ -48,21 +48,19 @@ def read_statements_from_Excel(root, ws):
 
 def read_accreditation_from_Excel(root, ws, statementsws):
     acc=dictionaries_from_table(ws,'accreditation')
-    statements=dictionaries_from_table(statementsws,'statement')
+    #statements=dictionaries_from_table(statementsws,'statement')
     adm=root.find(DCC+"administrativeData")
     accelement=et.SubElement(adm,DCC+"accreditation", attrib={'accrId':acc[0]['id']})
     for key, value in acc[0].items():
         if type(key)!=type(None) and key!='id':
             et.SubElement(accelement,DCC+key).text=str(value)
-    for statement in statements:
-        statementelement=et.SubElement(accelement,DCC+"accreditationStatement", attrib={'statementId':statement['id']})
-        et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
-        et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
-        et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
-        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['text lang1']
-        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['text lang2']
-        #DCCh.add_name(statementelement,lang=lang1,text=statement['name lang1'])
-        #DCCh.add_name(statementelement,lang=lang2,text=statement['name lang2'])
+    #for statement in statements:
+        #statementelement=et.SubElement(accelement,DCC+"accreditationStatement", attrib={'statementId':statement['id']})
+        #et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
+        #et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
+        #et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
+        #et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['text lang1']
+        #et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['text lang2']
     return root
 
 def read_settings_from_Excel(root, ws):
@@ -71,10 +69,10 @@ def read_settings_from_Excel(root, ws):
     settingselement=et.SubElement(adm,DCC+"settings")
     for setting in settings:
         settingelement=et.SubElement(settingselement,DCC+"setting", attrib={'settingId':setting['id']})
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':'en'}).text=setting['description']
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':'da'}).text=setting['description da']
-        DCCh.add_name(settingelement,lang="en",text=setting['name en'])
-        DCCh.add_name(settingelement,lang="da",text=setting['name da'])
+        et.SubElement(settingelement, DCC+"description", attrib={'lang':'en'}).text=setting['body lang1']
+        et.SubElement(settingelement, DCC+"description", attrib={'lang':'da'}).text=setting['body lang2']
+        DCCh.add_name(settingelement,lang="en",text=setting['heading lang1'])
+        DCCh.add_name(settingelement,lang="da",text=setting['heading lang2'])
         if type(setting['value'])!=type(None):
            et.SubElement(settingelement, DCC+"value").text=str(setting['value'])
         if type(setting['unit'])!=type(None):
@@ -205,6 +203,8 @@ def printelement(element):
 if __name__ == "__main__":
     from importlib import reload
     reload(DCCh)
+    #args=sys.argv[1:]
+    #if len(
 
     workbookName="CalLab-DCC-writer.xlsx"
     # outputxml   ="certificate3.xml"

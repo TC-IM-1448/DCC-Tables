@@ -363,6 +363,8 @@
                 <xs:enumeration value="traceability" /> 
                 <xs:enumeration value="attention" /> 
                 <xs:enumeration value="comment" /> 
+                <xs:enumeration value="accreditation" /> 
+                <xs:enumeration value="accreditationException" /> 
                 <xs:enumeration value="norm" /> 
             </xs:restriction>
     </xs:simpleType>
@@ -516,8 +518,8 @@
             <xs:element name="accreditationLabId" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
-            <xs:element name="accreditationStatement" type="dcc:statementType" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="accreditationException" minOccurs="0" type="dcc:statementType"/>
+            <!--xs:element name="accreditationStatement" type="dcc:statementType" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element name="accreditationException" minOccurs="0" type="dcc:statementType"/-->
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -777,7 +779,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="*" />
+                <xs:enumeration value="-" />
                 <xs:enumeration value="Value" />
                 <xs:enumeration value="TargetValue" />
                 <xs:enumeration value="ExpandedUncertainty" />
@@ -818,7 +820,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="*" />  <!--Used for metaData to refer to all scopes -->
+                <xs:enumeration value="-" />  <!--Used for metaData to refer to all scopes -->
                 <xs:enumeration value="reference" /> <!-- Value of the measurand according to the reference equipment -->
                 <xs:enumeration value="itemIndication" /> <!-- Value of the measurand according to the device under test. E.g. nominal value of an artefact or display  of an active instrument-->
                 <xs:enumeration value="itemBias" /> <!-- itemBias = itemIndicationValue - referenceResult -->
@@ -833,7 +835,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-				<xs:enumeration value="*" />
+				<xs:enumeration value="-" />
 				<xs:enumeration value="Measure.Capacitance" />
 				<xs:enumeration value="Measure.Conductance" />
 				<xs:enumeration value="Measure.Conductivity" />
