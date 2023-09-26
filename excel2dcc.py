@@ -46,6 +46,24 @@ def read_statements_from_Excel(root, ws):
     return root
 
 
+def read_accreditation_from_Excel(root, ws, statementsws):
+    acc=dictionaries_from_table(ws,'accreditation')
+    statements=dictionaries_from_table(statementsws,'statement')
+    adm=root.find(DCC+"administrativeData")
+    accelement=et.SubElement(adm,DCC+"accreditation", attrib={'accrId':acc[0]['id']})
+    for key, value in acc[0].items():
+        if type(key)!=type(None) and key!='id':
+            et.SubElement(accelement,DCC+key).text=str(value)
+    for statement in statements:
+        statementelement=et.SubElement(accelement,DCC+"accreditationStatement", attrib={'statementId':statement['id']})
+        et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
+        et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
+        et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
+        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['text lang1']
+        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['text lang2']
+        #DCCh.add_name(statementelement,lang=lang1,text=statement['name lang1'])
+        #DCCh.add_name(statementelement,lang=lang2,text=statement['name lang2'])
+    return root
 
 def read_settings_from_Excel(root, ws):
     settings=dictionaries_from_table(ws,'setting')
@@ -106,12 +124,6 @@ def read_admin_from_Excel(root, ws):
                 element=et.SubElement(element,DCC+level)
         element.text=values[i].value
 
-    administrativeData=root.find(DCC+'administrativeData')
-    accreditation=et.SubElement(administrativeData,DCC+'accreditation', attrib={'accrId':'accdfm'})
-    et.SubElement(accreditation,DCC+'accreditationLabId').text="255"
-    et.SubElement(accreditation,DCC+'accreditationBody').text="DANAK"
-    et.SubElement(accreditation,DCC+'accreditationCountry').text="DK"
-    et.SubElement(accreditation,DCC+'accreditationApplicability').text="2"
 
     return root
 
@@ -171,8 +183,8 @@ def read_table_from_Excel(root, ws, cell0):
             et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
         elif attributes['metaDataCategory']=='Exception':
             et.SubElement(xmlcol,DCC+"exceptionXMLList").text=' '.join(col.columnData)
-        elif attributes['metaDataCategory']=='accreditationApplies':
-            et.SubElement(xmlcol,DCC+"accreditationAppliesXMLList",attrib={'accrRef':'accdfm'}).text=' '.join(col.columnData)
+        elif attributes['metaDataCategory']=='accreditationException':
+            et.SubElement(xmlcol,DCC+"exceptionXMLList").text=' '.join(col.columnData)
         else:
             et.SubElement(xmlcol,DCC+"stringXMLList").text=' '.join(col.columnData)
         xmltable1.append(xmlcol)
@@ -207,8 +219,9 @@ if __name__ == "__main__":
     #Update root element with content from worksheets in the workbook
     root = read_item_from_Excel(      root, ws=wb["Items"])
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
-    root = read_statements_from_Excel(root, ws=wb["NewStatements"])
+    root = read_statements_from_Excel(root, ws=wb["Statements"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
+    root = read_accreditation_from_Excel(root, ws=wb["Accreditation"], statementsws=wb['AccreditationStatements'])
     for cell in wb['Table2']['A']:
         if cell.value=='DCCTable':
            print("hej")

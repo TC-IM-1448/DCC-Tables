@@ -511,12 +511,12 @@
 
     <xs:complexType name="accreditationType">
         <xs:sequence>
-            <xs:element name="accreditationLabId" minOccurs="1"/>
-            <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
+            <xs:element name="accreditationBody" minOccurs="1"/>
+            <xs:element name="accreditationLabId" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
-            <xs:element name="accreditationStatement" minOccurs="1" type="dcc:statementType"/>
+            <xs:element name="accreditationStatement" type="dcc:statementType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="accreditationException" minOccurs="0" type="dcc:statementType"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
@@ -803,7 +803,7 @@
                 <xs:enumeration value="UsedMethodId" />
                 <xs:enumeration value="UsedEquipmentId" />
                 <xs:enumeration value="Correction" /> 
-                <xs:enumeration value="accreditationApplies" /> 
+                <xs:enumeration value="accreditationException" /> 
                 <xs:enumeration value="customerTag" /> 
                 <xs:enumeration value="Exception" /> 
                 <xs:enumeration value="Statement" /> 
