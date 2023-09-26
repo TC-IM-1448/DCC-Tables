@@ -25,6 +25,8 @@ for col in tab.findall(DCC+'column'):
     attributes[4].append(col.attrib['metaDataCategory'])
     attributes[5].append(col.find(DCC+'name').find(DCC+'content').text)
     col=search(root, tab.attrib,col.attrib,col.find(DCC+'unit').text)[0]
+    if col=='-':
+        col=['']*len(cols[0])
     cols.append(col)
 
 
