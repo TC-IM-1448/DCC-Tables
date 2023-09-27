@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema version="3.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema version="1.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:dcc="https://dfm.dk"
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
            targetNamespace="https://dfm.dk"
            elementFormDefault="qualified">
 
-    <!--xs:import
-            namespace="https://ptb.de/si"
-            schemaLocation="https://ptb.de/si/v2.1.0/SI_Format.xsd"/-->
-    <!--
-           xmlns:si="https://ptb.de/si"
-    <xs:import
-            namespace="https://ptb.de/si"
-            schemaLocation="SI_Format.xsd"/-->
-
-    <!--xs:import
-        namespace="http://www.w3.org/2000/09/xmldsig#"
-        schemaLocation="https://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/-->
-
     <xs:annotation>
         <xs:documentation>
             DCC - Digital Calibration Certificate
-            Copyright (c) 2019 - 2021 Physikalisch-Technische Bundesanstalt
+            Copyright (c) 2019 - 2023 Physikalisch-Technische Bundesanstalt and DFM
 
             This XML Scheme Definition (XSD) is free software: you can redistribute it and/or modify
             it under the terms of the GNU Lesser General Public License as published by
@@ -32,17 +19,6 @@
             MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
             GNU Lesser General Public License for more details.
 
-            The development of minimum requirements for a digital calibration certificate (DCC) is partially funded and
-            supported by the joint research project EMPIR 17IND02 (title: SmartCom).
-            This project (17IND02) has received funding from the EMPIR programme co-financed by the Participating States
-            and from the European Union's Horizon 2020 research and innovation programme.
-            The further development of the digital calibration certificate (DCC) is partly supported by the lighthouse
-            project GEMIMEG-II (GEMIMEG 01 MT20001E) funded by the German Federal Ministry for Economic Affairs and
-            Energy (BMWi) and the project "International Standard Accident Number" (ISAN) funded by the Niedersächsiches
-            Vorab initiative of the Volkswagen Foundation (VolkswagenStiftung).
-
-
-            Documentation: https://ptb.de/dcc/v3.2.0/
         </xs:documentation>
     </xs:annotation>
 
@@ -51,7 +27,6 @@
     <xs:complexType name="digitalCalibrationCertificateType">
         <xs:annotation>
             <xs:documentation>
-                The root element that contains the four rings of the DCC.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -76,7 +51,7 @@
         <xs:attribute name="schemaVersion" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="3\.2\.0"/>
+                    <xs:pattern value="1\.0\.0"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -198,6 +173,7 @@
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="installedSoftwares" type="dcc:softwareListType" minOccurs="0" />
             <xs:element name="manufacturer" type="dcc:contactType"/>
+            <xs:element name="category" type="xs:string"/>
             <xs:element name="model" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="identifications" type="dcc:identificationListType"/>
         </xs:sequence>
@@ -824,6 +800,7 @@
                 <xs:enumeration value="reference" /> <!-- Value of the measurand according to the reference equipment -->
                 <xs:enumeration value="itemIndication" /> <!-- Value of the measurand according to the device under test. E.g. nominal value of an artefact or display  of an active instrument-->
                 <xs:enumeration value="itemBias" /> <!-- itemBias = itemIndicationValue - referenceResult -->
+                <xs:enumeration value="environment" />
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>

@@ -166,18 +166,19 @@ def add_identification(item_element,value,issuer, name_dk="",name_en=""):
     item_element.find(DCC+'identifications').append(identification)
     return identification
 
-def item(ID, manufacturer,model):
+def item(ID, category, manufacturer,model):
     attributes={'itemId':ID}
     item=et.Element(DCC+'item',attrib=attributes)
     manu=et.SubElement(item,DCC+'manufacturer')
     manuname=et.SubElement(manu,DCC+'name')
     et.SubElement(manuname,DCC+'content').text=manufacturer
+    et.SubElement(item,DCC+'category').text=category
     et.SubElement(item,DCC+'model').text=model
     et.SubElement(item,DCC+'identifications')
     return item
 
 def minimal_DCC():
-    version="3.2.0"
+    version="1.0.0"
     # xsilocation="dcc.xsd" #
     #xsilocation="https://ptb.de/dcc dcc.xsd"
     xsilocation= DCC.strip('{}') + " dcc.xsd"

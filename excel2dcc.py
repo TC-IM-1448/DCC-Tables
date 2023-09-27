@@ -45,22 +45,13 @@ def read_statements_from_Excel(root, ws):
         #DCCh.add_name(statementelement,lang=lang2,text=statement['name lang2'])
     return root
 
-
-def read_accreditation_from_Excel(root, ws, statementsws):
+def read_accreditation_from_Excel(root, ws):
     acc=dictionaries_from_table(ws,'accreditation')
-    #statements=dictionaries_from_table(statementsws,'statement')
     adm=root.find(DCC+"administrativeData")
     accelement=et.SubElement(adm,DCC+"accreditation", attrib={'accrId':acc[0]['id']})
     for key, value in acc[0].items():
         if type(key)!=type(None) and key!='id':
             et.SubElement(accelement,DCC+key).text=str(value)
-    #for statement in statements:
-        #statementelement=et.SubElement(accelement,DCC+"accreditationStatement", attrib={'statementId':statement['id']})
-        #et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
-        #et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
-        #et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
-        #et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['text lang1']
-        #et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['text lang2']
     return root
 
 def read_settings_from_Excel(root, ws):
@@ -69,8 +60,8 @@ def read_settings_from_Excel(root, ws):
     settingselement=et.SubElement(adm,DCC+"settings")
     for setting in settings:
         settingelement=et.SubElement(settingselement,DCC+"setting", attrib={'settingId':setting['id']})
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':'en'}).text=setting['body lang1']
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':'da'}).text=setting['body lang2']
+        et.SubElement(settingelement, DCC+"description", attrib={'lang':lang1}).text=setting['body lang1']
+        et.SubElement(settingelement, DCC+"description", attrib={'lang':lang2}).text=setting['body lang2']
         DCCh.add_name(settingelement,lang="en",text=setting['heading lang1'])
         DCCh.add_name(settingelement,lang="da",text=setting['heading lang2'])
         if type(setting['value'])!=type(None):
@@ -92,12 +83,12 @@ def read_item_from_Excel(root, ws):
     -------
     None.
     """
-    items=dictionaries_from_table(ws,'item')
+    items=dictionaries_from_table(ws,'equipment')
 
     #Make an item XML-element
     Itemslist=root[0][2]
     for item in items:
-       itemelement=DCCh.item(ID=item['id'], manufacturer=item['manufacturer'],model=item['productName'])
+       itemelement=DCCh.item(ID=item['id'], category=item['category'], manufacturer=item['manufacturer'],model=item['productName'])
        DCCh.add_name(itemelement, 'en', item['description'])
        DCCh.add_identification(itemelement,item['customerId'],issuer='customer', name_dk="MålerID", name_en="SensorID")
        DCCh.add_identification(itemelement,item['serialNumber'],issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
@@ -121,16 +112,9 @@ def read_admin_from_Excel(root, ws):
             else:
                 element=et.SubElement(element,DCC+level)
         element.text=values[i].value
-
-
     return root
 
-def read_tables_from_Excel(root, ws):
-    return 0
-
 def read_table_from_Excel(root, ws, cell0):
-
-    """ TODO: Add function that finds all the tables in a given sheet """
 
     columns = []
     attrib={}
@@ -191,9 +175,7 @@ def read_table_from_Excel(root, ws, cell0):
     if type(measurementResult)==type(None):
         measurementResult=et.SubElement(measurementResults,DCC+'measurementResult', attrib={'resId':'result1'})
     measurementResult.append(xmltable1)
-
     return root
-
 
 def printelement(element):
     xmlstring=minidom.parseString(et.tostring(element)).toprettyxml(indent="   ")
@@ -201,13 +183,16 @@ def printelement(element):
     return
 
 if __name__ == "__main__":
+    import sys
     from importlib import reload
     reload(DCCh)
-    #args=sys.argv[1:]
-    #if len(
+    args=sys.argv[1:]
+    if len(args)==1:
+        workbookName=args[0]
+    else:
+        workbookName="CalLab-DCC-writer.xlsx"
+    tableSheet='Table_TempCal'
 
-    workbookName="CalLab-DCC-writer.xlsx"
-    # outputxml   ="certificate3.xml"
     schema      ="dcc.xsd"
 
     #load workbook
@@ -215,17 +200,15 @@ if __name__ == "__main__":
     #Create root element with minimal content
     root = DCCh.minimal_DCC()
 
-
     #Update root element with content from worksheets in the workbook
-    root = read_item_from_Excel(      root, ws=wb["Items"])
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
+    root = read_accreditation_from_Excel(root, ws=wb["Accreditation"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
+    root = read_item_from_Excel(      root, ws=wb["Equipment"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
-    root = read_accreditation_from_Excel(root, ws=wb["Accreditation"], statementsws=wb['AccreditationStatements'])
-    for cell in wb['Table2']['A']:
+    for cell in wb[tableSheet]['A']:
         if cell.value=='DCCTable':
-           print("hej")
-           root = read_table_from_Excel(root, ws=wb["Table2"], cell0=cell)
+           root = read_table_from_Excel(root, ws=wb[tableSheet], cell0=cell)
     wb.close()
 
     ############### Output to xml-file ####################################
