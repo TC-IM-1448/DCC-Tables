@@ -320,9 +320,9 @@
 
     <xs:complexType name="statementType">
         <xs:sequence>
-            <xs:element name="statementCategory" type="dcc:statementCategoryType" minOccurs="0"/>
+            <xs:element name="category" type="dcc:statementCategoryType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="text" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
         <xs:attribute name="statementId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -385,15 +385,12 @@
         <xs:annotation>
             <xs:documentation>
                 A measurement results with the methods, software and equipments used for the calibration.
-                Also contains influence conditions and a list of the actual results.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="name" type="dcc:textType" minOccurs="0"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="usedMethods" type="dcc:usedMethodListType" minOccurs="0"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
-            <xs:element name="influenceConditions" type="dcc:influenceConditionListType" minOccurs="0"/>
             <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="column">
                 <xs:selector xpath="dcc:column"/>
@@ -409,68 +406,6 @@
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="usedMethodListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of the methods used in the calibration.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="usedMethod" type="dcc:usedMethodType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="usedMethodType">
-        <xs:annotation>
-            <xs:documentation>
-                A method used in the calibration.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="norm" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="reference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="influenceConditionListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of conditions that influence the measurements.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="influenceCondition" type="dcc:conditionType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="conditionType">
-        <xs:annotation>
-            <xs:documentation>
-                Condition (e.g. environmental) under which the calibrations were performed which have an influence on
-                the measurement results.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="status" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="beforeAdjustment"/>
-                        <xs:enumeration value="afterAdjustment"/>
-                        <xs:enumeration value="beforeRepair"/>
-                        <xs:enumeration value="afterRepair"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="certificate" type="dcc:hashType" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
     <xs:simpleType  name="charsXMLListType">
         <xs:annotation>
             <xs:documentation xml:lang="en">
@@ -480,12 +415,10 @@
         </xs:annotation>
         <xs:list itemType="xs:string"/>
     </xs:simpleType >
-
     
     <xs:simpleType name="dateTimeXMLListType">
         <xs:list itemType="xs:dateTime"  />
     </xs:simpleType>
-
 
     <xs:complexType name="accreditationType">
         <xs:sequence>
@@ -494,8 +427,6 @@
             <xs:element name="accreditationLabId" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
-            <!--xs:element name="accreditationStatement" type="dcc:statementType" minOccurs="1" maxOccurs="unbounded"/>
-                <xs:element name="accreditationException" minOccurs="0" type="dcc:statementType"/-->
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -519,7 +450,6 @@
             <xs:enumeration value="n"/>
         </xs:restriction>
     </xs:simpleType>
-
 
     <xs:simpleType name="booleanXMLListType">
         <xs:list itemType="xs:boolean"/>
@@ -662,8 +592,6 @@
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
-
-
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
@@ -748,32 +676,54 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="dataCategoryType">
+    <xs:simpleType name="scopeType">
         <xs:annotation>
             <xs:documentation>
-                The dataCategoryType is for machine readable labeling of columns in a table. 
+                The scopeType is restricting the scope attribute of the columnType.
+                For data columns the attribute is used to descibe the data.. 
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="-" />
-                <xs:enumeration value="Value" />
-                <xs:enumeration value="TargetValue" />
-                <xs:enumeration value="ExpandedUncertainty" />
+                <xs:enumeration value="reference" /> <!-- Data relating to the reference equipment. E.g. measured value or uncertainty of the reference. -->
+                <xs:enumeration value="itemIndication" /> <!-- Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument-->
+                <xs:enumeration value="itemBias" /> <!-- Data relating to the difference item_value - reference_value. E.g. the calibration result (bias of the item and its uncertainty.) -->
+                <xs:enumeration value="environment" /> <!-- Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...-->
+                <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
+                <xs:enumeration value="-" />  <!--Used for meta data columns to refer to all scopes -->
+            </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="dataCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+                The dataCategoryType is restricting the value of the dataCategory attribute of the columnType.
+                For data columns this attribute is used to describe the data.
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="Value" />  <!-- used for measured quantities -->
+                <xs:enumeration value="TargetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
+                <xs:enumeration value="ExpandedUncertainty" /> 
                 <xs:enumeration value="UncertaintyCoverageFactor_k" />
-                <xs:enumeration value="TargetValue" />
                 <xs:enumeration value="ToleranceLimitLower" />
                 <xs:enumeration value="ToleranceLimitUpper" />
                 <xs:enumeration value="AcceptanceLimitLower" />
                 <xs:enumeration value="AcceptanceLimitUpper" />
-                <xs:enumeration value="Conformity" />
                 <xs:enumeration value="repeatability" /> 
+                <xs:enumeration value="Conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. -->
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
+                <xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
             </xs:restriction>
     </xs:simpleType>
+
     <xs:simpleType name="metaDataCategoryType">
         <xs:annotation>
             <xs:documentation>
-                The metaDataCategoryType is for machine readable labeling of columns in a table. 
+                The metaDataCategoryType is restricting the values of the metaDataCategory attribute of the columnType. 
+                The attribute is used to distinguish data columns and meta data columns. A column is considered a meta data column if the atribute metaDataCategory has any other value than "Data"
+                For meata data columns this attribute is also used to describe the content of the column.
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
@@ -789,26 +739,13 @@
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="scopeType">
-        <xs:annotation>
-            <xs:documentation>
-                The colType is for machine readable labeling of columns in a table. 
-            </xs:documentation>
-        </xs:annotation>
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="-" />  <!--Used for metaData to refer to all scopes -->
-                <xs:enumeration value="reference" /> <!-- Value of the measurand according to the reference equipment -->
-                <xs:enumeration value="itemIndication" /> <!-- Value of the measurand according to the device under test. E.g. nominal value of an artefact or display  of an active instrument-->
-                <xs:enumeration value="itemBias" /> <!-- itemBias = itemIndicationValue - referenceResult -->
-                <xs:enumeration value="environment" />
-                <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
-            </xs:restriction>
-    </xs:simpleType>
 
     <xs:simpleType name="measurandType">
         <xs:annotation>
             <xs:documentation>
-                The measurandType is for machine readable labeling of columns in a table. 
+                The measurandType is restricting the value of the measurand attribute of the columnType.
+                For data columns this attribute is used to describe the data.
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
@@ -885,6 +822,7 @@
 				<xs:enumeration value="Measure.Voltage.AC.Squarewave" />
 				<xs:enumeration value="Measure.Voltage.AC.Trianglewave" />
 				<xs:enumeration value="Measure.Voltage.DC" />
+				<xs:enumeration value="Measure.Volume" />
 				<xs:enumeration value="Measure.Weight" />
 				<xs:enumeration value="Source.Capacitance" />
 				<xs:enumeration value="Source.Conductance" />
@@ -945,23 +883,6 @@
 				<xs:enumeration value="Source.Voltage.Noise.Terminated" />
 				<xs:enumeration value="Source.Voltage.Shorted" />
 				<xs:enumeration value="Source.Weight" />
-                <xs:enumeration value="metaData" />
-                <xs:enumeration value="temperatureAbsolute" />
-                <xs:enumeration value="temperatureDifference" />
-                <xs:enumeration value="pressureInternal" />
-                <xs:enumeration value="pressureAbsolute" />
-                <xs:enumeration value="pressureExcess" />
-                <xs:enumeration value="geometryLength" />
-                <xs:enumeration value="geometryDiameter" />
-                <xs:enumeration value="geometryFormError" />
-                <xs:enumeration value="geometryXcoord" />
-                <xs:enumeration value="geometryYcoord" />
-                <xs:enumeration value="geometryZcoord" />
-                <xs:enumeration value="volume" />
-                <xs:enumeration value="centreOfGravity" />
-                <xs:enumeration value="massVolumeCorrelation" />
-                <xs:enumeration value="identification" />
-                <xs:enumeration value="resistance" />
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>

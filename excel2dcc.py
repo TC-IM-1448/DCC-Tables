@@ -10,7 +10,7 @@ et.register_namespace("dcc", DCC.strip('{}'))
 lang1='en'
 lang2='da'
 
-def dictionaries_from_table(ws, rowtype):
+def dictionaries_from_table(ws, rowtype='x'):
     """
     Input: openpyxl worksheet object with column headers and row headers.
     Input: rowheader to look for (string)
@@ -32,21 +32,19 @@ def dictionaries_from_table(ws, rowtype):
 
 def read_statements_from_Excel(root, ws):
     adm=root.find(DCC+"administrativeData")
-    statements=dictionaries_from_table(ws,'statement')
+    statements=dictionaries_from_table(ws)
     statementselement=et.SubElement(adm,DCC+"statements")
     for statement in statements:
         statementelement=et.SubElement(statementselement,DCC+"statement", attrib={'statementId':statement['id']})
-        et.SubElement(statementelement, DCC+"statementCategory").text=statement['category']
+        et.SubElement(statementelement, DCC+"category").text=statement['category']
         et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang1}).text=statement['heading lang1']
         et.SubElement(statementelement, DCC+"heading", attrib={'lang':lang2}).text=statement['heading lang2']
-        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang1}).text=statement['body lang1']
-        et.SubElement(statementelement, DCC+"text", attrib={'lang':lang2}).text=statement['body lang2']
-        #DCCh.add_name(statementelement,lang=lang1,text=statement['name lang1'])
-        #DCCh.add_name(statementelement,lang=lang2,text=statement['name lang2'])
+        et.SubElement(statementelement, DCC+"body", attrib={'lang':lang1}).text=statement['body lang1']
+        et.SubElement(statementelement, DCC+"body", attrib={'lang':lang2}).text=statement['body lang2']
     return root
 
 def read_accreditation_from_Excel(root, ws):
-    acc=dictionaries_from_table(ws,'accreditation')
+    acc=dictionaries_from_table(ws)
     adm=root.find(DCC+"administrativeData")
     accelement=et.SubElement(adm,DCC+"accreditation", attrib={'accrId':acc[0]['id']})
     for key, value in acc[0].items():
@@ -55,7 +53,7 @@ def read_accreditation_from_Excel(root, ws):
     return root
 
 def read_settings_from_Excel(root, ws):
-    settings=dictionaries_from_table(ws,'setting')
+    settings=dictionaries_from_table(ws)
     adm=root.find(DCC+"administrativeData")
     settingselement=et.SubElement(adm,DCC+"settings")
     for setting in settings:
@@ -83,10 +81,10 @@ def read_item_from_Excel(root, ws):
     -------
     None.
     """
-    items=dictionaries_from_table(ws,'equipment')
+    items=dictionaries_from_table(ws)
 
     #Make an item XML-element
-    Itemslist=root[0][2]
+    Itemslist=root.find(DCC+"administrativeData").find(DCC+"items")
     for item in items:
        itemelement=DCCh.item(ID=item['id'], category=item['category'], manufacturer=item['manufacturer'],model=item['productName'])
        DCCh.add_name(itemelement, 'en', item['description'])

@@ -1,10 +1,36 @@
 import openpyxl as pyxl
 import xml.etree.ElementTree as et
 from DCChelpfunctions import search
+from excel2dcc import printelement
 
-"""
-TODO : make main function with input /outpu arguments
-"""
+LANG='da'
+
+def write_row(write_sheet, row_num: int, starting_column: str or int, write_values: list):
+    if isinstance(starting_column, str):
+        starting_column = ord(starting_column.lower()) - 96
+    for i, value in enumerate(write_values):
+        write_sheet.cell(row_num, starting_column + i, value)
+
+def statements(sheetname, statementselement):
+    #WB.create_sheet(sheetname)
+    line=1
+    ws=WB[sheetname]
+    columnheadings=['category','id', 'heading','body']
+    write_row(ws,line,2,columnheadings)
+    line+=1
+    headingstr=DCC+"heading[@lang='"+LANG+"']"
+    bodystr=DCC+"body[@lang='"+LANG+"']"
+    for statement in statementselement.findall(DCC+'statement'):
+        [category,ID,heading,body]=["","","",""]
+        category=statement.find(DCC+'category').text
+        ID=statement.attrib['statementId']
+        heading=statement.find(headingstr).text
+        body=statement.find(bodystr).text
+        write_row(ws,line,2,[category,ID,heading,body])
+        line+=1
+
+
+
 if __name__=="__main__":
     import sys
     args=sys.argv[1:]
@@ -19,7 +45,7 @@ if __name__=="__main__":
         print("2 arg")
     else:    
         WB=pyxl.Workbook()
-    WB.create_sheet('Table')
+        WB.create_sheet('Table')
    
     DCC='{https://dfm.dk}'
 
@@ -44,17 +70,29 @@ if __name__=="__main__":
     
     
     ws=WB['Table']
-    ws.append(["DCCTable"])
+    line=1
+    write_row(ws,line,1,["DCCTable"])
+    line+=1
     for item in tab.attrib.items():
-        ws.append([item[0],item[1]])
+        write_row(ws,line,1,[item[0],item[1]])
+        line+=1
     
-    ws.append(['numRows',len(cols[0])])
-    ws.append(['numColumns',len(cols)])
+    write_row(ws,line,1,['numRows',len(cols[0])])
+    line+=1
+    write_row(ws,line,1,['numColumns',len(cols)])
+    line+=3
     
     for row in attributes:
-        ws.append(row)
+        write_row(ws,line,1,row)
+        line+=1
+        #ws.append(row)
     for n in range(0,len(cols[0])):
         r=['']+[c[n] for c in cols]
-        ws.append(r) 
-    WB.save("test.xlsx")
+        write_row(ws,line,1,r)
+        line+=1
+        #ws.append(r) 
+
+    stat=root.find(DCC+'administrativeData').find(DCC+'statements')
+    statements('statements',stat)
+    WB.save("test2.xlsx")
          

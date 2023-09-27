@@ -207,14 +207,14 @@ def minimal_DCC():
     #et.SubElement(coreData,DCC+'beginPerformanceDate')
     #et.SubElement(coreData,DCC+'endPerformanceDate')
     #et.SubElement(coreData,DCC+'performanceLocation').text=performanceLocation
-    ####################### items #############################
-    et.SubElement(administrativeData,  DCC+'items')
     ###################### calibrationLaboratory ############
     et.SubElement(administrativeData,  DCC+'calibrationLaboratory')
     ###################### customer ########### ############
     et.SubElement(administrativeData,  DCC+'customer')
     ############### responsible persons ##################
     et.SubElement(administrativeData, DCC+'respPersons')
+    ####################### items #############################
+    et.SubElement(administrativeData,  DCC+'items')
 
     ################## measurementResults ##########################
     measurementResults=et.SubElement(root,DCC+'measurementResults')
@@ -287,13 +287,10 @@ def getTableFromResult(result, tableAttrib):
    count=0
    #Search all measurement results for a table with the required attributes
    searchResults=result.findall(DCC+"table")
-   print('hej')
    for table in searchResults:
        if all(Id in table.attrib['itemRef'] for Id in tableAttrib['itemRef'].split()) and all(Id in table.attrib['settingRef'] for Id in tableAttrib['settingRef'].split()) and table.attrib['tableId']==tableAttrib['tableId'] and count==0:
            xmltable=table
            count+=1
-
-   print('hej2')
    if count==0:
        raise ValueError('Warning: DCC contains no tables with the required combination of setting and item Ids.')
    if count>1:
