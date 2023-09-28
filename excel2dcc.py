@@ -48,7 +48,7 @@ def read_accreditation_from_Excel(root, ws):
     adm=root.find(DCC+"administrativeData")
     accelement=et.SubElement(adm,DCC+"accreditation", attrib={'accrId':acc[0]['id']})
     for key, value in acc[0].items():
-        if type(key)!=type(None) and key!='id':
+        if type(key)!=type(None) and "acc" in key:
             et.SubElement(accelement,DCC+key).text=str(value)
     return root
 

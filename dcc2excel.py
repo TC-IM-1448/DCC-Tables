@@ -32,20 +32,22 @@ def statements(sheetname, statementselement):
 
 
 if __name__=="__main__":
+    #################
+    #first argument is dcc xml file
+    #second argument is excel template to use
     import sys
     args=sys.argv[1:]
     print(len(args))
     if len(args)==0:
         xmlfile="DFM-T220000.xml"
-        print("0 arg")
     else:
         xmlfile=args[0]
     if len(args)==2:
         WB=pyxl.load_workbook(args[1])
-        print("2 arg")
     else:    
         WB=pyxl.Workbook()
         WB.create_sheet('Table')
+        WB.create_sheet('statements')
    
     DCC='{https://dfm.dk}'
 
@@ -63,7 +65,7 @@ if __name__=="__main__":
         attributes[3].append(col.find(DCC+'unit').text)
         attributes[4].append(col.attrib['metaDataCategory'])
         attributes[5].append(col.find(DCC+'name').find(DCC+'content').text)
-        col=search(root, tab.attrib,col.attrib,col.find(DCC+'unit').text)[0]
+        col=search(root, tab.attrib,col.attrib,col.find(DCC+'unit').text)[0][0][2].text.split()
         if col=='-':
             col=['']*len(cols[0])
         cols.append(col)
@@ -94,5 +96,5 @@ if __name__=="__main__":
 
     stat=root.find(DCC+'administrativeData').find(DCC+'statements')
     statements('statements',stat)
-    WB.save("test2.xlsx")
+    WB.save("view_content.xlsx")
          

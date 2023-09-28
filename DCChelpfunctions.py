@@ -297,32 +297,42 @@ def getTableFromResult(result, tableAttrib):
        raise ValueError('Warning: DCC contains ' + str(count) + ' tables with the required Id.\n Returning only the first instance')
    return xmltable
 
+def match_attributes(att,searchatt, unit, searchunit):
+    for key in att.keys():
+        if att[key]!='-' and searchatt[key]!='-' and att[key]!=searchatt[key]:
+            return False
+    if unit!='-' and searchunit!='-' and unit!=searchunit:
+        return False
+    return True
+
 
 def getColumnFromTable(table,searchattributes, searchunit=""):
     #INPUT: xml-element of type dcc:table
     #INPUT: attribute dictionary
     #INPUT: searchunit as string.
     #OUTPUT: xml-element of type dcc:column
+    cols=[]
     for col in table.findall(DCC+'column'):
         unit=""
         if type(col.find(DCC+'unit')) !=type(None):
             unit=col.find(DCC+'unit').text
-            print(unit)
-        if col.attrib==searchattributes and searchunit==unit:
-            print('found column')
-            return col
-    raise ValueError("No column found with the required attributes")
-    return None
+        #if col.attrib==searchattributes and searchunit==unit:
+        if match_attributes(col.attrib, searchattributes,unit,searchunit):
+            cols.append(col)
+            #return col
+    if len(cols)==0: 
+        raise ValueError("No column found with the required attributes")
+    return cols
 
 def getRowFromColumn(column, table, customerTag):
 
     try:
-        tagcol=getColumnFromTable(table,{'scope':'dataInfo','dataCategory':'customerTag','measurand':'metaData'},'nan')
+        tagcol=getColumnFromTable(table,{'scope':'-','dataCategory':'-','measurand':'-','metaDataCategory':'customerTag'},'-')
     except:
         raise RuntimeError("The table does not contain a customerTag column")
 
     """Iterate through the tags to find the row number of the specified tag"""
-    tags=tagcol[2].text.split()
+    tags=tagcol[0][2].text.split()
     found=False
     for i, tag in enumerate(tags):
         if tag==customerTag:
@@ -330,9 +340,10 @@ def getRowFromColumn(column, table, customerTag):
             break
     if found:    
        searchValue=column[2].text.split()[i]
+       return searchValue
     else: 
        raise Exception("The requested customer tag was not found")
-    return searchValue
+       return None
 
 def search(root, tableAttrib, colAttrib, unit, customerTag=None):
    """
@@ -360,12 +371,15 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None):
            tab=getTableFromResult(res, tableAttrib)
            try:
                """Find the rigt column using attributes and unit"""
-               col=getColumnFromTable(tab,colAttrib,unit)
+               cols=getColumnFromTable(tab,colAttrib,unit)
                try:
                    if type(customerTag)!=type(None):
-                      searchValue=lookup.getRowFromColumn(col,tab,customerTag)
+                       searchValue=[]
+                       for col in cols:
+                           searchValue.append(getRowFromColumn(col,tab,customerTag))
                    else:
-                       searchValue=col[2].text.split()
+                       #searchValue=col[2].text.split()
+                       searchValue=cols
                except Exception as e:
                    usertagwarning=e.args[0]
            except Exception as e:
@@ -375,8 +389,33 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None):
    except Exception as e:
        warning=e.args[0]
 
+   for col in cols:
+       print("")
+       print(col.attrib)
+       print("Unit:" +col.find(DCC+'unit').text)
+       if type(customerTag)!=type(None):
+            print(getRowFromColumn(col,tab,customerTag))
+       else:
+            print(col[2].text.split())
+
    return [searchValue, usertagwarning, colwarning, warning]
 
+def get_statement(root, ID, lang="en"):
+    statements=root.find(DCC+"administrativeData").find(DCC+"statements")
+    returnstatement=None
+    for statement in statements:
+        if ID==statement.attrib['statementId'] or ID=='-':
+            for heading in statement.findall(DCC+"heading"):
+                if heading.attrib['lang']==lang:
+                    print("---Header-----")
+                    print(heading.text)
+            for body in statement.findall(DCC+"body"):
+                if body.attrib['lang']==lang:
+                    print("---Body-----")
+                    print(body.text)
+                    print("-----------------------------------------------------------------")
+        returnstatement = statement
+    return returnstatement
 
 def printelement(element):
     #INPUT xml-element
