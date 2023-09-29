@@ -17,7 +17,7 @@ To generate the xml-based DCC the python file excel2dcc.py can used using the fo
 
 To view the content of a xml-based DCC the python file excel2dcc.py using the commandline below. This will generate the file view_content.xlsx. 
 
-'> python dcc2excel.py Examples/DFM-T220000.xml
+'> python dcc2excel.py Examples/DFM-T220000.xml DCC_template.xlsx 
 
 
 ToDo:
