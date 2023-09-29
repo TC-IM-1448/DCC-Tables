@@ -1,0 +1,441 @@
+<?xml version="1.0" ?>
+<dcc:digitalCalibrationCertificate schemaVersion="1.0.0" xmlns:dcc="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://dfm.dk dcc.xsd">
+   <dcc:administrativeData>
+      <dcc:dccSoftware>
+         <dcc:software>
+            <dcc:name>
+               <dcc:content>excel2dcc.py</dcc:content>
+            </dcc:name>
+            <dcc:release>v0.0.1</dcc:release>
+         </dcc:software>
+      </dcc:dccSoftware>
+      <dcc:coreData>
+         <dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
+         <dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
+         <dcc:usedLangCodeISO639_1>en</dcc:usedLangCodeISO639_1>
+         <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+         <dcc:uniqueIdentifier>DFM-T220000</dcc:uniqueIdentifier>
+         <dcc:customerIdentification>
+            <dcc:value>8000650430</dcc:value>
+         </dcc:customerIdentification>
+         <dcc:receiptDate>2022-02-18</dcc:receiptDate>
+         <dcc:beginPerformanceDate>2022-02-21</dcc:beginPerformanceDate>
+         <dcc:endPerformanceDate>2022-02-22</dcc:endPerformanceDate>
+         <dcc:performanceLocation>laboratory</dcc:performanceLocation>
+         <dcc:issueDate>2022-02-23</dcc:issueDate>
+      </dcc:coreData>
+      <dcc:calibrationLaboratory>
+         <dcc:contact>
+            <dcc:name>
+               <dcc:content>DFM A/S</dcc:content>
+            </dcc:name>
+            <dcc:eMail>Administration@dfm.dk</dcc:eMail>
+            <dcc:phone>+45 7730 5800</dcc:phone>
+            <dcc:location>
+               <dcc:city>Hørsholm</dcc:city>
+               <dcc:countryCode>DK</dcc:countryCode>
+               <dcc:postCode>2970</dcc:postCode>
+               <dcc:street>Kogle Alle</dcc:street>
+               <dcc:streetNo>5</dcc:streetNo>
+               <dcc:further>
+                  <dcc:content>www.dfm.dk</dcc:content>
+               </dcc:further>
+            </dcc:location>
+         </dcc:contact>
+      </dcc:calibrationLaboratory>
+      <dcc:customer>
+         <dcc:name>
+            <dcc:content>Danish Measurement Company Ltd.</dcc:content>
+         </dcc:name>
+         <dcc:attPerson>Mads Målermand</dcc:attPerson>
+         <dcc:eMail>mm@dmc.dk</dcc:eMail>
+         <dcc:phone>34507624</dcc:phone>
+         <dcc:location>
+            <dcc:city>Måløv</dcc:city>
+            <dcc:countryCode>DK</dcc:countryCode>
+            <dcc:postCode>9899</dcc:postCode>
+            <dcc:street>Målervej</dcc:street>
+            <dcc:streetNo>16, 1. sal</dcc:streetNo>
+            <dcc:further>
+               <dcc:content/>
+            </dcc:further>
+         </dcc:location>
+      </dcc:customer>
+      <dcc:respPersons>
+         <dcc:respPerson>
+            <dcc:person>
+               <dcc:name>
+                  <dcc:content>J. S. Nielsen</dcc:content>
+               </dcc:name>
+            </dcc:person>
+         </dcc:respPerson>
+      </dcc:respPersons>
+      <dcc:items>
+         <dcc:item itemId="itemID1">
+            <dcc:name>
+               <dcc:content lang="en">Temperature sensor</dcc:content>
+            </dcc:name>
+            <dcc:manufacturer>
+               <dcc:name>
+                  <dcc:content>Amitek</dcc:content>
+               </dcc:name>
+            </dcc:manufacturer>
+            <dcc:category>item</dcc:category>
+            <dcc:model>Platinum Super</dcc:model>
+            <dcc:identifications>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>MålerID</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>customer</dcc:issuer>
+                  <dcc:value>NN32</dcc:value>
+               </dcc:identification>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>Serienummer</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>manufacturer</dcc:issuer>
+                  <dcc:value>X34hwk4579</dcc:value>
+               </dcc:identification>
+            </dcc:identifications>
+         </dcc:item>
+         <dcc:item itemId="itemID2">
+            <dcc:name>
+               <dcc:content lang="en">display unit</dcc:content>
+            </dcc:name>
+            <dcc:manufacturer>
+               <dcc:name>
+                  <dcc:content>Amitek</dcc:content>
+               </dcc:name>
+            </dcc:manufacturer>
+            <dcc:category>item</dcc:category>
+            <dcc:model>Gold edition</dcc:model>
+            <dcc:identifications>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>MålerID</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>customer</dcc:issuer>
+                  <dcc:value>NN14</dcc:value>
+               </dcc:identification>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>Serienummer</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>manufacturer</dcc:issuer>
+                  <dcc:value>afl234jfeee</dcc:value>
+               </dcc:identification>
+            </dcc:identifications>
+         </dcc:item>
+         <dcc:item itemId="itemID3">
+            <dcc:name>
+               <dcc:content lang="en">another display unit</dcc:content>
+            </dcc:name>
+            <dcc:manufacturer>
+               <dcc:name>
+                  <dcc:content>Amitek</dcc:content>
+               </dcc:name>
+            </dcc:manufacturer>
+            <dcc:category>item</dcc:category>
+            <dcc:model>silver edition</dcc:model>
+            <dcc:identifications>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>MålerID</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>customer</dcc:issuer>
+                  <dcc:value>NN15</dcc:value>
+               </dcc:identification>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>Serienummer</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>manufacturer</dcc:issuer>
+                  <dcc:value>lqmdu2498710</dcc:value>
+               </dcc:identification>
+            </dcc:identifications>
+         </dcc:item>
+         <dcc:item itemId="equipID4">
+            <dcc:name>
+               <dcc:content lang="en">Acetylene stabilised Laser at 1542 nm</dcc:content>
+            </dcc:name>
+            <dcc:manufacturer>
+               <dcc:name>
+                  <dcc:content>DFM </dcc:content>
+               </dcc:name>
+            </dcc:manufacturer>
+            <dcc:category>Reference</dcc:category>
+            <dcc:model>stabilaser</dcc:model>
+            <dcc:identifications>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>MålerID</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>customer</dcc:issuer>
+                  <dcc:value>DFM 1542</dcc:value>
+               </dcc:identification>
+               <dcc:identification>
+                  <dcc:name>
+                     <dcc:content>Serienummer</dcc:content>
+                  </dcc:name>
+                  <dcc:issuer>manufacturer</dcc:issuer>
+                  <dcc:value>1</dcc:value>
+               </dcc:identification>
+            </dcc:identifications>
+         </dcc:item>
+      </dcc:items>
+      <dcc:accreditation accrId="DFM255">
+         <dcc:accreditationCountry>DK</dcc:accreditationCountry>
+         <dcc:accreditationBody>DANAK</dcc:accreditationBody>
+         <dcc:accreditationLabId>255</dcc:accreditationLabId>
+         <dcc:accreditationNorm>17025</dcc:accreditationNorm>
+         <dcc:accreditationApplicability>2</dcc:accreditationApplicability>
+      </dcc:accreditation>
+      <dcc:statements>
+         <dcc:statement statementId="statement01">
+            <dcc:category>general</dcc:category>
+            <dcc:heading lang="en">Reprint</dcc:heading>
+            <dcc:heading lang="da">Gengivelse af rapport i uddrag</dcc:heading>
+            <dcc:body lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcc:body>
+            <dcc:body lang="da">Denne rapport må ikke gengives i uddrag undtaget med laboratoriets skriftlige tilladelse.</dcc:body>
+         </dcc:statement>
+         <dcc:statement statementId="statement02">
+            <dcc:category>general</dcc:category>
+            <dcc:heading lang="en">CIPM MRA</dcc:heading>
+            <dcc:heading lang="da">CIPM MRA</dcc:heading>
+            <dcc:body lang="en">This certificate is consistent with the capabilities that are included in Appendix C of the MRA drawn up by the CIPM. Under the MRA, all participating institutes recognize the validity of each other’s calibration and measurement certificates for the quantities, ranges and measurement uncertainties specified in Appendix C (for details see http://www.bipm.org).</dcc:body>
+            <dcc:body lang="da">Dette certifikat er i overensstemmelse med måleevnerne angivet i MRA’ens Appendiks C, som er redigeret af CIPM. I henhold til MRA’en anerkender alle deltagende institutter gyldigheden af hinandens kalibrerings- og målecertifikater for de målestørrelser, måleområder og måleusikkerheder som er specificeret i Appendiks C 
+(for detaljer se www.bipm.org).</dcc:body>
+         </dcc:statement>
+         <dcc:statement statementId="meth02">
+            <dcc:category>method</dcc:category>
+            <dcc:heading lang="en"/>
+            <dcc:heading lang="da"/>
+            <dcc:body lang="en">The calibration is carried out by using the gravimetric performance test method. The used method is based on the
+DS/EN ISO 8655 standard. The used liquid is water according to DS/EN ISO 3696, grade 3.
+The conversion from mass to volume is done by using the calculation in DS/ISO/TR 20461 and
+DS/EN ISO 8655 part 6 for Z-factor.</dcc:body>
+            <dcc:body lang="da"/>
+         </dcc:statement>
+         <dcc:statement statementId="e02">
+            <dcc:category>exception</dcc:category>
+            <dcc:heading lang="en"/>
+            <dcc:heading lang="da"/>
+            <dcc:body lang="en">Measurements marked in exception column refering to this exception were carried out at new moon.</dcc:body>
+            <dcc:body lang="da"/>
+         </dcc:statement>
+         <dcc:statement statementId="e03">
+            <dcc:category>exception</dcc:category>
+            <dcc:heading lang="en"/>
+            <dcc:heading lang="da"/>
+            <dcc:body lang="en">Data marked with reference to this exception has increased uncertainty relative to the laboratory's best measurement capability  due to ill condition of the calibrated item. </dcc:body>
+            <dcc:body lang="da"/>
+         </dcc:statement>
+         <dcc:statement statementId="None">
+            <dcc:category>general</dcc:category>
+            <dcc:heading lang="en"/>
+            <dcc:heading lang="da"/>
+            <dcc:body lang="en"/>
+            <dcc:body lang="da"/>
+         </dcc:statement>
+         <dcc:statement statementId="acc1">
+            <dcc:category>accreditation</dcc:category>
+            <dcc:heading lang="en">Accreditation</dcc:heading>
+            <dcc:heading lang="da">Akkreditering</dcc:heading>
+            <dcc:body lang="en">The calibration is caried out under DANAK accreditation no..255 unless clearly statet in the tabel of results.
+
+DANAK is the national accreditation body in Denmark in compliance with Regulation (EC) No. 765/2008 of the European Parliament and of the Council.
+
+DANAK is covered by the multilateral agreements for testing, medical examination, calibration, proficiency testing providers and reference material producers under European co-operation for Accreditation (EA) and under International Laboratory Accreditation Cooperation (ILAC) based on peer-evaluation. This implies that accredited reports and certificates issued by companies accredited by DANAK are recognized across borders by members of EA and ILAC equal to reports and certificates issued by companies accredited by these members</dcc:body>
+            <dcc:body lang="da">Kalibreringen er udført under DANAK akkreditering nr. 255 med mindre det tydeligt fremgår i resultattabellerne.
+
+DANAK er det nationale akkrediteringsorgan i Danmark i overensstemmelse med Europa-Parlamentet og Rådetsforordning (EF) Nr. 765/2008.
+
+DANAK er omfattet af de multilaterale aftaler for prøvning, medicinsk undersøgelse, kalibrering, udbud af præstationsprøvning og produktion af referencematerialer i European co-operation for Accreditation (EA) og i International Laboratory Accreditation Cooperation (ILAC) baseret på peer-evaluering. Dette indebærer, at akkrediterede rapporter og certifikater udstedt af virksomheder akkrediteret af DANAK anerkendes på tværs af landegrænser af medlemmer i EA og ILAC på linje med rapporter og certifikater udstedt af disse medlemmers akkrediterede virksomheder.</dcc:body>
+         </dcc:statement>
+         <dcc:statement statementId="accex1">
+            <dcc:category>accreditationException</dcc:category>
+            <dcc:heading lang="en">Measurements not under accreditation</dcc:heading>
+            <dcc:heading lang="da">Ikke akkrediterede målinger</dcc:heading>
+            <dcc:body lang="en">Measurement of recistance between 1.5 and 3 \ohm is outside the scope of the laboratorys accreditation.</dcc:body>
+            <dcc:body lang="da">Måling af modstand i området fra 1.5 til 3 \ohm falder uden for laboratoriets kalibreringsområde.</dcc:body>
+         </dcc:statement>
+      </dcc:statements>
+      <dcc:settings>
+         <dcc:setting settingId="setting1">
+            <dcc:name>
+               <dcc:content lang="en">channel</dcc:content>
+               <dcc:content lang="da">kanal</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">pipette channel used</dcc:description>
+            <dcc:description lang="da">anvendt pipttekanal</dcc:description>
+            <dcc:value>1</dcc:value>
+         </dcc:setting>
+         <dcc:setting settingId="setting2">
+            <dcc:name>
+               <dcc:content lang="en">channel</dcc:content>
+               <dcc:content lang="da">kanal</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">pipette channel used</dcc:description>
+            <dcc:description lang="da">anvendt pipttekanal</dcc:description>
+            <dcc:value>2</dcc:value>
+         </dcc:setting>
+         <dcc:setting settingId="setting3">
+            <dcc:name>
+               <dcc:content lang="en">channel</dcc:content>
+               <dcc:content lang="da">kanal</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">pipette channel used</dcc:description>
+            <dcc:description lang="da">anvendt pipttekanal</dcc:description>
+            <dcc:value>3</dcc:value>
+         </dcc:setting>
+         <dcc:setting settingId="setting4">
+            <dcc:name>
+               <dcc:content lang="en">channel</dcc:content>
+               <dcc:content lang="da">kanal</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">pipette channel used</dcc:description>
+            <dcc:description lang="da">anvendt pipttekanal</dcc:description>
+            <dcc:value>4</dcc:value>
+         </dcc:setting>
+         <dcc:setting settingId="setting5">
+            <dcc:name>
+               <dcc:content lang="en">channel</dcc:content>
+               <dcc:content lang="da">kanal</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">pipette channel used</dcc:description>
+            <dcc:description lang="da">anvendt pipttekanal</dcc:description>
+            <dcc:value>5</dcc:value>
+         </dcc:setting>
+         <dcc:setting settingId="setting6">
+            <dcc:name>
+               <dcc:content lang="en">speed in</dcc:content>
+               <dcc:content lang="da">hastighed ind</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">speed for electronic pipette</dcc:description>
+            <dcc:description lang="da">hastighed for elektronisk pipette</dcc:description>
+            <dcc:value>5</dcc:value>
+         </dcc:setting>
+         <dcc:setting settingId="setting7">
+            <dcc:name>
+               <dcc:content lang="en">speed out</dcc:content>
+               <dcc:content lang="da">hastighed ud</dcc:content>
+            </dcc:name>
+            <dcc:description lang="en">speed for electronic pipette</dcc:description>
+            <dcc:description lang="da">hastighed for elektronisk pipette</dcc:description>
+            <dcc:value>5</dcc:value>
+         </dcc:setting>
+      </dcc:settings>
+   </dcc:administrativeData>
+   <dcc:measurementResults>
+      <dcc:measurementResult resId="result1">
+         <dcc:table itemRef="itemID1 itemID2" settingRef="setting6" tableId="TempCal">
+            <dcc:column dataCategory="-" measurand="-" metaDataCategory="customerTag" scope="-">
+               <dcc:name>
+                  <dcc:content lang="en">Customer Tags</dcc:content>
+               </dcc:name>
+               <dcc:unit>-</dcc:unit>
+               <dcc:stringXMLList>T0_0_degC T1_15_degC T2_25_degC T3_15_degC T4_0_degC</dcc:stringXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="TargetValue" measurand="Measure.Temperature" metaDataCategory="Data" scope="reference">
+               <dcc:name>
+                  <dcc:content lang="en">Calibration Point</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0 15 25 15 0</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" metaDataCategory="Data" scope="reference">
+               <dcc:name>
+                  <dcc:content lang="en">Reference Temperature</dcc:content>
+               </dcc:name>
+               <dcc:unit>\kelvin</dcc:unit>
+               <dcc:valueXMLList>273.15 288.15 298.15 288.15 273.15</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" metaDataCategory="Data" scope="reference">
+               <dcc:name>
+                  <dcc:content lang="en">Reference Temperature in instrument units</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0 15.001 25.002 15 -0.001</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" metaDataCategory="Data" scope="itemIndication">
+               <dcc:name>
+                  <dcc:content lang="en">Instrument indication  </dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>-0.1 15.1 25.2 15.3 0</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="Measure.Temperature" metaDataCategory="Data" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Instrument Error</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>-0.1 0.1 0.2 0.3 0</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="ExpandedUncertainty" measurand="Measure.Temperature" metaDataCategory="Data" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Uncertainty</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0.05 0.05 0.05 0.05 0.05</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="Measure.Temperature" metaDataCategory="Data" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">k</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>2 2 2 2 2</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="AcceptanceLimitUpper" measurand="Measure.Temperature" metaDataCategory="Data" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Upper acceptance limit for item bias</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:valueXMLList>0.2 0.2 0.2 0.2 0.2</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Conformity" measurand="Measure.Temperature" metaDataCategory="Data" scope="itemBias">
+               <dcc:name>
+                  <dcc:content lang="en">Conformaty statement</dcc:content>
+               </dcc:name>
+               <dcc:unit>\degreecelsius</dcc:unit>
+               <dcc:conformityXMLList>pass pass pass fail pass</dcc:conformityXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="repeatability" measurand="Measure.Resistance" metaDataCategory="Data" scope="itemIndication">
+               <dcc:name>
+                  <dcc:content lang="en">Indicated resistance of the calibration item</dcc:content>
+               </dcc:name>
+               <dcc:unit>\ohm</dcc:unit>
+               <dcc:valueXMLList>1 2 3 4 5</dcc:valueXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="-" measurand="Measure.Resistance" metaDataCategory="accreditationException" scope="-">
+               <dcc:name>
+                  <dcc:content lang="en">Accreditation exception</dcc:content>
+               </dcc:name>
+               <dcc:unit>-</dcc:unit>
+               <dcc:exceptionXMLList>None None accex1 None None</dcc:exceptionXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="ExpandedUncertainty" measurand="Measure.Temperature" metaDataCategory="Exception" scope="-">
+               <dcc:name>
+                  <dcc:content lang="en">Exception applies</dcc:content>
+               </dcc:name>
+               <dcc:unit>-</dcc:unit>
+               <dcc:exceptionXMLList>e03 None None e01 e02</dcc:exceptionXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Conformity" measurand="-" metaDataCategory="Statement" scope="-">
+               <dcc:name>
+                  <dcc:content lang="en">Basis of conformity statement</dcc:content>
+               </dcc:name>
+               <dcc:unit>-</dcc:unit>
+               <dcc:stringXMLList>s01 s01 s01 s01 s01</dcc:stringXMLList>
+            </dcc:column>
+            <dcc:column dataCategory="Value" measurand="-" metaDataCategory="UsedReferenceId" scope="-">
+               <dcc:name>
+                  <dcc:content lang="en">Reference Used</dcc:content>
+               </dcc:name>
+               <dcc:unit>-</dcc:unit>
+               <dcc:stringXMLList>equipID4 equipID4 equipID4 equipID4 equipID4</dcc:stringXMLList>
+            </dcc:column>
+         </dcc:table>
+      </dcc:measurementResult>
+   </dcc:measurementResults>
+</dcc:digitalCalibrationCertificate>
