@@ -1,9 +1,0 @@
-tableID,itemID,scope,category,Meas,unit,value
-NN_temperature1,item_ID1,itemIndication,Value,mass,\kilo\gram,
-NN_temperature1,item_ID1,itemIndication,Value,volume,\centi\metre\tothe{3},
-NN_temperature1,item_ID1,itemBias,Value,massConventional,\mili\gram,
-NN_temperature1,item_ID1,itemBias,Correction,massConventional,\mili\gram,
-NN_temperature1,item_ID1,itemBias,ExpandedUncertainty,massConventional,\mili\gram,
-NN_temperature1,item_ID1,dataInfo,UncertaintyCoverageFactor_k,metaData,\one,
-NN_temperature1,item_ID1,itemIndication,Value,centreOfGravity,\mm,
-NN_temperature1,item_ID1,itemIndication,Value,massVolumeCorrelation,\one,
