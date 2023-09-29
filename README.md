@@ -12,10 +12,15 @@ To generate xml-dcc's that are in accordance with schema, an Excel sheet is used
 
 To generate the xml-based DCC the python file excel2dcc.py can used using the following commandline from the main folder:
 
->> python excel2dcc.py Examples/DCC_GUI.xlsx
+'> python excel2dcc.py Examples/DCC_GUI.xlsx
 
 
 To view the content of a xml-based DCC the python file excel2dcc.py using the commandline below. This will generate the file view_content.xlsx. 
 
->> python dcc2excel.py Examples/DFM-T220000.xml
+'> python dcc2excel.py Examples/DFM-T220000.xml
 
+
+ToDo:
+- [ ] Make environment.yml for the python code
+- [ ] Comple python code. 
+- [ ] In dcc2excel.py: Add items and settings import functions.
