@@ -19,8 +19,16 @@ To view the content of a xml-based DCC the python file excel2dcc.py using the co
 
 '> python dcc2excel.py Examples/DFM-T220000.xml DCC_template.xlsx 
 
+# Screen shot
 
-ToDo:
+![image](https://github.com/TC-IM-1448/DCC-Tables/assets/123001590/25861559-a820-412f-9e90-73f2b591674a)
+
+![image](https://github.com/TC-IM-1448/DCC-Tables/assets/123001590/108218d7-7ca2-4340-9f8b-c98ed45766ef)
+
+![image](https://github.com/TC-IM-1448/DCC-Tables/assets/123001590/8ca06471-30eb-4e59-b5bd-9d33c325e9b6)
+
+
+# ToDo:
 - [ ] Make environment.yml for the python code
 - [ ] Comple python code. 
 - [ ] In dcc2excel.py: Add items and settings import functions.
