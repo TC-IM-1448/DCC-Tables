@@ -19,7 +19,7 @@ To view the content of a xml-based DCC the python file excel2dcc.py using the co
 
 '> python dcc2excel.py Examples/DFM-T220000.xml DCC_template.xlsx 
 
-# Screen shot
+# Screenshots
 
 ![image](https://github.com/TC-IM-1448/DCC-Tables/assets/123001590/25861559-a820-412f-9e90-73f2b591674a)
 
