@@ -153,67 +153,55 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="owner" type="dcc:contactType" minOccurs="0"/>
-            <xs:element name="identifications" type="dcc:identificationListType" minOccurs="0"/>
-
-            <xs:element name="item" type="dcc:itemType" maxOccurs="unbounded"/>
+            <xs:element name="equipment" type="dcc:equipmentType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="itemType">
+    <xs:complexType name="equipmentType">
         <xs:annotation>
             <xs:documentation>
-                An item that is calibrated in this DCC.
+                Equipment: I.e. Items under test and reference equipment.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
-            <xs:element name="installedSoftwares" type="dcc:softwareListType" minOccurs="0" />
-            <xs:element name="manufacturer" type="dcc:contactType"/>
-            <xs:element name="category" type="xs:string"/>
-            <xs:element name="model" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="identifications" type="dcc:identificationListType"/>
+        <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+        <xs:element name="productName" type="xs:string" minOccurs="0"/>
+        <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
+        <xs:element name="identification" type="dcc:identificationType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="itemId" type="xs:ID" use="required"/>
-    </xs:complexType>
-    
-    <xs:complexType name="identificationListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of additional identifications.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="identification" type="dcc:identificationType" maxOccurs="unbounded"/>
-        </xs:sequence>
+        <xs:attribute name="category"  use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="item"/>
+                        <xs:enumeration value="reference"/>
+                    </xs:restriction>
+                </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="equipId" type="xs:ID" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="identificationType">
         <xs:annotation>
             <xs:documentation>
-                An additional identification (eg. reference no., serial number, etc.).
+                Identification: I.e. serial number or identification number.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="issuer" minOccurs="0">
+        <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="value" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="issuer" >
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
+                        <xs:enumeration value="owner"/>
                         <xs:enumeration value="manufacturer"/>
                         <xs:enumeration value="calibrationLaboratory"/>
-                        <xs:enumeration value="customer"/>
-                        <xs:enumeration value="owner"/>
-                        <xs:enumeration value="other"/>
                     </xs:restriction>
                 </xs:simpleType>
-            </xs:element>
-            <xs:element name="value" type="dcc:notEmptyStringType"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        </xs:attribute>
     </xs:complexType>
+
 
     <xs:complexType name="performanceLocationType">
         <xs:annotation>
@@ -296,8 +284,8 @@
 
     <xs:complexType name="settingType">
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>
             <xs:element name="value" type="xs:decimal" minOccurs="0"/>

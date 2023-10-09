@@ -9,6 +9,7 @@ DCC='{https://dfm.dk}'
 et.register_namespace("dcc", DCC.strip('{}'))
 lang1='en'
 lang2='da'
+languages={'lang1':'en','lang2':'da'}
 
 def dictionaries_from_table(ws, rowtype='x'):
     """
@@ -58,17 +59,17 @@ def read_settings_from_Excel(root, ws):
     settingselement=et.SubElement(adm,DCC+"settings")
     for setting in settings:
         settingelement=et.SubElement(settingselement,DCC+"setting", attrib={'settingId':setting['id']})
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':lang1}).text=setting['body lang1']
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':lang2}).text=setting['body lang2']
-        DCCh.add_name(settingelement,lang="en",text=setting['heading lang1'])
-        DCCh.add_name(settingelement,lang="da",text=setting['heading lang2'])
+        et.SubElement(settingelement, DCC+"heading", attrib={'lang':lang1}).text=setting['heading lang1']
+        et.SubElement(settingelement, DCC+"heading", attrib={'lang':lang2}).text=setting['heading lang2']
+        et.SubElement(settingelement, DCC+"body", attrib={'lang':lang1}).text=setting['body lang1']
+        et.SubElement(settingelement, DCC+"body", attrib={'lang':lang2}).text=setting['body lang2']
         if type(setting['value'])!=type(None):
            et.SubElement(settingelement, DCC+"value").text=str(setting['value'])
         if type(setting['unit'])!=type(None):
            et.SubElement(settingelement, DCC+"unit").text=setting['unit']
     return root
 
-def read_item_from_Excel(root, ws):
+def read_equipment_from_Excel(root, ws):
     """
     Parameters
     ----------
@@ -86,11 +87,19 @@ def read_item_from_Excel(root, ws):
     #Make an item XML-element
     Itemslist=root.find(DCC+"administrativeData").find(DCC+"items")
     for item in items:
-       itemelement=DCCh.item(ID=item['id'], category=item['category'], manufacturer=item['manufacturer'],model=item['productName'])
-       DCCh.add_name(itemelement, 'en', item['description'])
-       DCCh.add_identification(itemelement,item['customerId'],issuer='customer', name_dk="MålerID", name_en="SensorID")
-       DCCh.add_identification(itemelement,item['serialNumber'],issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
-       Itemslist.append(itemelement)
+        equipmentelement=et.SubElement(Itemslist,DCC+"equipment",attrib={'equipId':item['id'], 'category':item['category']})
+        for key,value in languages.items():
+            et.SubElement(equipmentelement, DCC+"heading", attrib={'lang':value}).text=item['heading '+key]
+        for key in ['manufacturer', 'productName', 'productNumber']:
+            if type(item[key])!=type(None):
+                et.SubElement(equipmentelement, DCC+key).text=item[key]
+        for idn in ['id1','id2']:
+     
+            if type(item[idn])!=type(None):
+                identelement=et.SubElement(equipmentelement, DCC+"identification", attrib={'issuer':item[idn+' issuer']})
+            for key,value in languages.items():
+                et.SubElement(identelement, DCC+"heading", attrib={'lang':value}).text=item[idn+' heading '+key]
+            et.SubElement(identelement, DCC+"value").text=item[idn]
     return root
 
 def read_admin_from_Excel(root, ws):
@@ -202,7 +211,8 @@ if __name__ == "__main__":
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
     root = read_accreditation_from_Excel(root, ws=wb["Accreditation"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
-    root = read_item_from_Excel(      root, ws=wb["Equipment"])
+    #root = read_item_from_Excel(      root, ws=wb["Equipment"])
+    root = read_equipment_from_Excel(      root, ws=wb["Equipment"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
     for cell in wb[tableSheet]['A']:
         if cell.value=='DCCTable':

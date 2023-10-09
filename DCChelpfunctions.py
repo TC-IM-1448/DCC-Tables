@@ -322,6 +322,7 @@ def getColumnFromTable(table,searchattributes, searchunit=""):
             #return col
     if len(cols)==0: 
         raise ValueError("No column found with the required attributes")
+        return None
     return cols
 
 def getRowFromColumn(column, table, customerTag):
