@@ -134,7 +134,7 @@ def read_table_from_Excel(root, ws, cell0):
     numRows = cell0.offset(6,1).value
     numColumns = cell0.offset(7,1).value
 
-    numHeadings=6
+    numHeadings=7
     nRows = int(numRows)+numHeadings
     nCols = int(numColumns)
     cell = cell0.offset(8,1)
@@ -147,7 +147,7 @@ def read_table_from_Excel(root, ws, cell0):
                                 measurandType=c[2],
                                 unit=c[3],
                                 metaDataCategory=c[4],
-                                humanHeading = c[5],
+                                humanHeading = [c[5],c[6]],
                                 columnData= list(map(str, c[numHeadings:])))
         columns.append(col)
 
@@ -159,9 +159,11 @@ def read_table_from_Excel(root, ws, cell0):
     for col in columns:
         attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType, 'metaDataCategory':col.metaDataCategory}
         xmlcol=et.Element(DCC+'column',attrib=attributes)
+        for key,value in languages.items():
+            et.SubElement(xmlcol, DCC+"heading", attrib={'lang':value}).text=col.humanHeading[key]
         if type(col.unit)!=type(None):
           et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
-        DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
+        #DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
         #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
         if attributes['metaDataCategory']=='Data':
            if attributes['dataCategory']=='Conformity':

@@ -20,7 +20,7 @@ class DccTableColumn():
     measurandType = ""
     unit = ""
     metaDataCategory=""
-    humanHeading = ""
+    humanHeading = {}
     columnData = []
 
     def __init__(self,
@@ -29,7 +29,7 @@ class DccTableColumn():
                 measurandType="",
                 unit="",
                 metaDataCategory="",
-                humanHeading = "",
+                humanHeading = {},
                 columnData=[]):
         """ """
         self.columnType = columnType
@@ -37,7 +37,9 @@ class DccTableColumn():
         self.measurandType = measurandType
         self.unit = unit
         self.metaDataCategory = metaDataCategory
-        self.humanHeading = humanHeading
+        self.humanHeading = {}
+        for i, hh in enumerate(humanHeading):
+            self.humanHeading['lang'+str(i+1)] = hh
         self.columnData = columnData
 
     def get_attributes(self):

@@ -587,7 +587,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="unit" type="dcc:unitType" minOccurs="0"/>
             <xs:choice>
 		<xs:element name="valueXMLList" type="dcc:decimalXMLListType"/>
