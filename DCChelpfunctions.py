@@ -422,6 +422,63 @@ def get_statement(root, ID, lang="en"):
         returnstatement = statement
     return returnstatement
 
+def get_item(root, ID,lang='en'):
+    items=root.find(DCC+"administrativeData").find(DCC+"items")
+    returnitem=[]
+    for item in items:
+        if ID==item.attrib['equipId'] or ID=='*':
+            returnitem.append(item)
+            print('------------'+item.attrib['equipId']+'------------')
+            for heading in item.findall(DCC+"heading"):
+                if heading.attrib['lang']==lang:
+                    print(heading.text)
+            for identification in item.findall(DCC+"identification"):
+                for heading in identification.findall(DCC+"heading"):
+                    if heading.attrib['lang']==lang:
+                        print("------")
+                        print(heading.text)
+                print(identification.find(DCC+"value").text)
+    return returnitem
+def get_table(root, ID='*', lang='en'):
+    returntable=[]
+    tables=root.find(DCC+'measurementResults').find(DCC+'measurementResult').findall(DCC+'table')
+    for table in tables:
+        if ID==table.attrib['tableId'] or ID=='*':
+            returntable.append(table)
+            print('----------------table-------------')
+            print('tableId: '+table.attrib['tableId'])
+            print('itemRef: '+table.attrib['itemRef'])
+            print('settingRef: '+table.attrib['settingRef'])
+    return returntable
+
+"""
+def get_item(root, ID="*", issuer="*", lang='en'):
+    items=root.find(DCC+"administrativeData").find(DCC+"items")
+    returnitem=[]
+    if issuer!="*":
+        selectstring="identification[@issuer='"+issuer+"']"
+    else:
+        selectstring="identification"
+    for item in items:
+        identification=item.find(DCC+selectstring)
+        idvalue=identification.find(DCC+"value").text
+        if ID==idvalue or ID=='*':
+            returnitem.append(item)
+            print('------------'+item.attrib['equipId']+'------------')
+            for heading in item.findall(DCC+"heading"):
+                if heading.attrib['lang']==lang:
+                    print(heading.text)
+            for identification in item.findall(DCC+"identification"):
+                for heading in identification.findall(DCC+"heading"):
+                    if heading.attrib['lang']==lang:
+                        print("------")
+                        print(heading.text)
+                print(identification.find(DCC+"value").text)
+    return returnitem
+"""
+
+           
+
 def printelement(element):
     #INPUT xml-element
     #Print out the whole structure of an element to screen
