@@ -96,10 +96,6 @@ def transpose_2d_list(matrix):
 def add_name(element,lang="",text="",append=0):
     #A human readable name may be given to various elements such as quantitie, result, item, identification
     #printelement(element)
-    #DCC='{https://ptb.de/dcc}'
-    #SI='{https://ptb.de/si}'
-    #et.register_namespace("si", SI.strip('{}'))
-    #et.register_namespace("dcc", DCC.strip('{}'))
     name=element.find(DCC+'name')
     if type(name)==type(None):
         name=et.Element(DCC+'name')
@@ -301,9 +297,9 @@ def getTableFromResult(result, tableAttrib):
 
 def match_attributes(att,searchatt, unit, searchunit):
     for key in att.keys():
-        if att[key]!='-' and searchatt[key]!='-' and att[key]!=searchatt[key]:
+        if att[key]!='-' and searchatt[key]!='*' and att[key]!=searchatt[key]:
             return False
-    if unit!='-' and searchunit!='-' and unit!=searchunit:
+    if unit!='-' and searchunit!='*' and unit!=searchunit:
         return False
     return True
 
@@ -330,25 +326,25 @@ def getColumnFromTable(table,searchattributes, searchunit=""):
 def getRowFromColumn(column, table, customerTag):
 
     try:
-        tagcol=getColumnFromTable(table,{'scope':'-','dataCategory':'-','measurand':'-','metaDataCategory':'customerTag'},'-')
+        tagcol=getColumnFromTable(table,{'scope':'*','dataCategory':'*','measurand':'*','metaDataCategory':'customerTag'},'*')
     except:
         raise RuntimeError("The table does not contain a customerTag column")
 
     """Iterate through the tags to find the row number of the specified tag"""
-    tags=tagcol[0][2].text.split()
+    tags=tagcol[0][-1].text.split()
     found=False
     for i, tag in enumerate(tags):
         if tag==customerTag:
             found=True
             break
     if found:    
-       searchValue=column[2].text.split()[i]
+       searchValue=column[-1].text.split()[i]
        return searchValue
     else: 
        raise Exception("The requested customer tag was not found")
        return None
 
-def search(root, tableAttrib, colAttrib, unit, customerTag=None):
+def search(root, tableAttrib, colAttrib, unit, customerTag=None, lang="en"):
    """
    INPUT: 
    root: etree root element 
@@ -365,6 +361,7 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None):
    warning="-"
    usertagwarning="-"
    colwarning="-"
+   cols=[]
 
    try:
        """Find the right result using resId"""
@@ -394,20 +391,25 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None):
 
    for col in cols:
        print("")
-       print(col.attrib)
+       selectstring="heading[@lang='"+lang+"']"
+       heading=col.find(DCC+selectstring)
+       if type(heading) != type(None):
+           print(heading.text)
+       #print(col.attrib)
        print("Unit:" +col.find(DCC+'unit').text)
        if type(customerTag)!=type(None):
             print(getRowFromColumn(col,tab,customerTag))
        else:
-            print(col[2].text.split())
+            print(col[-1].text.split())
 
-   return [searchValue, usertagwarning, colwarning, warning]
+   #return [searchValue, usertagwarning, colwarning, warning]
+   return searchValue
 
 def get_statement(root, ID, lang="en"):
     statements=root.find(DCC+"administrativeData").find(DCC+"statements")
     returnstatement=None
     for statement in statements:
-        if ID==statement.attrib['statementId'] or ID=='-':
+        if ID==statement.attrib['statementId'] or ID=='*':
             for heading in statement.findall(DCC+"heading"):
                 if heading.attrib['lang']==lang:
                     print("---Header-----")
