@@ -76,43 +76,30 @@ def lookupFromMappingFile(mapFileName:str, dccFileName:str):
     outFileName = mapFileName.rsplit(".",maxsplit=1)[0]+'_QueryResult.xlsx'
     wb.save(outFileName)
 
-
-    # with open(filename,"r") as f:
-    #     print(f.readline())
-    #     lines = f.readlines()
-    #     for l in lines:
-    #         temp = l.split(',')
-    #         args = temp[:-1]
-    #         unit = temp[-2]
-    #         print(args)
-    #         tbl, col = LookupColumn(dccFile, *args)
-    #         dcccol = xml2dccColumn(col, unit)
-    #         values.append(dcccol.columnData)
-    #         outs.append(''.join(l[:-1])+','+','.join(dcccol.columnData)+'\n')
-
-    # with open(filename[:-4]+'Out.csv', "w") as f:
-    #     f.write('TableID, itemID, scope, category, measurand, unit, value\n')
-    #     f.writelines(outs)
-
-
 if __name__=="__main__":
     #################
     #first argument is dcc xml file
     #second argument is excel template to use
 
-    # import sys
-    # args=sys.argv[1:]
-    # print(len(args))
-    # if len(args)==0:
-    #     xmlfile="DFM-T220000.xml"
-    # else:
-    #     xmlfile=args[0]
-    # if len(args)==2:
-    #     WB=pyxl.load_workbook(args[1])
-    # else:    
-    #     mapfile = 'Examples/Mapping_Novo_temperatur_Certifikat.xlsx'
+    import sys
+    args=sys.argv[1:]
+    print(len(args))
+    if len(args)==0:
+        mapFileName ='Examples'+os.sep+'Mapping_Novo_temperatur_Certifikat.xlsx'
+        dccFileName = 'Examples'+os.sep+'Stip-230063-V1.xml'
+        lookupFromMappingFile(mapFileName, dccFileName)
+    elif len(args)==2:
+        mapFileName = args[0]
+        dccFileName = args[1]
+        lookupFromMappingFile(mapFileName, dccFileName)
+    else: 
+        helpstatement = """call dccquery.py using the following arguments: \n 
+        >> python dccquery.py [mapping file e.g. mapping.xlsx] [DCC file e.g. dcc.xml] """
+        print(helpstatement)
+    
+        
+    # mapfile = 'Examples/Mapping_Novo_temperatur_Certifikat.xlsx'
+    # lookupFromMappingFile('Examples'+os.sep+'Mapping_Novo_temperatur_Certifikat.xlsx', 'Examples'+os.sep+'Stip-230063-V1.xml')
    
-    # DCC='{https://dfm.dk}'
 
-    lookupFromMappingFile('Examples'+os.sep+'Mapping_Novo_temperatur_Certifikat.xlsx', 'Examples'+os.sep+'Stip-230063-V1.xml')
          
