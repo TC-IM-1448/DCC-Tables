@@ -7,42 +7,31 @@ from DCChelpfunctions import search
 LANG='da'
 DCC='{https://dfm.dk}'
 
-
-
-
 def lookupFromMappingFile(mapFileName:str, dccFileName:str):
-    # filename = 'LookupList.csv'
+    """LookupFromMappingFile """
     root = etree.parse(dccFileName)
-
-    values = []
-    outs = []
-    query_types = []
 
     wb = pyxl.load_workbook(mapFileName)
     sheet = wb['Mapping']
-    colA = list(sheet.columns)[1]
     n_rows = sheet.max_row
     n_cols = sheet.max_column
-    cols = sheet.columns
-    rows = sheet.rows
 
     for i in range(2, n_rows-1):
+        # Itterate over the first column in the mapping sheet until '--END--' is reached or last row
         cellA = sheet.cell(row=i, column=1).value
         if cellA == "--END--": break
         
         queryType = str(sheet.cell(row=i, column=3).value)
-        print(queryType, end = "   ")
+        # print(queryType, end = "   ")
 
+        # distinguish between two query types: xpath and data.
         if queryType == 'xpath': 
             cellC = sheet.cell(row=i, column=4).value
             xpath = cellC
             s = xpath.split("/dcc:digitalCalibrationCertificate")[1]
             ss = s.replace("dcc:", DCC)
-            # print(ss, end= "    ")
             elm = root.find(ss)
-            # print(elm)
             elm = elm.text
-            print(elm)
             cell = sheet.cell(row=i, column=n_cols+1, value=elm)
         elif queryType == 'data':
             tableId = sheet.cell(row=i, column=5).value
@@ -67,7 +56,6 @@ def lookupFromMappingFile(mapFileName:str, dccFileName:str):
                             unit = unit, 
                             customerTag = customerTag
                             )[0]
-            print(data)
             cell = sheet.cell(row=i, column=n_cols+1, value=data)
         else: 
             cell = sheet.cell(row=i, column=n_cols+1, value="FAILED")
@@ -96,10 +84,5 @@ if __name__=="__main__":
         helpstatement = """call dccquery.py using the following arguments: \n 
         >> python dccquery.py [mapping file e.g. mapping.xlsx] [DCC file e.g. dcc.xml] """
         print(helpstatement)
-    
-        
-    # mapfile = 'Examples/Mapping_Novo_temperatur_Certifikat.xlsx'
-    # lookupFromMappingFile('Examples'+os.sep+'Mapping_Novo_temperatur_Certifikat.xlsx', 'Examples'+os.sep+'Stip-230063-V1.xml')
-   
 
          
