@@ -36,7 +36,7 @@ def lookupFromMappingFile(mapFileName:str, dccFileName:str):
             # print(ss)
             elm = root.findall(ss)[0]
             elm = elm.text
-            cell = sheet.cell(row=i, column=n_cols+1, value=elm)
+            cell = sheet.cell(row=i, column=14, value=elm)
         elif queryType == 'data':
             tableId = sheet.cell(row=i, column=5).value
             itemRef = sheet.cell(row=i, column=6).value
@@ -60,9 +60,9 @@ def lookupFromMappingFile(mapFileName:str, dccFileName:str):
                             unit = unit, 
                             customerTag = customerTag
                             )[0]
-            cell = sheet.cell(row=i, column=n_cols+1, value=data)
+            cell = sheet.cell(row=i, column=14, value=data)
         else: 
-            cell = sheet.cell(row=i, column=n_cols+1, value="FAILED")
+            cell = sheet.cell(row=i, column=14, value="FAILED")
 
 
     outFileName = mapFileName.rsplit(".",maxsplit=1)[0]+'_QueryResult.xlsx'
