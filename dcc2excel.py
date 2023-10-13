@@ -39,7 +39,7 @@ if __name__=="__main__":
     args=sys.argv[1:]
     print(len(args))
     if len(args)==0:
-        xmlfile="DFM-T220000.xml"
+        xmlfile="Examples/DFM-T220000.xml"
     else:
         xmlfile=args[0]
     if len(args)==2:
