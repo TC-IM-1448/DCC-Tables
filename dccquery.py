@@ -28,7 +28,10 @@ def lookupFromMappingFile(mapFileName:str, dccFileName:str):
         if queryType == 'xpath': 
             cellC = sheet.cell(row=i, column=4).value
             xpath = cellC
-            s = xpath.split("/dcc:digitalCalibrationCertificate")[1]
+            if xpath.startswith("/dcc:digitalCalibrationCertificate"):
+                s = xpath.split("/dcc:digitalCalibrationCertificate")[1]
+            else: 
+                s = xpath
             ss = s.replace("dcc:", DCC)
             elm = root.find(ss)
             elm = elm.text
