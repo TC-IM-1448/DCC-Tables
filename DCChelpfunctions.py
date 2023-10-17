@@ -439,6 +439,7 @@ def get_item(root, ID,lang='en'):
                         print(heading.text)
                 print(identification.find(DCC+"value").text)
     return returnitem
+
 def get_table(root, ID='*', lang='en'):
     returntable=[]
     tables=root.find(DCC+'measurementResults').find(DCC+'measurementResult').findall(DCC+'table')
@@ -450,6 +451,22 @@ def get_table(root, ID='*', lang='en'):
             print('itemRef: '+table.attrib['itemRef'])
             print('settingRef: '+table.attrib['settingRef'])
     return returntable
+
+def get_setting(root, ID='*', lang='en'):
+    returnsetting=[]
+    settings=root.find(DCC+"administrativeData").find(DCC+"settings")
+    for setting in settings:
+        if ID==setting.attrib['settingId'] or ID=='*':
+            returnsetting.append(setting)
+            print('---------------'+setting.attrib['settingId']+'-------------')
+            for heading in setting.findall(DCC+"heading"):
+                if heading.attrib['lang']==lang:
+                    print(heading.text)
+            for body in setting.findall(DCC+"body"):
+                if body.attrib['lang']==lang:
+                    print(body.text)
+            print('value: '+setting.find(DCC+'value').text)
+    return returnsetting
 
 """
 def get_item(root, ID="*", issuer="*", lang='en'):

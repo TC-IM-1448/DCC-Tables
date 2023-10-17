@@ -30,6 +30,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="administrativeData" type="dcc:administrativeDataType"/>
 
             <xs:element name="measurementResults" type="dcc:measurementResultListType"/>
@@ -69,7 +70,7 @@
             <xs:element name="coreData" type="dcc:coreDataType"/>
             <xs:element name="items" type="dcc:itemListType"/>
             <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
-            <xs:element name="calibrationLaboratory" type="dcc:calibrationLaboratoryType"/>
+            <xs:element name="calibrationLaboratory" type="dcc:contactType"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
             <xs:element name="customer" type="dcc:contactType"/>
             <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
@@ -95,7 +96,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcc:notEmptyStringType"/>
             <xs:element name="release" type="dcc:notEmptyStringType"/>
             <xs:element name="type" minOccurs="0">
                <xs:simpleType>
@@ -127,7 +129,7 @@
             <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type"/>
             <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
             <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
-            <xs:element name="uniqueIdentifier" type="dcc:notEmptyStringType"/>
+            <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
             <xs:element name="customerIdentification" type="dcc:identificationType" minOccurs="0"/>
             <xs:element name="receiptDate" type="xs:date" minOccurs="0"/>
             <xs:element name="beginPerformanceDate" type="xs:date"/>
@@ -340,8 +342,9 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="numrows" type="xs:int" minOccurs="0"/>
+            <xs:element name="numcols" type="xs:int" minOccurs="0"/>
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
         </xs:element>
         </xs:sequence>
@@ -376,7 +379,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
             <xs:element name="table" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
@@ -413,7 +416,7 @@
             <xs:element name="accreditationCountry" minOccurs="1"/>
             <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationLabId" minOccurs="1"/>
-            <xs:element name="accreditationNorm" minOccurs="0"/> <!--type med specifikke værdier 17025, 17035, ... -->
+            <xs:element name="accreditationNorm" minOccurs="0"/> <!--type with specific values i.e. 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
         </xs:sequence>
         <xs:attribute name="accrId" type="xs:ID" use="required"/>
@@ -422,20 +425,13 @@
     <xs:simpleType name="accreditationApplicabilityType">
         <xs:annotation>
             <xs:documentation>
-                "1: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException attribute to indicate this
+                "1: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException to indicate this
               2: all results are under accreditation."
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="1"/>
             <xs:enumeration value="2"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="accreditationAppliesType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="y"/>
-            <xs:enumeration value="n"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -499,6 +495,7 @@
 
     <xs:complexType name="locationType">
         <xs:choice maxOccurs="unbounded">
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="city" type="dcc:notEmptyStringType"/>
             <xs:element name="countryCode" type="dcc:stringISO3166Type"/>
             <xs:element name="postCode" type="dcc:notEmptyStringType"/>
@@ -526,7 +523,9 @@
 
     <xs:complexType name="contactType">
         <xs:sequence>
-            <xs:element name="name" type="dcc:textType"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcc:textType" minOccurs="0"/>
+            <xs:element name="companyName" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="attPerson" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>

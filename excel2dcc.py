@@ -85,6 +85,8 @@ def read_equipment_from_Excel(root, ws):
     items=dictionaries_from_table(ws)
 
     #Make an item XML-element
+    administrativeData=root.find(DCC+"administrativeData")
+    Itemslist=et.SubElement(administrativeData,  DCC+'items')
     Itemslist=root.find(DCC+"administrativeData").find(DCC+"items")
     for item in items:
         equipmentelement=et.SubElement(Itemslist,DCC+"equipment",attrib={'equipId':item['id'], 'category':item['category']})
@@ -103,9 +105,11 @@ def read_equipment_from_Excel(root, ws):
     return root
 
 def read_admin_from_Excel(root, ws):
-    DFM_names=ws['B']
-    values=ws['C']
-    xpaths=ws['D']
+    headingslang1=ws['A'][1:]
+    headingslang2=ws['B'][1:]
+    DFM_names=ws['C'][1:]
+    values=ws['D'][1:]
+    xpaths=ws['E'][1:]
     for i, path in enumerate(xpaths):
         try:
             levels=path.value.split("/dcc:")[2:]
@@ -119,6 +123,10 @@ def read_admin_from_Excel(root, ws):
             else:
                 element=et.SubElement(element,DCC+level)
         element.text=values[i].value
+        if type(headingslang1[i].value)!=type(None):
+            et.SubElement(element,DCC+"heading",attrib={'lang':lang1}).text=headingslang1[i].value
+        if type(headingslang2[i].value)!=type(None):
+            et.SubElement(element,DCC+"heading",attrib={'lang':lang2}).text=headingslang2[i].value
     return root
 
 def read_table_from_Excel(root, ws, cell0):
@@ -126,6 +134,9 @@ def read_table_from_Excel(root, ws, cell0):
     columns = []
     attrib={}
 
+    headings={}
+    headings['lang1']=cell0.offset(1,2).value
+    headings['lang2']=cell0.offset(1,3).value
     attribnames=[cell0.offset(r,0) for r in range(1,5)]
     attribvalues=[cell0.offset(r,1) for r in range(1,5)]
     for (name, value) in zip(attribnames,attribvalues):
@@ -153,6 +164,11 @@ def read_table_from_Excel(root, ws, cell0):
 
     #Create empty table with table attributes
     xmltable1=et.Element(DCC+"table",attrib=attrib)
+    for key,value in languages.items():
+        et.SubElement(xmltable1, DCC+"heading", attrib={'lang':value}).text=headings[key]
+    
+    et.SubElement(xmltable1,DCC+"numrows").text=str(numRows)
+    et.SubElement(xmltable1,DCC+"numcols").text=str(numColumns)
 
     #Fill the table with data from table object
     columns=columns
@@ -190,6 +206,13 @@ def printelement(element):
     xmlstring=minidom.parseString(et.tostring(element)).toprettyxml(indent="   ")
     print(xmlstring)
     return
+def minimal_DCC():
+    version="1.0.0"
+    xsilocation= DCC.strip('{}') + " dcc.xsd"
+    xsi="http://www.w3.org/2001/XMLSchema-instance"
+    root=et.Element(DCC+'digitalCalibrationCertificate',
+            attrib={"schemaVersion":version,   "xmlns:xsi":xsi, "xsi:schemaLocation":xsilocation})
+    return root
 
 if __name__ == "__main__":
     import sys
@@ -207,22 +230,22 @@ if __name__ == "__main__":
     #load workbook
     wb = pyxl.load_workbook(workbookName, data_only=True)
     #Create root element with minimal content
-    root = DCCh.minimal_DCC()
+    root = minimal_DCC()
 
     #Update root element with content from worksheets in the workbook
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
     root = read_accreditation_from_Excel(root, ws=wb["Accreditation"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
-    #root = read_item_from_Excel(      root, ws=wb["Equipment"])
     root = read_equipment_from_Excel(      root, ws=wb["Equipment"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
+    measurementResults=et.SubElement(root,DCC+'measurementResults')
     for cell in wb[tableSheet]['A']:
         if cell.value=='DCCTable':
            root = read_table_from_Excel(root, ws=wb[tableSheet], cell0=cell)
     wb.close()
 
     ############### Output to xml-file ####################################
-    outputxml = root.find(DCC+"administrativeData").find(DCC+"coreData").find(DCC+"uniqueIdentifier").text+".xml"
+    outputxml = root.find(DCC+"administrativeData").find(DCC+"coreData").find(DCC+"uniqueIdentifier").find(DCC+'value').text+".xml"
     xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
     with open(outputxml,'wb') as f:
         f.write(xmlstr.encode('utf-8'))
