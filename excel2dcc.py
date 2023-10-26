@@ -3,7 +3,7 @@ import xml.etree.ElementTree as et
 from xml.dom import minidom
 import DCChelpfunctions as DCCh
 #Used from DCChelpfunctions :
-#item, add_name, add_identification, minimal, validate, DCC_tablecolumn,
+#validate, DCC_tablecolumn
 
 DCC='{https://dfm.dk}'
 et.register_namespace("dcc", DCC.strip('{}'))
@@ -222,10 +222,7 @@ if __name__ == "__main__":
     if len(args)==1:
         workbookName=args[0]
     else:
-        #workbookName="CalLab-DCC-writer.xlsx"
         workbookName="Examples/DCC_temperature.xlsx"
-    tableSheet='Table_TempCal'
-
     schema      ="dcc.xsd"
 
     #load workbook
@@ -240,9 +237,15 @@ if __name__ == "__main__":
     root = read_equipment_from_Excel(      root, ws=wb["Equipment"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
     measurementResults=et.SubElement(root,DCC+'measurementResults')
-    for cell in wb[tableSheet]['A']:
-        if cell.value=='DCCTable':
-           root = read_table_from_Excel(root, ws=wb[tableSheet], cell0=cell)
+    #All sheets whose name contain "Table" will be interpreted as table-sheets
+    tableSheets=[]
+    for sheetname in wb.sheetnames:
+        if "Table" in sheetname:
+            tableSheets.append(sheetname)
+    for tableSheet in tableSheets:
+        for cell in wb[tableSheet]['A']:
+            if cell.value=='DCCTable':
+               root = read_table_from_Excel(root, ws=wb[tableSheet], cell0=cell)
     wb.close()
 
     ############### Output to xml-file ####################################
