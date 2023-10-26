@@ -40,6 +40,7 @@ if __name__=="__main__":
     print(len(args))
     if len(args)==0:
         xmlfile="Examples/DFM-T220000.xml"
+        xmlfile="DFM-T2301.xml"
     else:
         xmlfile=args[0]
     if len(args)==2:

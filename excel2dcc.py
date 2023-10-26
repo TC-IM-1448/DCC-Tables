@@ -199,7 +199,8 @@ if __name__ == "__main__":
     if len(args)==1:
         workbookName=args[0]
     else:
-        workbookName="CalLab-DCC-writer.xlsx"
+        #workbookName="CalLab-DCC-writer.xlsx"
+        workbookName="Examples/DCC_temperature.xlsx"
     tableSheet='Table_TempCal'
 
     schema      ="dcc.xsd"
