@@ -3,12 +3,13 @@ import xml.etree.ElementTree as et
 from xml.dom import minidom
 import DCChelpfunctions as DCCh
 #Used from DCChelpfunctions :
-#item, add_name, add_identification, minimal, validate, DCC_tablecolumn,
+#validate, DCC_tablecolumn
 
 DCC='{https://dfm.dk}'
 et.register_namespace("dcc", DCC.strip('{}'))
 lang1='en'
 lang2='da'
+languages={'lang1':'en','lang2':'da'}
 
 def dictionaries_from_table(ws, rowtype='x'):
     """
@@ -58,17 +59,17 @@ def read_settings_from_Excel(root, ws):
     settingselement=et.SubElement(adm,DCC+"settings")
     for setting in settings:
         settingelement=et.SubElement(settingselement,DCC+"setting", attrib={'settingId':setting['id']})
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':lang1}).text=setting['body lang1']
-        et.SubElement(settingelement, DCC+"description", attrib={'lang':lang2}).text=setting['body lang2']
-        DCCh.add_name(settingelement,lang="en",text=setting['heading lang1'])
-        DCCh.add_name(settingelement,lang="da",text=setting['heading lang2'])
+        et.SubElement(settingelement, DCC+"heading", attrib={'lang':lang1}).text=setting['heading lang1']
+        et.SubElement(settingelement, DCC+"heading", attrib={'lang':lang2}).text=setting['heading lang2']
+        et.SubElement(settingelement, DCC+"body", attrib={'lang':lang1}).text=setting['body lang1']
+        et.SubElement(settingelement, DCC+"body", attrib={'lang':lang2}).text=setting['body lang2']
         if type(setting['value'])!=type(None):
            et.SubElement(settingelement, DCC+"value").text=str(setting['value'])
         if type(setting['unit'])!=type(None):
            et.SubElement(settingelement, DCC+"unit").text=setting['unit']
     return root
 
-def read_item_from_Excel(root, ws):
+def read_equipment_from_Excel(root, ws):
     """
     Parameters
     ----------
@@ -84,19 +85,31 @@ def read_item_from_Excel(root, ws):
     items=dictionaries_from_table(ws)
 
     #Make an item XML-element
+    administrativeData=root.find(DCC+"administrativeData")
+    Itemslist=et.SubElement(administrativeData,  DCC+'items')
     Itemslist=root.find(DCC+"administrativeData").find(DCC+"items")
     for item in items:
-       itemelement=DCCh.item(ID=item['id'], category=item['category'], manufacturer=item['manufacturer'],model=item['productName'])
-       DCCh.add_name(itemelement, 'en', item['description'])
-       DCCh.add_identification(itemelement,item['customerId'],issuer='customer', name_dk="MålerID", name_en="SensorID")
-       DCCh.add_identification(itemelement,item['serialNumber'],issuer='manufacturer',name_dk="Serienummer",name_en="Serial No.")
-       Itemslist.append(itemelement)
+        equipmentelement=et.SubElement(Itemslist,DCC+"equipment",attrib={'equipId':item['id'], 'category':item['category']})
+        for key,value in languages.items():
+            et.SubElement(equipmentelement, DCC+"heading", attrib={'lang':value}).text=item['heading '+key]
+        for key in ['manufacturer', 'productName', 'productNumber']:
+            if type(item[key])!=type(None):
+                et.SubElement(equipmentelement, DCC+key).text=item[key]
+        for idn in ['id1','id2']:
+     
+            if type(item[idn])!=type(None):
+                identelement=et.SubElement(equipmentelement, DCC+"identification", attrib={'issuer':item[idn+' issuer']})
+            for key,value in languages.items():
+                et.SubElement(identelement, DCC+"heading", attrib={'lang':value}).text=item[idn+' heading '+key]
+            et.SubElement(identelement, DCC+"value").text=item[idn]
     return root
 
 def read_admin_from_Excel(root, ws):
-    DFM_names=ws['B']
-    values=ws['C']
-    xpaths=ws['D']
+    headingslang1=ws['A'][1:]
+    headingslang2=ws['B'][1:]
+    DFM_names=ws['C'][1:]
+    values=ws['D'][1:]
+    xpaths=ws['E'][1:]
     for i, path in enumerate(xpaths):
         try:
             levels=path.value.split("/dcc:")[2:]
@@ -110,6 +123,10 @@ def read_admin_from_Excel(root, ws):
             else:
                 element=et.SubElement(element,DCC+level)
         element.text=values[i].value
+        if type(headingslang1[i].value)!=type(None):
+            et.SubElement(element,DCC+"heading",attrib={'lang':lang1}).text=headingslang1[i].value
+        if type(headingslang2[i].value)!=type(None):
+            et.SubElement(element,DCC+"heading",attrib={'lang':lang2}).text=headingslang2[i].value
     return root
 
 def read_table_from_Excel(root, ws, cell0):
@@ -117,6 +134,9 @@ def read_table_from_Excel(root, ws, cell0):
     columns = []
     attrib={}
 
+    headings={}
+    headings['lang1']=cell0.offset(1,2).value
+    headings['lang2']=cell0.offset(1,3).value
     attribnames=[cell0.offset(r,0) for r in range(1,5)]
     attribvalues=[cell0.offset(r,1) for r in range(1,5)]
     for (name, value) in zip(attribnames,attribvalues):
@@ -125,7 +145,7 @@ def read_table_from_Excel(root, ws, cell0):
     numRows = cell0.offset(6,1).value
     numColumns = cell0.offset(7,1).value
 
-    numHeadings=6
+    numHeadings=7
     nRows = int(numRows)+numHeadings
     nCols = int(numColumns)
     cell = cell0.offset(8,1)
@@ -138,21 +158,28 @@ def read_table_from_Excel(root, ws, cell0):
                                 measurandType=c[2],
                                 unit=c[3],
                                 metaDataCategory=c[4],
-                                humanHeading = c[5],
+                                humanHeading = [c[5],c[6]],
                                 columnData= list(map(str, c[numHeadings:])))
         columns.append(col)
 
     #Create empty table with table attributes
     xmltable1=et.Element(DCC+"table",attrib=attrib)
+    for key,value in languages.items():
+        et.SubElement(xmltable1, DCC+"heading", attrib={'lang':value}).text=headings[key]
+    
+    et.SubElement(xmltable1,DCC+"numrows").text=str(numRows)
+    et.SubElement(xmltable1,DCC+"numcols").text=str(numColumns)
 
     #Fill the table with data from table object
     columns=columns
     for col in columns:
         attributes={'scope':col.scopeType, 'dataCategory':col.columnType, 'measurand':col.measurandType, 'metaDataCategory':col.metaDataCategory}
         xmlcol=et.Element(DCC+'column',attrib=attributes)
+        for key,value in languages.items():
+            et.SubElement(xmlcol, DCC+"heading", attrib={'lang':value}).text=col.humanHeading[key]
         if type(col.unit)!=type(None):
           et.SubElement(xmlcol,DCC+'unit').text=' '.join([col.unit])
-        DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
+        #DCCh.add_name(xmlcol,lang="en",text=col.humanHeading)
         #xmllist=realListXMLList(value=col.columnData,unit=[col.unit])
         if attributes['metaDataCategory']=='Data':
            if attributes['dataCategory']=='Conformity':
@@ -179,6 +206,13 @@ def printelement(element):
     xmlstring=minidom.parseString(et.tostring(element)).toprettyxml(indent="   ")
     print(xmlstring)
     return
+def minimal_DCC():
+    version="1.0.0"
+    xsilocation= DCC.strip('{}') + " dcc.xsd"
+    xsi="http://www.w3.org/2001/XMLSchema-instance"
+    root=et.Element(DCC+'digitalCalibrationCertificate',
+            attrib={"schemaVersion":version,   "xmlns:xsi":xsi, "xsi:schemaLocation":xsilocation})
+    return root
 
 if __name__ == "__main__":
     import sys
@@ -188,29 +222,34 @@ if __name__ == "__main__":
     if len(args)==1:
         workbookName=args[0]
     else:
-        workbookName="CalLab-DCC-writer.xlsx"
-    tableSheet='Table_TempCal'
-
+        workbookName="Examples/DCC_temperature.xlsx"
     schema      ="dcc.xsd"
 
     #load workbook
     wb = pyxl.load_workbook(workbookName, data_only=True)
     #Create root element with minimal content
-    root = DCCh.minimal_DCC()
+    root = minimal_DCC()
 
     #Update root element with content from worksheets in the workbook
     root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
     root = read_accreditation_from_Excel(root, ws=wb["Accreditation"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
-    root = read_item_from_Excel(      root, ws=wb["Equipment"])
+    root = read_equipment_from_Excel(      root, ws=wb["Equipment"])
     root = read_settings_from_Excel(root, ws=wb["Settings"])
-    for cell in wb[tableSheet]['A']:
-        if cell.value=='DCCTable':
-           root = read_table_from_Excel(root, ws=wb[tableSheet], cell0=cell)
+    measurementResults=et.SubElement(root,DCC+'measurementResults')
+    #All sheets whose name contain "Table" will be interpreted as table-sheets
+    tableSheets=[]
+    for sheetname in wb.sheetnames:
+        if "Table" in sheetname:
+            tableSheets.append(sheetname)
+    for tableSheet in tableSheets:
+        for cell in wb[tableSheet]['A']:
+            if cell.value=='DCCTable':
+               root = read_table_from_Excel(root, ws=wb[tableSheet], cell0=cell)
     wb.close()
 
     ############### Output to xml-file ####################################
-    outputxml = root.find(DCC+"administrativeData").find(DCC+"coreData").find(DCC+"uniqueIdentifier").text+".xml"
+    outputxml = root.find(DCC+"administrativeData").find(DCC+"coreData").find(DCC+"uniqueIdentifier").find(DCC+'value').text+".xml"
     xmlstr=minidom.parseString(et.tostring(root)).toprettyxml(indent="   ")
     with open(outputxml,'wb') as f:
         f.write(xmlstr.encode('utf-8'))
