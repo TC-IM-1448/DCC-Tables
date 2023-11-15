@@ -870,6 +870,11 @@
 				<xs:enumeration value="Source.Voltage.Noise.Terminated" />
 				<xs:enumeration value="Source.Voltage.Shorted" />
 				<xs:enumeration value="Source.Weight" />
+				<xs:enumeration value="miscelaneous01" />
+				<xs:enumeration value="miscelaneous02" />
+				<xs:enumeration value="miscelaneous03" />
+				<xs:enumeration value="miscelaneous04" />
+				<xs:enumeration value="miscelaneous05" />
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
