@@ -30,16 +30,16 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            
             <xs:element name="administrativeData" type="dcc:administrativeDataType"/>
 
-            <!--xs:element name="measurementResults" type="dcc:measurementResultListType"/-->
-            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="measurementResults" type="dcc:measurementResultsType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="table">
                 <xs:selector xpath="dcc:table"/>
                 <xs:field xpath="@tableId"/>
-                <xs:field xpath="@itemRef"/>
-                <xs:field xpath="@settingRef"/>
+                <xs:field xpath="@measuringSystemRef"/>
             </xs:unique>
             </xs:element>
 
@@ -51,9 +51,7 @@
                 </xs:complexType>
             </xs:element>
 
-
             <!--xs:element ref="ds:Signature" minOccurs="0" maxOccurs="unbounded"/-->
-
 
         </xs:sequence>
 
@@ -76,14 +74,74 @@
         <xs:all>
             <xs:element name="dccSoftware" type="dcc:softwareListType"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
-            <xs:element name="items" type="dcc:itemListType"/>
+            <xs:element name="measuringInstruments" type="dcc:measuringInstrumentListType"/>
             <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
+            <xs:element name="measuringSystemsUnderCalibration" type="dcc:measuringSystemListType"/>
+            <xs:element name="measuringStandards" type="dcc:measuringSystemListType"/>
             <xs:element name="calibrationLaboratory" type="dcc:contactType"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
             <xs:element name="customer" type="dcc:contactType"/>
             <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
             <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
         </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="measuringSystemListType">
+        <xs:annotation>
+            <xs:documentation>
+                A list of measuringSystem elements.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded">
+            <xs:unique name="lkj">
+                <xs:selector xpath="heading"/>
+                <xs:field xpath="@lang"/>
+            </xs:unique>
+            </xs:element>
+            <xs:element name="measuringSystem" type="dcc:measuringSystemType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="measuringSystemType">
+        <xs:annotation>
+            <xs:documentation>
+                set of one or more measuring instruments and often other components, assembled and
+adapted to give information used to generate measured values within specified intervals for
+quantities of specified kinds
+                In the scope of DCC it is a list of references to elements of measuringInstrumentType and instrumentSettingType. Each table in the measutrementResults section must refer to exactely one element of measuringSystemType.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+        <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="instrumentRef" type="dcc:refIdType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="settingRef" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="measuringSystemId" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="refListType">
+        <xs:annotation>
+            <xs:documentation>
+                List of references to elements
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ref" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="refIdType">
+        <xs:annotation>
+            <xs:documentation>
+                Reference to an element
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="refId" type="xs:IDREFS" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="softwareListType">
@@ -155,22 +213,21 @@
     </xs:simpleType>
 
 
-    <xs:complexType name="itemListType">
+    <xs:complexType name="measuringInstrumentListType">
         <xs:annotation>
             <xs:documentation>
-                This element is a set of calibrated items.
-                Contains one or more item elements.
+                This element is a list of measuring instruments.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="equipment" type="dcc:equipmentType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="measuringInstrument" type="dcc:measuringInstrumentType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="equipmentType">
+    <xs:complexType name="measuringInstrumentType">
         <xs:annotation>
             <xs:documentation>
-                Equipment: I.e. Items under test and reference equipment.
+                Measuring instrument: I.e. equipment under test and reference equipment that has one or more identifiers (e.g. serial number).
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -346,7 +403,7 @@
     <xs:complexType name="tableType">
         <xs:annotation>
             <xs:documentation>
-                This type is for arranging any measurement data that can be arranged into a table with rows and columns
+                This type is for arranging any measurement data into a table with rows and columns
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -356,34 +413,15 @@
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
         </xs:element>
         </xs:sequence>
-        <xs:attribute name="itemRef" type="xs:IDREFS" use="required"/>
-        <xs:attribute name="settingRef" type="xs:IDREFS" use="required"/>
+        <xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
         <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
         <xs:attribute name="tableId" type="xs:string" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="measurementResultListType">
+    <xs:complexType name="measurementResultsType">
         <xs:annotation>
             <xs:documentation>
-                List of measurement results that are part of a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded" minOccurs="0">
-            <xs:unique name="table">
-                <xs:selector xpath="dcc:table"/>
-                <xs:field xpath="@tableId"/>
-                <xs:field xpath="@itemRef"/>
-                <xs:field xpath="@settingRef"/>
-            </xs:unique>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="measurementResultType">
-        <xs:annotation>
-            <xs:documentation>
-                A measurement results with the methods, software and equipments used for the calibration.
+                Measurement results consists of a number of tables containing the calibration results with reference to relevant measuring systems under calibration, references used and applicalble statments.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -401,7 +439,6 @@
             </xs:unique>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="resId" type="xs:string" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
@@ -681,8 +718,8 @@
         </xs:annotation>
             <xs:restriction base="xs:string">
                 <xs:enumeration value="reference" /> <!-- Data relating to the reference equipment. E.g. measured value or uncertainty of the reference. -->
-                <xs:enumeration value="itemIndication" /> <!-- Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument-->
-                <xs:enumeration value="itemBias" /> <!-- Data relating to the difference item_value - reference_value. E.g. the calibration result (bias of the item and its uncertainty.) -->
+                <xs:enumeration value="indication" /> <!-- Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument-->
+                <xs:enumeration value="bias" /> <!-- Data relating to the difference item_value - reference_value. E.g. the calibration result (bias of the item and its uncertainty.) -->
                 <xs:enumeration value="environment" /> <!-- Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...-->
                 <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
                 <xs:enumeration value="-" />  <!--Used for meta data columns to refer to all scopes -->
