@@ -33,7 +33,15 @@
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="administrativeData" type="dcc:administrativeDataType"/>
 
-            <xs:element name="measurementResults" type="dcc:measurementResultListType"/>
+            <!--xs:element name="measurementResults" type="dcc:measurementResultListType"/-->
+            <xs:element name="measurementResult" type="dcc:measurementResultType" maxOccurs="unbounded" minOccurs="0">
+            <xs:unique name="table">
+                <xs:selector xpath="dcc:table"/>
+                <xs:field xpath="@tableId"/>
+                <xs:field xpath="@itemRef"/>
+                <xs:field xpath="@settingRef"/>
+            </xs:unique>
+            </xs:element>
 
             <xs:element name="comment" minOccurs="0">
                 <xs:complexType>

@@ -204,7 +204,7 @@
             <dcc:heading lang="en">CIPM MRA</dcc:heading>
             <dcc:heading lang="da">CIPM MRA</dcc:heading>
             <dcc:body lang="en">This certificate is consistent with the capabilities that are included in Appendix C of the MRA drawn up by the CIPM. Under the MRA, all participating institutes recognize the validity of each other’s calibration and measurement certificates for the quantities, ranges and measurement uncertainties specified in Appendix C (for details see http://www.bipm.org).</dcc:body>
-            <dcc:body lang="da">Dette certifikat er i overensstemmelse med måleevnerne angivet i MRA’ens Appendiks C, som er redigeret af CIPM. I henhold til MRA’en anerkender alle deltagende institutter gyldigheden af hinandens kalibrerings- og målecertifikater for de målestørrelser, måleområder og måleusikkerheder som er specificeret i Appendiks C 
+            <dcc:body lang="da">Dette certifikat er i overensstemmelse med måleevnerne angivet i MRA’ens Appendiks C, som er redigeret af CIPM. I henhold til MRA’en anerkender alle deltagende institutter gyldigheden af hinandens kalibrerings- og målecertifikater for de målestørrelser, måleområder og måleusikkerheder som er specificeret i Appendiks C
 (for detaljer se www.bipm.org).</dcc:body>
          </dcc:statement>
          <dcc:statement statementId="meth02">
