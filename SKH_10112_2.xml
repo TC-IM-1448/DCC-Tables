@@ -274,7 +274,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
               <dcc:settingRef refId='sout'>
               </dcc:settingRef>
           </dcc:measuringSystem>
-      </dcc:measuringSystemsUnderCalibratin>
+      </dcc:measuringSystemsUnderCalibration>
       <dcc:settings>
          <dcc:setting settingId="c1">
             <dcc:heading lang="en">Channel</dcc:heading>
