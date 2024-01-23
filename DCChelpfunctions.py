@@ -153,7 +153,7 @@ def get_table(root, ID='*', lang='en', show=False):
     return returntable
     
     
-def getTableFromResult(root, tableAttrib):
+def getTableFromResult(tableAttrib):
     #INPUT itemId and settingId list of strings
     #OUTPUT xml-element of type dcc:table
 
@@ -210,7 +210,7 @@ def getColumnFromTable(table,searchattributes, searchunit=""):
     return cols
        
 
-def getColumnValues(column: et._Element) -> list: 
+def getColumnValues(column: et.Element) -> list: 
     return col.find("dcc:valueXMLList",column.nsmap).text.split()
 
 # dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
@@ -273,7 +273,7 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None, lang="en"):
 
     try:
         """Find the right table using measuringSystemRef and tableId"""
-        tbl=getTableFromResult(root, tableAttrib)
+        tbl=getTableFromResult(tableAttrib)
         try:
             """Find the rigt column using attributes and unit"""
             cols=getColumnFromTable(tbl,colAttrib,unit)
@@ -314,7 +314,7 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None, lang="en"):
 # print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
 # search(root,dtbl, dcol, "\micro\litre", customerTag="p5" )
 #%%
-def get_statements(root, ID='*') -> list:
+def get_statement(root, ID='*') -> list:
     ns = root.nsmap
     statements=root.findall(".//dcc:statement", ns)
     returnstatement=[]
@@ -325,7 +325,7 @@ def get_statements(root, ID='*') -> list:
 
 # print_node(get_statement(root,'meth1')[0])
 #%%
-def get_measuringSystems(root, ID='*',lang='en', show=False):
+def get_measuringSystem(root, ID='*',lang='en', show=False):
     ns = root.nsmap
     # items=root.findall("./dcc:administrativeData/dcc:measuringSystemsUnderCalibration",ns)
     items = root.findall(".//dcc:measuringSystem",ns)
@@ -538,13 +538,13 @@ def print_node(node):
 if False: 
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
-    tbl = getTableFromResult(root, dtbl)
+    tbl = getTableFromResult(dtbl)
     dcol = dict(dataCategory="Value", measurand="Measure.Volume", metaDataCategory="Data", scope="reference")
     col = getColumnFromTable(tbl,dcol,searchunit="*")[0]
     print_node(col)
     rowtag = "p5"
     getRowFromColumn(col, rowtag)
-    getColumnValues(col)
+    getColumnValues(col) 
     print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
     print("SEARCH RESULT:")
     print_node(search(root,dtbl, dcol, "\micro\litre").pop())
