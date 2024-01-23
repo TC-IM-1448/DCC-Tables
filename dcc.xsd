@@ -417,6 +417,7 @@ quantities of specified kinds
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="numrows" type="xs:int" minOccurs="0"/>
             <xs:element name="numcols" type="xs:int" minOccurs="0"/>
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">

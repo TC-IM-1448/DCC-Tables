@@ -516,9 +516,13 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Z-factor</dcc:heading>
                <dcc:heading lang="da">Z faktor</dcc:heading>
                <dcc:unit>\one</dcc:unit>
-                   <dcc:row RowIndex="1">1.003</dcc:row> 
-                   <dcc:row RowIndex="2">1.003 </dcc:row>
-                   <dcc:row RowIndex="3">1.003</dcc:row>
+               <dcc:columnData>
+               <dcc:floatList>
+                   <dcc:row idx="1">1.003</dcc:row> 
+                   <dcc:row idx="2">1.003 </dcc:row>
+                   <dcc:row idx="3">1.003</dcc:row>
+               </dcc:floatList>
+               </dcc:columnData>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="miscelaneous01" metaDataCategory="Statement" scope="environment">
                <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
@@ -529,7 +533,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:row RowIndex="3">meth3</dcc:row>
             </dcc:column>
          </dcc:calibrationResult>
-         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="1">
+         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" calibrationRowIdxRef="1">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
