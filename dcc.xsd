@@ -38,9 +38,17 @@
             <xs:element name="measurementResults" type="dcc:measurementResultsType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="calibrationResult">
                 <xs:selector xpath="dcc:calibrationResult"/>
-                <xs:field xpath="@serviceCategory"/>
                 <xs:field xpath="@measuringSystemRef"/>
+                <xs:field xpath="@serviceCategory"/>
+                <xs:field xpath="@customServiceCategory"/>
                 <!--xs:field xpath="dcc:column/@measurand"/-->
+            </xs:unique>
+            <xs:unique name="measurementSeries">
+                <xs:selector xpath="dcc:measurementSeries"/>
+                <xs:field xpath="@measuringSystemRef"/>
+                <xs:field xpath="@serviceCategory"/>
+                <xs:field xpath="@customServiceCategory"/>
+                <xs:field xpath="@calibrationRowIndexRef"/>
             </xs:unique>
             </xs:element>
 
@@ -75,7 +83,7 @@
         <xs:all>
             <xs:element name="dccSoftware" type="dcc:softwareListType"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
-            <xs:element name="measuringInstruments" type="dcc:measuringInstrumentListType"/>
+            <xs:element name="equipment" type="dcc:equipmentListType"/>
             <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
             <xs:element name="measuringSystemsUnderCalibration" type="dcc:measuringSystemListType"/>
             <xs:element name="measuringStandards" type="dcc:measuringSystemListType" minOccurs="0"/>
@@ -114,10 +122,10 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="instrumentRef" type="dcc:refIdType" minOccurs="1" maxOccurs="unbounded"/>
-        <xs:element name="settingRef" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="instrumentRef" type="dcc:refIdType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="settingRef" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="measuringSystemId" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -214,18 +222,18 @@ quantities of specified kinds
     </xs:simpleType>
 
 
-    <xs:complexType name="measuringInstrumentListType">
+    <xs:complexType name="equipmentListType">
         <xs:annotation>
             <xs:documentation>
                 This element is a list of measuring instruments.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="measuringInstrument" type="dcc:measuringInstrumentType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="equipmentItem" type="dcc:equipmentItemType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="measuringInstrumentType">
+    <xs:complexType name="equipmentItemType">
         <xs:annotation>
             <xs:documentation>
                 Measuring instrument: I.e. equipment under test and reference equipment that has one or more identifiers (e.g. serial number).
@@ -416,7 +424,9 @@ quantities of specified kinds
         </xs:sequence>
         <xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
         <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="serviceCategory" type="xs:string" use="required"/>
+        <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+        <xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
+        <xs:attribute name="calibrationRowIndexRef" type="xs:int" use="optional" default="0"/>
     </xs:complexType>
 
     <xs:complexType name="measurementResultsType">
@@ -427,7 +437,7 @@ quantities of specified kinds
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="description" type="dcc:richContentType" minOccurs="0"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
             <xs:element name="calibrationResult" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
                 <xs:unique name="column2">
@@ -644,13 +654,14 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="unit" type="dcc:unitType" minOccurs="0"/>
-            <xs:choice>
+            <xs:element name="row" type="dcc:rowType" minOccurs="1" maxOccurs="unbounded"/>
+            <!--xs:choice>
 		<xs:element name="valueXMLList" type="dcc:decimalXMLListType"/>
                 <xs:element name="conformityXMLList" type="dcc:stringConformityStatementStatusXMLListType"/>
                 <xs:element name="stringXMLList" type="dcc:stringXMLListType"/>
                 <xs:element name="accreditationAppliesXMLList" type="dcc:accreditationAppliesXMLListType"/>
                 <xs:element name="exceptionXMLList" type="xs:IDREFS"/>
-            </xs:choice>
+            </xs:choice-->
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategory" type="dcc:dataCategoryType" use="required"/>
@@ -709,7 +720,7 @@ quantities of specified kinds
     <xs:complexType name="rowType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="calibrationPoint" type="xs:string" use="required"/>
+                <xs:attribute name="RowIndex" type="xs:int" use="required"/>
                 <xs:attribute name="id" type="xs:ID" use="optional"/>
                 <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
             </xs:extension>
@@ -1362,7 +1373,7 @@ quantities of specified kinds
                <xs:enumeration value="TF/TI-3.4.2" />
                <xs:enumeration value="TF/TI-3.4.3" />
                <xs:enumeration value="TF/TI-3.4.4" />
-               <xs:enumeration value="unspecified" />  
+               <xs:enumeration value="custom" />  
             </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="measurandType">

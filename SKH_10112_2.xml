@@ -162,8 +162,8 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             <dcc:body lang="da">Relativ luftfugtighed: 59,4 %RH ±10 %RH</dcc:body>
          </dcc:statement>
       </dcc:statements>
-      <dcc:measuringInstruments>
-         <dcc:measuringInstrument category="item" equipId="item1">
+      <dcc:equipment>
+         <dcc:equipmentItem category="item" equipId="item1">
             <dcc:heading lang="en">Pipette with 12 channels 50-1200 µm</dcc:heading>
             <dcc:heading lang="da">Pipette med 12 kanaler 50-1200 µm</dcc:heading>
             <dcc:manufacturer>Biohit</dcc:manufacturer>
@@ -178,8 +178,8 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="da">Serienummer</dcc:heading>
                <dcc:value>12008522</dcc:value>
             </dcc:identification>
-         </dcc:measuringInstrument>
-         <dcc:measuringInstrument category="item" equipId="item2">
+         </dcc:equipmentItem>
+         <dcc:equipmentItem category="item" equipId="item2">
             <dcc:heading lang="en">Pipette tip (1200 µl)</dcc:heading>
             <dcc:heading lang="da">Pipettespids</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
@@ -194,8 +194,8 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="da">Lot-nummer</dcc:heading>
                <dcc:value>ss23987</dcc:value>
             </dcc:identification>
-         </dcc:measuringInstrument>
-         <dcc:measuringInstrument category="reference" equipId="ref1">
+         </dcc:equipmentItem>
+         <dcc:equipmentItem category="reference" equipId="ref1">
             <dcc:heading lang="en">Balance with 0.00001 g resolution last calibrated on 2021-11-25.</dcc:heading>
             <dcc:heading lang="da">Vægt er med en opløsning på 0,00001 g. Kalibreret d. 2021-11-25</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
@@ -209,8 +209,8 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="da">-</dcc:heading>
                <dcc:value>-</dcc:value>
             </dcc:identification>
-         </dcc:measuringInstrument>
-      </dcc:measuringInstruments>
+         </dcc:equipmentItem>
+      </dcc:equipment>
       <dcc:measuringSystemsUnderCalibration>
           <dcc:heading lang="en">Measuring Systems</dcc:heading>
           <dcc:heading lang="da">Målesystemer</dcc:heading>
@@ -323,127 +323,105 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                  <dcc:row calibrationPoint="pt1"> pt1 </dcc:row>
-                  <dcc:row calibrationPoint="pt2"> pt2 </dcc:row> 
-                  <dcc:row calibrationPoint="pt3"> pt3 </dcc:row>
-               </dcc:stringXMLList>
+                  <dcc:row RowIndex="1"> pt1 </dcc:row>
+                  <dcc:row RowIndex="2"> pt2 </dcc:row> 
+                  <dcc:row RowIndex="3"> pt3 </dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">120</dcc:row> 
+                   <dcc:row RowIndex="2">600</dcc:row> 
+                   <dcc:row RowIndex="3">1200</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference Value</dcc:heading>
                <dcc:heading lang="da">Referencens værdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">121.21</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.3 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">1199.1</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">121.21</dcc:row> 
+                   <dcc:row RowIndex="2">600.3 </dcc:row>
+                   <dcc:row RowIndex="3">1199.1</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="indication">
                <dcc:heading lang="en">Item indication</dcc:heading>
                <dcc:heading lang="da">Emnets visning</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList><dcc:row calibrationPoint="pt1">120</dcc:row> <dcc:row calibrationPoint="pt2">600</dcc:row> <dcc:row calibrationPoint="pt3">1200</dcc:row></dcc:stringXMLList>
+               <dcc:row RowIndex="1">120</dcc:row> 
+               <dcc:row RowIndex="2">600</dcc:row> 
+               <dcc:row RowIndex="3">1200</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Systematic error</dcc:heading>
                <dcc:heading lang="da">Systematisk fejl</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">1.21</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.3 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">-0.9</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1.21</dcc:row> 
+                   <dcc:row RowIndex="2">0.3 </dcc:row>
+                   <dcc:row RowIndex="3">-0.9</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="ExpandedUncertainty" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
                <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.35</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">1.5 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">2.4</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.35</dcc:row> 
+                   <dcc:row RowIndex="2">1.5 </dcc:row>
+                   <dcc:row RowIndex="3">2.4</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
                <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">1.01</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.05 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">-0.08</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1.01</dcc:row> 
+                   <dcc:row RowIndex="2">0.05 </dcc:row>
+                   <dcc:row RowIndex="3">-0.08</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="ExpandedUncertainty" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
                <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.29</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.25 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">0.2</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.29</dcc:row> 
+                   <dcc:row RowIndex="2">0.25 </dcc:row>
+                   <dcc:row RowIndex="3">0.2</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
                <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">2</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">2</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">2</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">2</dcc:row> 
+                   <dcc:row RowIndex="2">2</dcc:row> 
+                   <dcc:row RowIndex="3">2</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Repeatability</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.13</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.24 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">0.48</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.13</dcc:row> 
+                   <dcc:row RowIndex="2">0.24 </dcc:row>
+                   <dcc:row RowIndex="3">0.48</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.11</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.04 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">0.04</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.11</dcc:row> 
+                   <dcc:row RowIndex="2">0.04 </dcc:row>
+                   <dcc:row RowIndex="3">0.04</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="miscelaneous01" metaDataCategory="Data" scope="environment">
                <dcc:heading lang="en">Z-factor</dcc:heading>
                <dcc:heading lang="da">Z faktor</dcc:heading>
                <dcc:unit>\one</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">1.003</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">1.003 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">1.003</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1.003</dcc:row> 
+                   <dcc:row RowIndex="2">1.003 </dcc:row>
+                   <dcc:row RowIndex="3">1.003</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="miscelaneous01" metaDataCategory="Statement" scope="environment">
                <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                <dcc:unit>\one</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">meth3</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">meth3 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">meth3</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">meth3</dcc:row> 
+                   <dcc:row RowIndex="2">meth3 </dcc:row>
+                   <dcc:row RowIndex="3">meth3</dcc:row>
             </dcc:column>
          </dcc:calibrationResult>
          <dcc:calibrationResult  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
@@ -455,134 +433,108 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p2 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">p3</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2 </dcc:row>
+                   <dcc:row RowIndex="3">p3</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">120</dcc:row> 
+                   <dcc:row RowIndex="2">600 </dcc:row>
+                   <dcc:row RowIndex="3">1200</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference Value</dcc:heading>
                <dcc:heading lang="da">Referencens værdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">121.0752</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.0417 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">1198.901</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">121.0752</dcc:row> 
+                   <dcc:row RowIndex="2">600.0417 </dcc:row>
+                   <dcc:row RowIndex="3">1198.901</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="indication">
                <dcc:heading lang="en">Item indication</dcc:heading>
                <dcc:heading lang="da">Emnets visning</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">120</dcc:row> 
+                   <dcc:row RowIndex="2">600 </dcc:row>
+                   <dcc:row RowIndex="3">1200</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Systematic error</dcc:heading>
                <dcc:heading lang="da">Systematisk fejl</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">1.08</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.04 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">-1.1</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1.08</dcc:row> 
+                   <dcc:row RowIndex="2">0.04 </dcc:row>
+                   <dcc:row RowIndex="3">-1.1</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="ExpandedUncertainty" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
                <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.35</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">1.5 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">2.4</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.35</dcc:row> 
+                   <dcc:row RowIndex="2">1.5 </dcc:row>
+                   <dcc:row RowIndex="3">2.4</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
                <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.9</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.01 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">-0.09</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.9</dcc:row> 
+                   <dcc:row RowIndex="2">0.01 </dcc:row>
+                   <dcc:row RowIndex="3">-0.09</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="ExpandedUncertainty" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
                <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.29</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.25 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">0.2</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.29</dcc:row> 
+                   <dcc:row RowIndex="2">0.25 </dcc:row>
+                   <dcc:row RowIndex="3">0.2</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="UncertaintyCoverageFactor_k" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
                <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">2</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">2 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">2</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">2</dcc:row> 
+                   <dcc:row RowIndex="2">2 </dcc:row>
+                   <dcc:row RowIndex="3">2</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Repeatability</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.13</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.24 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">0.6</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.13</dcc:row> 
+                   <dcc:row RowIndex="2">0.24 </dcc:row>
+                   <dcc:row RowIndex="3">0.6</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="Data" scope="bias">
                <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">0.11</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">0.04 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">0.05</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">0.11</dcc:row> 
+                   <dcc:row RowIndex="2">0.04 </dcc:row>
+                   <dcc:row RowIndex="3">0.05</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="miscelaneous01" metaDataCategory="Data" scope="environment">
                <dcc:heading lang="en">Z-factor</dcc:heading>
                <dcc:heading lang="da">Z faktor</dcc:heading>
                <dcc:unit>\one</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">1.003</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">1.003 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">1.003</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1.003</dcc:row> 
+                   <dcc:row RowIndex="2">1.003 </dcc:row>
+                   <dcc:row RowIndex="3">1.003</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="miscelaneous01" metaDataCategory="Statement" scope="environment">
                <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                <dcc:unit>\one</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">meth3</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">meth3 </dcc:row>
-                   <dcc:row calibrationPoint="pt3">meth3</dcc:row>
-               </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">meth3</dcc:row> 
+                   <dcc:row RowIndex="2">meth3 </dcc:row>
+                   <dcc:row RowIndex="3">meth3</dcc:row>
             </dcc:column>
          </dcc:calibrationResult>
-         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3">
+         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="1">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -591,55 +543,49 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p2</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p3</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p4</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p5</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p6</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p7</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p8</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p9</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p10</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2</dcc:row> 
+                   <dcc:row RowIndex="3">p3</dcc:row> 
+                   <dcc:row RowIndex="4">p4</dcc:row> 
+                   <dcc:row RowIndex="5">p5</dcc:row> 
+                   <dcc:row RowIndex="6">p6</dcc:row> 
+                   <dcc:row RowIndex="7">p7</dcc:row> 
+                   <dcc:row RowIndex="8">p8</dcc:row> 
+                   <dcc:row RowIndex="9">p9</dcc:row> 
+                   <dcc:row RowIndex="10">p10</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">120</dcc:row> 
+                   <dcc:row RowIndex="2">120</dcc:row> 
+                   <dcc:row RowIndex="3">120</dcc:row> 
+                   <dcc:row RowIndex="4">120</dcc:row> 
+                   <dcc:row RowIndex="5">120</dcc:row> 
+                   <dcc:row RowIndex="6">120</dcc:row> 
+                   <dcc:row RowIndex="7">120</dcc:row> 
+                   <dcc:row RowIndex="8">120</dcc:row> 
+                   <dcc:row RowIndex="9">120</dcc:row> 
+                   <dcc:row RowIndex="10">120</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference value</dcc:heading>
                <dcc:heading lang="da">Referenceværdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">121.3229</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.1223</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.1724</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.1022</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.2025</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.1825</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.3129</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.042</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.1724</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.5034</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">121.3229</dcc:row> 
+                   <dcc:row RowIndex="2">121.1223</dcc:row> 
+                   <dcc:row RowIndex="3">121.1724</dcc:row> 
+                   <dcc:row RowIndex="4">121.1022</dcc:row> 
+                   <dcc:row RowIndex="5">121.2025</dcc:row> 
+                   <dcc:row RowIndex="6">121.1825</dcc:row> 
+                   <dcc:row RowIndex="7">121.3129</dcc:row> 
+                   <dcc:row RowIndex="8">121.042</dcc:row> 
+                   <dcc:row RowIndex="9">121.1724</dcc:row> 
+                   <dcc:row RowIndex="10">121.5034</dcc:row>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3">
+         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="2">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -648,72 +594,64 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p2</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p3</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p4</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p5</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p6</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p7</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p8</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p9</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p10</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2</dcc:row> 
+                   <dcc:row RowIndex="3">p3</dcc:row> 
+                   <dcc:row RowIndex="4">p4</dcc:row> 
+                   <dcc:row RowIndex="5">p5</dcc:row> 
+                   <dcc:row RowIndex="6">p6</dcc:row> 
+                   <dcc:row RowIndex="7">p7</dcc:row> 
+                   <dcc:row RowIndex="8">p8</dcc:row> 
+                   <dcc:row RowIndex="9">p9</dcc:row> 
+                   <dcc:row RowIndex="10">p10</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">600</dcc:row> 
+                   <dcc:row RowIndex="2">600</dcc:row> 
+                   <dcc:row RowIndex="3">600</dcc:row> 
+                   <dcc:row RowIndex="4">600</dcc:row> 
+                   <dcc:row RowIndex="5">600</dcc:row> 
+                   <dcc:row RowIndex="6">600</dcc:row> 
+                   <dcc:row RowIndex="7">600</dcc:row> 
+                   <dcc:row RowIndex="8">600</dcc:row> 
+                   <dcc:row RowIndex="9">600</dcc:row> 
+                   <dcc:row RowIndex="10">600</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference value</dcc:heading>
                <dcc:heading lang="da">Referenceværdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">600.5463</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.466</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">599.784</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.5262</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.4058</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.1049</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.3457</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.3757</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.7067</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.1952</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">600.5463</dcc:row> 
+                   <dcc:row RowIndex="2">600.466</dcc:row> 
+                   <dcc:row RowIndex="3">599.784</dcc:row> 
+                   <dcc:row RowIndex="4">600.5262</dcc:row> 
+                   <dcc:row RowIndex="5">600.4058</dcc:row> 
+                   <dcc:row RowIndex="6">600.1049</dcc:row> 
+                   <dcc:row RowIndex="7">600.3457</dcc:row> 
+                   <dcc:row RowIndex="8">600.3757</dcc:row> 
+                   <dcc:row RowIndex="9">600.7067</dcc:row> 
+                   <dcc:row RowIndex="10">600.1952</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="indication">
                <dcc:heading lang="en">Item indication</dcc:heading>
                <dcc:heading lang="da">Emnets visning</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">600</dcc:row> 
+                   <dcc:row RowIndex="2">600</dcc:row> 
+                   <dcc:row RowIndex="3">600</dcc:row> 
+                   <dcc:row RowIndex="4">600</dcc:row> 
+                   <dcc:row RowIndex="5">600</dcc:row> 
+                   <dcc:row RowIndex="6">600</dcc:row> 
+                   <dcc:row RowIndex="7">600</dcc:row> 
+                   <dcc:row RowIndex="8">600</dcc:row> 
+                   <dcc:row RowIndex="9">600</dcc:row> 
+                   <dcc:row RowIndex="10">600</dcc:row>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3">
+         <dcc:measurementSeries  measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="3">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -722,72 +660,64 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p2</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p3</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p4</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p5</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p6</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p7</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p8</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p9</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p10</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2</dcc:row> 
+                   <dcc:row RowIndex="3">p3</dcc:row> 
+                   <dcc:row RowIndex="4">p4</dcc:row> 
+                   <dcc:row RowIndex="5">p5</dcc:row> 
+                   <dcc:row RowIndex="6">p6</dcc:row> 
+                   <dcc:row RowIndex="7">p7</dcc:row> 
+                   <dcc:row RowIndex="8">p8</dcc:row> 
+                   <dcc:row RowIndex="9">p9</dcc:row> 
+                   <dcc:row RowIndex="10">p10</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1200</dcc:row> 
+                   <dcc:row RowIndex="2">1200</dcc:row> 
+                   <dcc:row RowIndex="3">1200</dcc:row> 
+                   <dcc:row RowIndex="4">1200</dcc:row> 
+                   <dcc:row RowIndex="5">1200</dcc:row> 
+                   <dcc:row RowIndex="6">1200</dcc:row> 
+                   <dcc:row RowIndex="7">1200</dcc:row> 
+                   <dcc:row RowIndex="8">1200</dcc:row> 
+                   <dcc:row RowIndex="9">1200</dcc:row> 
+                   <dcc:row RowIndex="10">1200</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference value</dcc:heading>
                <dcc:heading lang="da">Referenceværdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">1199.488</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.046</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.043</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.615</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.478</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.949</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.966</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.087</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.896</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.247</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1199.488</dcc:row> 
+                   <dcc:row RowIndex="2">1199.046</dcc:row> 
+                   <dcc:row RowIndex="3">1198.043</dcc:row> 
+                   <dcc:row RowIndex="4">1198.615</dcc:row> 
+                   <dcc:row RowIndex="5">1199.478</dcc:row> 
+                   <dcc:row RowIndex="6">1199.949</dcc:row> 
+                   <dcc:row RowIndex="7">1198.966</dcc:row> 
+                   <dcc:row RowIndex="8">1199.087</dcc:row> 
+                   <dcc:row RowIndex="9">1198.896</dcc:row> 
+                   <dcc:row RowIndex="10">1199.247</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="indication">
                <dcc:heading lang="en">Item indication</dcc:heading>
                <dcc:heading lang="da">Emnets visning</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1200</dcc:row> 
+                   <dcc:row RowIndex="2">1200</dcc:row> 
+                   <dcc:row RowIndex="3">1200</dcc:row> 
+                   <dcc:row RowIndex="4">1200</dcc:row> 
+                   <dcc:row RowIndex="5">1200</dcc:row> 
+                   <dcc:row RowIndex="6">1200</dcc:row> 
+                   <dcc:row RowIndex="7">1200</dcc:row> 
+                   <dcc:row RowIndex="8">1200</dcc:row> 
+                   <dcc:row RowIndex="9">1200</dcc:row> 
+                   <dcc:row RowIndex="10">1200</dcc:row>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
+         <dcc:measurementSeries  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="1">
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -796,55 +726,49 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p2</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p3</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p4</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p5</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p6</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p7</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p8</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p9</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">p10</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2</dcc:row> 
+                   <dcc:row RowIndex="3">p3</dcc:row> 
+                   <dcc:row RowIndex="4">p4</dcc:row> 
+                   <dcc:row RowIndex="5">p5</dcc:row> 
+                   <dcc:row RowIndex="6">p6</dcc:row> 
+                   <dcc:row RowIndex="7">p7</dcc:row> 
+                   <dcc:row RowIndex="8">p8</dcc:row> 
+                   <dcc:row RowIndex="9">p9</dcc:row> 
+                   <dcc:row RowIndex="10">p10</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">120</dcc:row> 
+                   <dcc:row RowIndex="2">120</dcc:row> 
+                   <dcc:row RowIndex="3">120</dcc:row> 
+                   <dcc:row RowIndex="4">120</dcc:row> 
+                   <dcc:row RowIndex="5">120</dcc:row> 
+                   <dcc:row RowIndex="6">120</dcc:row> 
+                   <dcc:row RowIndex="7">120</dcc:row> 
+                   <dcc:row RowIndex="8">120</dcc:row> 
+                   <dcc:row RowIndex="9">120</dcc:row> 
+                   <dcc:row RowIndex="10">120</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference value</dcc:heading>
                <dcc:heading lang="da">Referenceværdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt1">121.1925</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120.9919</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.012</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120.9919</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.0822</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.0621</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.1724</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120.9217</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">120.9618</dcc:row> 
-                   <dcc:row calibrationPoint="pt1">121.363</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">121.1925</dcc:row> 
+                   <dcc:row RowIndex="2">120.9919</dcc:row> 
+                   <dcc:row RowIndex="3">121.012</dcc:row> 
+                   <dcc:row RowIndex="4">120.9919</dcc:row> 
+                   <dcc:row RowIndex="5">121.0822</dcc:row> 
+                   <dcc:row RowIndex="6">121.0621</dcc:row> 
+                   <dcc:row RowIndex="7">121.1724</dcc:row> 
+                   <dcc:row RowIndex="8">120.9217</dcc:row> 
+                   <dcc:row RowIndex="9">120.9618</dcc:row> 
+                   <dcc:row RowIndex="10">121.363</dcc:row>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
+         <dcc:measurementSeries  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="2">
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -853,72 +777,64 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p2</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p3</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p4</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p5</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p6</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p7</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p8</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p9</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">p10</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2</dcc:row> 
+                   <dcc:row RowIndex="3">p3</dcc:row> 
+                   <dcc:row RowIndex="4">p4</dcc:row> 
+                   <dcc:row RowIndex="5">p5</dcc:row> 
+                   <dcc:row RowIndex="6">p6</dcc:row> 
+                   <dcc:row RowIndex="7">p7</dcc:row> 
+                   <dcc:row RowIndex="8">p8</dcc:row> 
+                   <dcc:row RowIndex="9">p9</dcc:row> 
+                   <dcc:row RowIndex="10">p10</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">600</dcc:row> 
+                   <dcc:row RowIndex="2">600</dcc:row> 
+                   <dcc:row RowIndex="3">600</dcc:row> 
+                   <dcc:row RowIndex="4">600</dcc:row> 
+                   <dcc:row RowIndex="5">600</dcc:row> 
+                   <dcc:row RowIndex="6">600</dcc:row> 
+                   <dcc:row RowIndex="7">600</dcc:row> 
+                   <dcc:row RowIndex="8">600</dcc:row> 
+                   <dcc:row RowIndex="9">600</dcc:row> 
+                   <dcc:row RowIndex="10">600</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference value</dcc:heading>
                <dcc:heading lang="da">Referenceværdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">600.1751</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.1651</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">599.5332</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.2353</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.0949</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">599.804</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.0147</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.1049</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600.3858</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">599.9043</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">600.1751</dcc:row> 
+                   <dcc:row RowIndex="2">600.1651</dcc:row> 
+                   <dcc:row RowIndex="3">599.5332</dcc:row> 
+                   <dcc:row RowIndex="4">600.2353</dcc:row> 
+                   <dcc:row RowIndex="5">600.0949</dcc:row> 
+                   <dcc:row RowIndex="6">599.804</dcc:row> 
+                   <dcc:row RowIndex="7">600.0147</dcc:row> 
+                   <dcc:row RowIndex="8">600.1049</dcc:row> 
+                   <dcc:row RowIndex="9">600.3858</dcc:row> 
+                   <dcc:row RowIndex="10">599.9043</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="indication">
                <dcc:heading lang="en">Item indication</dcc:heading>
                <dcc:heading lang="da">Emnets visning</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row> 
-                   <dcc:row calibrationPoint="pt2">600</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">600</dcc:row> 
+                   <dcc:row RowIndex="2">600</dcc:row> 
+                   <dcc:row RowIndex="3">600</dcc:row> 
+                   <dcc:row RowIndex="4">600</dcc:row> 
+                   <dcc:row RowIndex="5">600</dcc:row> 
+                   <dcc:row RowIndex="6">600</dcc:row> 
+                   <dcc:row RowIndex="7">600</dcc:row> 
+                   <dcc:row RowIndex="8">600</dcc:row> 
+                   <dcc:row RowIndex="9">600</dcc:row> 
+                   <dcc:row RowIndex="10">600</dcc:row>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
+         <dcc:measurementSeries  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" calibrationRowIndexRef="3">
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -927,69 +843,61 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">p1</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p2</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p3</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p4</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p5</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p6</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p7</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p8</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p9</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">p10</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">p1</dcc:row> 
+                   <dcc:row RowIndex="2">p2</dcc:row> 
+                   <dcc:row RowIndex="3">p3</dcc:row> 
+                   <dcc:row RowIndex="4">p4</dcc:row> 
+                   <dcc:row RowIndex="5">p5</dcc:row> 
+                   <dcc:row RowIndex="6">p6</dcc:row> 
+                   <dcc:row RowIndex="7">p7</dcc:row> 
+                   <dcc:row RowIndex="8">p8</dcc:row> 
+                   <dcc:row RowIndex="9">p9</dcc:row> 
+                   <dcc:row RowIndex="10">p10</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="TargetValue" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Calibration Point</dcc:heading>
                <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1200</dcc:row> 
+                   <dcc:row RowIndex="2">1200</dcc:row> 
+                   <dcc:row RowIndex="3">1200</dcc:row> 
+                   <dcc:row RowIndex="4">1200</dcc:row> 
+                   <dcc:row RowIndex="5">1200</dcc:row> 
+                   <dcc:row RowIndex="6">1200</dcc:row> 
+                   <dcc:row RowIndex="7">1200</dcc:row> 
+                   <dcc:row RowIndex="8">1200</dcc:row> 
+                   <dcc:row RowIndex="9">1200</dcc:row> 
+                   <dcc:row RowIndex="10">1200</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="reference">
                <dcc:heading lang="en">Reference value</dcc:heading>
                <dcc:heading lang="da">Referenceværdi</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">1199.468</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.896</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1197.893</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.405</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.267</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1199.819</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.755</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.946</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.575</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1198.986</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1199.468</dcc:row> 
+                   <dcc:row RowIndex="2">1198.896</dcc:row> 
+                   <dcc:row RowIndex="3">1197.893</dcc:row> 
+                   <dcc:row RowIndex="4">1198.405</dcc:row> 
+                   <dcc:row RowIndex="5">1199.267</dcc:row> 
+                   <dcc:row RowIndex="6">1199.819</dcc:row> 
+                   <dcc:row RowIndex="7">1198.755</dcc:row> 
+                   <dcc:row RowIndex="8">1198.946</dcc:row> 
+                   <dcc:row RowIndex="9">1198.575</dcc:row> 
+                   <dcc:row RowIndex="10">1198.986</dcc:row>
             </dcc:column>
             <dcc:column dataCategory="Value" measurand="Volume" metaDataCategory="Data" scope="indication">
                <dcc:heading lang="en">Item indication</dcc:heading>
                <dcc:heading lang="da">Emnets visning</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:stringXMLList>
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row> 
-                   <dcc:row calibrationPoint="pt3">1200</dcc:row>
-                </dcc:stringXMLList>
+                   <dcc:row RowIndex="1">1200</dcc:row> 
+                   <dcc:row RowIndex="2">1200</dcc:row> 
+                   <dcc:row RowIndex="3">1200</dcc:row> 
+                   <dcc:row RowIndex="4">1200</dcc:row> 
+                   <dcc:row RowIndex="5">1200</dcc:row> 
+                   <dcc:row RowIndex="6">1200</dcc:row> 
+                   <dcc:row RowIndex="7">1200</dcc:row> 
+                   <dcc:row RowIndex="8">1200</dcc:row> 
+                   <dcc:row RowIndex="9">1200</dcc:row> 
+                   <dcc:row RowIndex="10">1200</dcc:row>
             </dcc:column>
          </dcc:measurementSeries>
    </dcc:measurementResults>
