@@ -43,17 +43,12 @@
             <dcc:postCode>2635</dcc:postCode>
             <dcc:street>Baldershøj</dcc:street>
             <dcc:streetNo>19</dcc:streetNo>
-            <dcc:further>
-               <dcc:content/>
-            </dcc:further>
          </dcc:location>
       </dcc:calibrationLaboratory>
       <dcc:respPersons>
          <dcc:respPerson>
             <dcc:person>
-               <dcc:name>
-                  <dcc:content>Erling T. Nielsen</dcc:content>
-               </dcc:name>
+               <dcc:name>Erling T. Nielsen</dcc:name>
             </dcc:person>
          </dcc:respPerson>
       </dcc:respPersons>
