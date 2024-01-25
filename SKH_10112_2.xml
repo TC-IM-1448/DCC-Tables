@@ -35,37 +35,50 @@
          <dcc:heading lang="en">Calibration laboratory</dcc:heading>
          <dcc:heading lang="da">Kalibreringslaboratorium</dcc:heading>
          <dcc:companyName>Dandiag A/S</dcc:companyName>
-         <dcc:eMail>nln@dandiag.com</dcc:eMail>
-         <dcc:phone>2334 45 56</dcc:phone>
          <dcc:location>
+            <dcc:heading lang="en">Address</dcc:heading>
+            <dcc:heading lang="da">Addresse</dcc:heading>
             <dcc:city>Ishøj</dcc:city>
             <dcc:countryCode>DK</dcc:countryCode>
             <dcc:postCode>2635</dcc:postCode>
             <dcc:street>Baldershøj</dcc:street>
             <dcc:streetNo>19</dcc:streetNo>
          </dcc:location>
+         <dcc:contactInfo>
+             <dcc:heading lang="en">Contact person</dcc:heading>
+             <dcc:heading lang="da">Kontaktperson</dcc:heading>
+             <dcc:eMail>nln@dandiag.com</dcc:eMail>
+             <dcc:phone>2334 45 56</dcc:phone>
+         </dcc:contactInfo>
       </dcc:calibrationLaboratory>
       <dcc:respPersons>
          <dcc:respPerson>
-            <dcc:person>
-               <dcc:name>Erling T. Nielsen</dcc:name>
-            </dcc:person>
+            <dcc:heading lang="en">Main signer</dcc:heading>
+            <dcc:heading lang="da">Underskriftsberettiget</dcc:heading>
+            <dcc:name>Erling T. Nielsen</dcc:name>
+            <dcc:mainSigner>true</dcc:mainSigner>
          </dcc:respPerson>
       </dcc:respPersons>
       <dcc:customer>
          <dcc:heading lang="en">Customer</dcc:heading>
          <dcc:heading lang="da">Kunde</dcc:heading>
          <dcc:companyName>Dandiag A/S</dcc:companyName>
-         <dcc:attPerson>Scott Kenney Hansen</dcc:attPerson>
-         <dcc:eMail>skh@dandiag.com</dcc:eMail>
-         <dcc:phone>23 34 3456</dcc:phone>
          <dcc:location>
+            <dcc:heading lang="en">Address</dcc:heading>
+            <dcc:heading lang="da">Addresse</dcc:heading>
             <dcc:city>Ishøj</dcc:city>
             <dcc:countryCode>DK</dcc:countryCode>
             <dcc:postCode>2635</dcc:postCode>
             <dcc:street>Baldershøj</dcc:street>
             <dcc:streetNo>19</dcc:streetNo>
          </dcc:location>
+         <dcc:contactInfo>
+             <dcc:heading lang="en">Contact person</dcc:heading>
+             <dcc:heading lang="da">Kontaktperson</dcc:heading>
+             <dcc:attPerson>Scott Kenney Hansen</dcc:attPerson>
+             <dcc:eMail>skh@dandiag.com</dcc:eMail>
+             <dcc:phone>23 34 3456</dcc:phone>
+         </dcc:contactInfo>
       </dcc:customer>
       <dcc:accreditation accrId="acc0">
          <dcc:accreditationCountry>DK</dcc:accreditationCountry>
@@ -90,7 +103,7 @@
          <dcc:statement statementId="acc1" category="accreditation">
             <dcc:heading lang="en">Accreditation</dcc:heading>
             <dcc:heading lang="da">Akkreditering</dcc:heading>
-            <dcc:body lang="en">The calibration is caried out under DANAK accreditation no..490 unless clearly statet in the tabel of results.
+            <dcc:body lang="en">The calibration is caried out under DANAK accreditation no. 490 unless clearly statet in the tabel of results.
 
 DANAK is the national accreditation body in Denmark in compliance with Regulation (EC) No. 765/2008 of the European Parliament and of the Council.
 
@@ -197,7 +210,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
          </dcc:equipmentItem>
       </dcc:equipment>
       <dcc:measuringSystemsUnderCalibration>
-          <dcc:heading lang="en">Measuring Systems</dcc:heading>
+          <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
           <dcc:heading lang="da">Målesystemer</dcc:heading>
           <dcc:measuringSystem measuringSystemId="ms1">
               <dcc:heading lang="en">Channel 1</dcc:heading>

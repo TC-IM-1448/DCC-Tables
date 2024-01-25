@@ -22,7 +22,12 @@
         </xs:documentation>
     </xs:annotation>
 
-    <xs:element name="digitalCalibrationCertificate" type="dcc:digitalCalibrationCertificateType"/>
+    <xs:element name="digitalCalibrationCertificate" type="dcc:digitalCalibrationCertificateType">
+    <xs:unique name="heading">
+        <xs:selector xpath='dcc:heading'/>
+        <xs:field xpath="@lang"/>
+    </xs:unique>
+    </xs:element>
 
     <xs:complexType name="digitalCalibrationCertificateType">
         <xs:annotation>
@@ -95,12 +100,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded">
-            <xs:unique name="lkj">
-                <xs:selector xpath="heading"/>
-                <xs:field xpath="@lang"/>
-            </xs:unique>
-            </xs:element>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="measuringSystem" type="dcc:measuringSystemType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -317,9 +317,8 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0"/>
-            <xs:element name="person" type="dcc:contactType"/>
-            <xs:element name="role" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcc:notEmptyStringType"/>
             <xs:element name="mainSigner" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
@@ -498,13 +497,20 @@ quantities of specified kinds
     <xs:complexType name="contactType">
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="companyName" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcc:contactInfo" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="contactInfo">
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="attPerson" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="fax" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
@@ -670,7 +676,7 @@ quantities of specified kinds
         </xs:annotation>
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="lang" type="dcc:stringISO639Type" use="optional"/>
+                <xs:attribute name="lang" type="dcc:stringISO639Type" use="required"/>
                 <xs:attribute name="id" type="xs:ID" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
