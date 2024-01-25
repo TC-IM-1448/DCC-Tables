@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema version="1.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema version="2.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:dcc="https://dfm.dk"
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
            targetNamespace="https://dfm.dk"
@@ -41,14 +41,6 @@
                 <xs:field xpath="@measuringSystemRef"/>
                 <xs:field xpath="@serviceCategory"/>
                 <xs:field xpath="@customServiceCategory"/>
-                <!--xs:field xpath="dcc:column/@measurand"/-->
-            </xs:unique>
-            <xs:unique name="measurementSeries">
-                <xs:selector xpath="dcc:measurementSeries"/>
-                <xs:field xpath="@measuringSystemRef"/>
-                <xs:field xpath="@serviceCategory"/>
-                <xs:field xpath="@customServiceCategory"/>
-                <xs:field xpath="@calibrationRowIndexRef"/>
             </xs:unique>
             </xs:element>
 
@@ -67,7 +59,7 @@
         <xs:attribute name="schemaVersion" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="1\.0\.0"/>
+                    <xs:pattern value="2\.0\.0"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -129,17 +121,6 @@ quantities of specified kinds
             <xs:element name="settingRef" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="measuringSystemId" type="xs:ID" use="required"/>
-    </xs:complexType>
-
-    <xs:complexType name="refListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of references to elements
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="ref" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="refIdType">
@@ -384,11 +365,11 @@ quantities of specified kinds
 
     <xs:complexType name="statementType">
         <xs:sequence>
-            <xs:element name="category" type="dcc:statementCategoryType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
         <xs:attribute name="statementId" type="xs:ID" use="required"/>
+        <xs:attribute name="category" type="dcc:statementCategoryType" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="statementCategoryType">
@@ -423,11 +404,6 @@ quantities of specified kinds
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
         </xs:element>
         </xs:sequence>
-        <xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
-        <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
-        <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
-        <xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
-        <xs:attribute name="calibrationRowIndexRef" type="xs:int" use="optional" default="0"/>
     </xs:complexType>
 
     <xs:complexType name="measurementResultsType">
@@ -439,7 +415,17 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0"/>
-            <xs:element name="calibrationResult" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="calibrationResult"  maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                            <xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
+                            <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
                 <xs:unique name="column2">
                     <xs:selector xpath="dcc:column"/>
                     <xs:field xpath="@scope"/>
@@ -449,7 +435,14 @@ quantities of specified kinds
                     <xs:field xpath="dcc:unit"/>
                 </xs:unique>
             </xs:element>
-            <xs:element name="measurementSeries" type="dcc:tableType" maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="measurementSeries" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="measurementSeriesId" type="xs:ID" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
                 <xs:unique name="column">
                     <xs:selector xpath="dcc:column"/>
                     <xs:field xpath="@scope"/>
@@ -460,7 +453,6 @@ quantities of specified kinds
                 </xs:unique>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="accreditationType">
@@ -487,55 +479,6 @@ quantities of specified kinds
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="stringConformityStatementStatusType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="pass"/>
-            <xs:enumeration value="fail"/>
-            <xs:enumeration value="conditionalPass"/>
-            <xs:enumeration value="conditionalFail"/>
-            <xs:enumeration value="noPass"/>
-            <xs:enumeration value="noFail"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <xs:simpleType name="stringISO3166Type">
-        <xs:annotation>
-            <xs:documentation>
-                A string that is restricted to two upper case letters that contain a country code as defined in
-                ISO 3166-1.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Z]{2}"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="stringISO639Type">
-        <xs:annotation>
-            <xs:documentation>
-                A string that is restricted to two lower case letters that contain a language code as defined in
-                ISO 639.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[a-z]{2}"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:complexType name="stringWithLangType">
-        <xs:annotation>
-            <xs:documentation>
-                A string element with an additional lang attribute for localization.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="lang" type="dcc:stringISO639Type" use="optional"/>
-                <xs:attribute name="id" type="xs:ID" use="optional"/>
-                <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
 
     <xs:complexType name="locationType">
         <xs:choice maxOccurs="unbounded">
@@ -589,12 +532,68 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="unit" type="dcc:unitType" minOccurs="0"/>
-            <xs:element name="row" type="dcc:rowType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="dataList" type="dcc:formattedDataType" minOccurs='1' maxOccurs="unbounded">
+                <xs:unique name="idx">
+                    <xs:selector xpath="dcc:*"/>
+                    <xs:field xpath="@idx"/>
+                </xs:unique>
+            </xs:element>
+
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategory" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
         <xs:attribute name="metaDataCategory" type="dcc:metaDataCategoryType" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name='formattedDataType'>
+        <xs:choice>
+            <xs:element name='real' minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='dcc:decimalType'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name='int'  minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='xs:int'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name='string' minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='xs:string'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name='conformityStatus' minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='dcc:conformityStatusType'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name='ref'  minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='xs:IDREFS'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
     </xs:complexType>
 
     <xs:simpleType name="unitType">
@@ -620,15 +619,6 @@ quantities of specified kinds
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="rowType">
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="RowIndex" type="xs:int" use="required"/>
-                <xs:attribute name="id" type="xs:ID" use="optional"/>
-                <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
 
     <xs:simpleType name="yesno">
         <xs:restriction base="xs:string">
@@ -636,6 +626,55 @@ quantities of specified kinds
             <xs:enumeration value="n"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:simpleType name="conformityStatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="pass"/>
+            <xs:enumeration value="fail"/>
+            <xs:enumeration value="conditionalPass"/>
+            <xs:enumeration value="conditionalFail"/>
+            <xs:enumeration value="noPass"/>
+            <xs:enumeration value="noFail"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="stringISO3166Type">
+        <xs:annotation>
+            <xs:documentation>
+                A string that is restricted to two upper case letters that contain a country code as defined in
+                ISO 3166-1.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="stringISO639Type">
+        <xs:annotation>
+            <xs:documentation>
+                A string that is restricted to two lower case letters that contain a language code as defined in
+                ISO 639.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="stringWithLangType">
+        <xs:annotation>
+            <xs:documentation>
+                A string element with an additional lang attribute for localization.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="dcc:stringISO639Type" use="optional"/>
+                <xs:attribute name="id" type="xs:ID" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
     <xs:simpleType name="scopeType">
         <xs:annotation>
@@ -664,17 +703,18 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="Value" />  <!-- used for measured quantities -->
-                <xs:enumeration value="TargetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
-                <xs:enumeration value="ExpandedUncertainty" /> 
-                <xs:enumeration value="UncertaintyCoverageFactor_k" />
-                <xs:enumeration value="ToleranceLimitLower" />
-                <xs:enumeration value="ToleranceLimitUpper" />
-                <xs:enumeration value="AcceptanceLimitLower" />
-                <xs:enumeration value="AcceptanceLimitUpper" />
+                <xs:enumeration value="value" />  <!-- used for measured quantities -->
+                <xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
+                <xs:enumeration value="expandedUncertainty" /> 
+                <xs:enumeration value="uncertaintyCoverageFactor_k" />
+                <xs:enumeration value="toleranceLimitLower" />
+                <xs:enumeration value="toleranceLimitUpper" />
+                <xs:enumeration value="acceptanceLimitLower" />
+                <xs:enumeration value="acceptanceLimitUpper" />
                 <xs:enumeration value="repeatability" /> 
-                <xs:enumeration value="Conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. -->
-                <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
+                <xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
+                <xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
+                <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
                 <xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
             </xs:restriction>
     </xs:simpleType>
@@ -688,16 +728,18 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="UsedReferenceId" />
-                <xs:enumeration value="UsedMethodId" />
-                <xs:enumeration value="UsedEquipmentId" />
-                <xs:enumeration value="Correction" /> 
-                <xs:enumeration value="accreditationException" /> 
-                <xs:enumeration value="customerTag" /> 
-                <xs:enumeration value="Exception" /> 
-                <xs:enumeration value="Statement" /> 
-                <xs:enumeration value="Data" />  <!--The column is not considered as meta data. The data type is specified in the dataCategory attribute-->
-                <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
+                <xs:enumeration value="rowTag" /> 
+                <xs:enumeration value="usedReferenceRef" />
+                <xs:enumeration value="methodRef" />
+                <xs:enumeration value="exceptionRef" /> 
+                <xs:enumeration value="traceabilityRef" /> 
+                <xs:enumeration value="attentionRef" /> 
+                <xs:enumeration value="commentRef" /> 
+                <xs:enumeration value="accreditationExceptionRef" /> 
+                <xs:enumeration value="normRef" /> 
+                <xs:enumeration value="measurementSeriesRef" /> 
+                <xs:enumeration value="data" />  <!--The column is not considered as meta data. The data type is specified in the dataCategory attribute-->
+                <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>
     </xs:simpleType>
 
