@@ -403,6 +403,10 @@ quantities of specified kinds
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
         </xs:element>
         </xs:sequence>
+		<xs:attribute name="tableId" type="xs:ID" use="required"/>
+		<xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
+		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
+		<xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>		
     </xs:complexType>
 
     <xs:complexType name="measurementResultsType">
@@ -418,10 +422,7 @@ quantities of specified kinds
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
                             <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
-                            <xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
-                            <xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -438,7 +439,7 @@ quantities of specified kinds
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="measurementSeriesId" type="xs:ID" use="required"/>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
