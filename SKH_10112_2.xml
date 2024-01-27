@@ -311,9 +311,9 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
                <dcc:dataList>
-                  <dcc:string idx="1"> pt1 </dcc:string>
-                  <dcc:string idx="2"> pt2 </dcc:string> 
-                  <dcc:string idx="3"> pt3 </dcc:string>
+                  <dcc:string idx="1">pt1</dcc:string>
+                  <dcc:string idx="2">pt2</dcc:string> 
+                  <dcc:string idx="3">pt3</dcc:string>
               </dcc:dataList>
             </dcc:column>
             <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
@@ -442,7 +442,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:unit>\one</dcc:unit>
                <dcc:dataList>
                    <dcc:ref idx="1">ser11</dcc:ref> 
-                   <dcc:ref idx="2">ser12 </dcc:ref>
+                   <dcc:ref idx="2">ser12</dcc:ref>
                    <dcc:ref idx="3">ser13</dcc:ref>
                </dcc:dataList>
             </dcc:column>

@@ -163,7 +163,7 @@ def getTableFromResult(root, tableAttrib):
     ns = root.nsmap
     returntable=[]
 
-    searchResults=root.find('dcc:measurementResults',ns).findall('dcc:table',ns)
+    searchResults=root.find('dcc:measurementResults',ns).getchildren() #('dcc:table',ns)
     for table in searchResults:
         if tableAttrib == table.attrib:
         # if match_attributes(table.attrib, tableAttrib):
@@ -174,6 +174,7 @@ def getTableFromResult(root, tableAttrib):
     if count>1:
         raise ValueError('Warning: DCC contains ' + str(count) + ' tables with the required Id.\n Returning only the first instance')
     return returntable[0]
+
 
 # dd = dict(measuringSystemRef="ms1", tableId="MS120")
 # print_node(getTableFromResult(dd))
@@ -189,7 +190,7 @@ def match_attributes(att,searchatt, unit="-", searchunit='*'):
     return True
 
 
-def getColumnFromTable(table,searchattributes, searchunit=""):
+def getColumnsFromTable(table,searchattributes, searchunit="") -> list:
     #INPUT: xml-element of type dcc:table
     #INPUT: attribute dictionary
     #INPUT: searchunit as string.
@@ -208,53 +209,49 @@ def getColumnFromTable(table,searchattributes, searchunit=""):
         raise ValueError("No column found with the required attributes")
         return None
     return cols
-       
 
-def getColumnValues(column: et._Element) -> list: 
-    return col.find("dcc:valueXMLList",column.nsmap).text.split()
-
-# dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
-# tbl = getTableFromResult(dtbl)
-# dcol = dict(dataCategory="Value", measurand="Measure.Volume", metaDataCategory="Data", scope="reference")
-# col = getColumnFromTable(tbl,dcol,searchunit="*")[0]
-# print_node(col)
-# getColumnValues(col)
 
 #%%
-def getRowFromColumn(column, customerTag):
-    table = column.getparent()
-    try:
-        tagcol=getColumnFromTable(table,{'scope':'*','dataCategory':'*','measurand':'*','metaDataCategory':'customerTag'},'*')
-    except:
-        raise RuntimeError("The table does not contain a customerTag column")
-
+def getRowData(column: et._Element, search_idxs=[]) -> list:
     # Iterate through the tags to find the row number of the specified tag
-    tags=tagcol[0][-1].text.split()
-    found=False
-    for i, tag in enumerate(tags):
-        if tag==customerTag:
-            found=True
-            break
-    if found:    
-       searchValue=column[-1].text.split()[i]
-       return searchValue
-    else: 
-       raise Exception("The requested customer tag was not found")
-       return None
-
-# dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
-# tbl = getTableFromResult(dtbl)
-# dcol = dict(dataCategory="Value", measurand="Measure.Volume", metaDataCategory="Data", scope="reference")
-# col = getColumnFromTable(tbl,dcol,searchunit="*")[0]
-# print_node(col)
-# getRowFromColumn(col, "p5")
-
+    search_idxs = list(map(str, search_idxs))
+    dataList = column.find('dcc:dataList', column.nsmap).getchildren()
+    dataType = rev_ns_tag(dataList[0])
+    dataList = {row.attrib['idx']: row.text for row in dataList}
+    if search_idxs == []:
+        search_idxs = dataList.keys()
+    search_result = {}
+    for idx in search_idxs:  
+        if idx in dataList.keys(): 
+            rowData = dataList[idx]
+            if dataType == 'dcc:real': 
+                rowData = eval(f"float({rowData})")
+            elif dataType == 'dcc:int':
+                rowData = eval(f"int({rowData})")
+            search_result[idx] = rowData
+        else:
+            raise Exception(f"Row index idx={idx} not found in Column dataList!") 
+            return None
+    return search_result
 
 #%%
-def search(root, tableAttrib, colAttrib, unit, customerTag=None, lang="en"):
+def getRowTagColumns(tbl) -> list: 
+    return tbl.findall("./dcc:column[@metaDataCategory='rowTag']",tbl.nsmap)
+
+def getRowTagsFromRowTagColumn(col: et._Element) -> dict:
+    rowTags = {elm.attrib["idx"]: elm.text for elm in col.findall(".//*[@idx]")}
+    return rowTags
+
+def rowTagsToIndexs(rowTagColumn: et._Element) -> dict: 
+    """Returns {tag:idx}"""
+    rowTags = getRowTagsFromRowTagColumn(rowTagColumn)
+    return {v: k for k, v in rowTags.items()}
+
+#%%
+def search(root, tableAttrib, colAttrib, unit, rowTags=[], idxs=[], lang="en"):
     """
     INPUT: 
-    root: etree root element 
+    root: etree root element of the DCC
     tableAttributes itemRef, settingRef and tableId as dictionary of string values
     coAttributes scope, dataCategory and measurand  as dictionary of string values
     unit as string
@@ -276,36 +273,29 @@ def search(root, tableAttrib, colAttrib, unit, customerTag=None, lang="en"):
         tbl=getTableFromResult(root, tableAttrib)
         try:
             """Find the rigt column using attributes and unit"""
-            cols=getColumnFromTable(tbl,colAttrib,unit)
+            cols=getColumnsFromTable(tbl,colAttrib,unit)
+            if len(cols) != 1: 
+                raise Exception("Found multiple columns - search should be unique")
+            col = cols[0]
             try:
-                if type(customerTag)!=type(None):
-                    searchValue=[]
-                    for col in cols:
-                        searchValue.append(getRowFromColumn(col,customerTag))
-                else:
-                    #searchValue=col[2].text.split()
-                    searchValue=cols
+                """Convert rowTags to index's - checks for uniquenes of rowTag column"""
+                if rowTags!=[]: 
+                    tagColumns = getRowTagColumns(tbl)
+                    if len(tagColumns) != 1: 
+                        raise Exception("Multiple rowTag columns identified, please use another method to identify required row indexes.")
+                    tagColumn = tagColumns[0]
+                    rowTagIdxs=rowTagsToIndexs(tagColumns[0])
+                    idxs = [rowTagIdxs[rowTag] for rowTag in rowTags]
+                try: 
+                    searchValue=getRowData(col, idxs)
+                except Exception as e: 
+                    getrowdataWarning = e.args[0]
             except Exception as e:
-                usertagwarning=e.args[0]
+                rowtagwarning=e.args[0]
         except Exception as e:
             colwarning=e.args[0]
     except Exception as e:
         warning=e.args[0]
-
-    # for col in cols:
-    #     print("")
-    #     selectstring="heading[@lang='"+lang+"']"
-    #     heading=col.find("dcc:"+selectstring,ns)
-    #     if type(heading) != type(None):
-    #         print(heading.text)
-    #     #print(col.attrib)
-    #     print("Unit:" +col.find('dcc:unit',ns).text)
-    #     if type(customerTag)!=type(None):
-    #         print(getRowFromColumn(col,customerTag))
-    #     else:
-    #         print(col[-1].text.split())
-
-    #return [searchValue, usertagwarning, colwarning, warning]
     return searchValue
 
 # dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
@@ -393,9 +383,16 @@ def printelement(element):
 #------------------------------------------------------------------
 #%%
 def schema_get_restrictions(xsd_root: et._Element, 
-                            type_names=['yesno', 'scopeType', 'dataCategoryType', 
-                                        'statementCategoryType', 'stringPerformanceLocationType',
-                                        'metaDataCategoryType', 'measurandType' ]
+                            type_names=['yesno', 
+                                        'statementCategoryType', 
+                                        'accreditationApplicabilityType',
+                                        'stringPerformanceLocationType',
+                                        'conformityStatusType',
+                                        'scopeType', 
+                                        'dataCategoryType', 
+                                        'metaDataCategoryType', 
+                                        'serviceCategoryType',
+                                        'measurandType' ]
                             ) -> dict: 
     """schema_get_restrictions is used for finding the valid tokens for as specified in type_name:
         - yesno
@@ -535,33 +532,40 @@ def print_node(node):
 
 # print_node(root)
 #%% Run tests on dcc-xml-file
-if False: 
+if True: 
     tree, root = load_xml("SKH_10112_2.xml")
-    dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
+    dtbl = dict(measuringSystemRef="ms1", serviceCategory="M/FF-9.10.3")
     tbl = getTableFromResult(root, dtbl)
-    dcol = dict(dataCategory="Value", measurand="Measure.Volume", metaDataCategory="Data", scope="reference")
-    col = getColumnFromTable(tbl,dcol,searchunit="*")[0]
+    dcol = dict(dataCategory="value", measurand="Volume", metaDataCategory="data", scope="reference")
+    col = getColumnsFromTable(tbl,dcol,searchunit="*")[0]
+    print(col)
     print_node(col)
     rowtag = "p5"
-    getRowFromColumn(col, rowtag)
-    getColumnValues(col)
-    print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
-    print("SEARCH RESULT:")
-    print_node(search(root,dtbl, dcol, "\micro\litre").pop())
-    print(search(root,dtbl, dcol, "\micro\litre", customerTag="p5" ))
+    idxs = [1,3]
+    search_data = getRowData(col, [])
+    print(search_data)
+
+    search_result = search(root, dtbl, dcol, "\micro\litre")
+    print("SEARCH RESULT for Column: ", search_result)
+
+    search_result = search(root, dtbl, dcol, "\micro\litre", rowTags=['pt1','pt3'] ,idxs=[1,2])
+    print("SEARCH RESULT for specific Rows", search_result)
+
+    
+    #%%
     print("----------------------GET MeasuringSystem----------------")
     # print_node(get_measuringSystem(root,show=True)[0])
-    [print_node(n) for n in get_measuringSystem(root,"ms2")]
+    [print_node(n) for n in get_measuringSystems(root,"ms2")]
     print("----------------------get_table----------------")
     print(get_tables(root,show=False))
     print_node(get_tables(root,tableId="MS120")[0])
     print_node(get_setting(root)[0])
 
 #%% Run tests on dcc-xml-file
-if False: 
+if True: 
     xsd_tree, xsd_root = load_xml("dcc.xsd")
-    print(schema_get_restrictions(xsd_root))
-    print(schema_find_all_restrictions(xsd_root))
+    d = print(schema_get_restrictions(xsd_root))
+    da = print(schema_find_all_restrictions(xsd_root))
 
 
 elif __name__ == "__main__":
