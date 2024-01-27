@@ -388,6 +388,17 @@ quantities of specified kinds
                 <xs:enumeration value="norm" /> 
             </xs:restriction>
     </xs:simpleType>
+	
+	<xs:simpleType name="tableCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="calibrationResult" /> 
+			<xs:enumeration value="measurementSeries" /> 
+		</xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="tableType">
         <xs:annotation>

@@ -133,55 +133,38 @@ def load_xml(xml_path: str) -> (et._ElementTree, et.Element):
     return tree, root
 
 #%%
-def get_table(root, ID='*', lang='en', show=False):
-    ns = root.nsmap
-    returntable=[]
-    tables=root.find('dcc:measurementResults',ns).findall('dcc:table',ns)
-    for table in tables:
-        if ID==table.attrib['tableId'] or ID=='*':
-            returntable.append(table)
-            if show:
-                print('----------------table-------------')
-                for k,v in table.attrib.items():
-                    print(f"{k}: {v}")
-    
-    count = len(returntable)
-    if count==0:
-        raise ValueError('Warning: DCC contains no tables with the required combination of setting and item Ids.')
-    if count>1:
-        raise ValueError('Warning: DCC contains ' + str(count) + ' tables with the required Id.\n Returning only the first instance')
-    return returntable
-    
-    
-def getTableFromResult(root, tableAttrib):
-    #INPUT itemId and settingId list of strings
-    #OUTPUT xml-element of type dcc:table
-
-    xmltable=None
-    count=0
-    #Search all measurement results for a table with the required attributes
-    ns = root.nsmap
-    returntable=[]
-
-    searchResults=root.find('dcc:measurementResults',ns).getchildren() #('dcc:table',ns)
-    for table in searchResults:
-        if tableAttrib == table.attrib:
-        # if match_attributes(table.attrib, tableAttrib):
-            returntable.append(table)    
-    count = len(returntable)
-    if count==0:
-        raise ValueError('Warning: DCC contains no tables with the required combination of setting and item Ids.')
-    if count>1:
-        raise ValueError('Warning: DCC contains ' + str(count) + ' tables with the required Id.\n Returning only the first instance')
-    return returntable[0]
-
-
-# dd = dict(measuringSystemRef="ms1", tableId="MS120")
-# print_node(getTableFromResult(dd))
-
+def match_table_attributes(att,searchAttrib,searchTableType='*'):
+    for key in att.keys():
+        if att[key]!='-' and searchAttrib[key]!='*' and att[key]!=searchAttrib[key]:
+            return False
+    return True
 
 #%%
-def match_attributes(att,searchatt, unit="-", searchunit='*'):
+def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
+    ns = root.nsmap
+    default_search_attrib = dict(tableId='*',
+                                 measuringSystemRef="*", 
+                                 serviceCategory="*", 
+                                 customServiceCategory='*', 
+                                 statementRef='*')
+    default_search_attrib.update(search_attrib)
+    search_attrib = default_search_attrib
+    # print(search_attrib)
+    returntable=[]
+    tables=root.find('dcc:measurementResults',ns).getchildren() #findall('dcc:table',ns)
+    for table in tables:
+        if (tableType == '*' or tableType == rev_ns_tag(table)) and match_table_attributes(table.attrib, search_attrib):
+            returntable.append(table)
+
+    # count = len(returntable)
+    # if count==0:
+    #     raise ValueError('Warning: DCC contains no tables with the required combination of setting and item Ids.')
+    # if count>1:
+    #     raise ValueError('Warning: DCC contains ' + str(count) + ' tables with the required Id.\n Returning only the first instance')
+    return returntable
+    
+#%%
+def match_column_attributes(att,searchatt, unit="-", searchunit='*'):
     for key in att.keys():
         if att[key]!='-' and searchatt[key]!='*' and att[key]!=searchatt[key]:
             return False
@@ -202,7 +185,7 @@ def getColumnsFromTable(table,searchattributes, searchunit="") -> list:
         if type(col.find('dcc:unit',ns)) !=type(None):
             unit=col.find('dcc:unit',ns).text
         #if col.attrib==searchattributes and searchunit==unit:
-        if match_attributes(col.attrib, searchattributes,unit,searchunit):
+        if match_column_attributes(col.attrib, searchattributes,unit,searchunit):
             cols.append(col)
             #return col
     if len(cols)==0: 
@@ -248,7 +231,7 @@ def rowTagsToIndexs(rowTagColumn: et._Element) -> dict:
     return {v: k for k, v in rowTags.items()}
 
 #%%
-def search(root, tableAttrib, colAttrib, unit, rowTags=[], idxs=[], lang="en"):
+def search(root, tableAttrib, colAttrib, unit, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
     """
     INPUT: 
     root: etree root element of the DCC
@@ -259,10 +242,11 @@ def search(root, tableAttrib, colAttrib, unit, rowTags=[], idxs=[], lang="en"):
     OUTPUT:
     search result as string (or list of strings if customerTag is not specified)
     warnings as strings 
+    NOTE: rowTags takes prior rank to idxs if both are provided. 
     """
     ns = root.nsmap
 
-    searchValue="-"
+    searchValue=[]
     warning="-"
     usertagwarning="-"
     colwarning="-"
@@ -270,7 +254,11 @@ def search(root, tableAttrib, colAttrib, unit, rowTags=[], idxs=[], lang="en"):
 
     try:
         """Find the right table using measuringSystemRef and tableId"""
-        tbl=getTableFromResult(root, tableAttrib)
+        tbls=getTables(root, tableAttrib, tableType)
+        print(tbls)
+        if len(tbls) != 1: 
+                raise Exception("Found multiple columns - search should be unique")
+        tbl = tbls[0]
         try:
             """Find the rigt column using attributes and unit"""
             cols=getColumnsFromTable(tbl,colAttrib,unit)
@@ -315,7 +303,7 @@ def get_statements(root, ID='*') -> list:
 
 # print_node(get_statement(root,'meth1')[0])
 #%%
-def get_measuringSystems(root, ID='*',lang='en', show=False):
+def get_measuringSystems(root, ID='*',lang='en', show=False) -> list:
     ns = root.nsmap
     # items=root.findall("./dcc:administrativeData/dcc:measuringSystemsUnderCalibration",ns)
     items = root.findall(".//dcc:measuringSystem",ns)
@@ -336,20 +324,6 @@ def get_measuringSystems(root, ID='*',lang='en', show=False):
                     print(identification.find("dcc:value").text)
     return returnitem
 # print_node(get_measuringSystem(root,show=True)[0])
-#%%
-def get_tables(root, tableId='*', lang='en', show=False) -> list:
-    ns = root.nsmap
-    returntable=[]
-    tables=root.find('dcc:measurementResults',ns).findall('dcc:table',ns)
-    for table in tables:
-        if tableId==table.attrib['tableId'] or tableId=='*':
-            returntable.append(table)
-            if show:
-                print('----------------table-------------')
-                for k,v in table.attrib.items():
-                    print(f"{k}: {v}")
-    return returntable
-# print_node(get_tables(root, tableId="MS120")[0])
 #%%
 def get_setting(root, settingId='*', lang='en', show=False) -> list:
     """ Returns a list of elements fullfilling ID requirements"""
@@ -392,15 +366,17 @@ def schema_get_restrictions(xsd_root: et._Element,
                                         'dataCategoryType', 
                                         'metaDataCategoryType', 
                                         'serviceCategoryType',
-                                        'measurandType' ]
+                                        'measurandType',
+                                        'tableCategoryType']
                             ) -> dict: 
     """schema_get_restrictions is used for finding the valid tokens for as specified in type_name:
         - yesno
+        - statementCategoryType
         - scopeType
         - dataCategoryType
         - metaDataCategoryType
-        - statementCategoryType
         - measurandType
+        - and more 
 
         returns: 
             A dictionary with keys being the type_names passed in the function arguments,
@@ -534,32 +510,32 @@ def print_node(node):
 #%% Run tests on dcc-xml-file
 if True: 
     tree, root = load_xml("SKH_10112_2.xml")
-    dtbl = dict(measuringSystemRef="ms1", serviceCategory="M/FF-9.10.3")
-    tbl = getTableFromResult(root, dtbl)
+    dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="M/FF-9.10.3")
+    print("----------------------get_table----------------")
+    tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
+    print(tbl)
+    # print_node(get_measuringSystem(root,show=True)[0])
     dcol = dict(dataCategory="value", measurand="Volume", metaDataCategory="data", scope="reference")
     col = getColumnsFromTable(tbl,dcol,searchunit="*")[0]
     print(col)
     print_node(col)
     rowtag = "p5"
     idxs = [1,3]
-    search_data = getRowData(col, [])
-    print(search_data)
+    search_data = getRowData(col, idxs)
+    print("Search_data:  ", search_data)
 
-    search_result = search(root, dtbl, dcol, "\micro\litre")
+    search_result = search(root, dtbl, dcol, "\micro\litre", tableType="dcc:calibrationResult")
     print("SEARCH RESULT for Column: ", search_result)
 
     search_result = search(root, dtbl, dcol, "\micro\litre", rowTags=['pt1','pt3'] ,idxs=[1,2])
     print("SEARCH RESULT for specific Rows", search_result)
 
-    
-    #%%
     print("----------------------GET MeasuringSystem----------------")
-    # print_node(get_measuringSystem(root,show=True)[0])
     [print_node(n) for n in get_measuringSystems(root,"ms2")]
-    print("----------------------get_table----------------")
-    print(get_tables(root,show=False))
-    print_node(get_tables(root,tableId="MS120")[0])
     print_node(get_setting(root)[0])
+    #%%
+    print_node(getTables(root,dict(tableId="ser12"))[0])
+    #%%
 
 #%% Run tests on dcc-xml-file
 if True: 
@@ -569,4 +545,4 @@ if True:
 
 
 elif __name__ == "__main__":
-    validate( "certificate2.xml", "dcc.xsd")
+    validate( "SKH_10112_2.xml", "dcc.xsd")
