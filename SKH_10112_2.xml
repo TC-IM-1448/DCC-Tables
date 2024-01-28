@@ -85,7 +85,7 @@
          <dcc:accreditationBody>DANAK</dcc:accreditationBody>
          <dcc:accreditationLabId>490</dcc:accreditationLabId>
          <dcc:accreditationNorm>17025</dcc:accreditationNorm>
-         <dcc:accreditationApplicability>1</dcc:accreditationApplicability>
+         <dcc:accreditationApplicability>partial</dcc:accreditationApplicability>
       </dcc:accreditation>
       <dcc:statements>
          <dcc:statement statementId="s01" category="general">
@@ -94,7 +94,7 @@
             <dcc:body lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcc:body>
             <dcc:body lang="da">Denne rapport må ikke gengives i uddrag undtaget med laboratoriets skriftlige tilladelse.</dcc:body>
          </dcc:statement>
-         <dcc:statement statementId="None" category="general">
+         <dcc:statement statementId="Empty" category="general">
             <dcc:heading lang="en"/>
             <dcc:heading lang="da"/>
             <dcc:body lang="en"/>

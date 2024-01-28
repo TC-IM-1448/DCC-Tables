@@ -227,16 +227,23 @@ quantities of specified kinds
         <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
         <xs:element name="identification" type="dcc:identificationType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="category"  use="required">
-                <xs:simpleType>
+        <xs:attribute name="category"  type="dcc:equipmentCategoryType" use="required">
+               <!-- <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="item"/>
                         <xs:enumeration value="reference"/>
                     </xs:restriction>
-                </xs:simpleType>
+                </xs:simpleType>-->
         </xs:attribute>
         <xs:attribute name="equipId" type="xs:ID" use="required"/>
     </xs:complexType>
+
+    <xs:simpleType name="equipmentCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="item"/>
+			<xs:enumeration value="reference"/>
+		</xs:restriction>
+	</xs:simpleType>
 
     <xs:complexType name="identificationType">
         <xs:annotation>
@@ -248,17 +255,24 @@ quantities of specified kinds
         <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="value" type="xs:string" minOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="issuer" >
-                <xs:simpleType>
+        <xs:attribute name="issuer" type="dcc:issuerType">
+                <!--<xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="owner"/>
                         <xs:enumeration value="manufacturer"/>
                         <xs:enumeration value="calibrationLaboratory"/>
                     </xs:restriction>
-                </xs:simpleType>
+                </xs:simpleType> -->
         </xs:attribute>
     </xs:complexType>
 
+    <xs:simpleType name="issuerType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="owner"/>
+			<xs:enumeration value="manufacturer"/>
+			<xs:enumeration value="calibrationLaboratory"/>
+		</xs:restriction>
+	</xs:simpleType>
 
     <xs:complexType name="performanceLocationType">
         <xs:annotation>
@@ -342,8 +356,8 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
-                        maxOccurs="unbounded"/>
+            <!--<xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
+                        maxOccurs="unbounded"/>-->
             <xs:element name="value" type="xs:decimal" minOccurs="0"/>
             <xs:element name="unit" type="dcc:notEmptyStringType" minOccurs="0"/>
 	</xs:sequence>
@@ -480,13 +494,13 @@ quantities of specified kinds
     <xs:simpleType name="accreditationApplicabilityType">
         <xs:annotation>
             <xs:documentation>
-             "1: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException to indicate this
-              2: all results are under accreditation."
+             "partial: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException to indicate this
+              wholly: all results are under accreditation."
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="1"/>
-            <xs:enumeration value="2"/>
+            <xs:enumeration value="partial"/>
+            <xs:enumeration value="wholly"/>
         </xs:restriction>
     </xs:simpleType>
 

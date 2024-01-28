@@ -360,9 +360,11 @@ def schema_get_restrictions(xsd_root: et._Element,
                             type_names=['yesno', 
                                         'statementCategoryType', 
                                         'accreditationApplicabilityType',
+                                        'equipmentCategoryType',
+                                        'issuerType', 
                                         'stringPerformanceLocationType',
                                         'conformityStatusType',
-                                        'scopeType', 
+                                        'scopeType',
                                         'dataCategoryType', 
                                         'metaDataCategoryType', 
                                         'serviceCategoryType',
@@ -508,7 +510,7 @@ def print_node(node):
 
 # print_node(root)
 #%% Run tests on dcc-xml-file
-if True: 
+if False: 
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="M/FF-9.10.3")
     print("----------------------get_table----------------")
@@ -533,15 +535,18 @@ if True:
     print("----------------------GET MeasuringSystem----------------")
     [print_node(n) for n in get_measuringSystems(root,"ms2")]
     print_node(get_setting(root)[0])
-    #%%
     print_node(getTables(root,dict(tableId="ser12"))[0])
+    #%%
+    statementIds = [elm.attrib['statementId'] for elm in get_statements(root)]
+    statementIds
     #%%
 
 #%% Run tests on dcc-xml-file
 if True: 
     xsd_tree, xsd_root = load_xml("dcc.xsd")
-    d = print(schema_get_restrictions(xsd_root))
-    da = print(schema_find_all_restrictions(xsd_root))
+    da = schema_find_all_restrictions(xsd_root)
+    d = schema_get_restrictions(xsd_root)
+    validate( "SKH_10112_2.xml", "dcc.xsd")
 
 
 elif __name__ == "__main__":
