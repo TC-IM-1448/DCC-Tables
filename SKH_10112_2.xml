@@ -85,7 +85,7 @@
          <dcc:accreditationBody>DANAK</dcc:accreditationBody>
          <dcc:accreditationLabId>490</dcc:accreditationLabId>
          <dcc:accreditationNorm>17025</dcc:accreditationNorm>
-         <dcc:accreditationApplicability>1</dcc:accreditationApplicability>
+         <dcc:accreditationApplicability>partial</dcc:accreditationApplicability>
       </dcc:accreditation>
       <dcc:statements>
          <dcc:statement statementId="s01" category="general">
@@ -94,7 +94,7 @@
             <dcc:body lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcc:body>
             <dcc:body lang="da">Denne rapport må ikke gengives i uddrag undtaget med laboratoriets skriftlige tilladelse.</dcc:body>
          </dcc:statement>
-         <dcc:statement statementId="None" category="general">
+         <dcc:statement statementId="Empty" category="general">
             <dcc:heading lang="en"/>
             <dcc:heading lang="da"/>
             <dcc:body lang="en"/>
@@ -312,7 +312,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
       </dcc:settings>
    </dcc:administrativeData>
    <dcc:measurementResults>
-         <dcc:calibrationResult measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3">
+         <dcc:calibrationResult tableId="calRes1" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3">
             <dcc:heading lang="en">Calibration result chanel 1</dcc:heading>
             <dcc:heading lang="da">Kalibreringsresultat kanal 1</dcc:heading>
             <dcc:numrows>3</dcc:numrows>
@@ -322,9 +322,9 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:heading lang="da">Kundens kode</dcc:heading>
                <dcc:unit>-</dcc:unit>
                <dcc:dataList>
-                  <dcc:string idx="1"> pt1 </dcc:string>
-                  <dcc:string idx="2"> pt2 </dcc:string> 
-                  <dcc:string idx="3"> pt3 </dcc:string>
+                  <dcc:string idx="1">pt1</dcc:string>
+                  <dcc:string idx="2">pt2</dcc:string> 
+                  <dcc:string idx="3">pt3</dcc:string>
               </dcc:dataList>
             </dcc:column>
             <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
@@ -453,12 +453,12 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                <dcc:unit>\one</dcc:unit>
                <dcc:dataList>
                    <dcc:ref idx="1">ser11</dcc:ref> 
-                   <dcc:ref idx="2">ser12 </dcc:ref>
+                   <dcc:ref idx="2">ser12</dcc:ref>
                    <dcc:ref idx="3">ser13</dcc:ref>
                </dcc:dataList>
             </dcc:column>
          </dcc:calibrationResult>
-         <dcc:calibrationResult  measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
+         <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
             <dcc:heading lang="en">Calibration result chanel 2</dcc:heading>
             <dcc:heading lang="da">Kalibreringsresultat kanal 2</dcc:heading>
             <dcc:numrows>3</dcc:numrows>
@@ -604,7 +604,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:calibrationResult>
-         <dcc:measurementSeries  measurementSeriesId="ser11">
+         <dcc:measurementSeries  tableId="ser11" measuringSystemRef="ms1">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -661,7 +661,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measurementSeriesId="ser12">
+         <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -735,7 +735,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measurementSeriesId="ser13">
+         <dcc:measurementSeries  tableId="ser13" measuringSystemRef="ms1">
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -809,7 +809,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measurementSeriesId="ser21">
+         <dcc:measurementSeries  tableId="ser21" measuringSystemRef="ms2">
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -866,7 +866,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measurementSeriesId="ser22">
+         <dcc:measurementSeries  tableId="ser22" measuringSystemRef="ms2">
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
@@ -940,7 +940,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  measurementSeriesId="ser23">
+         <dcc:measurementSeries  tableId="ser23" measuringSystemRef="ms2">
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
             <dcc:numrows>10</dcc:numrows>
