@@ -185,6 +185,12 @@ class DccQuerryTool():
             ids = ids+tmp
             rng = sht.range((idx+2,1))
             rng.value = ids
+
+        rng = sht.range((1,1)).expand('table')
+        sht.tables.add(source=rng, name='TableSettings')
+        rng.api.WrapText = True
+        rng = sht.range((1,3)).expand('table')
+        rng.columns
         
     def loadDCCMeasurementSystem(self):
         root = self.dccRoot
@@ -254,19 +260,28 @@ class DccQuerryTool():
             tblType = dcchf.rev_ns_tag(tbl).split(':')[-1]
             tableId = tbl.attrib['tableId']
             # print(f"{tblId} : {tblCategoryType}")
-            headings = ['tableId', 'tableType', 'serviceCategory', 'measuringSystemRef', 'customServiceCategory', 'statementRef','Heading Lang1', 'Heading Lang2', 'numRows', 'numCols']
+            tabelHeadings = ['tableId', 'tableCategory', 'serviceCategory', 'measuringSystemRef', 'customServiceCategory', 'statementRef','Heading Lang1', 'Heading Lang2', 'numRows', 'numCols']
                         
             sht = wb.sheets[tableId]
-            sht.range("A1").value = [[txt] for txt in headings]
+            sht.range("A1").value = [[txt] for txt in tabelHeadings]
             sht.range("A1").expand('down').columns.autofit()
             
-            idx = headings.index('tableType')+1
+            idx = tabelHeadings.index('tableCategory')+1
             sht.range((idx,2)).value = tblType
 
+            # insert validation on table headings
+            for k in ['tableCategory', 'serviceCategory']:
+                i = tabelHeadings.index(k)+1
+                rng = sht.range((i,2))
+                formula = '='+k+'Type'
+                rng.api.Validation.Delete()
+                rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
+            
             for k, a in tbl.attrib.items(): 
-                idx = headings.index(k)+1
+                idx = tabelHeadings.index(k)+1
                 sht.range((idx,2)).value = a
             
+
             colInitRowIdx = idx+2
             numRows = int(tbl.attrib['numRows'])
             numCols = int(tbl.attrib['numCols'])
@@ -321,7 +336,7 @@ class DccQuerryTool():
                     for k,v in dataPoints.items(): 
                         sht.range((rowIdx+k,cIdx)).value = v 
 
-            # set colors of the column heading-rows
+            # set colors of the column heading rows
             for i in range(len(columnHeading)):
                 idx = colInitRowIdx + i
                 rng = sht.range((idx,1)).expand('right')
@@ -337,7 +352,10 @@ class DccQuerryTool():
 
             
             # Set the column widths
-            rng = sht.range((rowIdx,1),(1,1)).expand('right')
+            idx = colInitRowIdx + len(columnHeading) - 1
+            rng = sht.range((colInitRowIdx,1),(colInitRowIdx+4,1)).expand('right')
+            rng.columns.autofit()
+            rng = sht.range((1,1)).expand()
             rng.columns.autofit()
             # Set the borders visible for the table
             rng = sht.range((colInitRowIdx,1)).expand()
@@ -447,9 +465,10 @@ class MainApp(tk.Tk):
         # self.bindVirtualEvents()
         self.queryTool.loadExcelWorkbook(workBookFilePath='DCC_pipette_blank.xlsx')
         self.label1.config(text='DCC_pipette_blank.xlsx')
-        self.queryTool.loadDCCFile('SKH_10112_2.xml')
-        self.label2.config(text='SKH_10112_2.xml')
-
+        # self.queryTool.loadDCCFile('SKH_10112_2.xml')
+        self.queryTool.loadDCCFile('I:\\MS\\4006-03 AI metrologi\\Software\\DCCtables\\master\\Examples\\Stip-230063-V1.xml')
+        self.label2.config(text='Stip-230063-V1.xml')
+        self.loadDCCprocedure()
 
     def setup_gui(self,app):
         self.wm_title("DCC EXCEL GUI Tool")
@@ -496,6 +515,7 @@ class MainApp(tk.Tk):
     def loadDCC(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
         self.queryTool.loadDCCFile(file_path)
+        # dcchf.validate(file_path, self.label1)    
         self.loadDCCprocedure()
         self.label2.config(text=file_path)
         

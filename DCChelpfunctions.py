@@ -541,13 +541,14 @@ if False:
     statementIds
     #%%
 
-#%% Run tests on dcc-xml-file
-if True: 
+if False: 
+    #%% Run tests on dcc-xml-file
     xsd_tree, xsd_root = load_xml("dcc.xsd")
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)
-    validate( "SKH_10112_2.xml", "dcc.xsd")
-
+    print(validate( "SKH_10112_2.xml", "dcc.xsd"))
+    print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))
+    #%%
 
 elif __name__ == "__main__":
     validate( "SKH_10112_2.xml", "dcc.xsd")
