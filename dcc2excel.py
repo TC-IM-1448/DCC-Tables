@@ -32,6 +32,7 @@ def statements(sheetname, statementselement):
 
 def write_to_admin(ws, root, startline, section):
     line=startline
+    DCC='{https://dfm.dk}'
     for element in section.iter():
         head=[]
         for child in element.getchildren():
@@ -48,6 +49,7 @@ def write_to_admin(ws, root, startline, section):
 
             
 def admin(ws, root):
+    DCC='{https://dfm.dk}'
     toprow=["heading lang1", "heading lang2", "Description", "Value", "XPatht"]
     write_row(ws, 1 ,1, toprow) 
     head=[]

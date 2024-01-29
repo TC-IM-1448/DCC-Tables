@@ -45,8 +45,8 @@
             <dcc:streetNo>19</dcc:streetNo>
          </dcc:location>
          <dcc:contactInfo>
-             <dcc:heading lang="en">Contact person</dcc:heading>
-             <dcc:heading lang="da">Kontaktperson</dcc:heading>
+             <dcc:heading lang="en">Contact info</dcc:heading>
+             <dcc:heading lang="da">Kontaktinformation</dcc:heading>
              <dcc:eMail>nln@dandiag.com</dcc:eMail>
              <dcc:phone>2334 45 56</dcc:phone>
          </dcc:contactInfo>
