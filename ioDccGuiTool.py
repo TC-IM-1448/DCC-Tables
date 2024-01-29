@@ -103,7 +103,7 @@ class DccQuerryTool():
         lang2 = 'en'
 
         if not 'Equipment' in wb.sheet_names:
-            wb.add('Equipment', after='Statements')
+            wb.sheets.add('Equipment', after='Statements')
         sht = wb.sheets['Equipment']
         equipment = root.find(".//dcc:equipment",ns) 
         equipItems = equipment.getchildren()
@@ -157,7 +157,7 @@ class DccQuerryTool():
         lang2 = 'en'
 
         if not 'Settings' in wb.sheet_names:
-            wb.add('Settings', after='Equipment')
+            wb.sheets.add('Settings', after='Statements')
         sht = wb.sheets['Settings']
         settings = root.find(".//dcc:settings",ns) 
         settingList = settings.getchildren()
@@ -255,7 +255,7 @@ class DccQuerryTool():
             tableId = tbl.attrib['tableId']
             # print(f"{tblId} : {tblCategoryType}")
             headings = ['tableId', 'tableType', 'serviceCategory', 'measuringSystemRef', 'customServiceCategory', 'statementRef','Heading Lang1', 'Heading Lang2', 'numRows', 'numCols']
-            
+                        
             sht = wb.sheets[tableId]
             sht.range("A1").value = [[txt] for txt in headings]
             sht.range("A1").expand('down').columns.autofit()
@@ -268,24 +268,39 @@ class DccQuerryTool():
                 sht.range((idx,2)).value = a
             
             colInitRowIdx = idx+2
+            numRows = int(tbl.attrib['numRows'])
+            numCols = int(tbl.attrib['numCols'])
 
             # Now load the columns
             columns = tbl.findall("dcc:column", ns)
-            columnHeading = ['@scope', '@dataCategory', '@measurand', '@metaDataCategory', 'unit', 'headingLang1', 'headingLang2']
-            sht.range((colInitRowIdx,1)).value = [[h] for h in columnHeading]
+            columnHeading = ['metaDataCategory', 'scope', 'dataCategory', 'measurand', 'unit', 'headingLang1', 'headingLang2', 'idx \ dataType']
+            headingColors = ['light_gray', 'light_yellow', 'light_yellow', 'light_yellow', 'light_green', 'light_blue', 'light_blue', 'light_gray']
+            headingColors = [self.colors[k] for k in headingColors]
 
+            sht.range((colInitRowIdx,1)).value = [[h] for h in columnHeading]
+            # insert the index column
+            rng = sht.range((colInitRowIdx+len(columnHeading),1))
+            rng.value = [[i+1] for i in range(numRows)]
+            rng = rng.expand('down')
+            rng.color = headingColors[0]
+            rng.api.HorizontalAlignment = xw.constants.HAlign.xlHAlignCenter
+
+            # 
             for colIdx, col in enumerate(columns):
+                # insert the metadata heading attribute values
                 cIdx = colIdx + 2
                 for k, a in col.attrib.items():
-                    rowIdx = colInitRowIdx + columnHeading.index('@'+k)
+                    rowIdx = colInitRowIdx + columnHeading.index(k)
                     sht.range((rowIdx,cIdx)).value = a 
 
+                # instert the unit
                 unit = col.find("dcc:unit",ns).text
                 rowIdx = colInitRowIdx + columnHeading.index('unit')
                 sht.range(((rowIdx,cIdx))).value = unit
 
+                # Insert human readable heading in two languages. 
                 for idx, lang in enumerate(self.langs):
-                    xpath =  './dcc:heading[@lang="{lang}"]'
+                    xpath =  './/dcc:heading[@lang="{lang}"]'.format(lang=lang)
                     elm = col.find(xpath,ns)
                     if elm is None: 
                         val = None
@@ -295,6 +310,41 @@ class DccQuerryTool():
                     sht.range(((rowIdx,cIdx))).value = val
 
 
+
+                # Insert the data 
+                rowIdx = colInitRowIdx + len(columnHeading) - 1
+                dataList = col.find('dcc:dataList',ns)
+                dataPoints = {int(pt.attrib['idx']): pt.text for pt in dataList}
+                if len(dataPoints) > 0:  
+                    dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcc:")
+                    sht.range((rowIdx,cIdx)).value = dataType
+                    for k,v in dataPoints.items(): 
+                        sht.range((rowIdx+k,cIdx)).value = v 
+
+            # set colors of the column heading-rows
+            for i in range(len(columnHeading)):
+                idx = colInitRowIdx + i
+                rng = sht.range((idx,1)).expand('right')
+                rng.color = headingColors[i]
+                
+            # set Validator for the first four rows in the column heading-rows
+            for i in range(4):
+                idx = colInitRowIdx + i
+                rng = sht.range((idx,2)).expand('right')
+                rng.api.Validation.Delete()
+                formula = '='+columnHeading[i]+'Type'
+                rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
+
+            
+            # Set the column widths
+            rng = sht.range((rowIdx,1),(1,1)).expand('right')
+            rng.columns.autofit()
+            # Set the borders visible for the table
+            rng = sht.range((colInitRowIdx,1)).expand()
+            rng.api.Borders.Weight = 2 
+            # Set the color of the data range in the table. 
+            rng = sht.range((colInitRowIdx+len(columnHeading),2)).expand()
+            rng.color = self.colors["light_red"]
 
         # heading = ['in DCC', 'settingId', 'refId', 
         #            'value', 'unit',  
@@ -399,10 +449,6 @@ class MainApp(tk.Tk):
         self.label1.config(text='DCC_pipette_blank.xlsx')
         self.queryTool.loadDCCFile('SKH_10112_2.xml')
         self.label2.config(text='SKH_10112_2.xml')
-        self.queryTool.loadDCCEquipment()
-        self.queryTool.loadDCCSettings()
-        # self.queryTool.loadDCCMeasurementSystem()
-        self.queryTool.loadDCCMeasurementResults()
 
 
     def setup_gui(self,app):
@@ -429,6 +475,12 @@ class MainApp(tk.Tk):
         button3 = tk.Button(app, text='Merge DCC into gui') #, command=self.queryTool.runDccQuery)
         button3.pack(pady=10)
 
+    def loadDCCprocedure(self):
+            self.queryTool.loadDCCSettings()
+            self.queryTool.loadDCCEquipment()
+            # self.queryTool.loadDCCMeasurementSystem()
+            self.queryTool.loadDCCMeasurementResults()
+
     def loadExcelBook(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
         self.queryTool.loadExcelWorkbook(workBookFilePath=file_path)
@@ -444,7 +496,7 @@ class MainApp(tk.Tk):
     def loadDCC(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
         self.queryTool.loadDCCFile(file_path)
-        self.queryTool.loadDccAttributes()
+        self.loadDCCprocedure()
         self.label2.config(text=file_path)
         
 # if __name__ == "__main__":

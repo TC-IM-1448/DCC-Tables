@@ -29,6 +29,7 @@ class DccQuerryTool():
         self.wb = wb
         self.loadSchemaFile()
         self.loadSchemaRestrictions()
+        wb.activate(steal_focus=True)
 
     def loadSchemaFile(self, xsdFileName="dcc.xsd"):
         self.xsdTree, self.xsdRoot  = dcchf.load_xml(xsdFileName)
