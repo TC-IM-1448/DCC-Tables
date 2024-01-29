@@ -215,70 +215,38 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             </dcc:identification>
          </dcc:equipmentItem>
       </dcc:equipment>
-      <dcc:measuringSystemsUnderCalibration>
+      <dcc:measuringSystems>
           <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
           <dcc:heading lang="da">Målesystemer</dcc:heading>
           <dcc:measuringSystem measuringSystemId="ms1">
               <dcc:heading lang="en">Channel 1</dcc:heading>
               <dcc:heading lang="da">Kanal 1</dcc:heading>
-              <dcc:instrumentRef refId='item1'>
-                  <dcc:heading lang="en">Pipette</dcc:heading>
-                  <dcc:heading lang="da">Pipette</dcc:heading>
-              </dcc:instrumentRef>
-              <dcc:instrumentRef refId='item2'>
-                  <dcc:heading lang="en">Tip</dcc:heading>
-                  <dcc:heading lang="da">Spids</dcc:heading>
-              </dcc:instrumentRef>
-              <dcc:settingRef refId='c1'>
-                  <dcc:heading lang="en">Channel</dcc:heading>
-                  <dcc:heading lang="da">Kanal</dcc:heading>
-              </dcc:settingRef>
-              <dcc:settingRef refId='sin'>
-                  <dcc:heading lang="en">Speed in</dcc:heading>
-                  <dcc:heading lang="da">Hastighed (ind)</dcc:heading>
-              </dcc:settingRef>
-              <dcc:settingRef refId='sout'>
-                  <dcc:heading lang="en">Speed out</dcc:heading>
-                  <dcc:heading lang="da">Hastighed (ud)</dcc:heading>
-              </dcc:settingRef>
+              <dcc:ref>item1</dcc:ref> 
+              <dcc:ref>item2</dcc:ref> 
+              <dcc:ref>c1</dcc:ref>
+              <dcc:ref>sin</dcc:ref>
+              <dcc:ref>sout</dcc:ref>
           </dcc:measuringSystem>
           <dcc:measuringSystem measuringSystemId="ms2">
               <dcc:heading lang="en">Channel 2</dcc:heading>
               <dcc:heading lang="da">Kanal 2</dcc:heading>
-              <dcc:instrumentRef refId='item1'>
-                  <dcc:heading lang="en">Pipette</dcc:heading>
-                  <dcc:heading lang="da">Pipette</dcc:heading>
-              </dcc:instrumentRef>
-              <dcc:instrumentRef refId='item2'>
-                  <dcc:heading lang="en">Tip</dcc:heading>
-                  <dcc:heading lang="da">Spids</dcc:heading>
-              </dcc:instrumentRef>
-              <dcc:settingRef refId='c2'>
-                  <dcc:heading lang="en">Channel</dcc:heading>
-                  <dcc:heading lang="da">Kanal</dcc:heading>
-              </dcc:settingRef>
-              <dcc:settingRef refId='sin'>
-                  <dcc:heading lang="en">Speed in</dcc:heading>
-                  <dcc:heading lang="da">Hastighed (ind)</dcc:heading>
-              </dcc:settingRef>
-              <dcc:settingRef refId='sout'>
-                  <dcc:heading lang="en">Speed out</dcc:heading>
-                  <dcc:heading lang="da">Hastighed (ud)</dcc:heading>
-              </dcc:settingRef>
+              <dcc:ref category="equipmentItem">item1</dcc:ref>
+              <dcc:ref category="equipmentItem">item2</dcc:ref>
+              <dcc:ref category="setting">c2</dcc:ref>
+              <dcc:ref category="setting">sin</dcc:ref>
+              <dcc:ref category="setting">sout</dcc:ref>
           </dcc:measuringSystem>
           <dcc:measuringSystem measuringSystemId="ms3">
-              <dcc:instrumentRef refId='item1'> </dcc:instrumentRef>
-              <dcc:instrumentRef refId='item2'> </dcc:instrumentRef>
-              <dcc:settingRef refId='c3'> </dcc:settingRef>
-              <dcc:settingRef refId='sin'> </dcc:settingRef>
-              <dcc:settingRef refId='sout'> </dcc:settingRef>
+              <dcc:ref>item1</dcc:ref>
+              <dcc:ref>item2</dcc:ref>
+              <dcc:ref>c3</dcc:ref>
+              <dcc:ref>sin</dcc:ref>
+              <dcc:ref>sout</dcc:ref>
           </dcc:measuringSystem>
-      </dcc:measuringSystemsUnderCalibration>
-      <dcc:measuringStandards>
           <dcc:measuringSystem measuringSystemId="refernece1">
-              <dcc:instrumentRef refId='ref1'> </dcc:instrumentRef>
+              <dcc:ref>ref1</dcc:ref>
           </dcc:measuringSystem>
-      </dcc:measuringStandards>
+      </dcc:measuringSystems>
       <dcc:settings>
          <dcc:setting settingId="c1">
             <dcc:heading lang="en">Channel</dcc:heading>
@@ -300,6 +268,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             <dcc:heading lang="da">Hastighed ind</dcc:heading>
             <dcc:body lang="en">Same speed is used in all measurements</dcc:body>
             <dcc:body lang="da">Samme hastighed er anvendt I alle målinger</dcc:body>
+            <dcc:parameter>speed-in</dcc:parameter>
             <dcc:value>5</dcc:value>
          </dcc:setting>
          <dcc:setting settingId="sout">
@@ -307,6 +276,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             <dcc:heading lang="da">Hastighed ud</dcc:heading>
             <dcc:body lang="en">Same speed is used in all measurements</dcc:body>
             <dcc:body lang="da">Samme hastighed er anvendt I alle målinger</dcc:body>
+            <dcc:parameter>speed-out</dcc:parameter>
             <dcc:value>5</dcc:value>
          </dcc:setting>
       </dcc:settings>

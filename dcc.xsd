@@ -80,15 +80,14 @@
         <xs:all>
             <xs:element name="dccSoftware" type="dcc:softwareListType"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
-            <xs:element name="equipment" type="dcc:equipmentListType"/>
-            <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
-            <xs:element name="measuringSystemsUnderCalibration" type="dcc:measuringSystemListType"/>
-            <xs:element name="measuringStandards" type="dcc:measuringSystemListType" minOccurs="0"/>
             <xs:element name="calibrationLaboratory" type="dcc:contactType"/>
+            <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
             <xs:element name="customer" type="dcc:contactType"/>
+            <xs:element name="equipment" type="dcc:equipmentListType"/>
+            <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
             <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
-            <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
+            <xs:element name="measuringSystems" type="dcc:measuringSystemListType"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
         </xs:all>
     </xs:complexType>
@@ -117,13 +116,20 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="instrumentRef" type="dcc:refIdType" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="settingRef" type="dcc:refIdType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ref" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='xs:IDREFS'>
+                            <xs:attribute name="category" type="dcc:notEmptyStringType" use="optional"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
         <xs:attribute name="measuringSystemId" type="xs:ID" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="refIdType">
+    <!--xs:complexType name="refIdType">
         <xs:annotation>
             <xs:documentation>
                 Reference to an element
@@ -133,7 +139,7 @@ quantities of specified kinds
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="refId" type="xs:IDREFS" use="required"/>
-    </xs:complexType>
+    </xs:complexType-->
 
     <xs:complexType name="softwareListType">
         <xs:annotation>
@@ -358,10 +364,11 @@ quantities of specified kinds
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <!--<xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>-->
-            <xs:element name="value" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="parameter" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="value" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="unit" type="dcc:notEmptyStringType" minOccurs="0"/>
 	</xs:sequence>
-        <xs:attribute name="settingId" type="xs:ID" use="optional"/>
+        <xs:attribute name="settingId" type="xs:ID" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
