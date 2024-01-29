@@ -301,11 +301,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
       </dcc:settings>
    </dcc:administrativeData>
    <dcc:measurementResults>
-         <dcc:calibrationResult tableId="calRes1" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3">
+         <dcc:calibrationResult tableId="calRes1" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" numRows='3' numCols='13'>
             <dcc:heading lang="en">Calibration result chanel 1</dcc:heading>
             <dcc:heading lang="da">Kalibreringsresultat kanal 1</dcc:heading>
-            <dcc:numrows>3</dcc:numrows>
-            <dcc:numcols>13</dcc:numcols>
+            <!-- <dcc:numrows>3</dcc:numrows>
+            <dcc:numcols>13</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -447,11 +447,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:calibrationResult>
-         <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3">
+         <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" numRows='3' numCols='13'>
             <dcc:heading lang="en">Calibration result chanel 2</dcc:heading>
             <dcc:heading lang="da">Kalibreringsresultat kanal 2</dcc:heading>
-            <dcc:numrows>3</dcc:numrows>
-            <dcc:numcols>13</dcc:numcols>
+            <!-- <dcc:numrows>3</dcc:numrows>
+            <dcc:numcols>13</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -593,11 +593,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:calibrationResult>
-         <dcc:measurementSeries  tableId="ser11" measuringSystemRef="ms1">
+         <dcc:measurementSeries  tableId="ser11" measuringSystemRef="ms1" numRows='10' numCols='3'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>3</dcc:numcols>
+            <!-- <dcc:numrows>10</dcc:numrows>
+            <dcc:numcols>3</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -650,11 +650,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1">
+         <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1"  numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>4</dcc:numcols>
+            <!-- <dcc:numrows>10</dcc:numrows>
+            <dcc:numcols>4</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -724,11 +724,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser13" measuringSystemRef="ms1">
+         <dcc:measurementSeries  tableId="ser13" measuringSystemRef="ms1"  numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>4</dcc:numcols>
+            <!-- <dcc:numrows>10</dcc:numrows>
+            <dcc:numcols>4</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -798,11 +798,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser21" measuringSystemRef="ms2">
+         <dcc:measurementSeries  tableId="ser21" measuringSystemRef="ms2" numRows='10' numCols='3'>
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>3</dcc:numcols>
+            <!-- <dcc:numrows>10</dcc:numrows>
+            <dcc:numcols>3</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -855,11 +855,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser22" measuringSystemRef="ms2">
+         <dcc:measurementSeries  tableId="ser22" measuringSystemRef="ms2" numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>4</dcc:numcols>
+            <!-- <dcc:numrows>10</dcc:numrows>
+            <dcc:numcols>4</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>
@@ -929,11 +929,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                </dcc:dataList>
             </dcc:column>
          </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser23" measuringSystemRef="ms2">
+         <dcc:measurementSeries  tableId="ser23" measuringSystemRef="ms2" numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>4</dcc:numcols>
+            <!-- <dcc:numrows>10</dcc:numrows>
+            <dcc:numcols>4</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>

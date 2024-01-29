@@ -423,13 +423,15 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="numrows" type="xs:int" minOccurs="0"/>
-            <xs:element name="numcols" type="xs:int" minOccurs="0"/>
+            <!-- <xs:element name="numrows" type="xs:int" minOccurs="0"/>
+				 <xs:element name="numcols" type="xs:int" minOccurs="0"/> -->
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
         </xs:element>
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
 		<xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
+		<xs:attribute name="numRows" type="xs:int" use="required"/>
+		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
 		<xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>		
     </xs:complexType>
