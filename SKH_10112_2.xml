@@ -150,13 +150,13 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
          <dcc:statement statementId="env2" category="method">
             <dcc:heading lang="en">Environment</dcc:heading>
             <dcc:heading lang="da">Miljøfaktor</dcc:heading>
-            <dcc:body lang="en">Temperatur: 20,5°C±0,4°C</dcc:body>
+            <dcc:body lang="en">Temperature: 20.5°C±0,4°C</dcc:body>
             <dcc:body lang="da">Temperatur: 20,5°C±0,4°C</dcc:body>
          </dcc:statement>
          <dcc:statement statementId="env3" category="method">
             <dcc:heading lang="en">Evironment</dcc:heading>
             <dcc:heading lang="da">Miljøfaktor</dcc:heading>
-            <dcc:body lang="en"> relative humidity: 59,4 %RH ±10 %RH</dcc:body>
+            <dcc:body lang="en"> relative humidity: 59.4 %RH ±10 %RH</dcc:body>
             <dcc:body lang="da">Relativ luftfugtighed: 59,4 %RH ±10 %RH</dcc:body>
          </dcc:statement>
       </dcc:statements>
@@ -194,8 +194,14 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             </dcc:identification>
          </dcc:equipmentItem>
          <dcc:equipmentItem category="reference" equipId="ref1">
-            <dcc:heading lang="en">Balance with 0.00001 g resolution last calibrated on 2021-11-25.</dcc:heading>
-            <dcc:heading lang="da">Vægt er med en opløsning på 0,00001 g. Kalibreret d. 2021-11-25</dcc:heading>
+            <dcc:heading lang="en">Balance. 
+                                   resolution: 0.00001 g.
+                                   calibrated: 2021-11-25.
+            </dcc:heading>
+            <dcc:heading lang="da">Vægt. 
+                                   Opløsning:  0,00001 g.  
+                                   Kalibreret: 2021-11-25
+            </dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
             <dcc:identification issuer="owner">
                <dcc:heading lang="en">Laboratory's ID for the used reference</dcc:heading>
@@ -268,6 +274,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
               <dcc:settingRef refId='sout'> </dcc:settingRef>
           </dcc:measuringSystem>
       </dcc:measuringSystemsUnderCalibration>
+      <dcc:measuringStandards>
+          <dcc:measuringSystem measuringSystemId="refernece1">
+              <dcc:instrumentRef refId='ref1'> </dcc:instrumentRef>
+          </dcc:measuringSystem>
+      </dcc:measuringStandards>
       <dcc:settings>
          <dcc:setting settingId="c1">
             <dcc:heading lang="en">Channel</dcc:heading>
