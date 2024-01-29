@@ -397,7 +397,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:real idx="3">0.2</dcc:real>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="uncertaintyCoverageFactor_k" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:column dataCategory="expandedUncertainty" measurand="-" metaDataCategory="uncertaintyCoverageFactor_k" scope="-">
                <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
                <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
                <dcc:unit>-</dcc:unit>
@@ -543,7 +543,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:real idx="3">0.2</dcc:real>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="uncertaintyCoverageFactor_k" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:column dataCategory="expandedUncertainty" measurand="-" metaDataCategory="uncertaintyCoverageFactor_k" scope="-">
                <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
                <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
                <dcc:unit>-</dcc:unit>
