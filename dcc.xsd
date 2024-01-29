@@ -738,7 +738,6 @@ quantities of specified kinds
                 <xs:enumeration value="value" />  <!-- used for measured quantities -->
                 <xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
                 <xs:enumeration value="expandedUncertainty" /> 
-                <xs:enumeration value="uncertaintyCoverageFactor_k" />
                 <xs:enumeration value="toleranceLimitLower" />
                 <xs:enumeration value="toleranceLimitUpper" />
                 <xs:enumeration value="acceptanceLimitLower" />
@@ -746,6 +745,7 @@ quantities of specified kinds
                 <xs:enumeration value="repeatability" /> 
                 <xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
                 <xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
+                <xs:enumeration value="correlation" /> 
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
                 <xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
             </xs:restriction>
@@ -769,6 +769,8 @@ quantities of specified kinds
                 <xs:enumeration value="commentRef" /> 
                 <xs:enumeration value="accreditationExceptionRef" /> 
                 <xs:enumeration value="normRef" /> 
+                <xs:enumeration value="uncertaintyCoverageFactor_k" />
+                <xs:enumeration value="uncertaintyCoverageProbability" />
                 <xs:enumeration value="measurementSeriesRef" /> 
                 <xs:enumeration value="data" />  <!--The column is not considered as meta data. The data type is specified in the dataCategory attribute-->
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
