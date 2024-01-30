@@ -46,7 +46,7 @@ class DccQuerryTool():
             sht_def.range((1, i+j)).value = [k]
             sht_def.range((2, i+j)).value = [[v] for v in vs]
             sht_def.range((2,i+j)).expand('down').name = k  
-        self.dccDefInitCol = i+1
+        self.dccDefInitCol = j+i+1
         
         j = 7
         sht = self.sheetMap
@@ -86,6 +86,13 @@ class DccQuerryTool():
         rng = sht_map.range((2,6),(1024,6))
         rng.api.Validation.Delete()
         rng.api.Validation.Add(Type=xlValidateList, Formula1='=tableId') 
+
+        sht_map.range((1,2)).value = [[v] for v in ['queryType', 'data', 'xpath']]
+        sht_def.range((2,2)).expand('down').name = 'queryType'
+        rng = sht_map.range((2,3),(1024,3))
+        rng.api.Validation.Delete()
+        rng.api.Validation.Add(Type=xlValidateList, Formula1='=queryType') 
+
         
     def runDccQuery(self):
         sht = self.sheetMap
@@ -251,6 +258,18 @@ class MainApp(tk.Tk):
 
         button3 = tk.Button(app, text='run query', command=self.queryTool.runDccQuery)
         button3.pack(pady=10)
+
+        self.startupTest()
+
+    def startupTest(self):
+        excelFileName = 'SKH_10112_2_Mapping.xlsx'
+        self.queryTool.loadExcelWorkbook(excelFileName)
+        self.label1.config(text=excelFileName)
+        self.queryTool.loadSchemaFile(xsdFileName='dcc.xsd')
+        self.queryTool.loadSchemaRestrictions()
+        self.queryTool.loadDCCFile('SKH_10112_2.xml')
+        self.queryTool.loadDccAttributes()
+        self.label2.config(text='SKH_10112_2.xml')
 
     def loadExcelBook(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())

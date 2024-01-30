@@ -81,6 +81,8 @@
          </dcc:contactInfo>
       </dcc:customer>
       <dcc:accreditation accrId="acc0">
+		<dcc:heading lang="en">Accreditation</dcc:heading>
+		<dcc:heading lang="da">Akkreditering</dcc:heading>
          <dcc:accreditationCountry>DK</dcc:accreditationCountry>
          <dcc:accreditationBody>DANAK</dcc:accreditationBody>
          <dcc:accreditationLabId>490</dcc:accreditationLabId>
@@ -194,14 +196,11 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             </dcc:identification>
          </dcc:equipmentItem>
          <dcc:equipmentItem category="reference" equipId="ref1">
-            <dcc:heading lang="en">Balance. 
-                                   resolution: 0.00001 g.
-                                   calibrated: 2021-11-25.
-            </dcc:heading>
+            <dcc:heading lang="en">Balance. 	resolution: 0.00001 g.
+	calibrated: 2021-11-25.</dcc:heading>
             <dcc:heading lang="da">Vægt. 
-                                   Opløsning:  0,00001 g.  
-                                   Kalibreret: 2021-11-25
-            </dcc:heading>
+	Opløsning:  0,00001 g.  
+	Kalibreret: 2021-11-25</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
             <dcc:identification issuer="owner">
                <dcc:heading lang="en">Laboratory's ID for the used reference</dcc:heading>
@@ -215,38 +214,6 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             </dcc:identification>
          </dcc:equipmentItem>
       </dcc:equipment>
-      <dcc:measuringSystems>
-          <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
-          <dcc:heading lang="da">Målesystemer</dcc:heading>
-          <dcc:measuringSystem measuringSystemId="ms1">
-              <dcc:heading lang="en">Channel 1</dcc:heading>
-              <dcc:heading lang="da">Kanal 1</dcc:heading>
-              <dcc:ref>item1</dcc:ref> 
-              <dcc:ref>item2</dcc:ref> 
-              <dcc:ref>c1</dcc:ref>
-              <dcc:ref>sin</dcc:ref>
-              <dcc:ref>sout</dcc:ref>
-          </dcc:measuringSystem>
-          <dcc:measuringSystem measuringSystemId="ms2">
-              <dcc:heading lang="en">Channel 2</dcc:heading>
-              <dcc:heading lang="da">Kanal 2</dcc:heading>
-              <dcc:ref category="equipmentItem">item1</dcc:ref>
-              <dcc:ref category="equipmentItem">item2</dcc:ref>
-              <dcc:ref category="setting">c2</dcc:ref>
-              <dcc:ref category="setting">sin</dcc:ref>
-              <dcc:ref category="setting">sout</dcc:ref>
-          </dcc:measuringSystem>
-          <dcc:measuringSystem measuringSystemId="ms3">
-              <dcc:ref>item1</dcc:ref>
-              <dcc:ref>item2</dcc:ref>
-              <dcc:ref>c3</dcc:ref>
-              <dcc:ref>sin</dcc:ref>
-              <dcc:ref>sout</dcc:ref>
-          </dcc:measuringSystem>
-          <dcc:measuringSystem measuringSystemId="refernece1">
-              <dcc:ref>ref1</dcc:ref>
-          </dcc:measuringSystem>
-      </dcc:measuringSystems>
       <dcc:settings>
          <dcc:setting settingId="c1">
             <dcc:heading lang="en">Channel</dcc:heading>
@@ -280,6 +247,38 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             <dcc:value>5</dcc:value>
          </dcc:setting>
       </dcc:settings>
+	  <dcc:measuringSystems>
+          <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
+          <dcc:heading lang="da">Målesystemer</dcc:heading>
+          <dcc:measuringSystem measuringSystemId="ms1">
+              <dcc:heading lang="en">Channel 1</dcc:heading>
+              <dcc:heading lang="da">Kanal 1</dcc:heading>
+              <dcc:ref>item1</dcc:ref> 
+              <dcc:ref>item2</dcc:ref> 
+              <dcc:ref>c1</dcc:ref>
+              <dcc:ref>sin</dcc:ref>
+              <dcc:ref>sout</dcc:ref>
+          </dcc:measuringSystem>
+          <dcc:measuringSystem measuringSystemId="ms2">
+              <dcc:heading lang="en">Channel 2</dcc:heading>
+              <dcc:heading lang="da">Kanal 2</dcc:heading>
+              <dcc:ref category="equipmentItem">item1</dcc:ref>
+              <dcc:ref category="equipmentItem">item2</dcc:ref>
+              <dcc:ref category="setting">c2</dcc:ref>
+              <dcc:ref category="setting">sin</dcc:ref>
+              <dcc:ref category="setting">sout</dcc:ref>
+          </dcc:measuringSystem>
+          <dcc:measuringSystem measuringSystemId="ms3">
+              <dcc:ref>item1</dcc:ref>
+              <dcc:ref>item2</dcc:ref>
+              <dcc:ref>c3</dcc:ref>
+              <dcc:ref>sin</dcc:ref>
+              <dcc:ref>sout</dcc:ref>
+          </dcc:measuringSystem>
+          <dcc:measuringSystem measuringSystemId="refernece1">
+              <dcc:ref>ref1</dcc:ref>
+          </dcc:measuringSystem>
+      </dcc:measuringSystems>
    </dcc:administrativeData>
    <dcc:measurementResults>
          <dcc:calibrationResult tableId="calRes1" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" numRows='3' numCols='13'>
@@ -634,8 +633,6 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
          <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1"  numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <!-- <dcc:numrows>10</dcc:numrows>
-            <dcc:numcols>4</dcc:numcols> -->
             <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
                <dcc:heading lang="en">Customer Tags</dcc:heading>
                <dcc:heading lang="da">Kundens kode</dcc:heading>

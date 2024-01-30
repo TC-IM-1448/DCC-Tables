@@ -490,7 +490,8 @@ quantities of specified kinds
     </xs:complexType>
 
     <xs:complexType name="accreditationType">
-        <xs:sequence>
+		<xs:sequence>
+			<xs:element name="heading" type="dcc:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
             <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationLabId" minOccurs="1"/>

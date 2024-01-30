@@ -72,10 +72,10 @@ class DccTabel():
 def validate(xml_path: str, xsd_path: str) -> bool:
     if xsd_path[0:5]=="https":
     #Note: etree.parse can not handle https, so we have to open the url with urlopen
-       with urlopen(xsd_path) as xsd_file:
-          xmlschema_doc = et.parse(xsd_file)
+        with urlopen(xsd_path) as xsd_file:
+            xmlschema_doc = et.parse(xsd_file)
     else:
-       xmlschema_doc = et.parse(xsd_path)
+        xmlschema_doc = et.parse(xsd_path)
 
     xmlschema = et.XMLSchema(xmlschema_doc)
 
@@ -125,7 +125,7 @@ def load_xml(xml_path: str) -> (et._ElementTree, et.Element):
     ## return the root element from an xml file
     # et.register_namespace("si", SI.strip('{}'))
     # et.register_namespace("dcc", DCC.strip('{}'))
-    parser=et.XMLParser(encoding='utf-8')
+    parser=et.XMLParser(encoding='utf-8', remove_comments=True)
     tree=et.parse(xml_path,parser)
     root=tree.getroot()
     for k,v in root.nsmap.items():
@@ -146,7 +146,9 @@ def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
                                  measuringSystemRef="*", 
                                  serviceCategory="*", 
                                  customServiceCategory='*', 
-                                 statementRef='*')
+                                 statementRef='*',
+                                 numRows='*',
+                                 numCols='*')
     default_search_attrib.update(search_attrib)
     search_attrib = default_search_attrib
     # print(search_attrib)
@@ -511,6 +513,7 @@ def print_node(node):
 # print_node(root)
 #%% Run tests on dcc-xml-file
 if False: 
+    #%%
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="M/FF-9.10.3")
     print("----------------------get_table----------------")
@@ -533,22 +536,34 @@ if False:
     print("SEARCH RESULT for specific Rows", search_result)
 
     print("----------------------GET MeasuringSystem----------------")
-    [print_node(n) for n in get_measuringSystems(root,"ms2")]
+    for n in get_measuringSystems(root,"ms1"): print_node(n)
     print_node(get_setting(root)[0])
-    print_node(getTables(root,dict(tableId="ser12"))[0])
-    #%%
+    print_node(getTables(root,dict(tableId="ser13"))[0])
+    
     statementIds = [elm.attrib['statementId'] for elm in get_statements(root)]
     statementIds
     #%%
+    dtbl = dict(tableId='*',measuringSystemRef="ms2")
+    print("----------------------get_table----------------")
+    tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
+    print(tbl)
+    # print_node(get_measuringSystem(root,show=True)[0])
+    dcol = dict(dataCategory="value", measurand="Volume", metaDataCategory="data", scope="reference")
+    col = getColumnsFromTable(tbl,dcol,searchunit="*")[0]
+    
+    search(root, dtbl, dcol, '\micro\litre', rowTags=['p1'])
 
+
+
+#%% Run tests on dcc-xml-file
 if False: 
-    #%% Run tests on dcc-xml-file
     xsd_tree, xsd_root = load_xml("dcc.xsd")
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)
-    print(validate( "SKH_10112_2.xml", "dcc.xsd"))
-    print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))
-    #%%
+    v = validate( "SKH_10112_2.xml", "dcc.xsd")
+    print(v)
+    # print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))
+#%%
 
-elif __name__ == "__main__":
+if __name__ == "__main__":
     validate( "SKH_10112_2.xml", "dcc.xsd")
