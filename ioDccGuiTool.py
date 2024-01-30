@@ -53,7 +53,6 @@ class DccQuerryTool():
         
     def loadDCCFile(self, xmlFileName="SKH_10112_2.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
-        self.loadDccStatements()
         
     def loadSchemaRestrictions(self): 
         xsd_root = self.xsdRoot
@@ -73,7 +72,7 @@ class DccQuerryTool():
         lang2 = 'en'
 
         if not 'Statements' in wb.sheet_names:
-            wb.sheets.add('Statements', after='Definitions')
+            wb.sheets.add('Statements', after='AdministrativeData')
         sht = wb.sheets['Statements']
         statements = dcchf.get_statements(root)
         heading = ['in DCC', 'category', 'id', 'heading lang1', 'body lang1', 'heading lang2', 'body lang2']
@@ -159,7 +158,7 @@ class DccQuerryTool():
         lang2 = 'en'
 
         if not 'Settings' in wb.sheet_names:
-            wb.sheets.add('Settings', after='AdministrativeInfo')
+            wb.sheets.add('Settings', after='AdministrativeData')
         sht = wb.sheets['Settings']
         settings = root.find(".//dcc:settings",ns) 
         settingList = settings.getchildren()
@@ -209,7 +208,7 @@ class DccQuerryTool():
         lang2 = 'en'
 
         if not 'MeasuringSystems' in wb.sheet_names:
-            wb.add('MeasuringSystems', after='Settings')
+            wb.sheets.add('MeasuringSystems', after='Settings')
         sht = wb.sheets['MeasuringSystems']
         msuc = root.find(".//dcc:measuringSystems",ns) 
 
@@ -552,8 +551,10 @@ class MainApp(tk.Tk):
         self.label1.config(text='DCC_pipette_blank.xlsx')
         # self.queryTool.loadDCCFile('I:\\MS\\4006-03 AI metrologi\\Software\\DCCtables\\master\\Examples\\Stip-230063-V1.xml')
         # self.label2.config(text='Stip-230063-V1.xml')
-        self.queryTool.loadDCCFile('SKH_10112_2.xml')
-        self.label2.config(text='SKH_10112_2.xml')
+        dccFfileName = 'SKH_10112_2.xml'
+        dccFfileName = 'Examples\\Stip-230063-V1.xml'
+        self.queryTool.loadDCCFile(dccFfileName)
+        self.label2.config(text=dccFfileName)
         self.loadDCCprocedure()
 
     def setup_gui(self,app):
@@ -582,6 +583,7 @@ class MainApp(tk.Tk):
 
     def loadDCCprocedure(self):
             self.queryTool.loadDCCAdministrativeInformation()
+            self.queryTool.loadDccStatements()
             self.queryTool.loadDCCSettings()
             self.queryTool.loadDCCEquipment()
             self.queryTool.loadDCCMeasurementSystem()
