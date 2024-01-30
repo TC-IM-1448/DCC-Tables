@@ -11,6 +11,7 @@ import os
 import openpyxl as pyxl
 import xlwings as xw
 from  lxml import etree as et
+from  lxml.etree import ElementTree 
 import tkinter as tk
 import tkinter.filedialog as tkfd
 import DCChelpfunctions as dcchf
@@ -19,8 +20,9 @@ from DCChelpfunctions import search
 #%%
 LANG='da'
 DCC='{https://dfm.dk}'
-xlValidateList = xw.constants.DVType.xlValidateList
 
+# ElementTree.register_namespace("dcc", DCC.strip('{}'))
+xlValidateList = xw.constants.DVType.xlValidateList
 
 class DccQuerryTool(): 
     xsdDefInitCol = 3  
@@ -402,10 +404,10 @@ class DccQuerryTool():
         lang1 = 'da'
         lang2 = 'en'
 
-        if not 'AdministrativeInfo' in wb.sheet_names:
-            wb.sheets.add('AdministrativeInfo', after='Definitions')
+        if not 'AdministrativeData' in wb.sheet_names:
+            wb.sheets.add('AdministrativeData', after='Definitions')
         
-        sht = wb.sheets['AdministrativeInfo']
+        sht = wb.sheets['AdministrativeData']
         sht.clear()
         toprow = ["heading lang1", "heading lang2", "Description", "Value", "XPatht"]
         sht.range((1,1)).value = toprow
@@ -451,8 +453,48 @@ class DccQuerryTool():
         #     rng = sht.range((idx+2,1))
         #     rng.value = ids            
 
+    def minimal_DCC():
+    #     schemaVersion = self.xsd_root.attrib['version']
+    #     et.register_namespace("dcc", DCC.strip('{}'))
+    #     nsmap = {'xs': "http://www.w3.org/2001/XMLSchema-instance", 
+    #              'dcc': DCC.strip('{}')}
+    #     schemalocation= DCC.strip('{}') + " dcc.xsd"
+    #     xsi="http://www.w3.org/2001/XMLSchema-instance"
+    #     newRoot = et.Element(DCC+'digitalCalibrationCertificate', 
+    #                          nsmap=nsmap, 
+    #                          attrib={"schemaVersion":schemaVersion,
+    #                                  "xmlns:xsi":xsi, 
+    #                                  "xsi:schemaLocation":schemalocation})
 
-    def storeExcelDataToXML(self): 
+    #     newRoot=et.Element(DCC+'digitalCalibrationCertificate',
+    #             attrib={"schemaVersion":schemaVersion,   
+    #                     "xmlns:xsi":xsi, 
+    #                     "xsi:schemaLocation":xsilocation})
+    #     return newRoot
+
+    # def storeExcelDataToXML(self):
+    #     self.storeAdministrativeDataToEtree()
+    #     self.storeStatementsToEtree()
+    #     self.storeEquipmentToEtree() 
+    #     self.store
+        pass
+
+    def storeAdministrativeDataToEtree(self): 
+        pass
+    
+    def storeStatementsToEtree(self):
+        pass
+
+    def storeEquipmentToEtree(self):
+        pass
+
+    def storeSettingsToEtree(self):
+        pass
+    
+    def storeMeasureingSystemsToEtree(self):
+        pass
+
+    def storeDataTablesToEtree(self):
         pass
 
     # def runDccQuery(self):
