@@ -582,10 +582,10 @@ class MainApp(tk.Tk):
 
     def loadDCCprocedure(self):
             self.queryTool.loadDCCAdministrativeInformation()
-            # self.queryTool.loadDCCSettings()
+            self.queryTool.loadDCCSettings()
             self.queryTool.loadDCCEquipment()
-            # self.queryTool.loadDCCMeasurementSystem()
-            # self.queryTool.loadDCCMeasurementResults()
+            self.queryTool.loadDCCMeasurementSystem()
+            self.queryTool.loadDCCMeasurementResults()
 
     def loadExcelBook(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
