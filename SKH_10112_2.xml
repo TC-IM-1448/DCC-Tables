@@ -376,7 +376,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:real idx="3">2</dcc:real>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
                <dcc:heading lang="en">Repeatability</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
@@ -386,7 +386,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:real idx="3">0.48</dcc:real>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
                <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
@@ -416,9 +416,9 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:ref idx="3">meth3</dcc:ref>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="indication">
-               <dcc:heading lang="en">Data-series used for calculation of repeatability</dcc:heading>
-               <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed</dcc:heading>
+            <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="bias">
+               <dcc:heading lang="en">Data-series used for calculation of repeatability and systematic error</dcc:heading>
+               <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed og systematisk fejl</dcc:heading>
                <dcc:unit>\one</dcc:unit>
                <dcc:dataList>
                    <dcc:ref idx="1">ser11</dcc:ref> 
