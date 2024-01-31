@@ -363,7 +363,8 @@ def schema_get_restrictions(xsd_root: et._Element,
                                         'statementCategoryType', 
                                         'accreditationApplicabilityType',
                                         'equipmentCategoryType',
-                                        'issuerType', 
+                                        'issuerType',
+                                        'operationalStatusType', 
                                         'stringPerformanceLocationType',
                                         'conformityStatusType',
                                         'scopeType',
@@ -556,7 +557,7 @@ if False:
 
 
 #%% Run tests on dcc-xml-file
-if False: 
+if True: 
     xsd_tree, xsd_root = load_xml("dcc.xsd")
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)

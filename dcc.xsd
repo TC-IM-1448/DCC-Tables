@@ -116,6 +116,7 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="operationalStatus" type="dcc:operationalStatusType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="ref" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:simpleContent>
@@ -247,7 +248,11 @@ quantities of specified kinds
     <xs:simpleType name="equipmentCategoryType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="item"/>
+			<xs:enumeration value="indicating"/>
+			<xs:enumeration value="transfering"/>
+			<xs:enumeration value="sensing"/>
 			<xs:enumeration value="reference"/>
+			<xs:enumeration value=""/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -272,12 +277,12 @@ quantities of specified kinds
         </xs:attribute>
     </xs:complexType>
 
-    <xs:simpleType name="measuringSystemCategoryType">
+    <xs:simpleType name="operationalStatusType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="AsFound"/>
-			<xs:enumeration value="AfterAdjustment"/>
-			<xs:enumeration value="AfterMaintenance"/>
-			<xs:enumeration value="AfterMaintenanceAndAdjustment"/>
+			<xs:enumeration value="As Found"/>
+			<xs:enumeration value="After Adjustment"/>
+			<xs:enumeration value="After Maintenance"/>
+			<xs:enumeration value="After Maintenance And Adjustme"/>
 		</xs:restriction>
 	</xs:simpleType>
 

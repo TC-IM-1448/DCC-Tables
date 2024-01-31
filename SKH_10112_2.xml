@@ -269,6 +269,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
               <dcc:heading lang="da">Kanal 2</dcc:heading>
               <dcc:body lang="da">-</dcc:body>
 			  <dcc:body lang="en">-</dcc:body>
+			  <dcc:operationalStatus>As Found</dcc:operationalStatus>
               <dcc:ref category="equipmentItem">item1</dcc:ref>
               <dcc:ref category="equipmentItem">item2</dcc:ref>
               <dcc:ref category="setting">c2</dcc:ref>

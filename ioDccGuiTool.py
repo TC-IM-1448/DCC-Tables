@@ -297,18 +297,43 @@ class DccQuerryTool():
 
             if nodeTag == "dcc:measuringSystems": 
                 sht.range((1,3)).column_width = 40
-            # refs = ms.findall('./dcc:ref',ns)
-            # refs = " ".join([elm.text for elm in refs])
-            # tmp = [ headingLang1, bodyLang1, headingLang2, bodyLang2] 
-            # tmp =  [None if i == [] else i[0].text for i in tmp] 
-            # ids = ids+ [refs]+tmp
-        
-        # rng = sht.range((1,3)).expand('table')
         
         rng = sht.range((tblRowIdx,1),(tblRowIdx+1+idx,len(heading)))
         self.resizeXlTable(rng,sht,'Table_'+shtName)
         rng.api.WrapText = True
         rng.columns
+
+        if shtName == "statements": 
+            rng = sht.range("Table_"+shtName+"['@category]") 
+            self.applyValidationToRange(rng, 'statementCategoryType')
+        
+        if shtName == "equipment":
+            rng = sht.range("Table_"+shtName+"['@category]")
+            self.applyValidationToRange(rng, 'equipmentCategoryType')
+            equipIdRng = wb.sheets['equipment'].range("Table_equipment['@equipId]")
+            equipIdRng.name = "equipIdRange"
+        
+        if shtName == "settings":
+            rng = sht.range("Table_"+shtName+"['@refId]")
+            self.applyValidationToRange(rng, 'equipIdRange')
+
+        if shtName == 'measuringSystems': 
+            rng = sht.range("Table_"+shtName+"['@measuringSystemId]")
+            measuringSysIdRng = wb.sheets['equipment'].range("Table_equipment['@equipId]")
+            measuringSysIdRng.name = "measuringSystemIdRange"
+            rng = sht.range("Table_"+shtName+"[operationalStatus]")
+            self.applyValidationToRange(rng, 'operationalStatusType')
+
+
+        # Apply Validation
+        # validatorMap= {'dcc:statements': }
+
+    def applyValidationToRange(self, rng, restrictionName:str):
+            # insert validation on table headings
+            formula = '='+restrictionName
+            rng.api.Validation.Delete()
+            rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
+
         
     def loadDCCMeasurementSystem(self, after='Settings'):
         root = self.dccRoot
@@ -392,7 +417,10 @@ class DccQuerryTool():
                 formula = '='+k+'Type'
                 rng.api.Validation.Delete()
                 rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
-            
+
+            rng = sht.range((tabelHeadings.index('measuringSystemRef')+1,2))
+            self.applyValidationToRange(rng, 'measuringSystemIdRange')
+
             for k, a in tbl.attrib.items(): 
                 idx = tabelHeadings.index(k)+1
                 sht.range((idx,2)).value = a
@@ -625,42 +653,6 @@ class DccQuerryTool():
     def storeDataTablesToEtree(self):
         pass
 
-    # def runDccQuery(self):
-    #     sht = self.sheetMap
-    #     root = self.dccRoot
-    #     vals = sht.range("A1").expand("down").value
-    #     [print(v) for v in vals]
-    #     n_rows = vals.index("--END--")+1
-    #     print(n_rows)
-
-    #     for i in range(1, n_rows):
-    #         queryType = sht.range((i,3)).value
-
-    #         if queryType == 'xpath':
-    #             xpath_str = sht.range((i,4)).value
-    #             val = dcchf.xpath_query(root, xpath_str)
-    #             print(vals[i-1], queryType, val)
-    #             if len(val)>0:
-    #                 sht[f"M{i}"].value = val[0].text
-    #             else:
-    #                 sht[f"M{i}"].value = "ERROR not Found"
-    #         elif queryType == 'data':
-    #             dtbl = dict(zip(["measuringSystemRef", "tableId"], sht.range((i,5),(i,6)).value))
-    #             dcol = dict(zip(["metaDataCategory", "scope", "dataCategory","measurand"], sht.range((i,7), (i,10)).value))
-    #             unit = sht.range((i,11)).value
-    #             customerTag = sht.range((i,12)).value
-    #             if customerTag is None:
-    #                 data = search(root, dtbl, dcol, unit)
-    #             else: 
-    #                 data = search(root, dtbl, dcol, unit, rowTags=[customerTag])
-    #             print(dtbl, dcol, unit, customerTag, ":", data)
-    #             if len(data) == 0 : 
-    #                 data_val = "ERROR not Found"
-    #             else:
-    #                 data_val = list(data.values())
-    #             # elif len(data) > 1: 
-    #                 # data_val = "ERROR too many values"
-    #             sht[f"M{i}"].value = data_val
 
 
 
@@ -691,7 +683,7 @@ class MainApp(tk.Tk):
     def setup_gui(self,app):
         self.wm_title("DCC EXCEL UI Tool")
         # self.canvas = tk.Canvas(self, width = 1851, height = 1041)
-        self.geometry('500x200')
+        self.geometry('300x200')
         self.attributes('-topmost', True)
         # img = tk.PhotoImage(file = 'BG_design.png')
         # self.background_image = img
@@ -730,7 +722,8 @@ class MainApp(tk.Tk):
                                             nodeTag="dcc:settings", 
                                             subNodeTag="dcc:setting",
                                             place_sheet_after='equipment')
-            self.queryTool.loadDccInfoTable( heading = ['in DCC', '@measuringSystemId', 'ref',
+            self.queryTool.loadDccInfoTable( heading = ['in DCC', '@measuringSystemId', 
+                                                        'ref', 'operationalStatus',
                                                         'heading[en]', 'body[en]', 
                                                         'heading[da]', 'body[da]'], 
                                             nodeTag="dcc:measuringSystems", 
