@@ -272,6 +272,15 @@ quantities of specified kinds
         </xs:attribute>
     </xs:complexType>
 
+    <xs:simpleType name="measuringSystemCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AsFound"/>
+			<xs:enumeration value="AfterAdjustment"/>
+			<xs:enumeration value="AfterMaintenance"/>
+			<xs:enumeration value="AfterMaintenanceAndAdjustment"/>
+		</xs:restriction>
+	</xs:simpleType>
+
     <xs:simpleType name="issuerType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="owner"/>
@@ -354,6 +363,8 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="setting" type="dcc:settingType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -367,7 +378,8 @@ quantities of specified kinds
             <xs:element name="parameter" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="value" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="unit" type="dcc:notEmptyStringType" minOccurs="0"/>
-	</xs:sequence>
+			<xs:element name="softwareInstruction" type="dcc:notEmptyStringType" minOccurs="0"/>
+		</xs:sequence>
         <xs:attribute name="settingId" type="xs:ID" use="required"/>
         <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
@@ -379,6 +391,8 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+			<xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="statement" type="dcc:statementType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>

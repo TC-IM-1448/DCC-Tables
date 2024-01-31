@@ -90,6 +90,9 @@
          <dcc:accreditationApplicability>partial</dcc:accreditationApplicability>
       </dcc:accreditation>
       <dcc:statements>
+	    <dcc:heading lang="en">Statements</dcc:heading>
+		<dcc:heading lang="da">Bemærkninger</dcc:heading>
+            
          <dcc:statement statementId="s01" category="general">
             <dcc:heading lang="en">Reprint</dcc:heading>
             <dcc:heading lang="da">Gengivelse af rapport i uddrag</dcc:heading>
@@ -215,6 +218,8 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
          </dcc:equipmentItem>
       </dcc:equipment>
       <dcc:settings>
+	     <dcc:heading lang="en">Settings</dcc:heading>
+		 <dcc:heading lang="da">Indstillinger</dcc:heading>
          <dcc:setting settingId="c1">
             <dcc:heading lang="en">Channel</dcc:heading>
             <dcc:heading lang="da">Kanal</dcc:heading>
@@ -262,6 +267,8 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
           <dcc:measuringSystem measuringSystemId="ms2">
               <dcc:heading lang="en">Channel 2</dcc:heading>
               <dcc:heading lang="da">Kanal 2</dcc:heading>
+              <dcc:body lang="da">-</dcc:body>
+			  <dcc:body lang="en">-</dcc:body>
               <dcc:ref category="equipmentItem">item1</dcc:ref>
               <dcc:ref category="equipmentItem">item2</dcc:ref>
               <dcc:ref category="setting">c2</dcc:ref>
