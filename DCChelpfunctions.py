@@ -416,6 +416,18 @@ def schema_find_all_restrictions(xsd_root):
 
 # schema_find_all_restrictions(xsd_root)
 
+
+#%% get id element
+def getNodeById(root, ID:str):
+    nodes = root.xpath(f'//*[@*="{ID}"]')
+    if len(nodes) == 0: 
+        raise(KeyError, "No elements found")
+    elif len(nodes)>1: 
+        raise(KeyError, f"Too many elements: found {len(nodes)} elements expected 1.")
+    node = nodes[0]
+    nTag = rev_ns_tag(node)
+    return nTag, node
+
 #%%
 def xpath_query(node, xpath_str: str) -> et._Element: 
     """

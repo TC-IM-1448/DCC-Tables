@@ -282,11 +282,23 @@ class DccQuerryTool():
                         rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subSubNode, what))
                     else:
                         rowData.append(None)
-                elif nodeTag == "dcc:measuringSystems" and h=='ref': 
-                    refs = subNode.findall('dcc:ref',ns)
-                    print(refs)
-                    refs = " ".join([elm.text for elm in refs])
-                    rowData.append(refs)
+                elif nodeTag == "dcc:measuringSystems":
+                    refs = subNode.findall('./dcc:ref',ns)
+                    refNodes = [dcchf.getNodeById(root, ref.text) for ref in refs]
+                    if h=='equipmentRefs': 
+                        # print("EquipmentRefs: ",refNodes)
+                        refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:equipmentItem"])
+                        rowData.append(refs)
+                    elif nodeTag == "dcc:measuringSystems" and h=='settingRefs': 
+                        refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:setting"])
+                        rowData.append(refs)
+                    elif nodeTag == "dcc:measuringSystems" and h=='statementRefs': 
+                        refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:statement"])
+                        rowData.append(refs)
+                    else: 
+                        nodes =  subNode.findall(f'./dcc:{h}', ns)
+                        if len(nodes)>0: rowData.append(nodes[0].text) 
+                        else: rowData.append(None)
                 else: 
                     nodes =  subNode.findall(f'./dcc:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text) 
@@ -296,7 +308,7 @@ class DccQuerryTool():
             rng.value = rowData
 
             if nodeTag == "dcc:measuringSystems": 
-                sht.range((1,3)).column_width = 40
+                sht.range((1,3)).column_width = 30
         
         rng = sht.range((tblRowIdx,1),(tblRowIdx+1+idx,len(heading)))
         self.resizeXlTable(rng,sht,'Table_'+shtName)
@@ -723,7 +735,8 @@ class MainApp(tk.Tk):
                                             subNodeTag="dcc:setting",
                                             place_sheet_after='equipment')
             self.queryTool.loadDccInfoTable( heading = ['in DCC', '@measuringSystemId', 
-                                                        'ref', 'operationalStatus',
+                                                        'equipmentRefs', 'settingRefs', 'statementRefs', 
+                                                        'operationalStatus',
                                                         'heading[en]', 'body[en]', 
                                                         'heading[da]', 'body[da]'], 
                                             nodeTag="dcc:measuringSystems", 

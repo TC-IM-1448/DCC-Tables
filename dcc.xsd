@@ -121,7 +121,7 @@ quantities of specified kinds
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='xs:IDREFS'>
-                            <xs:attribute name="category" type="dcc:notEmptyStringType" use="optional"/>
+                            <xs:attribute name="type" type="dcc:refTypeType" use="optional"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -129,6 +129,16 @@ quantities of specified kinds
         </xs:sequence>
         <xs:attribute name="measuringSystemId" type="xs:ID" use="required"/>
     </xs:complexType>
+	
+	<xs:simpleType name="refTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="statement"/>
+			<xs:enumeration value="equipmentItem"/>
+			<xs:enumeration value="setting"/>
+			<xs:enumeration value="measuringSystem"/>
+			<xs:enumeration value="hlink"/>
+		</xs:restriction>
+	</xs:simpleType>
 
     <!--xs:complexType name="refIdType">
         <xs:annotation>
@@ -252,7 +262,7 @@ quantities of specified kinds
 			<xs:enumeration value="transfering"/>
 			<xs:enumeration value="sensing"/>
 			<xs:enumeration value="reference"/>
-			<xs:enumeration value=""/>
+			<xs:enumeration value="other"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -279,10 +289,10 @@ quantities of specified kinds
 
     <xs:simpleType name="operationalStatusType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="As Found"/>
-			<xs:enumeration value="After Adjustment"/>
-			<xs:enumeration value="After Maintenance"/>
-			<xs:enumeration value="After Maintenance And Adjustme"/>
+			<xs:enumeration value="as found"/>
+			<xs:enumeration value="after adjustment"/>
+			<xs:enumeration value="after maintenance"/>
+			<xs:enumeration value="after maintenance and adjustme"/>
 		</xs:restriction>
 	</xs:simpleType>
 

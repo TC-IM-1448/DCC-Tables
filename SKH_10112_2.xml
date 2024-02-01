@@ -258,6 +258,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
           <dcc:measuringSystem measuringSystemId="ms1">
               <dcc:heading lang="en">Channel 1</dcc:heading>
               <dcc:heading lang="da">Kanal 1</dcc:heading>
+			  <dcc:operationalStatus>as found</dcc:operationalStatus>
               <dcc:ref>item1</dcc:ref> 
               <dcc:ref>item2</dcc:ref> 
               <dcc:ref>c1</dcc:ref>
@@ -269,14 +270,15 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
               <dcc:heading lang="da">Kanal 2</dcc:heading>
               <dcc:body lang="da">-</dcc:body>
 			  <dcc:body lang="en">-</dcc:body>
-			  <dcc:operationalStatus>As Found</dcc:operationalStatus>
-              <dcc:ref category="equipmentItem">item1</dcc:ref>
-              <dcc:ref category="equipmentItem">item2</dcc:ref>
-              <dcc:ref category="setting">c2</dcc:ref>
-              <dcc:ref category="setting">sin</dcc:ref>
-              <dcc:ref category="setting">sout</dcc:ref>
+			  <dcc:operationalStatus>as found</dcc:operationalStatus>
+              <dcc:ref type="equipmentItem">item1</dcc:ref>
+              <dcc:ref type="equipmentItem">item2</dcc:ref>
+              <dcc:ref type="setting">c2</dcc:ref>
+              <dcc:ref type="setting">sin</dcc:ref>
+              <dcc:ref type="setting">sout</dcc:ref>
           </dcc:measuringSystem>
           <dcc:measuringSystem measuringSystemId="ms3">
+			  <dcc:operationalStatus>as found</dcc:operationalStatus>
               <dcc:ref>item1</dcc:ref>
               <dcc:ref>item2</dcc:ref>
               <dcc:ref>c3</dcc:ref>
@@ -530,7 +532,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:real idx="3">2</dcc:real>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
                <dcc:heading lang="en">Repeatability</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed</dcc:heading>
                <dcc:unit>\micro\litre</dcc:unit>
@@ -540,7 +542,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:real idx="3">0.6</dcc:real>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
                <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
                <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
                <dcc:unit>\percent</dcc:unit>
@@ -570,7 +572,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
                    <dcc:ref idx="3">meth3</dcc:ref>
                </dcc:dataList>
             </dcc:column>
-            <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="indication">
+            <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="bias">
                <dcc:heading lang="en">Data-series used for calculation of repeatability</dcc:heading>
                <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed</dcc:heading>
                <dcc:unit>\one</dcc:unit>
