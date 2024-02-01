@@ -298,7 +298,7 @@ quantities of specified kinds
 
     <xs:simpleType name="issuerType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="owner"/>
+			<xs:enumeration value="customer"/>
 			<xs:enumeration value="manufacturer"/>
 			<xs:enumeration value="calibrationLaboratory"/>
 		</xs:restriction>

@@ -152,7 +152,7 @@ DANAK er omfattet af de multilaterale aftaler for prøvning, medicinsk undersøg
             <dcc:heading lang="da">Temperatursensor</dcc:heading>
             <dcc:manufacturer>Oceasoft</dcc:manufacturer>
             <dcc:productName>Pt-100 Smart sensor</dcc:productName>
-            <dcc:identification issuer="owner">
+            <dcc:identification issuer="customer">
                <dcc:heading lang="en">Client label</dcc:heading>
                <dcc:heading lang="da">Kundens id</dcc:heading>
                <dcc:value>1695550</dcc:value>
@@ -168,7 +168,7 @@ DANAK er omfattet af de multilaterale aftaler for prøvning, medicinsk undersøg
             <dcc:heading lang="da">Standard</dcc:heading>
             <dcc:manufacturer>Fluke</dcc:manufacturer>
             <dcc:productNumber>5627A</dcc:productNumber>
-            <dcc:identification issuer="owner">
+            <dcc:identification issuer="customer">
                <dcc:heading lang="en">Equipmten No.</dcc:heading>
                <dcc:heading lang="da">Udstyrsnummer</dcc:heading>
                <dcc:value>TN-0439</dcc:value>

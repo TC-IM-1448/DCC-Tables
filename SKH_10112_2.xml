@@ -171,7 +171,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             <dcc:heading lang="da">Pipette med 12 kanaler 50-1200 µm</dcc:heading>
             <dcc:manufacturer>Biohit</dcc:manufacturer>
             <dcc:productName>Picus</dcc:productName>
-            <dcc:identification issuer="owner">
+            <dcc:identification issuer="customer">
                <dcc:heading lang="en">Customer iD</dcc:heading>
                <dcc:heading lang="da">Kundens ID</dcc:heading>
                <dcc:value>ID107</dcc:value>
@@ -187,7 +187,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
             <dcc:heading lang="da">Pipettespids</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
             <dcc:productName>Optifit</dcc:productName>
-            <dcc:identification issuer="owner">
+            <dcc:identification issuer="customer">
                <dcc:heading lang="en">-</dcc:heading>
                <dcc:heading lang="da">-</dcc:heading>
                <dcc:value>-</dcc:value>
@@ -205,7 +205,7 @@ coverage factor k=2 which corresponds to a coverage probability of approximately
 	Opløsning:  0,00001 g.  
 	Kalibreret: 2021-11-25</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
-            <dcc:identification issuer="owner">
+            <dcc:identification issuer="calibrationLaboratory">
                <dcc:heading lang="en">Laboratory's ID for the used reference</dcc:heading>
                <dcc:heading lang="da">Laboratoriets ID nummer</dcc:heading>
                <dcc:value>ID148</dcc:value>
