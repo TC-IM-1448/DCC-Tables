@@ -753,15 +753,23 @@ quantities of specified kinds
                 The scopeType is restricting the scope attribute of the columnType.
                 For data columns the attribute is used to descibe the data.. 
                 For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+				
+				* reference  : Data relating to the reference equipment. E.g. measured value or uncertainty of the reference.
+				* indication : Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument
+				* bias       : Data relating to the difference item_value - reference_value. 
+								E.g. the calibration result (bias of the item and its uncertainty.)
+				* environment: Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...
+				* Other      : the content may be specified in the column name in human readable form.
+				* '-'        : Used for meta data columns to refer to all scopes
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="reference" /> <!-- Data relating to the reference equipment. E.g. measured value or uncertainty of the reference. -->
-                <xs:enumeration value="indication" /> <!-- Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument-->
-                <xs:enumeration value="bias" /> <!-- Data relating to the difference item_value - reference_value. E.g. the calibration result (bias of the item and its uncertainty.) -->
-                <xs:enumeration value="environment" /> <!-- Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...-->
-                <xs:enumeration value="Other" />  <!--the content may be specified in the column name in human readable form -->
-                <xs:enumeration value="-" />  <!--Used for meta data columns to refer to all scopes -->
+                <xs:enumeration value="reference" /> 
+                <xs:enumeration value="indication" /> 
+                <xs:enumeration value="bias" /> 
+                <xs:enumeration value="environment" /> 
+                <xs:enumeration value="Other" />  
+                <xs:enumeration value="-" />  
             </xs:restriction>
     </xs:simpleType>
 

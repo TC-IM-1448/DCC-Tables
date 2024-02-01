@@ -326,22 +326,26 @@ class DccQuerryTool():
                     else:
                         rowData.append(None)
                 elif nodeTag == "dcc:measuringSystems":
-                    refs = subNode.findall('./dcc:ref',ns)
-                    refNodes = [dcchf.getNodeById(root, ref.text) for ref in refs]
-                    if h=='equipmentRefs': 
-                        # print("EquipmentRefs: ",refNodes)
-                        refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:equipmentItem"])
-                        rowData.append(refs)
-                    elif nodeTag == "dcc:measuringSystems" and h=='settingRefs': 
-                        refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:setting"])
-                        rowData.append(refs)
-                    elif nodeTag == "dcc:measuringSystems" and h=='statementRefs': 
-                        refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:statement"])
-                        rowData.append(refs)
-                    else: 
-                        nodes =  subNode.findall(f'./dcc:{h}', ns)
-                        if len(nodes)>0: rowData.append(nodes[0].text) 
-                        else: rowData.append(None)
+                    try: 
+                        refs = subNode.findall('./dcc:ref',ns)
+                        refNodes = [dcchf.getNodeById(root, ref.text) for ref in refs]
+                        if h=='equipmentRefs': 
+                            # print("EquipmentRefs: ",refNodes)
+                            refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:equipmentItem"])
+                            rowData.append(refs)
+                        elif nodeTag == "dcc:measuringSystems" and h=='settingRefs': 
+                            refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:setting"])
+                            rowData.append(refs)
+                        elif nodeTag == "dcc:measuringSystems" and h=='statementRefs': 
+                            refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:statement"])
+                            rowData.append(refs)
+                        else: 
+                            nodes =  subNode.findall(f'./dcc:{h}', ns)
+                            if len(nodes)>0: rowData.append(nodes[0].text) 
+                            else: rowData.append(None)
+                    except: 
+                        rowData.append(None)
+                        
                 else: 
                     nodes =  subNode.findall(f'./dcc:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text) 
@@ -525,7 +529,7 @@ class DccQuerryTool():
             rng = sht.range((colInitRowIdx,1)).expand()
             rng.api.Borders.Weight = 2 
             # Set the color of the data range in the table. 
-            rng = sht.range((colInitRowIdx+len(columnHeading),2)).expand()
+            rng = sht.range((colInitRowIdx+len(columnHeading),2),(colInitRowIdx+len(columnHeading)+numRows-1,1+numCols))
             rng.color = self.colors["light_red"]
 
 
@@ -735,6 +739,7 @@ class MainApp(tk.Tk):
         # self.queryTool.loadDCCFile('I:\\MS\\4006-03 AI metrologi\\Software\\DCCtables\\master\\Examples\\Stip-230063-V1.xml')
         # self.label2.config(text='Stip-230063-V1.xml')
         dccFileName = 'Examples\\Stip-230063-V1.xml'
+        dccFileName = 'Examples\\Template_TemperatureCal.xml'
         dccFileName = 'SKH_10112_2.xml'
         self.queryTool.loadDCCFile(dccFileName)
         self.label2.config(text=dccFileName)
