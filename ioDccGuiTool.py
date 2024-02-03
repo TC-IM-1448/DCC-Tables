@@ -12,7 +12,8 @@ import openpyxl as pyxl
 import xlwings as xw
 from  lxml import etree as et
 from lxml import builder as etb
-from  xml.etree import ElementTree as xmlEt 
+from lxml.builder import ElementMaker 
+# from lxml import etree
 import tkinter as tk
 import tkinter.filedialog as tkfd
 import DCChelpfunctions as dcchf
@@ -22,7 +23,6 @@ from DCChelpfunctions import search
 LANG='da'
 DCC='{https://dfm.dk}'
 
-xmlEt.register_namespace("dcc", DCC.strip('{}'))
 xlValidateList = xw.constants.DVType.xlValidateList
 #%%
 class DccQuerryTool(): 
@@ -400,7 +400,16 @@ class DccQuerryTool():
 
 
 
-    def loadDCCMeasurementResults(self):
+    def loadDCCMeasurementResults(self, heading=['tableId', 
+                                                 'tableCategory', 
+                                                 'serviceCategory', 
+                                                 'measuringSystemRef', 
+                                                 'customServiceCategory', 
+                                                 'statementRef',
+                                                 'Heading Lang1', 
+                                                 'Heading Lang2', 
+                                                 'numRows', 
+                                                 'numCols']):
         root = self.dccRoot
         ns = root.nsmap
         wb = self.wb
@@ -425,30 +434,42 @@ class DccQuerryTool():
             tblType = dcchf.rev_ns_tag(tbl).split(':')[-1]
             tableId = tbl.attrib['tableId']
             # print(f"{tblId} : {tblCategoryType}")
-            tabelHeadings = ['tableId', 'tableCategory', 'serviceCategory', 'measuringSystemRef', 'customServiceCategory', 'statementRef','Heading Lang1', 'Heading Lang2', 'numRows', 'numCols']
+            tabelHeadings = heading
                         
             sht = wb.sheets[tableId]
             sht.range("A1").value = [[txt] for txt in tabelHeadings]
             sht.range("A1").expand('down').columns.autofit()
             
-            idx = tabelHeadings.index('tableCategory')+1
-            sht.range((idx,2)).value = tblType
 
-            # insert validation on table headings
-            for k in ['tableCategory', 'serviceCategory']:
-                i = tabelHeadings.index(k)+1
-                rng = sht.range((i,2))
-                formula = '='+k+'Type'
-                rng.api.Validation.Delete()
-                rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
-
-            rng = sht.range((tabelHeadings.index('measuringSystemRef')+1,2))
-            self.applyValidationToRange(rng, 'measuringSystemIdRange')
-
-            for k, a in tbl.attrib.items(): 
-                idx = tabelHeadings.index(k)+1
-                sht.range((idx,2)).value = a
-            
+            for i,h in enumerate(tabelHeadings):
+                idx = i+1
+                if h=='tableCategory':
+                    # idx = tabelHeadings.index('tableCategory')+1
+                    rng = sht.range((idx,2))
+                    rng.value = tblType
+                    self.applyValidationToRange(rng, 'tableCategoryType')
+                elif h == '@serviceCategory':
+                    rng = sht.range((idx,2))
+                    rng.value = tbl.attrib['serviceCategory']
+                    self.applyValidationToRange(rng,'serviceCategoryType')
+                elif h == '@measuringSystemRef': 
+                    rng = sht.range((idx,2))
+                    rng.value = tbl.attrib['measuringSystemRef']
+                    self.applyValidationToRange(rng, 'measuringSystemIdRange')
+                elif h.startswith('heading['): 
+                    rng = sht.range((idx,2))
+                    rng.value = self.getHeadingOrBodyFromXlHeadingTag(tbl, h)
+                elif h.startswith('@'): 
+                    rng = sht.range((idx,2))
+                    if h.strip('@') in tbl.attrib.keys():
+                        rng.value = tbl.attrib[h.strip('@')]
+                else:
+                    rng = sht.range((idx,2)) 
+                    nodes =  tbl.findall(f'./dcc:{h}', ns)
+                    if len(nodes)>0: 
+                        rng.value = nodes[0].text
+                    else:
+                        rng.value = None
 
             colInitRowIdx = idx+2
             numRows = int(tbl.attrib['numRows'])
@@ -558,23 +579,32 @@ class DccQuerryTool():
         return line
 
                 
-    def loadDCCAdministrativeInformation(self, after='Definitions'):
+    def loadDCCAdministrativeInformation(self, after='Definitions', 
+                                         heading=["heading[en]", 
+                                                  "heading[da]", 
+                                                  "Description", 
+                                                  "Value", 
+                                                  "XPath"]):
         root = self.dccRoot
         ns = root.nsmap
         wb = self.wb
         lang1 = 'da'
         lang2 = 'en'
 
-        if not 'AdministrativeData' in wb.sheet_names:
-            wb.sheets.add('AdministrativeData', after=after)
+        if not 'administrativeData' in wb.sheet_names:
+            wb.sheets.add('administrativeData', after=after)
         
-        sht = wb.sheets['AdministrativeData']
+        sht = wb.sheets['administrativeData']
         sht.clear()
-        toprow = ["heading lang1", "heading lang2", "Description", "Value", "XPatht"]
+        toprow = heading
         sht.range((1,1)).value = toprow
         sht.range((1,1)).expand('right').font.bold = True
-        head = [h.text for h in root.findall('./dcc:heading', ns)]
-        sht.range((2,1)).value = head
+        hIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
+        titles = [self.getHeadingOrBodyFromXlHeadingTag(root, heading[i]) for i in hIdx]
+        
+        # head = [h.text for h in root.findall('./dcc:heading', ns)]
+        sht.range((2,1)).value = titles
+        sht.range((2,1),(2,2)).color = self.colors["light_yellow"]
         lineIdx = 3
         adm=root.find("dcc:administrativeData", ns)
         soft=adm.find("dcc:dccSoftware", ns)
@@ -614,45 +644,28 @@ class DccQuerryTool():
         #     rng = sht.range((idx+2,1))
         #     rng.value = ids            
 
-    def minimal_DCC():
-        schemaVersion = self.xsd_root.attrib['version']
-        #%%
-        nsmap = {'xsi': "http://www.w3.org/2001/XMLSchema-instance", 
-                 'dcc': DCC.strip('{}')}
-        schemalocation= DCC.strip('{}') + " dcc.xsd"
-        xsi="http://www.w3.org/2001/XMLSchema-instance"
-        newRoot = xmlEt.Element('digitalCalibrationCertificate', 
-                             nsmap=nsmap, 
-                             attrib={"schemaVersion":schemaVersion,
-                                     "xmlns:xsi":xsi, 
-                                     "xsi:schemaLocation":schemalocation})
-        #%%
-        myNameSpaces = DCC.strip('{}') + " dcc.xsd"
-        em = etb.ElementMaker(namespace=myNameSpaces, 
-                               nsmap={None: DCC.strip('{}'), 
-                                      'dcc' : DCC.strip('{}'), 
-                                      'xsi' : "http://www.w3.org/2001/XMLSchema-instance"
-                               })
-        g = em.root(label="Test", directed="1")
-        print(et.tostring(graph, pretty_print=True))
-        
-        #%%
-        from lxml.builder import ElementMaker
-        from lxml import etree
-
+    #%%
+        # from lxml.builder import ElementMaker
+        # from lxml import etree
+    def exportToXmlFile():
         # create an ElementMaker instance with multiple namespaces
         myNameSpace = DCC.strip('{}')
         ns = {'dcc': 'https://dfm.dk',
               'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
-        E = ElementMaker(namespace=myNameSpace, 
+        elmMaker = ElementMaker(namespace=myNameSpace, 
                          nsmap=ns)
 
-        # create elements with attributes
-        r = E("digitalCalibrationCertificate")
+        # create the root element of the output tree  with attributes
+        r = elmMaker("digitalCalibrationCertificate")
         r.set("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation", myNameSpace+" dcc.xsd")
 
-        child1 = E("administrativeData", name="value")
-        child2 = E("{http://www.example2.com}child", name="value2")
+        certTitleEN = elmMaker("heading", "Calibration Certificate", lang='en')
+        certTitleDA = elmMaker('heading', 'Kalibreringscertifikat', lang='da')
+        r.append(certTitleEN)
+        r.append(certTitleDA)
+        # Create the children  
+        child1 = buildAdministrativeChildForExport(elmMaker)        
+        child2 = elmMaker("coreData", name="test")
 
         # add the children to the root
         r.append(child1)
@@ -662,7 +675,14 @@ class DccQuerryTool():
         with open('output.xml', 'wb') as f:
             f.write(etree.tostring(r, pretty_print=True))
 
+    def buildAdministrativeChildForExport(elmMaker: ElementMaker):
+        child = elmMaker("administrativeData", name="test")
 
+        heading = elmMaker("heading", )
+    
+        return child
+
+        exportToXmlFile()
         #%%
         from lxml import etree as ET
 
@@ -770,52 +790,70 @@ class MainApp(tk.Tk):
         button3.pack(pady=10)
 
     def loadDCCsequence(self):
-            self.statementHeadings = ['in DCC', '@category', '@statementId', 
-                                        'heading[en]', 'body[en]', 
-                                        'heading[da]', 'body[da]']
-
-            self.equipmentHeadings = ['in DCC', '@equipId', '@category',
-                                        'heading[da]', 'heading[en]', 'manufacturer', 'productName', 
-                                        'customer_id heading[en]', 'customer_id heading[da]','customer_id value', 
-                                        'manufact_id heading[en]', 'manufact_id heading[da]','manufact_id value', 
-                                        'calLab_id heading[en]', 'calLab_id heading[da]', 'calLab_id value']
-            
-            self.settingsHeadings = ['in DCC', '@settingId', '@refId', 
-                                    'parameter', 'value', 'unit', 'softwareInstruction', 
+        self.statementHeadings = ['in DCC', '@category', '@statementId', 
                                     'heading[en]', 'body[en]', 
                                     'heading[da]', 'body[da]']
-            
-            self.measuringSystemsHeadings = ['in DCC', '@measuringSystemId', 
-                                            'equipmentRefs', 'settingRefs', 'statementRefs', 
-                                            'operationalStatus',
-                                            'heading[en]', 'body[en]', 
-                                            'heading[da]', 'body[da]']
 
-            self.queryTool.loadDCCAdministrativeInformation()
-            
-            self.queryTool.loadDccInfoTable(heading = self.statementHeadings, 
-                                            nodeTag="dcc:statements",
-                                            subNodeTag="dcc:statement",
-                                            place_sheet_after='AdministrativeData')
-            
-            self.queryTool.loadDccInfoTable(heading = self.equipmentHeadings, 
-                                            nodeTag="dcc:equipment", 
-                                            subNodeTag="dcc:equipmentItem",
-                                            place_sheet_after='statements')
-            
-            self.queryTool.loadDccInfoTable( heading = self.settingsHeadings, 
-                                            nodeTag="dcc:settings", 
-                                            subNodeTag="dcc:setting",
-                                            place_sheet_after='equipment')
-            self.queryTool.loadDccInfoTable( heading = self.measuringSystemsHeadings, 
-                                            nodeTag="dcc:measuringSystems", 
-                                            subNodeTag="dcc:measuringSystem",
-                                            place_sheet_after='settings')
-            self.queryTool.loadDCCMeasurementResults()
-            # self.queryTool.loadDccStatements()
-            # self.queryTool.loadDCCEquipment()
-            # self.queryTool.loadDCCSettings()
-            # self.queryTool.loadDCCMeasurementSystem()
+        self.equipmentHeadings = ['in DCC', '@equipId', '@category',
+                                    'heading[da]', 'heading[en]', 'manufacturer', 'productName', 
+                                    'customer_id heading[en]', 'customer_id heading[da]','customer_id value', 
+                                    'manufact_id heading[en]', 'manufact_id heading[da]','manufact_id value', 
+                                    'calLab_id heading[en]', 'calLab_id heading[da]', 'calLab_id value']
+        
+        self.settingsHeadings = ['in DCC', '@settingId', '@refId', 
+                                'parameter', 'value', 'unit', 'softwareInstruction', 
+                                'heading[en]', 'body[en]', 
+                                'heading[da]', 'body[da]']
+        
+        self.measuringSystemsHeadings = ['in DCC', '@measuringSystemId', 
+                                        'equipmentRefs', 'settingRefs', 'statementRefs', 
+                                        'operationalStatus',
+                                        'heading[en]', 'body[en]', 
+                                        'heading[da]', 'body[da]']
+        
+        self.administrativeDataHeadings = [ "heading[en]", 
+                                            "heading[da]", 
+                                            "Description", 
+                                            "Value", 
+                                            "XPath"]
+        
+        self.measurementResultHeadings = ['tableCategory', 
+                                          '@tableId', 
+                                          '@serviceCategory', 
+                                          '@measuringSystemRef', 
+                                          '@customServiceCategory', 
+                                          'statementRef',
+                                          'heading[da]', 
+                                          'heading[en]', 
+                                          '@numRows', 
+                                          '@numCols']
+
+        self.queryTool.loadDCCAdministrativeInformation(after='Definitions',
+                                                        heading=self.administrativeDataHeadings)
+        
+        self.queryTool.loadDccInfoTable(heading = self.statementHeadings, 
+                                        nodeTag="dcc:statements",
+                                        subNodeTag="dcc:statement",
+                                        place_sheet_after='AdministrativeData')
+        
+        self.queryTool.loadDccInfoTable(heading = self.equipmentHeadings, 
+                                        nodeTag="dcc:equipment", 
+                                        subNodeTag="dcc:equipmentItem",
+                                        place_sheet_after='statements')
+        
+        self.queryTool.loadDccInfoTable( heading = self.settingsHeadings, 
+                                        nodeTag="dcc:settings", 
+                                        subNodeTag="dcc:setting",
+                                        place_sheet_after='equipment')
+        self.queryTool.loadDccInfoTable( heading = self.measuringSystemsHeadings, 
+                                        nodeTag="dcc:measuringSystems", 
+                                        subNodeTag="dcc:measuringSystem",
+                                        place_sheet_after='settings')
+        self.queryTool.loadDCCMeasurementResults(heading=self.measurementResultHeadings)
+        # self.queryTool.loadDccStatements()
+        # self.queryTool.loadDCCEquipment()
+        # self.queryTool.loadDCCSettings()
+        # self.queryTool.loadDCCMeasurementSystem()
 
     def loadExcelBook(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
