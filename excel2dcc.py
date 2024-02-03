@@ -231,7 +231,7 @@ if __name__ == "__main__":
     root = minimal_DCC()
 
     #Update root element with content from worksheets in the workbook
-    root = read_admin_from_Excel(     root, ws=wb["AdministrativeData"])
+    root = read_admin_from_Excel( root, ws=wb["AdministrativeData"])
     root = read_accreditation_from_Excel(root, ws=wb["Accreditation"])
     root = read_statements_from_Excel(root, ws=wb["Statements"])
     root = read_equipment_from_Excel(      root, ws=wb["Equipment"])
