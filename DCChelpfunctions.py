@@ -415,7 +415,12 @@ def schema_find_all_restrictions(xsd_root):
     return d
 
 # schema_find_all_restrictions(xsd_root)
-
+#%%
+def schemaFindAdministrativeDataChildren(xsd_root):
+    adminNode = xsd_root.xpath('.//*[@name="administrativeDataType"]')[0]
+    tmp = adminNode.find("xs:all",adminNode.nsmap).getchildren()
+    adminDataTags = ['dcc:'+e.attrib['name'] for e in tmp]
+    return adminDataTags
 
 #%% get id element
 def getNodeById(root, ID:str):
