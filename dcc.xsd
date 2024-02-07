@@ -241,6 +241,7 @@ quantities of specified kinds
         <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
         <xs:element name="productName" type="xs:string" minOccurs="0"/>
+        <xs:element name="productType" type="xs:string" minOccurs="0"/>
         <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
         <xs:element name="identification" type="dcc:identificationType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -262,6 +263,7 @@ quantities of specified kinds
 			<xs:enumeration value="transfering"/>
 			<xs:enumeration value="sensing"/>
 			<xs:enumeration value="reference"/>
+			<xs:enumeration value="environment"/>
 			<xs:enumeration value="other"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -406,7 +408,7 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-			<xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="statement" type="dcc:statementType" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -416,7 +418,8 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
+            <xs:element name="externalReference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
         <xs:attribute name="statementId" type="xs:ID" use="required"/>
         <xs:attribute name="category" type="dcc:statementCategoryType" use="required"/>
     </xs:complexType>
@@ -518,7 +521,28 @@ quantities of specified kinds
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="CMCListType">
+        <xs:annotation>
+            <xs:documentation>
+                List of approved Calibration and Measurement Capabilities (CMC) applicable to results in this DCC.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="CMC" type="dcc:accreditationType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="accreditationType">
+        <xs:annotation>
+            <xs:documentation>
+                Approved Calibration and Measurement Capability (CMC) applicable to results in this DCC.
+                Mandatotry fields: 
+                Name and country of the accreditation body
+                Id of the calibration laboratory in the system of the accreitation body
+                Applicability of accreditation for results in this DCC: 'wholly' (applies to all results) or 'partial' (exceptions occur)
+
+            </xs:documentation>
+        </xs:annotation>
 		<xs:sequence>
 			<xs:element name="heading" type="dcc:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
@@ -785,10 +809,6 @@ quantities of specified kinds
                 <xs:enumeration value="value" />  <!-- used for measured quantities -->
                 <xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
                 <xs:enumeration value="expandedUncertainty" /> 
-                <xs:enumeration value="toleranceLimitLower" />
-                <xs:enumeration value="toleranceLimitUpper" />
-                <xs:enumeration value="acceptanceLimitLower" />
-                <xs:enumeration value="acceptanceLimitUpper" />
                 <xs:enumeration value="repeatability" /> 
                 <xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
                 <xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
@@ -816,9 +836,13 @@ quantities of specified kinds
                 <xs:enumeration value="commentRef" /> 
                 <xs:enumeration value="accreditationExceptionRef" /> 
                 <xs:enumeration value="normRef" /> 
+                <xs:enumeration value="measurementSeriesRef" /> 
                 <xs:enumeration value="uncertaintyCoverageFactor_k" />
                 <xs:enumeration value="uncertaintyCoverageProbability" />
-                <xs:enumeration value="measurementSeriesRef" /> 
+                <xs:enumeration value="toleranceLimitLower" />
+                <xs:enumeration value="toleranceLimitUpper" />
+                <xs:enumeration value="acceptanceLimitLower" />
+                <xs:enumeration value="acceptanceLimitUpper" />
                 <xs:enumeration value="data" />  <!--The column is not considered as meta data. The data type is specified in the dataCategory attribute-->
                 <xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
             </xs:restriction>

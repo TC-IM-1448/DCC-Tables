@@ -26,10 +26,11 @@ DCC='{https://dfm.dk}'
 xlValidateList = xw.constants.DVType.xlValidateList
 HEADINGS = dict(statementHeadings = ['in DCC', '@category', '@statementId', 
                             'heading[en]', 'body[en]', 
-                            'heading[da]', 'body[da]'],
+                            'heading[da]', 'body[da]', 
+                            'externalReference'],
 
     equipmentHeadings = ['in DCC', '@equipId', '@category',
-                                'heading[da]', 'heading[en]', 'manufacturer', 'productName', 
+                                'heading[da]', 'heading[en]', 'manufacturer', 'productName', 'productType',
                                 'customer_id heading[en]', 'customer_id heading[da]','customer_id value', 
                                 'manufact_id heading[en]', 'manufact_id heading[da]','manufact_id value', 
                                 'calLab_id heading[en]', 'calLab_id heading[da]', 'calLab_id value'],
@@ -804,10 +805,10 @@ class MainApp(tk.Tk):
         dccFileName = 'Examples\\Stip-230063-V1.xml'
         dccFileName = 'Examples\\Template_TemperatureCal.xml'
         dccFileName = 'SKH_10112_2.xml'
-        self.queryTool.loadDCCFile(dccFileName)
-        self.label2.config(text=dccFileName)
+        #self.queryTool.loadDCCFile(dccFileName)
+        #self.label2.config(text=dccFileName)
         # self.loadDCCsequence()
-        exportToXmlFile('output.xml')
+        # exportToXmlFile('output.xml')
 
     def setup_gui(self,app):
         self.wm_title("DCC EXCEL UI Tool")
@@ -830,7 +831,7 @@ class MainApp(tk.Tk):
         self.label2 = tk.Label(app, text = "Select a DCC file")
         self.label2.pack()
 
-        button3 = tk.Button(app, text='Merge DCC into gui') #, command=self.queryTool.runDccQuery)
+        button3 = tk.Button(app, text='Export DCC from GUI', command=self.exportDCC) #, command=self.queryTool.runDccQuery)
         button3.pack(pady=10)
 
     def loadDCCsequence(self):
@@ -879,6 +880,11 @@ class MainApp(tk.Tk):
         dcchf.validate(file_path, 'dcc.xsd')    
         self.loadDCCsequence()
         self.label2.config(text=file_path)
+        
+    def exportDCC(self):
+        self.label2.config(text="EXPORTING!")
+        exportToXmlFile('output.xml')
+        self.label2.config(text="exported to: output.xml")
         
 # if __name__ == "__main__":
 
