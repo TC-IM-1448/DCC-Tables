@@ -39,6 +39,10 @@
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             
             <xs:element name="administrativeData" type="dcc:administrativeDataType"/>
+            <xs:element name="equipment" type="dcc:equipmentListType"/>
+            <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
+            <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
+            <xs:element name="measuringSystems" type="dcc:measuringSystemListType"/>
 
             <xs:element name="measurementResults" type="dcc:measurementResultsType" maxOccurs="unbounded" minOccurs="0">
             <xs:unique name="calibrationResult">
@@ -84,10 +88,6 @@
             <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
             <xs:element name="customer" type="dcc:contactType"/>
-            <xs:element name="equipment" type="dcc:equipmentListType"/>
-            <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
-            <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
-            <xs:element name="measuringSystems" type="dcc:measuringSystemListType"/>
             <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
         </xs:all>
     </xs:complexType>
@@ -438,6 +438,7 @@ quantities of specified kinds
                 <xs:enumeration value="comment" /> 
                 <xs:enumeration value="accreditation" /> 
                 <xs:enumeration value="accreditationException" /> 
+                <xs:enumeration value="decisionRule" /> 
                 <xs:enumeration value="norm" /> 
             </xs:restriction>
     </xs:simpleType>
@@ -834,6 +835,7 @@ quantities of specified kinds
                 <xs:enumeration value="traceabilityRef" /> 
                 <xs:enumeration value="attentionRef" /> 
                 <xs:enumeration value="commentRef" /> 
+                <xs:enumeration value="decisionRuleRef" /> 
                 <xs:enumeration value="accreditationExceptionRef" /> 
                 <xs:enumeration value="normRef" /> 
                 <xs:enumeration value="measurementSeriesRef" /> 
