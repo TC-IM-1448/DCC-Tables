@@ -27,6 +27,14 @@
         <xs:selector xpath='dcc:heading'/>
         <xs:field xpath="@lang"/>
     </xs:unique>
+    <xs:key name="PKequipment">
+        <xs:selector xpath="dcc:equipment/dcc:equipmentItem"/>
+        <xs:field xpath="@equipId"/>
+    </xs:key>
+    <xs:keyref name="msequip" refer="dcc:PKequipment">
+        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:equipmentRef"/>
+        <xs:field xpath="."/>
+    </xs:keyref>
     </xs:element>
 
     <xs:complexType name="digitalCalibrationCertificateType">
@@ -116,8 +124,9 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="operationalStatus" type="dcc:operationalStatusType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="ref" minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="operationalStatus" type="dcc:operationalStatusType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="equipmentRef" type="xs:IDREF" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="ref" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='xs:IDREFS'>
@@ -457,16 +466,14 @@ quantities of specified kinds
     <xs:complexType name="tableType">
         <xs:annotation>
             <xs:documentation>
-                This type is for arranging any measurement data into a table with rows and columns
+                This type is for arranging any measurement data into a table with rows and columns. It is also allowed to include images and plots in the form of references to embedded files.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <!-- <xs:element name="numrows" type="xs:int" minOccurs="0"/>
-				 <xs:element name="numcols" type="xs:int" minOccurs="0"/> -->
-            <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded">
-        </xs:element>
+            <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="embeddedFileRef" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
 		<xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
@@ -771,6 +778,23 @@ quantities of specified kinds
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:complexType name="embeddedFileType">
+        <xs:annotation>
+            <xs:documentation>
+                The embeddedFileType defines a type which allows to add binary encoded files to the measurement result
+                section.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fileName" type="dcc:notEmptyStringType"/>
+            <xs:element name="dataBase64" type="xs:base64Binary"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
 
     <xs:simpleType name="scopeType">
         <xs:annotation>

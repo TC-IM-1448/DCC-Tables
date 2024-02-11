@@ -36,7 +36,7 @@
          <dcc:heading lang="da">Kalibreringslaboratorium</dcc:heading>
          <dcc:companyName>Dandiag A/S</dcc:companyName>
          <dcc:location>
-            <dcc:heading lang="en">Address</dcc:heading>
+            <dcc:heading lang="en"> Address </dcc:heading>
             <dcc:heading lang="da">Addresse</dcc:heading>
             <dcc:city>Ishøj</dcc:city>
             <dcc:countryCode>DK</dcc:countryCode>
@@ -260,8 +260,8 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
            <dcc:heading lang="en">Channel 1</dcc:heading>
            <dcc:heading lang="da">Kanal 1</dcc:heading>
      		  <dcc:operationalStatus>as found</dcc:operationalStatus>
-           <dcc:ref>item1</dcc:ref> 
-           <dcc:ref>item2</dcc:ref> 
+           <dcc:equipmentRef>item1</dcc:equipmentRef> 
+           <dcc:equipmentRef>item2</dcc:equipmentRef> 
            <dcc:ref>c1</dcc:ref>
            <dcc:ref>sin</dcc:ref>
            <dcc:ref>sout</dcc:ref>
@@ -272,730 +272,730 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
            <dcc:body lang="da">-</dcc:body>
      		  <dcc:body lang="en">-</dcc:body>
      		  <dcc:operationalStatus>as found</dcc:operationalStatus>
-           <dcc:ref type="equipmentItem">item1</dcc:ref>
-           <dcc:ref type="equipmentItem">item2</dcc:ref>
+           <dcc:equipmentRef>item1</dcc:equipmentRef>
+           <dcc:equipmentRef>item2</dcc:equipmentRef>
            <dcc:ref type="setting">c2</dcc:ref>
            <dcc:ref type="setting">sin</dcc:ref>
            <dcc:ref type="setting">sout</dcc:ref>
        </dcc:measuringSystem>
        <dcc:measuringSystem measuringSystemId="ms3">
      		  <dcc:operationalStatus>as found</dcc:operationalStatus>
-           <dcc:ref>item1</dcc:ref>
-           <dcc:ref>item2</dcc:ref>
+           <dcc:equipmentRef>item1</dcc:equipmentRef>
+           <dcc:equipmentRef>item2</dcc:equipmentRef>
            <dcc:ref>c3</dcc:ref>
            <dcc:ref>sin</dcc:ref>
            <dcc:ref>sout</dcc:ref>
        </dcc:measuringSystem>
        <dcc:measuringSystem measuringSystemId="refernece1">
-           <dcc:ref>ref1</dcc:ref>
+           <dcc:equipmentRef>ref1</dcc:equipmentRef>
        </dcc:measuringSystem>
    </dcc:measuringSystems>
    <dcc:measurementResults>
-         <dcc:calibrationResult tableId="calRes1" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" numRows='3' numCols='14'>
-            <dcc:heading lang="en">Calibration result chanel 1</dcc:heading>
-            <dcc:heading lang="da">Kalibreringsresultat kanal 1</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                  <dcc:string idx="1">pt1</dcc:string>
-                  <dcc:string idx="2">pt2</dcc:string> 
-                  <dcc:string idx="3">pt3</dcc:string>
-              </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">120</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real> 
-                   <dcc:real idx="3">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference Value</dcc:heading>
-               <dcc:heading lang="da">Referencens værdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">121.21</dcc:real> 
-                   <dcc:real idx="2">600.3 </dcc:real>
-                   <dcc:real idx="3">1199.1</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
-               <dcc:heading lang="en">Item indication</dcc:heading>
-               <dcc:heading lang="da">Emnets visning</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-               <dcc:real idx="1">120</dcc:real> 
-               <dcc:real idx="2">600</dcc:real> 
-               <dcc:real idx="3">1200</dcc:real>
+      <dcc:calibrationResult tableId="calRes1" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" numRows='3' numCols='14'>
+         <dcc:heading lang="en">Calibration result chanel 1</dcc:heading>
+         <dcc:heading lang="da">Kalibreringsresultat kanal 1</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+               <dcc:string idx="1">pt1</dcc:string>
+               <dcc:string idx="2">pt2</dcc:string> 
+               <dcc:string idx="3">pt3</dcc:string>
            </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Systematic error</dcc:heading>
-               <dcc:heading lang="da">Systematisk fejl</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1.21</dcc:real> 
-                   <dcc:real idx="2">0.3 </dcc:real>
-                   <dcc:real idx="3">-0.9</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
-               <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.35</dcc:real> 
-                   <dcc:real idx="2">1.5 </dcc:real>
-                   <dcc:real idx="3">2.4</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
-               <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
-               <dcc:unit>\percent</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1.01</dcc:real> 
-                   <dcc:real idx="2">0.05 </dcc:real>
-                   <dcc:real idx="3">-0.08</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
-               <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
-               <dcc:unit>\percent</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.29</dcc:real> 
-                   <dcc:real idx="2">0.25 </dcc:real>
-                   <dcc:real idx="3">0.2</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="expandedUncertainty" measurand="-" metaDataCategory="uncertaintyCoverageFactor_k" scope="-">
-               <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
-               <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">2</dcc:real> 
-                   <dcc:real idx="2">2</dcc:real> 
-                   <dcc:real idx="3">2</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Repeatability</dcc:heading>
-               <dcc:heading lang="da">Repeterbarhed</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.13</dcc:real> 
-                   <dcc:real idx="2">0.24 </dcc:real>
-                   <dcc:real idx="3">0.48</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
-               <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
-               <dcc:unit>\percent</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.11</dcc:real> 
-                   <dcc:real idx="2">0.04 </dcc:real>
-                   <dcc:real idx="3">0.04</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="conformity" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Conformaty statement</dcc:heading>
-               <dcc:heading lang="da">Overensstemmelseserklæring</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:conformityStatus idx="1">pass</dcc:conformityStatus> 
-                   <dcc:conformityStatus idx="2">pass</dcc:conformityStatus>
-                   <dcc:conformityStatus idx="3">pass</dcc:conformityStatus>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="data" scope="environment">
-               <dcc:heading lang="en">Z-factor</dcc:heading>
-               <dcc:heading lang="da">Z faktor</dcc:heading>
-               <dcc:unit>\one</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1.003</dcc:real> 
-                   <dcc:real idx="2">1.003 </dcc:real>
-                   <dcc:real idx="3">1.003</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="methodRef" scope="environment">
-               <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
-               <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
-               <dcc:unit>\one</dcc:unit>
-               <dcc:dataList>
-                   <dcc:ref idx="1">meth3</dcc:ref> 
-                   <dcc:ref idx="2">meth3</dcc:ref>
-                   <dcc:ref idx="3">meth3</dcc:ref>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="conformity" measurand="-" metaDataCategory="decisionRuleRef" scope="bias">
-               <dcc:heading lang="en">Conformaty status decision rule</dcc:heading>
-               <dcc:heading lang="da">Grundlag for overensstemmelseserklæring</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:ref idx="1">conf1</dcc:ref> 
-                   <dcc:ref idx="2">conf1</dcc:ref>
-                   <dcc:ref idx="3">conf1</dcc:ref>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="bias">
-               <dcc:heading lang="en">Data-series used for calculation of repeatability and systematic error</dcc:heading>
-               <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed og systematisk fejl</dcc:heading>
-               <dcc:unit>\one</dcc:unit>
-               <dcc:dataList>
-                   <dcc:ref idx="1">ser11</dcc:ref> 
-                   <dcc:ref idx="2">ser12</dcc:ref>
-                   <dcc:ref idx="3">ser13</dcc:ref>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:calibrationResult>
-         <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" numRows='3' numCols='13'>
-            <dcc:heading lang="en">Calibration result chanel 2</dcc:heading>
-            <dcc:heading lang="da">Kalibreringsresultat kanal 2</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string>
-                   <dcc:string idx="3">p3</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">120</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real>
-                   <dcc:real idx="3">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference Value</dcc:heading>
-               <dcc:heading lang="da">Referencens værdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">121.0752</dcc:real> 
-                   <dcc:real idx="2">600.0417 </dcc:real>
-                   <dcc:real idx="3">1198.901</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
-               <dcc:heading lang="en">Item indication</dcc:heading>
-               <dcc:heading lang="da">Emnets visning</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">120</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real>
-                   <dcc:real idx="3">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Systematic error</dcc:heading>
-               <dcc:heading lang="da">Systematisk fejl</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1.08</dcc:real> 
-                   <dcc:real idx="2">0.04 </dcc:real>
-                   <dcc:real idx="3">-1.1</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
-               <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.35</dcc:real> 
-                   <dcc:real idx="2">1.5 </dcc:real>
-                   <dcc:real idx="3">2.4</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
-               <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
-               <dcc:unit>\percent</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.9</dcc:real> 
-                   <dcc:real idx="2">0.01 </dcc:real>
-                   <dcc:real idx="3">-0.09</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
-               <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
-               <dcc:unit>\percent</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.29</dcc:real> 
-                   <dcc:real idx="2">0.25 </dcc:real>
-                   <dcc:real idx="3">0.2</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="expandedUncertainty" measurand="-" metaDataCategory="uncertaintyCoverageFactor_k" scope="-">
-               <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
-               <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">2</dcc:real> 
-                   <dcc:real idx="2">2 </dcc:real>
-                   <dcc:real idx="3">2</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Repeatability</dcc:heading>
-               <dcc:heading lang="da">Repeterbarhed</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.13</dcc:real> 
-                   <dcc:real idx="2">0.24 </dcc:real>
-                   <dcc:real idx="3">0.6</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
-               <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
-               <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
-               <dcc:unit>\percent</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">0.11</dcc:real> 
-                   <dcc:real idx="2">0.04 </dcc:real>
-                   <dcc:real idx="3">0.05</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="data" scope="environment">
-               <dcc:heading lang="en">Z-factor</dcc:heading>
-               <dcc:heading lang="da">Z faktor</dcc:heading>
-               <dcc:unit>\one</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1.003</dcc:real> 
-                   <dcc:real idx="2">1.003 </dcc:real>
-                   <dcc:real idx="3">1.003</dcc:real>
-           </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="methodRef" scope="environment">
-               <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
-               <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
-               <dcc:unit>\one</dcc:unit>
-               <dcc:dataList>
-                   <dcc:ref idx="1">meth3</dcc:ref> 
-                   <dcc:ref idx="2">meth3 </dcc:ref>
-                   <dcc:ref idx="3">meth3</dcc:ref>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="bias">
-               <dcc:heading lang="en">Data-series used for calculation of repeatability</dcc:heading>
-               <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed</dcc:heading>
-               <dcc:unit>\one</dcc:unit>
-               <dcc:dataList>
-                   <dcc:ref idx="1">ser21</dcc:ref> 
-                   <dcc:ref idx="2">ser22 </dcc:ref>
-                   <dcc:ref idx="3">ser23</dcc:ref>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:calibrationResult>
-         <dcc:measurementSeries  tableId="ser11" measuringSystemRef="ms1" numRows='10' numCols='3'>
-            <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
-            <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string> 
-                   <dcc:string idx="3">p3</dcc:string> 
-                   <dcc:string idx="4">p4</dcc:string> 
-                   <dcc:string idx="5">p5</dcc:string> 
-                   <dcc:string idx="6">p6</dcc:string> 
-                   <dcc:string idx="7">p7</dcc:string> 
-                   <dcc:string idx="8">p8</dcc:string> 
-                   <dcc:string idx="9">p9</dcc:string> 
-                   <dcc:string idx="10">p10</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">120</dcc:real> 
-                   <dcc:real idx="2">120</dcc:real> 
-                   <dcc:real idx="3">120</dcc:real> 
-                   <dcc:real idx="4">120</dcc:real> 
-                   <dcc:real idx="5">120</dcc:real> 
-                   <dcc:real idx="6">120</dcc:real> 
-                   <dcc:real idx="7">120</dcc:real> 
-                   <dcc:real idx="8">120</dcc:real> 
-                   <dcc:real idx="9">120</dcc:real> 
-                   <dcc:real idx="10">120</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference value</dcc:heading>
-               <dcc:heading lang="da">Referenceværdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">121.3229</dcc:real> 
-                   <dcc:real idx="2">121.1223</dcc:real> 
-                   <dcc:real idx="3">121.1724</dcc:real> 
-                   <dcc:real idx="4">121.1022</dcc:real> 
-                   <dcc:real idx="5">121.2025</dcc:real> 
-                   <dcc:real idx="6">121.1825</dcc:real> 
-                   <dcc:real idx="7">121.3129</dcc:real> 
-                   <dcc:real idx="8">121.042</dcc:real> 
-                   <dcc:real idx="9">121.1724</dcc:real> 
-                   <dcc:real idx="10">121.5034</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1"  numRows='10' numCols='4'>
-            <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
-            <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string> 
-                   <dcc:string idx="3">p3</dcc:string> 
-                   <dcc:string idx="4">p4</dcc:string> 
-                   <dcc:string idx="5">p5</dcc:string> 
-                   <dcc:string idx="6">p6</dcc:string> 
-                   <dcc:string idx="7">p7</dcc:string> 
-                   <dcc:string idx="8">p8</dcc:string> 
-                   <dcc:string idx="9">p9</dcc:string> 
-                   <dcc:string idx="10">p10</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">600</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real> 
-                   <dcc:real idx="3">600</dcc:real> 
-                   <dcc:real idx="4">600</dcc:real> 
-                   <dcc:real idx="5">600</dcc:real> 
-                   <dcc:real idx="6">600</dcc:real> 
-                   <dcc:real idx="7">600</dcc:real> 
-                   <dcc:real idx="8">600</dcc:real> 
-                   <dcc:real idx="9">600</dcc:real> 
-                   <dcc:real idx="10">600</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference value</dcc:heading>
-               <dcc:heading lang="da">Referenceværdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">600.5463</dcc:real> 
-                   <dcc:real idx="2">600.466</dcc:real> 
-                   <dcc:real idx="3">599.784</dcc:real> 
-                   <dcc:real idx="4">600.5262</dcc:real> 
-                   <dcc:real idx="5">600.4058</dcc:real> 
-                   <dcc:real idx="6">600.1049</dcc:real> 
-                   <dcc:real idx="7">600.3457</dcc:real> 
-                   <dcc:real idx="8">600.3757</dcc:real> 
-                   <dcc:real idx="9">600.7067</dcc:real> 
-                   <dcc:real idx="10">600.1952</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
-               <dcc:heading lang="en">Item indication</dcc:heading>
-               <dcc:heading lang="da">Emnets visning</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">600</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real> 
-                   <dcc:real idx="3">600</dcc:real> 
-                   <dcc:real idx="4">600</dcc:real> 
-                   <dcc:real idx="5">600</dcc:real> 
-                   <dcc:real idx="6">600</dcc:real> 
-                   <dcc:real idx="7">600</dcc:real> 
-                   <dcc:real idx="8">600</dcc:real> 
-                   <dcc:real idx="9">600</dcc:real> 
-                   <dcc:real idx="10">600</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser13" measuringSystemRef="ms1"  numRows='10' numCols='4'>
-            <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
-            <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string> 
-                   <dcc:string idx="3">p3</dcc:string> 
-                   <dcc:string idx="4">p4</dcc:string> 
-                   <dcc:string idx="5">p5</dcc:string> 
-                   <dcc:string idx="6">p6</dcc:string> 
-                   <dcc:string idx="7">p7</dcc:string> 
-                   <dcc:string idx="8">p8</dcc:string> 
-                   <dcc:string idx="9">p9</dcc:string> 
-                   <dcc:string idx="10">p10</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1200</dcc:real> 
-                   <dcc:real idx="2">1200</dcc:real> 
-                   <dcc:real idx="3">1200</dcc:real> 
-                   <dcc:real idx="4">1200</dcc:real> 
-                   <dcc:real idx="5">1200</dcc:real> 
-                   <dcc:real idx="6">1200</dcc:real> 
-                   <dcc:real idx="7">1200</dcc:real> 
-                   <dcc:real idx="8">1200</dcc:real> 
-                   <dcc:real idx="9">1200</dcc:real> 
-                   <dcc:real idx="10">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference value</dcc:heading>
-               <dcc:heading lang="da">Referenceværdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1199.488</dcc:real> 
-                   <dcc:real idx="2">1199.046</dcc:real> 
-                   <dcc:real idx="3">1198.043</dcc:real> 
-                   <dcc:real idx="4">1198.615</dcc:real> 
-                   <dcc:real idx="5">1199.478</dcc:real> 
-                   <dcc:real idx="6">1199.949</dcc:real> 
-                   <dcc:real idx="7">1198.966</dcc:real> 
-                   <dcc:real idx="8">1199.087</dcc:real> 
-                   <dcc:real idx="9">1198.896</dcc:real> 
-                   <dcc:real idx="10">1199.247</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
-               <dcc:heading lang="en">Item indication</dcc:heading>
-               <dcc:heading lang="da">Emnets visning</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1200</dcc:real> 
-                   <dcc:real idx="2">1200</dcc:real> 
-                   <dcc:real idx="3">1200</dcc:real> 
-                   <dcc:real idx="4">1200</dcc:real> 
-                   <dcc:real idx="5">1200</dcc:real> 
-                   <dcc:real idx="6">1200</dcc:real> 
-                   <dcc:real idx="7">1200</dcc:real> 
-                   <dcc:real idx="8">1200</dcc:real> 
-                   <dcc:real idx="9">1200</dcc:real> 
-                   <dcc:real idx="10">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser21" measuringSystemRef="ms2" numRows='10' numCols='3'>
-            <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
-            <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string> 
-                   <dcc:string idx="3">p3</dcc:string> 
-                   <dcc:string idx="4">p4</dcc:string> 
-                   <dcc:string idx="5">p5</dcc:string> 
-                   <dcc:string idx="6">p6</dcc:string> 
-                   <dcc:string idx="7">p7</dcc:string> 
-                   <dcc:string idx="8">p8</dcc:string> 
-                   <dcc:string idx="9">p9</dcc:string> 
-                   <dcc:string idx="10">p10</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">120</dcc:real> 
-                   <dcc:real idx="2">120</dcc:real> 
-                   <dcc:real idx="3">120</dcc:real> 
-                   <dcc:real idx="4">120</dcc:real> 
-                   <dcc:real idx="5">120</dcc:real> 
-                   <dcc:real idx="6">120</dcc:real> 
-                   <dcc:real idx="7">120</dcc:real> 
-                   <dcc:real idx="8">120</dcc:real> 
-                   <dcc:real idx="9">120</dcc:real> 
-                   <dcc:real idx="10">120</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference value</dcc:heading>
-               <dcc:heading lang="da">Referenceværdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">121.1925</dcc:real> 
-                   <dcc:real idx="2">120.9919</dcc:real> 
-                   <dcc:real idx="3">121.012</dcc:real> 
-                   <dcc:real idx="4">120.9919</dcc:real> 
-                   <dcc:real idx="5">121.0822</dcc:real> 
-                   <dcc:real idx="6">121.0621</dcc:real> 
-                   <dcc:real idx="7">121.1724</dcc:real> 
-                   <dcc:real idx="8">120.9217</dcc:real> 
-                   <dcc:real idx="9">120.9618</dcc:real> 
-                   <dcc:real idx="10">121.363</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser22" measuringSystemRef="ms2" numRows='10' numCols='4'>
-            <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
-            <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string> 
-                   <dcc:string idx="3">p3</dcc:string> 
-                   <dcc:string idx="4">p4</dcc:string> 
-                   <dcc:string idx="5">p5</dcc:string> 
-                   <dcc:string idx="6">p6</dcc:string> 
-                   <dcc:string idx="7">p7</dcc:string> 
-                   <dcc:string idx="8">p8</dcc:string> 
-                   <dcc:string idx="9">p9</dcc:string> 
-                   <dcc:string idx="10">p10</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">600</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real> 
-                   <dcc:real idx="3">600</dcc:real> 
-                   <dcc:real idx="4">600</dcc:real> 
-                   <dcc:real idx="5">600</dcc:real> 
-                   <dcc:real idx="6">600</dcc:real> 
-                   <dcc:real idx="7">600</dcc:real> 
-                   <dcc:real idx="8">600</dcc:real> 
-                   <dcc:real idx="9">600</dcc:real> 
-                   <dcc:real idx="10">600</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference value</dcc:heading>
-               <dcc:heading lang="da">Referenceværdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">600.1751</dcc:real> 
-                   <dcc:real idx="2">600.1651</dcc:real> 
-                   <dcc:real idx="3">599.5332</dcc:real> 
-                   <dcc:real idx="4">600.2353</dcc:real> 
-                   <dcc:real idx="5">600.0949</dcc:real> 
-                   <dcc:real idx="6">599.804</dcc:real> 
-                   <dcc:real idx="7">600.0147</dcc:real> 
-                   <dcc:real idx="8">600.1049</dcc:real> 
-                   <dcc:real idx="9">600.3858</dcc:real> 
-                   <dcc:real idx="10">599.9043</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
-               <dcc:heading lang="en">Item indication</dcc:heading>
-               <dcc:heading lang="da">Emnets visning</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">600</dcc:real> 
-                   <dcc:real idx="2">600</dcc:real> 
-                   <dcc:real idx="3">600</dcc:real> 
-                   <dcc:real idx="4">600</dcc:real> 
-                   <dcc:real idx="5">600</dcc:real> 
-                   <dcc:real idx="6">600</dcc:real> 
-                   <dcc:real idx="7">600</dcc:real> 
-                   <dcc:real idx="8">600</dcc:real> 
-                   <dcc:real idx="9">600</dcc:real> 
-                   <dcc:real idx="10">600</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:measurementSeries>
-         <dcc:measurementSeries  tableId="ser23" measuringSystemRef="ms2" numRows='10' numCols='4'>
-            <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
-            <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
-               <dcc:heading lang="en">Customer Tags</dcc:heading>
-               <dcc:heading lang="da">Kundens kode</dcc:heading>
-               <dcc:unit>-</dcc:unit>
-               <dcc:dataList>
-                   <dcc:string idx="1">p1</dcc:string> 
-                   <dcc:string idx="2">p2</dcc:string> 
-                   <dcc:string idx="3">p3</dcc:string> 
-                   <dcc:string idx="4">p4</dcc:string> 
-                   <dcc:string idx="5">p5</dcc:string> 
-                   <dcc:string idx="6">p6</dcc:string> 
-                   <dcc:string idx="7">p7</dcc:string> 
-                   <dcc:string idx="8">p8</dcc:string> 
-                   <dcc:string idx="9">p9</dcc:string> 
-                   <dcc:string idx="10">p10</dcc:string>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Calibration Point</dcc:heading>
-               <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1200</dcc:real> 
-                   <dcc:real idx="2">1200</dcc:real> 
-                   <dcc:real idx="3">1200</dcc:real> 
-                   <dcc:real idx="4">1200</dcc:real> 
-                   <dcc:real idx="5">1200</dcc:real> 
-                   <dcc:real idx="6">1200</dcc:real> 
-                   <dcc:real idx="7">1200</dcc:real> 
-                   <dcc:real idx="8">1200</dcc:real> 
-                   <dcc:real idx="9">1200</dcc:real> 
-                   <dcc:real idx="10">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
-               <dcc:heading lang="en">Reference value</dcc:heading>
-               <dcc:heading lang="da">Referenceværdi</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1199.468</dcc:real> 
-                   <dcc:real idx="2">1198.896</dcc:real> 
-                   <dcc:real idx="3">1197.893</dcc:real> 
-                   <dcc:real idx="4">1198.405</dcc:real> 
-                   <dcc:real idx="5">1199.267</dcc:real> 
-                   <dcc:real idx="6">1199.819</dcc:real> 
-                   <dcc:real idx="7">1198.755</dcc:real> 
-                   <dcc:real idx="8">1198.946</dcc:real> 
-                   <dcc:real idx="9">1198.575</dcc:real> 
-                   <dcc:real idx="10">1198.986</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-            <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
-               <dcc:heading lang="en">Item indication</dcc:heading>
-               <dcc:heading lang="da">Emnets visning</dcc:heading>
-               <dcc:unit>\micro\litre</dcc:unit>
-               <dcc:dataList>
-                   <dcc:real idx="1">1200</dcc:real> 
-                   <dcc:real idx="2">1200</dcc:real> 
-                   <dcc:real idx="3">1200</dcc:real> 
-                   <dcc:real idx="4">1200</dcc:real> 
-                   <dcc:real idx="5">1200</dcc:real> 
-                   <dcc:real idx="6">1200</dcc:real> 
-                   <dcc:real idx="7">1200</dcc:real> 
-                   <dcc:real idx="8">1200</dcc:real> 
-                   <dcc:real idx="9">1200</dcc:real> 
-                   <dcc:real idx="10">1200</dcc:real>
-               </dcc:dataList>
-            </dcc:column>
-         </dcc:measurementSeries>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">120</dcc:real> 
+                <dcc:real idx="2">600</dcc:real> 
+                <dcc:real idx="3">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference Value</dcc:heading>
+            <dcc:heading lang="da">Referencens værdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">121.21</dcc:real> 
+                <dcc:real idx="2">600.3 </dcc:real>
+                <dcc:real idx="3">1199.1</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:heading lang="en">Item indication</dcc:heading>
+            <dcc:heading lang="da">Emnets visning</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+            <dcc:real idx="1">120</dcc:real> 
+            <dcc:real idx="2">600</dcc:real> 
+            <dcc:real idx="3">1200</dcc:real>
+        </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Systematic error</dcc:heading>
+            <dcc:heading lang="da">Systematisk fejl</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1.21</dcc:real> 
+                <dcc:real idx="2">0.3 </dcc:real>
+                <dcc:real idx="3">-0.9</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
+            <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.35</dcc:real> 
+                <dcc:real idx="2">1.5 </dcc:real>
+                <dcc:real idx="3">2.4</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
+            <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
+            <dcc:unit>\percent</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1.01</dcc:real> 
+                <dcc:real idx="2">0.05 </dcc:real>
+                <dcc:real idx="3">-0.08</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
+            <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
+            <dcc:unit>\percent</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.29</dcc:real> 
+                <dcc:real idx="2">0.25 </dcc:real>
+                <dcc:real idx="3">0.2</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="expandedUncertainty" measurand="-" metaDataCategory="uncertaintyCoverageFactor_k" scope="-">
+            <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
+            <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">2</dcc:real> 
+                <dcc:real idx="2">2</dcc:real> 
+                <dcc:real idx="3">2</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Repeatability</dcc:heading>
+            <dcc:heading lang="da">Repeterbarhed</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.13</dcc:real> 
+                <dcc:real idx="2">0.24 </dcc:real>
+                <dcc:real idx="3">0.48</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
+            <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
+            <dcc:unit>\percent</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.11</dcc:real> 
+                <dcc:real idx="2">0.04 </dcc:real>
+                <dcc:real idx="3">0.04</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="conformity" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Conformaty statement</dcc:heading>
+            <dcc:heading lang="da">Overensstemmelseserklæring</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:conformityStatus idx="1">pass</dcc:conformityStatus> 
+                <dcc:conformityStatus idx="2">pass</dcc:conformityStatus>
+                <dcc:conformityStatus idx="3">pass</dcc:conformityStatus>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="data" scope="environment">
+            <dcc:heading lang="en">Z-factor</dcc:heading>
+            <dcc:heading lang="da">Z faktor</dcc:heading>
+            <dcc:unit>\one</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1.003</dcc:real> 
+                <dcc:real idx="2">1.003 </dcc:real>
+                <dcc:real idx="3">1.003</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="methodRef" scope="environment">
+            <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
+            <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
+            <dcc:unit>\one</dcc:unit>
+            <dcc:dataList>
+                <dcc:ref idx="1">meth3</dcc:ref> 
+                <dcc:ref idx="2">meth3</dcc:ref>
+                <dcc:ref idx="3">meth3</dcc:ref>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="conformity" measurand="-" metaDataCategory="decisionRuleRef" scope="bias">
+            <dcc:heading lang="en">Conformaty status decision rule</dcc:heading>
+            <dcc:heading lang="da">Grundlag for overensstemmelseserklæring</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:ref idx="1">conf1</dcc:ref> 
+                <dcc:ref idx="2">conf1</dcc:ref>
+                <dcc:ref idx="3">conf1</dcc:ref>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="bias">
+            <dcc:heading lang="en">Data-series used for calculation of repeatability and systematic error</dcc:heading>
+            <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed og systematisk fejl</dcc:heading>
+            <dcc:unit>\one</dcc:unit>
+            <dcc:dataList>
+                <dcc:ref idx="1">ser11</dcc:ref> 
+                <dcc:ref idx="2">ser12</dcc:ref>
+                <dcc:ref idx="3">ser13</dcc:ref>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:calibrationResult>
+      <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" numRows='3' numCols='13'>
+         <dcc:heading lang="en">Calibration result chanel 2</dcc:heading>
+         <dcc:heading lang="da">Kalibreringsresultat kanal 2</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string>
+                <dcc:string idx="3">p3</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">120</dcc:real> 
+                <dcc:real idx="2">600</dcc:real>
+                <dcc:real idx="3">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference Value</dcc:heading>
+            <dcc:heading lang="da">Referencens værdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">121.0752</dcc:real> 
+                <dcc:real idx="2">600.0417 </dcc:real>
+                <dcc:real idx="3">1198.901</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:heading lang="en">Item indication</dcc:heading>
+            <dcc:heading lang="da">Emnets visning</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">120</dcc:real> 
+                <dcc:real idx="2">600</dcc:real>
+                <dcc:real idx="3">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Systematic error</dcc:heading>
+            <dcc:heading lang="da">Systematisk fejl</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1.08</dcc:real> 
+                <dcc:real idx="2">0.04 </dcc:real>
+                <dcc:real idx="3">-1.1</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
+            <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.35</dcc:real> 
+                <dcc:real idx="2">1.5 </dcc:real>
+                <dcc:real idx="3">2.4</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
+            <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
+            <dcc:unit>\percent</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.9</dcc:real> 
+                <dcc:real idx="2">0.01 </dcc:real>
+                <dcc:real idx="3">-0.09</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="expandedUncertainty" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
+            <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
+            <dcc:unit>\percent</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.29</dcc:real> 
+                <dcc:real idx="2">0.25 </dcc:real>
+                <dcc:real idx="3">0.2</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="expandedUncertainty" measurand="-" metaDataCategory="uncertaintyCoverageFactor_k" scope="-">
+            <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
+            <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">2</dcc:real> 
+                <dcc:real idx="2">2 </dcc:real>
+                <dcc:real idx="3">2</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Repeatability</dcc:heading>
+            <dcc:heading lang="da">Repeterbarhed</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.13</dcc:real> 
+                <dcc:real idx="2">0.24 </dcc:real>
+                <dcc:real idx="3">0.6</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="repeatability" measurand="Volume" metaDataCategory="data" scope="bias">
+            <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
+            <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
+            <dcc:unit>\percent</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">0.11</dcc:real> 
+                <dcc:real idx="2">0.04 </dcc:real>
+                <dcc:real idx="3">0.05</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="data" scope="environment">
+            <dcc:heading lang="en">Z-factor</dcc:heading>
+            <dcc:heading lang="da">Z faktor</dcc:heading>
+            <dcc:unit>\one</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1.003</dcc:real> 
+                <dcc:real idx="2">1.003 </dcc:real>
+                <dcc:real idx="3">1.003</dcc:real>
+        </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="miscelaneous01" metaDataCategory="methodRef" scope="environment">
+            <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
+            <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
+            <dcc:unit>\one</dcc:unit>
+            <dcc:dataList>
+                <dcc:ref idx="1">meth3</dcc:ref> 
+                <dcc:ref idx="2">meth3 </dcc:ref>
+                <dcc:ref idx="3">meth3</dcc:ref>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="-" measurand="Volume" metaDataCategory="measurementSeriesRef" scope="bias">
+            <dcc:heading lang="en">Data-series used for calculation of repeatability</dcc:heading>
+            <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed</dcc:heading>
+            <dcc:unit>\one</dcc:unit>
+            <dcc:dataList>
+                <dcc:ref idx="1">ser21</dcc:ref> 
+                <dcc:ref idx="2">ser22 </dcc:ref>
+                <dcc:ref idx="3">ser23</dcc:ref>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:calibrationResult>
+      <dcc:measurementSeries  tableId="ser11" measuringSystemRef="ms1" numRows='10' numCols='3'>
+         <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
+         <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string> 
+                <dcc:string idx="3">p3</dcc:string> 
+                <dcc:string idx="4">p4</dcc:string> 
+                <dcc:string idx="5">p5</dcc:string> 
+                <dcc:string idx="6">p6</dcc:string> 
+                <dcc:string idx="7">p7</dcc:string> 
+                <dcc:string idx="8">p8</dcc:string> 
+                <dcc:string idx="9">p9</dcc:string> 
+                <dcc:string idx="10">p10</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">120</dcc:real> 
+                <dcc:real idx="2">120</dcc:real> 
+                <dcc:real idx="3">120</dcc:real> 
+                <dcc:real idx="4">120</dcc:real> 
+                <dcc:real idx="5">120</dcc:real> 
+                <dcc:real idx="6">120</dcc:real> 
+                <dcc:real idx="7">120</dcc:real> 
+                <dcc:real idx="8">120</dcc:real> 
+                <dcc:real idx="9">120</dcc:real> 
+                <dcc:real idx="10">120</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference value</dcc:heading>
+            <dcc:heading lang="da">Referenceværdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">121.3229</dcc:real> 
+                <dcc:real idx="2">121.1223</dcc:real> 
+                <dcc:real idx="3">121.1724</dcc:real> 
+                <dcc:real idx="4">121.1022</dcc:real> 
+                <dcc:real idx="5">121.2025</dcc:real> 
+                <dcc:real idx="6">121.1825</dcc:real> 
+                <dcc:real idx="7">121.3129</dcc:real> 
+                <dcc:real idx="8">121.042</dcc:real> 
+                <dcc:real idx="9">121.1724</dcc:real> 
+                <dcc:real idx="10">121.5034</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:measurementSeries>
+      <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1"  numRows='10' numCols='4'>
+         <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
+         <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string> 
+                <dcc:string idx="3">p3</dcc:string> 
+                <dcc:string idx="4">p4</dcc:string> 
+                <dcc:string idx="5">p5</dcc:string> 
+                <dcc:string idx="6">p6</dcc:string> 
+                <dcc:string idx="7">p7</dcc:string> 
+                <dcc:string idx="8">p8</dcc:string> 
+                <dcc:string idx="9">p9</dcc:string> 
+                <dcc:string idx="10">p10</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">600</dcc:real> 
+                <dcc:real idx="2">600</dcc:real> 
+                <dcc:real idx="3">600</dcc:real> 
+                <dcc:real idx="4">600</dcc:real> 
+                <dcc:real idx="5">600</dcc:real> 
+                <dcc:real idx="6">600</dcc:real> 
+                <dcc:real idx="7">600</dcc:real> 
+                <dcc:real idx="8">600</dcc:real> 
+                <dcc:real idx="9">600</dcc:real> 
+                <dcc:real idx="10">600</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference value</dcc:heading>
+            <dcc:heading lang="da">Referenceværdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">600.5463</dcc:real> 
+                <dcc:real idx="2">600.466</dcc:real> 
+                <dcc:real idx="3">599.784</dcc:real> 
+                <dcc:real idx="4">600.5262</dcc:real> 
+                <dcc:real idx="5">600.4058</dcc:real> 
+                <dcc:real idx="6">600.1049</dcc:real> 
+                <dcc:real idx="7">600.3457</dcc:real> 
+                <dcc:real idx="8">600.3757</dcc:real> 
+                <dcc:real idx="9">600.7067</dcc:real> 
+                <dcc:real idx="10">600.1952</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:heading lang="en">Item indication</dcc:heading>
+            <dcc:heading lang="da">Emnets visning</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">600</dcc:real> 
+                <dcc:real idx="2">600</dcc:real> 
+                <dcc:real idx="3">600</dcc:real> 
+                <dcc:real idx="4">600</dcc:real> 
+                <dcc:real idx="5">600</dcc:real> 
+                <dcc:real idx="6">600</dcc:real> 
+                <dcc:real idx="7">600</dcc:real> 
+                <dcc:real idx="8">600</dcc:real> 
+                <dcc:real idx="9">600</dcc:real> 
+                <dcc:real idx="10">600</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:measurementSeries>
+      <dcc:measurementSeries  tableId="ser13" measuringSystemRef="ms1"  numRows='10' numCols='4'>
+         <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
+         <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string> 
+                <dcc:string idx="3">p3</dcc:string> 
+                <dcc:string idx="4">p4</dcc:string> 
+                <dcc:string idx="5">p5</dcc:string> 
+                <dcc:string idx="6">p6</dcc:string> 
+                <dcc:string idx="7">p7</dcc:string> 
+                <dcc:string idx="8">p8</dcc:string> 
+                <dcc:string idx="9">p9</dcc:string> 
+                <dcc:string idx="10">p10</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1200</dcc:real> 
+                <dcc:real idx="2">1200</dcc:real> 
+                <dcc:real idx="3">1200</dcc:real> 
+                <dcc:real idx="4">1200</dcc:real> 
+                <dcc:real idx="5">1200</dcc:real> 
+                <dcc:real idx="6">1200</dcc:real> 
+                <dcc:real idx="7">1200</dcc:real> 
+                <dcc:real idx="8">1200</dcc:real> 
+                <dcc:real idx="9">1200</dcc:real> 
+                <dcc:real idx="10">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference value</dcc:heading>
+            <dcc:heading lang="da">Referenceværdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1199.488</dcc:real> 
+                <dcc:real idx="2">1199.046</dcc:real> 
+                <dcc:real idx="3">1198.043</dcc:real> 
+                <dcc:real idx="4">1198.615</dcc:real> 
+                <dcc:real idx="5">1199.478</dcc:real> 
+                <dcc:real idx="6">1199.949</dcc:real> 
+                <dcc:real idx="7">1198.966</dcc:real> 
+                <dcc:real idx="8">1199.087</dcc:real> 
+                <dcc:real idx="9">1198.896</dcc:real> 
+                <dcc:real idx="10">1199.247</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:heading lang="en">Item indication</dcc:heading>
+            <dcc:heading lang="da">Emnets visning</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1200</dcc:real> 
+                <dcc:real idx="2">1200</dcc:real> 
+                <dcc:real idx="3">1200</dcc:real> 
+                <dcc:real idx="4">1200</dcc:real> 
+                <dcc:real idx="5">1200</dcc:real> 
+                <dcc:real idx="6">1200</dcc:real> 
+                <dcc:real idx="7">1200</dcc:real> 
+                <dcc:real idx="8">1200</dcc:real> 
+                <dcc:real idx="9">1200</dcc:real> 
+                <dcc:real idx="10">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:measurementSeries>
+      <dcc:measurementSeries  tableId="ser21" measuringSystemRef="ms2" numRows='10' numCols='3'>
+         <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
+         <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string> 
+                <dcc:string idx="3">p3</dcc:string> 
+                <dcc:string idx="4">p4</dcc:string> 
+                <dcc:string idx="5">p5</dcc:string> 
+                <dcc:string idx="6">p6</dcc:string> 
+                <dcc:string idx="7">p7</dcc:string> 
+                <dcc:string idx="8">p8</dcc:string> 
+                <dcc:string idx="9">p9</dcc:string> 
+                <dcc:string idx="10">p10</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">120</dcc:real> 
+                <dcc:real idx="2">120</dcc:real> 
+                <dcc:real idx="3">120</dcc:real> 
+                <dcc:real idx="4">120</dcc:real> 
+                <dcc:real idx="5">120</dcc:real> 
+                <dcc:real idx="6">120</dcc:real> 
+                <dcc:real idx="7">120</dcc:real> 
+                <dcc:real idx="8">120</dcc:real> 
+                <dcc:real idx="9">120</dcc:real> 
+                <dcc:real idx="10">120</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference value</dcc:heading>
+            <dcc:heading lang="da">Referenceværdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">121.1925</dcc:real> 
+                <dcc:real idx="2">120.9919</dcc:real> 
+                <dcc:real idx="3">121.012</dcc:real> 
+                <dcc:real idx="4">120.9919</dcc:real> 
+                <dcc:real idx="5">121.0822</dcc:real> 
+                <dcc:real idx="6">121.0621</dcc:real> 
+                <dcc:real idx="7">121.1724</dcc:real> 
+                <dcc:real idx="8">120.9217</dcc:real> 
+                <dcc:real idx="9">120.9618</dcc:real> 
+                <dcc:real idx="10">121.363</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:measurementSeries>
+      <dcc:measurementSeries  tableId="ser22" measuringSystemRef="ms2" numRows='10' numCols='4'>
+         <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
+         <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string> 
+                <dcc:string idx="3">p3</dcc:string> 
+                <dcc:string idx="4">p4</dcc:string> 
+                <dcc:string idx="5">p5</dcc:string> 
+                <dcc:string idx="6">p6</dcc:string> 
+                <dcc:string idx="7">p7</dcc:string> 
+                <dcc:string idx="8">p8</dcc:string> 
+                <dcc:string idx="9">p9</dcc:string> 
+                <dcc:string idx="10">p10</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">600</dcc:real> 
+                <dcc:real idx="2">600</dcc:real> 
+                <dcc:real idx="3">600</dcc:real> 
+                <dcc:real idx="4">600</dcc:real> 
+                <dcc:real idx="5">600</dcc:real> 
+                <dcc:real idx="6">600</dcc:real> 
+                <dcc:real idx="7">600</dcc:real> 
+                <dcc:real idx="8">600</dcc:real> 
+                <dcc:real idx="9">600</dcc:real> 
+                <dcc:real idx="10">600</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference value</dcc:heading>
+            <dcc:heading lang="da">Referenceværdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">600.1751</dcc:real> 
+                <dcc:real idx="2">600.1651</dcc:real> 
+                <dcc:real idx="3">599.5332</dcc:real> 
+                <dcc:real idx="4">600.2353</dcc:real> 
+                <dcc:real idx="5">600.0949</dcc:real> 
+                <dcc:real idx="6">599.804</dcc:real> 
+                <dcc:real idx="7">600.0147</dcc:real> 
+                <dcc:real idx="8">600.1049</dcc:real> 
+                <dcc:real idx="9">600.3858</dcc:real> 
+                <dcc:real idx="10">599.9043</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:heading lang="en">Item indication</dcc:heading>
+            <dcc:heading lang="da">Emnets visning</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">600</dcc:real> 
+                <dcc:real idx="2">600</dcc:real> 
+                <dcc:real idx="3">600</dcc:real> 
+                <dcc:real idx="4">600</dcc:real> 
+                <dcc:real idx="5">600</dcc:real> 
+                <dcc:real idx="6">600</dcc:real> 
+                <dcc:real idx="7">600</dcc:real> 
+                <dcc:real idx="8">600</dcc:real> 
+                <dcc:real idx="9">600</dcc:real> 
+                <dcc:real idx="10">600</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:measurementSeries>
+      <dcc:measurementSeries  tableId="ser23" measuringSystemRef="ms2" numRows='10' numCols='4'>
+         <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
+         <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
+         <dcc:column dataCategory="-" measurand="-" metaDataCategory="rowTag" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:dataList>
+                <dcc:string idx="1">p1</dcc:string> 
+                <dcc:string idx="2">p2</dcc:string> 
+                <dcc:string idx="3">p3</dcc:string> 
+                <dcc:string idx="4">p4</dcc:string> 
+                <dcc:string idx="5">p5</dcc:string> 
+                <dcc:string idx="6">p6</dcc:string> 
+                <dcc:string idx="7">p7</dcc:string> 
+                <dcc:string idx="8">p8</dcc:string> 
+                <dcc:string idx="9">p9</dcc:string> 
+                <dcc:string idx="10">p10</dcc:string>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="targetValue" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Calibration Point</dcc:heading>
+            <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1200</dcc:real> 
+                <dcc:real idx="2">1200</dcc:real> 
+                <dcc:real idx="3">1200</dcc:real> 
+                <dcc:real idx="4">1200</dcc:real> 
+                <dcc:real idx="5">1200</dcc:real> 
+                <dcc:real idx="6">1200</dcc:real> 
+                <dcc:real idx="7">1200</dcc:real> 
+                <dcc:real idx="8">1200</dcc:real> 
+                <dcc:real idx="9">1200</dcc:real> 
+                <dcc:real idx="10">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="reference">
+            <dcc:heading lang="en">Reference value</dcc:heading>
+            <dcc:heading lang="da">Referenceværdi</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1199.468</dcc:real> 
+                <dcc:real idx="2">1198.896</dcc:real> 
+                <dcc:real idx="3">1197.893</dcc:real> 
+                <dcc:real idx="4">1198.405</dcc:real> 
+                <dcc:real idx="5">1199.267</dcc:real> 
+                <dcc:real idx="6">1199.819</dcc:real> 
+                <dcc:real idx="7">1198.755</dcc:real> 
+                <dcc:real idx="8">1198.946</dcc:real> 
+                <dcc:real idx="9">1198.575</dcc:real> 
+                <dcc:real idx="10">1198.986</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+         <dcc:column dataCategory="value" measurand="Volume" metaDataCategory="data" scope="indication">
+            <dcc:heading lang="en">Item indication</dcc:heading>
+            <dcc:heading lang="da">Emnets visning</dcc:heading>
+            <dcc:unit>\micro\litre</dcc:unit>
+            <dcc:dataList>
+                <dcc:real idx="1">1200</dcc:real> 
+                <dcc:real idx="2">1200</dcc:real> 
+                <dcc:real idx="3">1200</dcc:real> 
+                <dcc:real idx="4">1200</dcc:real> 
+                <dcc:real idx="5">1200</dcc:real> 
+                <dcc:real idx="6">1200</dcc:real> 
+                <dcc:real idx="7">1200</dcc:real> 
+                <dcc:real idx="8">1200</dcc:real> 
+                <dcc:real idx="9">1200</dcc:real> 
+                <dcc:real idx="10">1200</dcc:real>
+            </dcc:dataList>
+         </dcc:column>
+      </dcc:measurementSeries>
    </dcc:measurementResults>
 </dcc:digitalCalibrationCertificate>
