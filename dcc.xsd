@@ -29,10 +29,34 @@
     </xs:unique>
     <xs:key name="PKequipment">
         <xs:selector xpath="dcc:equipment/dcc:equipmentItem"/>
-        <xs:field xpath="@equipId"/>
+        <xs:field xpath="@id"/>
     </xs:key>
-    <xs:keyref name="msequip" refer="dcc:PKequipment">
+    <xs:key name="PKsetting">
+        <xs:selector xpath="dcc:settings/dcc:setting"/>
+        <xs:field xpath="@settingId"/>
+    </xs:key>
+    <xs:key name="PKstatement">
+        <xs:selector xpath="dcc:statements/dcc:statement"/>
+        <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:key name="PKmeasuringSystem">
+        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem"/>
+        <xs:field xpath="@id"/>
+    </xs:key>
+    <xs:keyref name="ms2equip" refer="dcc:PKequipment">
         <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:equipmentRef"/>
+        <xs:field xpath="@equipmentItemRef"/>
+    </xs:keyref>
+    <xs:keyref name="ms2statetment" refer="dcc:PKstatement">
+        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:statementRef"/>
+        <xs:field xpath="."/>
+    </xs:keyref>
+    <xs:keyref name="table2ms" refer="dcc:PKmeasuringSystem">
+        <xs:selector xpath="dcc:measurementResults/dcc:calibrationResult"/>
+        <xs:field xpath="@measuringSystemRef"/>
+    </xs:keyref>
+    <xs:keyref name="msequip2setting" refer="dcc:PKsetting">
+        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:equipmentRef/dcc:settingRef"/>
         <xs:field xpath="."/>
     </xs:keyref>
     </xs:element>
@@ -125,18 +149,26 @@ quantities of specified kinds
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="operationalStatus" type="dcc:operationalStatusType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="equipmentRef" type="xs:IDREF" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="equipmentRef" type="dcc:equipmentRefType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="statementRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="ref" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:simpleContent>
-                        <xs:extension base='xs:IDREFS'>
+                        <xs:extension base='xs:IDREF'>
                             <xs:attribute name="type" type="dcc:refTypeType" use="optional"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="measuringSystemId" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="equipmentRefType">
+        <xs:sequence>
+          <xs:element name="settingRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="equipmentItemRef" type="xs:IDREF" use="required"/>
     </xs:complexType>
 	
 	<xs:simpleType name="refTypeType">
@@ -262,7 +294,7 @@ quantities of specified kinds
                     </xs:restriction>
                 </xs:simpleType>-->
         </xs:attribute>
-        <xs:attribute name="equipId" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="equipmentCategoryType">
@@ -429,7 +461,7 @@ quantities of specified kinds
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="externalReference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="statementId" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="category" type="dcc:statementCategoryType" use="required"/>
     </xs:complexType>
 
@@ -473,10 +505,10 @@ quantities of specified kinds
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="column" type="dcc:columnType" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="embeddedFileRef" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="embeddedImageType" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
-		<xs:attribute name="measuringSystemRef" type="xs:IDREFS" use="required"/>
+		<xs:attribute name="measuringSystemRef" type="xs:IDREF" use="required"/>
 		<xs:attribute name="numRows" type="xs:int" use="required"/>
 		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
@@ -779,7 +811,7 @@ quantities of specified kinds
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:complexType name="embeddedFileType">
+    <xs:complexType name="embeddedImageType">
         <xs:annotation>
             <xs:documentation>
                 The embeddedFileType defines a type which allows to add binary encoded files to the measurement result
@@ -789,7 +821,7 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fileName" type="dcc:notEmptyStringType"/>
+            <xs:element name="fileExtension" type="dcc:notEmptyStringType"/>
             <xs:element name="dataBase64" type="xs:base64Binary"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>

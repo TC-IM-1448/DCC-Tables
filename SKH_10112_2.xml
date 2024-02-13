@@ -91,7 +91,7 @@
       </dcc:accreditation>
    </dcc:administrativeData>
    <dcc:equipment>
-      <dcc:equipmentItem category="item" equipId="item1">
+      <dcc:equipmentItem category="item" id="item1">
          <dcc:heading lang="en">Pipette with 12 channels 50-1200 µm</dcc:heading>
          <dcc:heading lang="da">Pipette med 12 kanaler 50-1200 µm</dcc:heading>
          <dcc:manufacturer>Biohit</dcc:manufacturer>
@@ -107,7 +107,7 @@
             <dcc:value>12008522</dcc:value>
          </dcc:identification>
       </dcc:equipmentItem>
-      <dcc:equipmentItem category="item" equipId="item2">
+      <dcc:equipmentItem category="item" id="item2">
          <dcc:heading lang="en">Pipette tip (1200 µl)</dcc:heading>
          <dcc:heading lang="da">Pipettespids</dcc:heading>
          <dcc:manufacturer>Satorius</dcc:manufacturer>
@@ -123,7 +123,7 @@
             <dcc:value>ss23987</dcc:value>
          </dcc:identification>
       </dcc:equipmentItem>
-      <dcc:equipmentItem category="reference" equipId="ref1">
+      <dcc:equipmentItem category="reference" id="ref1">
          <dcc:heading lang="en">Balance. 	resolution: 0.00001 g.
      calibrated: 2021-11-25.</dcc:heading>
          <dcc:heading lang="da">Vægt. 
@@ -181,19 +181,19 @@
          <dcc:heading lang="en">Statements</dcc:heading>
      	<dcc:heading lang="da">Bemærkninger</dcc:heading>
          
-      <dcc:statement statementId="s01" category="general">
+      <dcc:statement id="s01" category="general">
          <dcc:heading lang="en">Reprint</dcc:heading>
          <dcc:heading lang="da">Gengivelse af rapport i uddrag</dcc:heading>
          <dcc:body lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcc:body>
          <dcc:body lang="da">Denne rapport må ikke gengives i uddrag undtaget med laboratoriets skriftlige tilladelse.</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="conf1" category="general">
+      <dcc:statement id="conf1" category="general">
          <dcc:heading lang="en">Decision rule</dcc:heading>
          <dcc:heading lang="da">Grundlag for overensstemmelseserklæring</dcc:heading>
          <dcc:body lang="en">Conformaty status "pass" is given if a value plus the uncertainy is smaller than the upper tolerance level AND the value minus its uncertainty is smaller thatn its uncertainty levvel.</dcc:body>
          <dcc:body lang="da">Overensstemmelseserklæringen "godkendt" ("pass") tildeles dersom en værdi plus dens usikkerehed er mindre end den øvre tolerancegrænse OG værdien minus dens usikkerhed er større end den øvre tolranncegrænse.</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="acc1" category="accreditation">
+      <dcc:statement id="acc1" category="accreditation">
          <dcc:heading lang="en">Accreditation</dcc:heading>
          <dcc:heading lang="da">Akkreditering</dcc:heading>
          <dcc:body lang="en">The calibration is caried out under DANAK accreditation no. 490 unless clearly statet in the tabel of results.
@@ -207,46 +207,46 @@ DANer det nationale akkrediteringsorgan i Danmark i overensstemmelse med Europa-
 
 DANer omfattet af de multilaterale aftaler for prøvning, medicinsk undersøgelse, kalibrering, udbud af præstationsprøvning og produktion af referencematerialer i European co-operation for Accreditation (EA) og i International Laboratory Accreditation Cooperation (ILAC) baseret på peer-evaluering. Dette indebærer, at akkrediterede rapporter og certifikater udstedt af virksomheder akkrediteret af DANAK anerkendes på tværs af landegrænser af medlemmer i EA og ILAC på linje med rapporter og certifikater udstedt af disse medlemmers akkrediterede virksomheder.</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="meth1" category="method">
+      <dcc:statement id="meth1" category="method">
          <dcc:heading lang="en">Calibration method</dcc:heading>
          <dcc:heading lang="da">Kalibrering metode</dcc:heading>
          <dcc:body lang="en">Calibration is performed in accordance with Dandiags internal procedure PIP-005</dcc:body>
          <dcc:body lang="da">Pipetten er kalibreret med en multikanalsvægt.  Dandiags interne procedure PIP-005</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="meth2" category="method">
+      <dcc:statement id="meth2" category="method">
          <dcc:heading lang="en">Used method</dcc:heading>
          <dcc:heading lang="da">Anvendt metode</dcc:heading>
          <dcc:body lang="en">The calibration is carried out by using the gravimetric performance test method. The used method is based on the
 DS/ISO 8655 standard. The used liquid is water according to DS/EN ISO 3696, grade 3.
-Thenversion from mass to volume is done by using the calculation in DS/ISO/TR 20461.</dcc:body>
+The conversion from mass to volume is done by using the calculation in DS/ISO/TR 20461.</dcc:body>
          <dcc:body lang="da">Kalibreringen er udført ved brug af den gravimetriske performance-test-metode. Metoden er baseret på standarden DS/EN ISO 8655. Der er anvandt fydende vand af grad3 jvf. DS/EN ISO 3696. Konvertering fra masse til volumen er udført I overensstemmelse med DS/ISO/TR 20461. </dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="meth3" category="method">
+      <dcc:statement id="meth3" category="method">
          <dcc:heading lang="en">Z-factor</dcc:heading>
          <dcc:heading lang="da">Z-faktor</dcc:heading>
          <dcc:body lang="en"> Z-factor is calculated according to DS/EN ISO 8655 part 6.</dcc:body>
          <dcc:body lang="da">Z-faktor er beregnet ifølge DS/EN ISO 8655 part 6.</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="meth4" category="method">
+      <dcc:statement id="meth4" category="method">
          <dcc:heading lang="en">Uncertainty</dcc:heading>
          <dcc:heading lang="da">Usikkerhed</dcc:heading>
          <dcc:body lang="en">The reported expanded uncertainty [±U] is given as the measurement standard uncertainty multiplied with the
 covge factor k=2 which corresponds to a coverage probability of approximately 95%</dcc:body>
          <dcc:body lang="da">Den rapporterede måleusikkerhed er angivet som standard måleusikkerheden ganget med dækningsfaktoren k=2 svarende til en dækningssansylighed på ca. 95%.</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="env1" category="method">
+      <dcc:statement id="env1" category="method">
          <dcc:heading lang="en">Environment</dcc:heading>
          <dcc:heading lang="da">Miljøfaktor</dcc:heading>
          <dcc:body lang="en">Pressure: 1011 hPa ±10 hPa</dcc:body>
          <dcc:body lang="da">Tryk: 1011 hPa ±10 hPa</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="env2" category="method">
+      <dcc:statement id="env2" category="method">
          <dcc:heading lang="en">Environment</dcc:heading>
          <dcc:heading lang="da">Miljøfaktor</dcc:heading>
          <dcc:body lang="en">Temperature: 20.5°C±0,4°C</dcc:body>
          <dcc:body lang="da">Temperatur: 20,5°C±0,4°C</dcc:body>
       </dcc:statement>
-      <dcc:statement statementId="env3" category="method">
+      <dcc:statement id="env3" category="method">
          <dcc:heading lang="en">Evironment</dcc:heading>
          <dcc:heading lang="da">Miljøfaktor</dcc:heading>
          <dcc:body lang="en"> relative humidity: 59.4 %RH ±10 %RH</dcc:body>
@@ -256,38 +256,38 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
        <dcc:measuringSystems>
        <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
        <dcc:heading lang="da">Målesystemer</dcc:heading>
-       <dcc:measuringSystem measuringSystemId="ms1">
+       <dcc:measuringSystem id="ms1">
            <dcc:heading lang="en">Channel 1</dcc:heading>
            <dcc:heading lang="da">Kanal 1</dcc:heading>
-     		  <dcc:operationalStatus>as found</dcc:operationalStatus>
-           <dcc:equipmentRef>item1</dcc:equipmentRef> 
+     	   <dcc:operationalStatus>as found</dcc:operationalStatus>
+           <dcc:equipmentRef equipmentItemRef="item1">
+               <dcc:settingRef>c1</dcc:settingRef>
+               <dcc:settingRef>sin</dcc:settingRef>
+               <dcc:settingRef>sout</dcc:settingRef>
+           </dcc:equipmentRef>
+           <dcc:equipmentRef equipmentItemRef="item2"/>
+           <!--dcc:equipmentRef settings="c1 sin">item1</dcc:equipmentRef> 
            <dcc:equipmentRef>item2</dcc:equipmentRef> 
            <dcc:ref>c1</dcc:ref>
            <dcc:ref>sin</dcc:ref>
-           <dcc:ref>sout</dcc:ref>
+           <dcc:ref>sout</dcc:ref-->
        </dcc:measuringSystem>
-       <dcc:measuringSystem measuringSystemId="ms2">
+       <dcc:measuringSystem id="ms2">
            <dcc:heading lang="en">Channel 2</dcc:heading>
            <dcc:heading lang="da">Kanal 2</dcc:heading>
            <dcc:body lang="da">-</dcc:body>
-     		  <dcc:body lang="en">-</dcc:body>
-     		  <dcc:operationalStatus>as found</dcc:operationalStatus>
-           <dcc:equipmentRef>item1</dcc:equipmentRef>
-           <dcc:equipmentRef>item2</dcc:equipmentRef>
-           <dcc:ref type="setting">c2</dcc:ref>
-           <dcc:ref type="setting">sin</dcc:ref>
-           <dcc:ref type="setting">sout</dcc:ref>
+           <dcc:body lang="en">-</dcc:body>
+           <dcc:operationalStatus>as found</dcc:operationalStatus>
+           <dcc:equipmentRef equipmentItemRef="item1">
+               <dcc:settingRef>c2</dcc:settingRef>
+               <dcc:settingRef>sin</dcc:settingRef>
+               <dcc:settingRef>sout</dcc:settingRef>
+           </dcc:equipmentRef>
+           <dcc:equipmentRef equipmentItemRef="item2"/>
        </dcc:measuringSystem>
-       <dcc:measuringSystem measuringSystemId="ms3">
-     		  <dcc:operationalStatus>as found</dcc:operationalStatus>
-           <dcc:equipmentRef>item1</dcc:equipmentRef>
-           <dcc:equipmentRef>item2</dcc:equipmentRef>
-           <dcc:ref>c3</dcc:ref>
-           <dcc:ref>sin</dcc:ref>
-           <dcc:ref>sout</dcc:ref>
-       </dcc:measuringSystem>
-       <dcc:measuringSystem measuringSystemId="refernece1">
-           <dcc:equipmentRef>ref1</dcc:equipmentRef>
+       <dcc:measuringSystem id="refernece1">
+           <dcc:equipmentRef equipmentItemRef="ref1"/>
+           <dcc:statementRef>meth2</dcc:statementRef>
        </dcc:measuringSystem>
    </dcc:measuringSystems>
    <dcc:measurementResults>
