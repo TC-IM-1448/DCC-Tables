@@ -207,6 +207,12 @@ DANer det nationale akkrediteringsorgan i Danmark i overensstemmelse med Europa-
 
 DANer omfattet af de multilaterale aftaler for prøvning, medicinsk undersøgelse, kalibrering, udbud af præstationsprøvning og produktion af referencematerialer i European co-operation for Accreditation (EA) og i International Laboratory Accreditation Cooperation (ILAC) baseret på peer-evaluering. Dette indebærer, at akkrediterede rapporter og certifikater udstedt af virksomheder akkrediteret af DANAK anerkendes på tværs af landegrænser af medlemmer i EA og ILAC på linje med rapporter og certifikater udstedt af disse medlemmers akkrediterede virksomheder.</dcc:body>
       </dcc:statement>
+      <dcc:statement id="accex" category="accreditationException">
+         <dcc:heading lang="en">Accreditation exception</dcc:heading>
+         <dcc:heading lang="da">Undtagelse fra akkreditering</dcc:heading>
+         <dcc:body lang="en">Calibration point 3 (120 µm) is not under accreditation.</dcc:body>
+         <dcc:body lang="da">Tredie kalibreringspunkt (120 µl) er ikke udført under akkreditering</dcc:body>
+      </dcc:statement>
       <dcc:statement id="meth1" category="method">
          <dcc:heading lang="en">Calibration method</dcc:heading>
          <dcc:heading lang="da">Kalibrering metode</dcc:heading>
@@ -294,6 +300,16 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
       <dcc:calibrationResult tableId="calRes0" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3" numRows='3' numCols='14'>
          <dcc:heading lang="en">New format of calibration data</dcc:heading>
          <dcc:heading lang="da">Kalibreringsresultat nyt format</dcc:heading>
+         <dcc:dataColumn dataCategoryRef="-" measurand="-" scope="-">
+            <dcc:heading lang="en">Customer Tags</dcc:heading>
+            <dcc:heading lang="da">Kundens kode</dcc:heading>
+            <dcc:unit>-</dcc:unit>
+            <dcc:rowTag>
+               <dcc:row idx="1">pt1</dcc:row>
+               <dcc:row idx="2">pt2</dcc:row> 
+               <dcc:row idx="3">pt3</dcc:row>
+           </dcc:rowTag>
+         </dcc:dataColumn>
          <dcc:dataColumn measurand="Volume" scope="indication">
             <dcc:heading lang="en">Item indication</dcc:heading>
             <dcc:heading lang="da">Emnets visning</dcc:heading>
@@ -404,27 +420,15 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
                 <dcc:row idx="3">1200</dcc:row>
             </dcc:targetValue>
          </dcc:dataColumn>
-         <dcc:metaDataColumn dataCategory="-" measurand="-" scope="-">
-            <dcc:heading lang="en">Customer Tags</dcc:heading>
-            <dcc:heading lang="da">Kundens kode</dcc:heading>
+         <dcc:dataColumn measurand="Volume" scope="reference">
+            <dcc:heading lang="en">Exception to accreditation</dcc:heading>
+            <dcc:heading lang="da">Undtagelse fra akkreditering</dcc:heading>
             <dcc:unit>-</dcc:unit>
-            <dcc:rowTag>
-               <dcc:row idx="1">pt1</dcc:row>
-               <dcc:row idx="2">pt2</dcc:row> 
-               <dcc:row idx="3">pt3</dcc:row>
-           </dcc:rowTag>
-         </dcc:metaDataColumn>
-         <dcc:metaDataColumn measurand="Volume" scope="reference">
-            <dcc:heading lang="en">Exception to statement</dcc:heading>
-            <dcc:heading lang="da">Undtagelse</dcc:heading>
-            <dcc:unit>-</dcc:unit>
-            <dcc:exceptionRef>
-                <dcc:row idx="1">s01</dcc:row> 
-                <dcc:row idx="2">s01 </dcc:row>
-                <dcc:row idx="3">s01</dcc:row>
-            </dcc:exceptionRef>
-         </dcc:metaDataColumn>
-         <dcc:metaDataColumn dataCategory="expandedUncertainty" measurand="-"  scope="-">
+            <dcc:accreditationExceptionRef>
+                <dcc:row idx="3">accex</dcc:row>
+            </dcc:accreditationExceptionRef>
+         </dcc:dataColumn>
+         <dcc:dataColumn dataCategoryRef="expandedUncertainty" measurand="-"  scope="-">
             <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
             <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
             <dcc:unit>-</dcc:unit>
@@ -433,8 +437,8 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
                 <dcc:row idx="2">2</dcc:row> 
                 <dcc:row idx="3">2</dcc:row>
             </dcc:uncertaintyCoverageFactor_k>
-         </dcc:metaDataColumn>
-         <dcc:metaDataColumn dataCategory="value" measurand="miscelaneous01" scope="environment">
+         </dcc:dataColumn>
+         <dcc:dataColumn dataCategoryRef="value" measurand="miscelaneous01" scope="environment">
             <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
             <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
             <dcc:unit>\one</dcc:unit>
@@ -443,8 +447,8 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
                 <dcc:row idx="2">meth3</dcc:row>
                 <dcc:row idx="3">meth3</dcc:row>
             </dcc:methodRef>
-         </dcc:metaDataColumn>
-         <dcc:metaDataColumn dataCategory="conformity" measurand="-" scope="bias">
+         </dcc:dataColumn>
+         <dcc:dataColumn dataCategoryRef="conformity" measurand="-" scope="bias">
             <dcc:heading lang="en">Conformaty status decision rule</dcc:heading>
             <dcc:heading lang="da">Grundlag for overensstemmelseserklæring</dcc:heading>
             <dcc:unit>-</dcc:unit>
@@ -453,8 +457,8 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
                 <dcc:row idx="2">conf1</dcc:row>
                 <dcc:row idx="3">conf1</dcc:row>
             </dcc:decisionRuleRef>
-         </dcc:metaDataColumn>
-         <dcc:metaDataColumn dataCategory="-" measurand="Volume" scope="bias">
+         </dcc:dataColumn>
+         <dcc:dataColumn dataCategoryRef="-" measurand="Volume" scope="bias">
             <dcc:heading lang="en">Data-series used for calculation of repeatability and systematic error</dcc:heading>
             <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed og systematisk fejl</dcc:heading>
             <dcc:unit>\one</dcc:unit>
@@ -463,7 +467,7 @@ covge factor k=2 which corresponds to a coverage probability of approximately 95
                 <dcc:row idx="2">ser12</dcc:row>
                 <dcc:row idx="3">ser13</dcc:row>
             </dcc:measurementSeriesRef>
-         </dcc:metaDataColumn>
+         </dcc:dataColumn>
       </dcc:calibrationResult>
 
       <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3" numRows='3' numCols='13'>
