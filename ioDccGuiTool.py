@@ -9,6 +9,7 @@ __ver__ = "DCC-EXCEL-GUI v. 0.0.1"
 #%%
 import os
 import re
+import base64
 import openpyxl as pyxl
 import xlwings as xw
 from  lxml import etree as et
@@ -24,27 +25,35 @@ LANG='da'
 DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
-HEADINGS = dict(statementHeadings = ['in DCC', '@category', '@statementId', 
-                            'heading[en]', 'body[en]', 
-                            'heading[da]', 'body[da]', 
+HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
+                            'heading[en]', 'heading[da]', 
+                            'body[en]', 'body[da]', 
                             'externalReference'],
 
-    equipmentHeadings = ['in DCC', '@equipId', '@category',
+    equipmentHeadings = ['in DCC', '@id', '@category',
                                 'heading[da]', 'heading[en]', 'manufacturer', 'productName', 'productType',
                                 'customer_id heading[en]', 'customer_id heading[da]','customer_id value', 
                                 'manufact_id heading[en]', 'manufact_id heading[da]','manufact_id value', 
                                 'calLab_id heading[en]', 'calLab_id heading[da]', 'calLab_id value'],
 
-    settingsHeadings = ['in DCC', '@settingId', '@refId', 
+    settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
                             'parameter', 'value', 'unit', 'softwareInstruction', 
-                            'heading[en]', 'body[en]', 
-                            'heading[da]', 'body[da]'],
+                            'heading[en]', 'heading[da]', 'body[en]', 'body[da]'
+                            ],
 
-    measuringSystemsHeadings = ['in DCC', '@measuringSystemId', 
-                                    'equipmentRefs', 'settingRefs', 'statementRefs', 
+    measuringSystemsHeadings = ['in DCC', '@id', 
+                                    'heading[en]', 'heading[da]', 
+                                    'equipmentRefs', 'settingRefs', 'statementRefs',
                                     'operationalStatus',
-                                    'heading[en]', 'body[en]', 
-                                    'heading[da]', 'body[da]'], 
+                                    'body[en]', 'body[da]'
+                                    ], 
+
+    embeddedFilesHeadings = ['in DCC', '@id', 
+                             'heading[da]', 
+                             'heading[en]',
+                             'body[da]',
+                             'body[en]',
+                             'fileExtension'],
 
     administrativeDataHeadings = [ "heading[en]", 
                                         "heading[da]", 
@@ -63,7 +72,7 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@category', '@statementId',
                                         '@numRows', 
                                         '@numCols'], 
 
-    columnHeading = ['metaDataCategory', 'scope', 'dataCategory', 'measurand', 'unit', 'heading[da]', 'heading[en]', 'idx \ dataType'])
+    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'measurand', 'unit', 'heading[da]', 'heading[en]', 'idx'])
 
 #%%
 class DccQuerryTool(): 
@@ -89,22 +98,40 @@ class DccQuerryTool():
         self.loadSchemaRestrictions()
         self.langs = ['da','en']
         wb.activate(steal_focus=True)
+        self.createEmbeddedFilesFolder(wb)
+
+    def createEmbeddedFilesFolder(self, wb):
+        wbpath = wb.fullname.replace(wb.name, '')
+        if not os.path.exists(wbpath+'embeddedFiles'):
+            os.mkdir(wbpath+'embeddedFiles')
+        self.embeddedFilesPath = wbpath+'embeddedFiles'+os.sep
 
     def loadSchemaFile(self, xsdFileName="dcc.xsd"):
         self.xsdTree, self.xsdRoot  = dcchf.load_xml(xsdFileName)
         
     def loadDCCFile(self, xmlFileName="SKH_10112_2.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
+        errors = dcchf.validate(xmlFileName, 'dcc.xsd')    
+        
+        for sht in self.wb.sheets: 
+            if not sht.name == "Definitions": sht.delete()
+        self.loadSchemaRestrictions()
+        self.loadDccSequence()
+        return errors
         
     def loadSchemaRestrictions(self): 
         xsd_root = self.xsdRoot
         sht_def = self.sheetDef
         drestr = dcchf.schema_get_restrictions(xsd_root)
+        rng = sht_def.range((1,3)).expand()
+        rng.clear()
         j = self.xsdDefInitCol
         for i, (k,vs) in enumerate(drestr.items()):
-            sht_def.range((1, i+j)).value = [k]
-            sht_def.range((2, i+j)).value = [[v] for v in vs]
-            sht_def.range((2,i+j)).expand('down').name = k  
+            rng = sht_def.range((1, i+j))
+            rng.value = [k]
+            rng.offset(1,0).value = [[v] for v in vs]
+            rng.expand('down').name = k  
+            rng.font.bold = True
         self.dccDefInitCol = i+1
 
     def resizeXlTable(self,rng,sht,tableName:str):
@@ -122,6 +149,35 @@ class DccQuerryTool():
         nodes = node.findall(searchStr, node.nsmap)
         if len(nodes) > 0: return nodes[0].text
         else: return None
+
+    def loadDccSequence(self):
+        self.loadDCCAdministrativeInformation(after='Definitions',
+                                              heading=HEADINGS['administrativeDataHeadings'])
+        
+        self.loadDccInfoTable(heading = HEADINGS['statementHeadings'], 
+                                nodeTag="dcc:statements",
+                                subNodeTag="dcc:statement",
+                                place_sheet_after='AdministrativeData')
+        
+        self.loadDccInfoTable(heading = HEADINGS['equipmentHeadings'], 
+                                nodeTag="dcc:equipment", 
+                                subNodeTag="dcc:equipmentItem",
+                                place_sheet_after='statements')
+        
+        self.loadDccInfoTable( heading = HEADINGS['settingsHeadings'], 
+                                nodeTag="dcc:settings", 
+                                subNodeTag="dcc:setting",
+                                place_sheet_after='equipment')
+        self.loadDccInfoTable( heading = HEADINGS['measuringSystemsHeadings'], 
+                                nodeTag="dcc:measuringSystems", 
+                                subNodeTag="dcc:measuringSystem",
+                                place_sheet_after='settings')
+        self.loadDccInfoTable( heading = HEADINGS['embeddedFilesHeadings'], 
+                                nodeTag="dcc:embeddedFiles", 
+                                subNodeTag="dcc:embeddedFile",
+                                place_sheet_after='measuringSystems')
+        self.loadDCCMeasurementResults(heading=HEADINGS['measurementResultHeadings'])
+
 
     def loadDccInfoTable(self, 
                          heading=['in DCC', '@category', '@statementId', 
@@ -167,7 +223,7 @@ class DccQuerryTool():
         # load the information into the table
         ids = []
         rows = node.findall(subNodeTag,ns)
-        issuerIdMap = {'owner_id':'owner', 'manufact_id': 'manufacturer', 'calLab_id': 'calibrationLaboratory'}
+        issuerIdMap = {'customer_id':'customer', 'manufact_id': 'manufacturer', 'calLab_id': 'calibrationLaboratory'}
         for idx, subNode in enumerate(rows):
             rowData = []
             for i, h in enumerate(heading):
@@ -195,32 +251,22 @@ class DccQuerryTool():
                     elif what.startswith('heading') or what.startswith('body'): 
                         rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subSubNode, what))
                     else:
-                        rowData.append(None)
-                elif nodeTag == "dcc:measuringSystems":
-                    try: 
-                        refs = subNode.findall('./dcc:ref',ns)
-                        refNodes = [dcchf.getNodeById(root, ref.text) for ref in refs]
-                        if h=='equipmentRefs': 
-                            # print("EquipmentRefs: ",refNodes)
-                            refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:equipmentItem"])
-                            rowData.append(refs)
-                        elif nodeTag == "dcc:measuringSystems" and h=='settingRefs': 
-                            refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:setting"])
-                            rowData.append(refs)
-                        elif nodeTag == "dcc:measuringSystems" and h=='statementRefs': 
-                            refs = " ".join([ref.text for ref,(tag,node) in zip(refs,refNodes) if tag == "dcc:statement"])
-                            rowData.append(refs)
-                        else: 
-                            nodes =  subNode.findall(f'./dcc:{h}', ns)
-                            if len(nodes)>0: rowData.append(nodes[0].text) 
-                            else: rowData.append(None)
-                    except: 
-                        rowData.append(None)
-                        
+                        rowData.append(None)   
                 else: 
                     nodes =  subNode.findall(f'./dcc:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text) 
                     else: rowData.append(None)
+                if nodeTag == "dcc:embeddedFiles" and h=="@id": 
+                    fileId = subNode.attrib[h.strip('@')]
+                    filePath = self.embeddedFilesPath+fileId
+                    fileData = subNode.find("dcc:fileContent", ns).text
+                    fileIsSaved = self.saveEmbeddedFileToFolder(filePath, fileData)
+                    cidx = len(heading)+1
+                    if fileId.split('.')[-1].lower() in ['png', 'emf', 'jpg'] and fileIsSaved:
+                        sht.pictures.add(filePath, name=fileId, anchor=sht.range((4+idx,1+cidx+idx)))
+                    sht.range((tblRowIdx+1+idx,cidx)).value = filePath
+                    sht.range((1,2)).column_width = 27
+
 
             rng = sht.range((tblRowIdx+1+idx,1))
             rng.value = rowData
@@ -243,17 +289,17 @@ class DccQuerryTool():
             rng = sht.range("Table_"+shtName+"['@category]")
             self.applyValidationToRange(rng, 'equipmentCategoryType')
             # Give a name to the equipmentId column
-            equipIdRng = wb.sheets['equipment'].range("Table_equipment['@equipId]")
+            equipIdRng = wb.sheets['equipment'].range("Table_equipment['@id]")
             equipIdRng.name = "equipIdRange"
         
         if shtName == "settings":
             #Apply equipmentId validator to the setting@refId column
-            rng = sht.range("Table_"+shtName+"['@refId]")
+            rng = sht.range("Table_"+shtName+"['@equipmentRef]")
             self.applyValidationToRange(rng, 'equipIdRange')
 
         if shtName == 'measuringSystems': 
             # Give a name to the measurementId column
-            measuringSysIdRng = sht.range("Table_"+shtName+"['@measuringSystemId]")
+            measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
             measuringSysIdRng.name = "measuringSystemIdRange"
             #Apply operationalStatus validator to the measuringSystems@operationalStatus column
             rng = sht.range("Table_"+shtName+"[operationalStatus]")
@@ -269,8 +315,19 @@ class DccQuerryTool():
             rng.api.Validation.Delete()
             rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
 
+    def saveEmbeddedFileToFolder(self, filepath, base64_string):
+        try:
+            image_bytes = base64.b64decode(base64_string)
 
-
+            with open(filepath, "wb") as img_file:
+                img_file.write(image_bytes)
+                
+            print(f"Image saved to {filepath}")
+            return True
+        except Exception as e:
+            print(f"Error decoding base64 string: {e}")
+            return False
+        
     def loadDCCMeasurementResults(self, heading=['tableId', 
                                                  'tableCategory', 
                                                  'serviceCategory', 
@@ -345,15 +402,19 @@ class DccQuerryTool():
                     else:
                         rng.value = None
 
+            rng = sht.range((1,2), (idx,2))
+            rng.color = self.colors["light_yellow"]
+            rng.api.Borders.Weight = 2 
+            
             colInitRowIdx = idx+2
             numRows = int(tbl.attrib['numRows'])
             numCols = int(tbl.attrib['numCols'])
 
             # Now load the columns
             columns = tbl.findall("dcc:column", ns)
-            columnHeading = ['metaDataCategory', 'scope', 'dataCategory', 'measurand', 'unit', 'headingLang1', 'headingLang2', 'idx \ dataType']
+            columnHeading = ['dataCategoryRef', 'scope', 'dataCategory', 'measurand', 'unit', 'heading[da]', 'heading[en]', 'idx']
             columnHeading = HEADINGS['columnHeading']
-            headingColors = ['light_gray', 'light_yellow', 'light_yellow', 'light_yellow', 'light_green', 'light_blue', 'light_blue', 'light_gray']
+            headingColors = ['yellow', 'yellow', 'light_yellow', 'green', 'light_green', 'light_blue', 'light_blue', 'light_gray']
             headingColors = [self.colors[k] for k in headingColors]
 
             sht.range((colInitRowIdx,1)).value = [[h] for h in columnHeading]
@@ -361,7 +422,7 @@ class DccQuerryTool():
             rng = sht.range((colInitRowIdx+len(columnHeading),1))
             rng.value = [[i+1] for i in range(numRows)]
             rng = rng.expand('down')
-            rng.color = headingColors[0]
+            rng.color = headingColors[-1] 
             rng.api.HorizontalAlignment = xw.constants.HAlign.xlHAlignCenter
 
             # 
@@ -371,6 +432,13 @@ class DccQuerryTool():
                 for k, a in col.attrib.items():
                     rowIdx = colInitRowIdx + columnHeading.index(k)
                     sht.range((rowIdx,cIdx)).value = a 
+
+                # insert the dataCategory. 
+                dataList = col.find('dcc:dataList',ns)
+                rowIdx = colInitRowIdx + columnHeading.index('dataCategory')
+                dataCategory = dcchf.rev_ns_tag(dataList.getchildren()[0])
+                dataCategory = dataCategory.replace("dcc:", "", 1)
+                sht.range((rowIdx,cIdx)).value = dataCategory 
 
                 # instert the unit
                 unit = col.find("dcc:unit",ns).text
@@ -385,18 +453,17 @@ class DccQuerryTool():
                         val = None
                     else:
                         val = elm.text
-                    rowIdx = colInitRowIdx + columnHeading.index(f'heading[{lang}]')+idx
+                    rowIdx = colInitRowIdx + columnHeading.index(f'heading[{lang}]')
                     sht.range(((rowIdx,cIdx))).value = val
-
 
 
                 # Insert the data 
                 rowIdx = colInitRowIdx + len(columnHeading) - 1
-                dataList = col.find('dcc:dataList',ns)
+                dataList = col.find('dcc:dataList',ns).getchildren()[0]
                 dataPoints = {int(pt.attrib['idx']): pt.text for pt in dataList}
                 if len(dataPoints) > 0:  
-                    dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcc:")
-                    sht.range((rowIdx,cIdx)).value = dataType
+                    # dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcc:")
+                    # sht.range((rowIdx,cIdx)).value = dataType
                     for k,v in dataPoints.items(): 
                         sht.range((rowIdx+k,cIdx)).value = v 
 
@@ -411,7 +478,8 @@ class DccQuerryTool():
                 idx = colInitRowIdx + i
                 rng = sht.range((idx,2)).expand('right')
                 rng.api.Validation.Delete()
-                formula = '='+columnHeading[i]+'Type'
+                formula = columnHeading[i] if not columnHeading[i][-3:] == "Ref" else 'dataCategory'
+                formula = '='+formula+'Type'
                 rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
 
             
@@ -442,6 +510,13 @@ class DccQuerryTool():
                 sht.range((line,3)).value = dcchf.rev_ns_tag(element).replace('dcc:','')
                 sht.range((line,3)).font.bold = True
                 line+=1
+                for k,v in element.attrib.items(): 
+                    sht.range((line,3)).value = "@"+k
+                    rng = sht.range((line,4))
+                    rng.value = str(v)
+                    rng.color = self.colors["light_yellow"]
+                    sht.range((line,5)).value = self.dccTree.getpath(element)
+                    line+=1
             if type(element.text)!=type(None): 
                 if dcchf.rev_ns_tag(element)!="dcc:heading": 
                     if not(element.text.startswith('\n')):
@@ -493,8 +568,8 @@ class DccQuerryTool():
         lineIdx = self.write_to_admin(sht, root, lineIdx,callab)
         respPers=adm.find("dcc:respPersons", ns)
         lineIdx = self.write_to_admin(sht, root, lineIdx,respPers)
-        core=adm.find("dcc:accreditation", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx, core)
+        accr=adm.find("dcc:accreditation", ns)
+        lineIdx = self.write_to_admin(sht, root, lineIdx, accr)
         cust=adm.find("dcc:customer", ns)
         lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
         rng = sht.range((1,1)).expand()
@@ -541,7 +616,7 @@ def exportToXmlFile(fileName='output.xml'):
                         nsmap=ns)
 
     # create the root element of the output tree  with attributes
-    exportRoot = elmMaker("digitalCalibrationCertificate", schemaVersion="2.0.0")
+    exportRoot = elmMaker("digitalCalibrationCertificate", schemaVersion="3.0.0")
     exportRoot.set("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation", myNameSpace+" dcc.xsd")
 
     wb = xw.Book('DCC_pipette_blank.xlsx')
@@ -552,6 +627,8 @@ def exportToXmlFile(fileName='output.xml'):
     colIdxXpath = adminHeading.index('XPath')+1
     rowInitXpath = 2
     rngXpath = adminSht.range((rowInitXpath,colIdxXpath)).expand('down')
+    rngDescription = adminSht.range((rowInitXpath,adminHeading.index('Description'))).expand('down')
+    descriptions = [c.value for c in rngDescription]
 
     def exportHeading(node, elmMaker, xlSheet, sheetHeading, rowIdx): 
         headingColIdxLang = [(idx, extractHeadingLang(h)) for idx,h in enumerate(sheetHeading) if h.startswith('heading[')]
@@ -590,23 +667,29 @@ def exportToXmlFile(fileName='output.xml'):
     if mainSignerNode != None: 
         mainSignerNode.text = mainSignerNode.text.lower()
 
+    
+
     # set TRUE/FALSE to true/false
-    measurementResultsNode = elmMaker("measurementResults", name="test")
-    exportRoot.append(measurementResultsNode)
 
     adminNode = exportRoot.find('./dcc:administrativeData', ns)
     print(adminNode)
     dcchf.print_node(exportRoot)
 
-    exportInfoTable(adminNode, elmMaker, wb, nodeName = 'statements')
-    exportEquipment(adminNode, elmMaker, wb)
-    exportInfoTable(adminNode, elmMaker, wb, nodeName = 'settings')
-    exportInfoTable(adminNode, elmMaker, wb, nodeName = 'measuringSystems')
-    msIdx = wb.sheet_names.index('measuringSystems')+1
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'statements')
+    exportEquipment(exportRoot, elmMaker, wb)
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'settings')
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'measuringSystems')
+    msIdx = wb.sheet_names.index('embeddedFiles')+1
+    measurementResultsNode = elmMaker('measurementResults')
+    exportRoot.append(measurementResultsNode)
     for tblId in wb.sheet_names[msIdx:]:
         print(tblId)
-        exportDataTable(exportRoot, elmMaker, wb, tblId)
+        exportDataTable(measurementResultsNode, elmMaker, wb, tblId)
     
+    efNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='embeddedFiles')
+    exportEmbeddedFiles(exportRoot, elmMaker, wb, efNode)
+
+    # measurementResultsNode = elmMaker("measurementResults", name="test")
 
     # write the XML to file with pretty print
     with open(fileName, 'wb') as f:
@@ -621,18 +704,47 @@ def exportSheetHeading(parentNode, sht, elmMaker):
     for i in range(1,3): 
         head = sht.range((i,1)).value
         lang = extractHeadingLang(head)
-        txt = sht.range((i,2)).value
+        txt = sht.range((i,2)).value if not sht.range((i,2)).value == None else "" 
         elm = elmMaker("heading", txt, lang=lang)
         parentNode.append(elm)
+
+def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
+    ns = exportRoot.nsmap
+    shtIdx = wb.sheet_names.index('embeddedFiles')
+    sht = wb.sheets[shtIdx]
+    
+    def encode_file_to_base64(file_path):
+        try:
+            with open(file_path, "rb") as img_file:
+                file_bytes = img_file.read()
+                base64_encoded = base64.b64encode(file_bytes).decode("utf-8")
+                return base64_encoded
+        except FileNotFoundError:
+            print(f"Error: File '{file_path}' not found.")
+            return None
+
+    tbl = sht.tables['Table_embeddedFiles']      
+    rng_header = tbl.data_body_range
+    nrow, ncols = rng_header.shape
+    print(rng_header.shape)
+    dcchf.print_node(embeddedFilesNode)
+
+    for i, efn in enumerate(embeddedFilesNode.findall("./dcc:embeddedFile",ns)): 
+        filepath = sht.range((4+i,ncols+1)).value
+        print(f"loading file: {filepath}")
+        base64str = encode_file_to_base64(filepath)
+        node = elmMaker('fileContent',base64str)
+        efn.append(node)
+
 
 def exportEquipment(adminNode, elmMaker,wb): 
     ns = adminNode.nsmap
     shtIdx = wb.sheet_names.index('equipment')
     sht = wb.sheets[shtIdx]
-    statementsNode = elmMaker.statements()
+    equipmentNode = elmMaker.equipment()
 
-    exportSheetHeading(statementsNode, sht, elmMaker)
-    ns = statementsNode.nsmap
+    exportSheetHeading(equipmentNode, sht, elmMaker)
+    ns = equipmentNode.nsmap
     tbl = sht.tables['Table_equipment']
     rng = tbl.data_body_range
     rng_header = tbl.header_row_range
@@ -658,7 +770,9 @@ def exportEquipment(adminNode, elmMaker,wb):
                     elm = elmMaker('body', str(row[i]),lang=lang)
                     node.append(elm)
                 elif len(h.split('_id ')) > 1: 
-                    issuer, what = h.split('_id')
+                    issuer, what = h.split('_id ')
+                    if issuer.startswith('manufac'): issuer = 'manufacturer'
+                    if issuer.startswith('calLab'): issuer = 'calibrationLaboratory'
                     idNode = node.find(f'./dcc:identification[@issuer="{issuer}"]', ns)
                     if idNode is None:
                         idNode = elmMaker('identification',issuer=issuer)
@@ -673,8 +787,8 @@ def exportEquipment(adminNode, elmMaker,wb):
                         idNode.append(elm)
                 else: 
                     elm = elmMaker(h,str(row[i]))
-        statementsNode.append(node)
-    adminNode.append(statementsNode)
+        equipmentNode.append(node)
+    adminNode.append(equipmentNode)
 
 def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'): 
     shtIdx = wb.sheet_names.index(nodeName)
@@ -712,6 +826,7 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
                 node.append(elm)
         statementsNode.append(node)
     adminNode.append(statementsNode)
+    return statementsNode
 
 def exportDataTable(parentNode, elmMaker, wb, tableId): 
     shtIdx = wb.sheet_names.index(tableId)
@@ -760,21 +875,44 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     colAttrValues = [c.value for c in colAttrRange]
     colData = [c.value for c in colDataRange]
     colIndex = [int(c.value) for c in colIndexRange]
+
+    colHeadDict = dict(zip(colAttrNames,colAttrValues))
+
+    colAttrKeys = ['scope', 'dataCategoryRef', 'measurand'] 
+    colAttr = {k: colHeadDict[k] for k in colAttrKeys}
+    # colNode = elmMaker('column', **dict(zip(colAttrNames[:4], colAttrValues[:4])))
+    colNode = elmMaker('column', **colAttr)
+
+    colHeadingDict = {k: colHeadDict[k] for k in colAttrNames if k.startswith('heading')}
+    for k,v in colHeadingDict.items():
+        lang = extractHeadingLang(k)
+        elm = elmMaker('heading', v,lang=lang)
+        colNode.append(elm)
+    # I AM HERE
+    unitNode = elmMaker('unit', colHeadDict['unit'])
+    colNode.append(unitNode)
+
     # print(colAttrNames)
     # print(colAttrValues)
     # print(colHeading)
     # print(colIndex)
     # print(colData)
     # print(len(colData))
-    colNode = elmMaker('column', **dict(zip(colAttrNames[:4], colAttrValues[:4])))
-    dataType = colAttrValues[-1]
-    typecast = typecast_dict[dataType]
+    # dataType = colAttrValues[-1]
+    # typecast = typecast_dict[dataType]
     dataList = elmMaker('dataList')
+    dataCategoryNode = elmMaker(colHeadDict['dataCategory'])
+    dataList.append(dataCategoryNode)
+    
+
+
+    
     for i, data in enumerate(colData):
         txt = str(data)
         # print(txt)
-        elm = elmMaker(dataType, txt, idx=str(colIndex[i]))
-        dataList.append(elm)
+        # elm = elmMaker(dataType, txt, idx=str(colIndex[i]))
+        elm = elmMaker('row', txt, idx=str(colIndex[i]))
+        dataCategoryNode.append(elm)
     colNode.append(dataList)
     parentNode.append(colNode)
 
@@ -835,28 +973,7 @@ class MainApp(tk.Tk):
         button3.pack(pady=10)
 
     def loadDCCsequence(self):
-        self.queryTool.loadDCCAdministrativeInformation(after='Definitions',
-                                                        heading=HEADINGS['administrativeDataHeadings'])
-        
-        self.queryTool.loadDccInfoTable(heading = HEADINGS['statementHeadings'], 
-                                        nodeTag="dcc:statements",
-                                        subNodeTag="dcc:statement",
-                                        place_sheet_after='AdministrativeData')
-        
-        self.queryTool.loadDccInfoTable(heading = HEADINGS['equipmentHeadings'], 
-                                        nodeTag="dcc:equipment", 
-                                        subNodeTag="dcc:equipmentItem",
-                                        place_sheet_after='statements')
-        
-        self.queryTool.loadDccInfoTable( heading = HEADINGS['settingsHeadings'], 
-                                        nodeTag="dcc:settings", 
-                                        subNodeTag="dcc:setting",
-                                        place_sheet_after='equipment')
-        self.queryTool.loadDccInfoTable( heading = HEADINGS['measuringSystemsHeadings'], 
-                                        nodeTag="dcc:measuringSystems", 
-                                        subNodeTag="dcc:measuringSystem",
-                                        place_sheet_after='settings')
-        self.queryTool.loadDCCMeasurementResults(heading=HEADINGS['measurementResultHeadings'])
+        self.queryTool.loadDccSequence()
 
 
     def loadExcelBook(self):
@@ -873,13 +990,11 @@ class MainApp(tk.Tk):
 
     def loadDCC(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
-        for sht in self.queryTool.wb.sheets: 
-            if not sht.name == "Definitions": sht.delete()
-        self.queryTool.loadDCCFile(file_path)
-        # print(f"Label is: {self.label1['text']}")
-        dcchf.validate(file_path, 'dcc.xsd')    
-        self.loadDCCsequence()
-        self.label2.config(text=file_path)
+        errors = self.queryTool.loadDCCFile(file_path)
+        if not errors: 
+            self.label2.config(text=file_path)
+        else: 
+            self.label2.config(text="File does not validate!")
         
     def exportDCC(self):
         self.label2.config(text="EXPORTING!")
