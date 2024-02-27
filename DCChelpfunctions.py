@@ -166,16 +166,19 @@ def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
     return returntable
     
 #%%
-def match_column_attributes(att,searchatt, unit="-", searchunit='*'):
+def match_column_attributes(att,searchatt, dataCategory, searchDataCategory, unit="-", searchunit='*'):
     for key in att.keys():
         if att[key]!='-' and searchatt[key]!='*' and att[key]!=searchatt[key]:
             return False
     if unit!='-' and searchunit!='*' and unit!=searchunit:
         return False
+    if dataCategory!='-' and searchDataCategory!='*' and searchDataCategory!=searchunit:
+        return False
     return True
 
 
-def getColumnsFromTable(table,searchattributes, searchunit="") -> list:
+
+def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchunit="") -> list:
     #INPUT: xml-element of type dcc:table
     #INPUT: attribute dictionary
     #INPUT: searchunit as string.
@@ -186,8 +189,9 @@ def getColumnsFromTable(table,searchattributes, searchunit="") -> list:
         unit=""
         if type(col.find('dcc:unit',ns)) !=type(None):
             unit=col.find('dcc:unit',ns).text
+        dataCategory=rev_ns_tag(col.find('dcc:dataList',ns)[0]).replace("dcc:","")
         #if col.attrib==searchattributes and searchunit==unit:
-        if match_column_attributes(col.attrib, searchattributes,unit,searchunit):
+        if match_column_attributes(col.attrib, searchattributes, dataCategory, searchDataCategory, unit,searchunit):
             cols.append(col)
             #return col
     if len(cols)==0: 
@@ -233,7 +237,7 @@ def rowTagsToIndexs(rowTagColumn: et._Element) -> dict:
     return {v: k for k, v in rowTags.items()}
 
 #%%
-def search(root, tableAttrib, colAttrib, unit, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
+def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
     """
     INPUT: 
     root: etree root element of the DCC
@@ -263,7 +267,7 @@ def search(root, tableAttrib, colAttrib, unit, tableType="dcc:calibrationResult"
         tbl = tbls[0]
         try:
             """Find the rigt column using attributes and unit"""
-            cols=getColumnsFromTable(tbl,colAttrib,unit)
+            cols=getColumnsFromTable(tbl,colAttrib,dataCategory, unit)
             if len(cols) != 1: 
                 raise Exception("Found multiple columns - search should be unique")
             col = cols[0]

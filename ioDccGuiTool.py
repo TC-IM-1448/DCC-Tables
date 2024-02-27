@@ -5,7 +5,7 @@
 # https://docs.xlwings.org/en/stable/syntax_overview.html 
 # https://docs.xlwings.org/en/latest/ 
 #%%
-__ver__ = "DCC-EXCEL-GUI v. 0.0.1"
+__ver__ = "DCC-EXCEL-GUI v. 0.0.2"
 #%%
 import os
 import re
@@ -607,7 +607,7 @@ def extractHeadingLang(s):
         return re.findall(r'\[(.*?)\]', s)
 #%%    
 
-def exportToXmlFile(fileName='output.xml'):
+def exportToXmlFile(wb, fileName='output.xml'):
     # create an ElementMaker instance with multiple namespaces
     myNameSpace = DCC.strip('{}')
     ns = {'dcc': 'https://dfm.dk',
@@ -619,7 +619,7 @@ def exportToXmlFile(fileName='output.xml'):
     exportRoot = elmMaker("digitalCalibrationCertificate", schemaVersion="3.0.0")
     exportRoot.set("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation", myNameSpace+" dcc.xsd")
 
-    wb = xw.Book('DCC_pipette_blank.xlsx')
+    # wb = xw.Book('DCC_pipette_blank.xlsx')
     
     adminSht = wb.sheets['administrativeData']
     adminHeading = HEADINGS['administrativeDataHeadings']
@@ -634,8 +634,9 @@ def exportToXmlFile(fileName='output.xml'):
         headingColIdxLang = [(idx, extractHeadingLang(h)) for idx,h in enumerate(sheetHeading) if h.startswith('heading[')]
         headingText = [(xlSheet.range((rowIdx,idx+1)).value, lang) for idx, lang in headingColIdxLang]
         for txt,lang in headingText:
-            elm = elmMaker("heading", txt, lang=lang)
-            node.append(elm)
+            if not txt == None:
+                elm = elmMaker("heading", txt, lang=lang)
+                node.append(elm)
 
     def add_subtree(root, xpath_list: list):
         for idx, xpath in enumerate(xpath_list):
@@ -652,9 +653,10 @@ def exportToXmlFile(fileName='output.xml'):
                     current_node.append(next_node)
                 elif next_node is None:
                     tag = node.replace('dcc:','')
-                    # print(f'tag is: {tag}  data:{data} ', current_node)
-                    next_node = elmMaker(tag, data)
-                    current_node.append(next_node)
+                    print(f'tag is: {tag}  data:{data} ', current_node)
+                    if not data == None:
+                        next_node = elmMaker(tag, data)
+                        current_node.append(next_node)
                 current_node = next_node
             if adminSht.range((rowIdx,colIdxXpath-2)).font.bold :
                 exportHeading(current_node, elmMaker, adminSht, adminHeading, rowIdx) 
@@ -803,12 +805,12 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
     headings = rng_header.value
     nrow, ncols = rng.shape
     tbl_data = rng.value
-    # print(rng.value) 
-    for row in tbl_data: 
+    if nrow == 1: 
+        tbl_data = [tbl_data]
+    for row in tbl_data:
         if row[0].startswith('y'):
             a = {h[1:]:  row[i] for i,h in enumerate(headings) if h.startswith('@')}
             a = {k:v for k,v in a.items() if v != None}
-            # print(a)
             node = elmMaker(nodeName[:-1], **a)
             for i, h in enumerate(headings):
                 if i == 0 or row[i] == None: 
@@ -873,7 +875,7 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     
     colAttrNames = [c.value for c in colAttrNameRange]
     colAttrValues = [c.value for c in colAttrRange]
-    colData = [c.value for c in colDataRange]
+    colData = [c.api.Text for c in colDataRange]
     colIndex = [int(c.value) for c in colIndexRange]
 
     colHeadDict = dict(zip(colAttrNames,colAttrValues))
@@ -885,9 +887,10 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
 
     colHeadingDict = {k: colHeadDict[k] for k in colAttrNames if k.startswith('heading')}
     for k,v in colHeadingDict.items():
-        lang = extractHeadingLang(k)
-        elm = elmMaker('heading', v,lang=lang)
-        colNode.append(elm)
+        if not v == None:
+            lang = extractHeadingLang(k)
+            elm = elmMaker('heading', v,lang=lang)
+            colNode.append(elm)
     # I AM HERE
     unitNode = elmMaker('unit', colHeadDict['unit'])
     colNode.append(unitNode)
@@ -908,11 +911,12 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
 
     
     for i, data in enumerate(colData):
-        txt = str(data)
-        # print(txt)
-        # elm = elmMaker(dataType, txt, idx=str(colIndex[i]))
-        elm = elmMaker('row', txt, idx=str(colIndex[i]))
-        dataCategoryNode.append(elm)
+        if not data == "":
+            txt = str(data)
+            # print(txt)
+            # elm = elmMaker(dataType, txt, idx=str(colIndex[i]))
+            elm = elmMaker('row', txt, idx=str(colIndex[i]))
+            dataCategoryNode.append(elm)
     colNode.append(dataList)
     parentNode.append(colNode)
 
@@ -997,9 +1001,11 @@ class MainApp(tk.Tk):
             self.label2.config(text="File does not validate!")
         
     def exportDCC(self):
+        # file_path = tkfd.asksaveasfilename(initialdir=os.getcwd())
+        file_path = "output.xml"
         self.label2.config(text="EXPORTING!")
-        exportToXmlFile('output.xml')
-        self.label2.config(text="exported to: output.xml")
+        exportToXmlFile(self.queryTool.wb, file_path)
+        self.label2.config(text=f"exported to: {file_path}")
         
 # if __name__ == "__main__":
 
