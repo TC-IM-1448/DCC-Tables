@@ -937,8 +937,8 @@ class MainApp(tk.Tk):
         # self.configure(background='white')
         # self.bind()
         # self.bindVirtualEvents()
-        uiExcelFileName = 'DCC_UI_blank.xlsx'
         uiExcelFileName = 'DCC_pipette_blank.xlsx'
+        uiExcelFileName = 'DCC_UI_blank.xlsx'
         self.queryTool.loadExcelWorkbook(workBookFilePath=uiExcelFileName)
         # self.label1.config(text='DCC_pipette_blank.xlsx')
         self.label1.config(text=uiExcelFileName)
