@@ -726,7 +726,7 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
             return None
 
     tbl = sht.tables['Table_embeddedFiles']      
-    rng_header = tbl.data_body_range
+    rng_header = tbl.data_body_range  #xlwings function
     nrow, ncols = rng_header.shape
     print(rng_header.shape)
     dcchf.print_node(embeddedFilesNode)
@@ -803,30 +803,31 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
     rng = tbl.data_body_range
     rng_header = tbl.header_row_range
     headings = rng_header.value
-    nrow, ncols = rng.shape
-    tbl_data = rng.value
-    if nrow == 1: 
-        tbl_data = [tbl_data]
-    for row in tbl_data:
-        if row[0].startswith('y'):
-            a = {h[1:]:  row[i] for i,h in enumerate(headings) if h.startswith('@')}
-            a = {k:v for k,v in a.items() if v != None}
-            node = elmMaker(nodeName[:-1], **a)
-            for i, h in enumerate(headings):
-                if i == 0 or row[i] == None: 
-                    continue
-                if h.startswith('@'):
-                    continue
-                elif h.startswith('heading['): 
-                    lang = extractHeadingLang(h)
-                    elm = elmMaker('heading', str(row[i]),lang=lang)
-                elif h.startswith('body['):
-                    lang = extractHeadingLang(h)
-                    elm = elmMaker('body', str(row[i]),lang=lang)
-                else: 
-                    elm = elmMaker(h,str(row[i]))
-                node.append(elm)
-        statementsNode.append(node)
+    if rng != None: 
+        nrow, ncols = rng.shape
+        tbl_data = rng.value
+        if nrow == 1: 
+            tbl_data = [tbl_data]
+        for row in tbl_data:
+            if row[0].startswith('y'):
+                a = {h[1:]:  row[i] for i,h in enumerate(headings) if h.startswith('@')}
+                a = {k:v for k,v in a.items() if v != None}
+                node = elmMaker(nodeName[:-1], **a)
+                for i, h in enumerate(headings):
+                    if i == 0 or row[i] == None: 
+                        continue
+                    if h.startswith('@'):
+                        continue
+                    elif h.startswith('heading['): 
+                        lang = extractHeadingLang(h)
+                        elm = elmMaker('heading', str(row[i]),lang=lang)
+                    elif h.startswith('body['):
+                        lang = extractHeadingLang(h)
+                        elm = elmMaker('body', str(row[i]),lang=lang)
+                    else: 
+                        elm = elmMaker(h,str(row[i]))
+                    node.append(elm)
+            statementsNode.append(node)
     adminNode.append(statementsNode)
     return statementsNode
 
