@@ -434,9 +434,9 @@ class DccQuerryTool():
                     sht.range((rowIdx,cIdx)).value = a 
 
                 # insert the dataCategory. 
-                dataList = col.find('dcc:dataList',ns)
+                # dataList = col.find('dcc:dataList',ns)
                 rowIdx = colInitRowIdx + columnHeading.index('dataCategory')
-                dataCategory = dcchf.rev_ns_tag(dataList.getchildren()[0])
+                dataCategory = dcchf.rev_ns_tag(col.getchildren()[-1])
                 dataCategory = dataCategory.replace("dcc:", "", 1)
                 sht.range((rowIdx,cIdx)).value = dataCategory 
 
@@ -459,7 +459,7 @@ class DccQuerryTool():
 
                 # Insert the data 
                 rowIdx = colInitRowIdx + len(columnHeading) - 1
-                dataList = col.find('dcc:dataList',ns).getchildren()[0]
+                dataList = col.getchildren()[-1]
                 dataPoints = {int(pt.attrib['idx']): pt.text for pt in dataList}
                 if len(dataPoints) > 0:  
                     # dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcc:")
@@ -903,9 +903,9 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     # print(len(colData))
     # dataType = colAttrValues[-1]
     # typecast = typecast_dict[dataType]
-    dataList = elmMaker('dataList')
+    # dataList = elmMaker('dataList')
     dataCategoryNode = elmMaker(colHeadDict['dataCategory'])
-    dataList.append(dataCategoryNode)
+    # dataList.append(dataCategoryNode)
     
 
 
@@ -917,7 +917,8 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
             # elm = elmMaker(dataType, txt, idx=str(colIndex[i]))
             elm = elmMaker('row', txt, idx=str(colIndex[i]))
             dataCategoryNode.append(elm)
-    colNode.append(dataList)
+    # colNode.append(dataList)
+    colNode.append(dataCategoryNode)
     parentNode.append(colNode)
 
 # exportToXmlFile()    
