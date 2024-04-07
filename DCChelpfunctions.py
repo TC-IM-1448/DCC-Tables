@@ -167,12 +167,13 @@ def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
     
 #%%
 def match_column_attributes(att,searchatt, dataCategory, searchDataCategory, unit="-", searchunit='*'):
+    # print(f"On Column with: {att}, {dataCategory}, {unit}")
     for key in att.keys():
         if att[key]!='-' and searchatt[key]!='*' and att[key]!=searchatt[key]:
             return False
     if unit!='-' and searchunit!='*' and unit!=searchunit:
         return False
-    if dataCategory!='-' and searchDataCategory!='*' and searchDataCategory!=searchunit:
+    if dataCategory!='-' and searchDataCategory!='*' and dataCategory!=searchDataCategory:
         return False
     return True
 
@@ -182,21 +183,22 @@ def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchuni
     #INPUT: xml-element of type dcc:table
     #INPUT: attribute dictionary
     #INPUT: searchunit as string.
-    #OUTPUT: xml-element of type dcc:column
+    #OUTPUT: list of xml-element of type dcc:column
     ns = table.nsmap
     cols=[]
+    # print(f"searching for: {searchattributes}, {searchDataCategory}, {searchunit}")
     for col in table.findall('dcc:column',ns):
         unit=""
         if type(col.find('dcc:unit',ns)) !=type(None):
             unit=col.find('dcc:unit',ns).text
-        dataCategory=rev_ns_tag(col.find('dcc:dataList',ns)[0]).replace("dcc:","")
+        dataCategory=rev_ns_tag(col.getchildren()[-1]).replace("dcc:","")
         #if col.attrib==searchattributes and searchunit==unit:
         if match_column_attributes(col.attrib, searchattributes, dataCategory, searchDataCategory, unit,searchunit):
             cols.append(col)
             #return col
     if len(cols)==0: 
         raise ValueError("No column found with the required attributes")
-        return None
+        return []
     return cols
 
 
@@ -204,8 +206,8 @@ def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchuni
 def getRowData(column: et._Element, search_idxs=[]) -> list:
     # Iterate through the tags to find the row number of the specified tag
     search_idxs = list(map(str, search_idxs))
-    dataList = column.find('dcc:dataList', column.nsmap).getchildren()
-    dataType = rev_ns_tag(dataList[0])
+    dataList = column.getchildren()[-1]
+    dataType = rev_ns_tag(dataList)
     dataList = {row.attrib['idx']: row.text for row in dataList}
     if search_idxs == []:
         search_idxs = dataList.keys()
@@ -225,7 +227,9 @@ def getRowData(column: et._Element, search_idxs=[]) -> list:
 
 #%%
 def getRowTagColumns(tbl) -> list: 
-    return tbl.findall("./dcc:column[@metaDataCategory='rowTag']",tbl.nsmap)
+    # return tbl.findall("./dcc:column[@dataCategory='rowTag']",tbl.nsmap)
+    tagCols =  [c.getparent() for c in tbl.findall("*/dcc:rowTag",tbl.nsmap)]
+    return tagCols
 
 def getRowTagsFromRowTagColumn(col: et._Element) -> dict:
     rowTags = {elm.attrib["idx"]: elm.text for elm in col.findall(".//*[@idx]")}
@@ -261,16 +265,19 @@ def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:cali
     try:
         """Find the right table using measuringSystemRef and tableId"""
         tbls=getTables(root, tableAttrib, tableType)
-        print(tbls)
+        # print(tbls)
         if len(tbls) != 1: 
                 raise Exception("Found multiple columns - search should be unique")
         tbl = tbls[0]
+        print(tbl.attrib['tableId'])
         try:
             """Find the rigt column using attributes and unit"""
             cols=getColumnsFromTable(tbl,colAttrib,dataCategory, unit)
+            # print(cols)
             if len(cols) != 1: 
                 raise Exception("Found multiple columns - search should be unique")
             col = cols[0]
+            # print(col.attrib)
             try:
                 """Convert rowTags to index's - checks for uniquenes of rowTag column"""
                 if rowTags!=[]: 
@@ -303,7 +310,7 @@ def get_statements(root, ID='*') -> list:
     statements=root.findall(".//dcc:statement", ns)
     returnstatement=[]
     for statement in statements:
-        if ID==statement.attrib['statementId'] or ID=='*':
+        if ID==statement.attrib['id'] or ID=='*':
             returnstatement.append(statement)
     return returnstatement
 
@@ -315,10 +322,10 @@ def get_measuringSystems(root, ID='*',lang='en', show=False) -> list:
     items = root.findall(".//dcc:measuringSystem",ns)
     returnitem = []
     for item in items:
-        if ID==item.attrib['measuringSystemId'] or ID=='*':
+        if ID==item.attrib['id'] or ID=='*':
             returnitem.append(item)
             if show:
-                print('------------'+item.attrib['measuringSystemId']+'------------')
+                print('------------'+item.attrib['id']+'------------')
                 for heading in item.findall("dcc:heading",ns):
                     if heading.attrib['lang']==lang:
                         print(heading.text)
@@ -337,10 +344,10 @@ def get_setting(root, settingId='*', lang='en', show=False) -> list:
     returnsetting=[]
     settings=settings = root.find("dcc:administrativeData/dcc:settings",ns)
     for setting in settings:
-        if settingId==setting.attrib['settingId'] or settingId=='*':
+        if settingId==setting.attrib['id'] or settingId=='*':
             returnsetting.append(setting)
             if show:
-                print('---------------'+setting.attrib['settingId']+'-------------')
+                print('---------------'+setting.attrib['id']+'-------------')
                 for heading in setting.findall("dcc:heading",ns):
                     if heading.attrib['lang']==lang:
                         print(heading.text)
@@ -539,24 +546,32 @@ def print_node(node):
 if False: 
     #%%
     tree, root = load_xml("SKH_10112_2.xml")
-    dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="M/FF-9.10.3")
+    dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="*")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(dataCategory="value", measurand="Volume", metaDataCategory="data", scope="reference")
-    col = getColumnsFromTable(tbl,dcol,searchunit="*")[0]
+    dcol = dict(measurand="Volume", dataCategoryRef="*", scope="reference")
+    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="\micro\litre")[0]
     print(col)
     print_node(col)
-    rowtag = "p5"
+    rowtag = "1"
     idxs = [1,3]
     search_data = getRowData(col, idxs)
     print("Search_data:  ", search_data)
 
-    search_result = search(root, dtbl, dcol, "\micro\litre", tableType="dcc:calibrationResult")
+    tagCols = getRowTagColumns(tbl)
+    print(tagCols)
+
+    print(getRowTagsFromRowTagColumn(tagCols[0]))
+    print(rowTagsToIndexs(tagCols[0]))
+
+
+    #%%
+    search_result = search(root, dtbl, dcol, "value", "\micro\litre", tableType="dcc:calibrationResult")
     print("SEARCH RESULT for Column: ", search_result)
 
-    search_result = search(root, dtbl, dcol, "\micro\litre", rowTags=['pt1','pt3'] ,idxs=[1,2])
+    search_result = search(root, dtbl, dcol, "value", "\micro\litre", rowTags=['pt1','pt3'] ,idxs=[1,2])
     print("SEARCH RESULT for specific Rows", search_result)
 
     print("----------------------GET MeasuringSystem----------------")

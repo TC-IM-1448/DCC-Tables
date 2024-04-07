@@ -23,7 +23,7 @@ class DccQuerryTool():
     mapperHeading =['Client DB ref', 'client description', 'queryType', 
                     'xpath', 
                     'measuringSystemRef', 'serviceCategory', 'tableId', 
-                    'metaDataCategory', 'scope', 'DataCategory', 'measurand', 'unit', 'customerTag', 
+                    'scope', 'dataCategory', 'dataCategoryRef', 'measurand', 'unit', 'customerTag', 
                     'query result']
     xsdDefInitCol = 3  
     def loadExcelWorkbook(self, workBookFilePath: str):
@@ -54,11 +54,11 @@ class DccQuerryTool():
             sht_def.range((2,i+j)).expand('down').name = k  
         self.dccDefInitCol = j+i+1
         
-        j = self.mapperHeading.index('metaDataCategory')+1
+        j = self.mapperHeading.index('scope')+1
 
         # Apply validators in the mapping sheet
         sht = self.sheetMap
-        for r in ['metaDataCategoryType', 'scopeType','dataCategoryType', 'measurandType']: 
+        for r in ['scopeType','dataCategoryType', 'dataCategoryType', 'measurandType']: 
             rng = sht.range((2,j),(1024,j))
             rng.api.Validation.Delete()
             fml = "="+r
@@ -72,13 +72,13 @@ class DccQuerryTool():
         sht_map = self.sheetMap
 
         i = self.dccDefInitCol
-        statementIds = [elm.attrib['statementId'] for elm in dcchf.get_statements(root)]
+        statementIds = [elm.attrib['id'] for elm in dcchf.get_statements(root)]
         sht_def.range((1,i)).value = 'statementId'
         sht_def.range((2,i)).value = [[s] for s in statementIds]
         sht_def.range((2,i)).expand('down').name = 'statementId' 
         
         i+=1 
-        msucIds = [elm.attrib['measuringSystemId'] for elm in dcchf.get_measuringSystems(root)]
+        msucIds = [elm.attrib['id'] for elm in dcchf.get_measuringSystems(root)]
         sht_def.range((1,i)).value = 'measuringSystemId'
         sht_def.range((2,i)).value = [[ms] for ms in msucIds]
         sht_def.range((2,i)).expand('down').name = 'measuringSystemId'
@@ -117,16 +117,17 @@ class DccQuerryTool():
         vals = sht.range("A1").expand("down").value
         [print(v) for v in vals]
         n_rows = vals.index("--END--")+1
+        # queryParam = sht.range((2,1),(n_rows-1,len(self.mapperHeading))).value
         print(n_rows)
 
-        for i in range(1, n_rows):
+        for i in range(2, n_rows+1):
             queryType = sht.range((i,3)).value
             cidxQueryResult = self.mapperHeading.index('query result')+1
             data_val = None
             if queryType == 'xpath':
                 xpath_str = sht.range((i,4)).value
                 val = dcchf.xpath_query(root, xpath_str)
-                print(vals[i-1], queryType, val)
+                print(vals[i-2], queryType, val)
                 if len(val)>0:
                     data_val = val[0].text
                 else:
@@ -135,16 +136,18 @@ class DccQuerryTool():
                 cidx = self.mapperHeading.index("measuringSystemRef")+1
                 dtbl = dict(zip(["measuringSystemRef", "serviceCategory", "tableId"], sht.range((i,cidx),(i,cidx+3)).value))
                 dtbl = {k:v for k,v in dtbl.items() if v != None}
-                dcol = dict(zip(["metaDataCategory", "scope", "dataCategory","measurand"], sht.range((i,cidx+3), (i,cidx+3+4)).value))
+                dcol = dict(zip(["scope", "dataCategoryRef", "measurand"], [sht.range((i,cidx+3)).value]+sht.range((i,cidx+3+2), (i,cidx+3+4)).value))
                 dcol = {k:v for k,v in dcol.items() if v != None}
+                dataCategory = sht.range((i,cidx+3+1)).value
+
                 cidxUnit = self.mapperHeading.index('unit')+1
                 unit = sht.range((i,cidxUnit)).value
                 customerTag = sht.range((i,cidxUnit+1)).value
                 if customerTag is None:
-                    data = search(root, dtbl, dcol, unit)
+                    data = search(root, dtbl, dcol, dataCategory, unit)
                 else: 
-                    data = search(root, dtbl, dcol, unit, rowTags=[customerTag])
-                print(dtbl, dcol, unit, customerTag, ":", data)
+                    data = search(root, dtbl, dcol, dataCategory, unit, rowTags=[customerTag])
+                print(dtbl, dcol, dataCategory, unit, customerTag, ":", data)
                 if len(data) == 0 : 
                     data_val = "ERROR not Found"
                 else:
@@ -155,93 +158,6 @@ class DccQuerryTool():
                 # sht[f"M{i}"].value = data_val
 
 
-
-#%%
-# if False: 
-#     xsd_tree, xsd_root  = dcchf.load_xml("dcc.xsd")
-#     tree, root = dcchf.load_xml("SKH_10112_2.xml")
-#     wb = xw.Book('SKH_10112_2_Mapping.xlsx')
-#     sht = wb.sheets['Mapping']
-#     sht_def = wb.sheets['Definitions']
-
-#     #%% Load schema definitions 
-#     drestr = dcchf.schema_get_restrictions(xsd_root)
-#     for i, (k,vs) in enumerate(drestr.items()):
-#         sht_def.range((1, i+3)).value = [k]
-#         sht_def.range((2, i+3)).value = [[v] for v in vs]
-#         sht_def.range((2,i+3)).expand('down').name = k  
-        
-#     #%% Get DCC attribute names and set Validators for tables and measuringSystems
-#     xlValidateList = xw.constants.DVType.xlValidateList
-#     statementIds = [elm.attrib['statementId'] for elm in dcchf.get_statements(root)]
-#     sht_def.range((1,i+4)).value = 'statementId'
-#     sht_def.range((2,i+4)).value = [[s] for s in statementIds]
-#     sht_def.range((2,i+4)).expand('down').name = 'statementId'  
-
-#     msucIds = [elm.attrib['measuringSystemId'] for elm in dcchf.get_measuringSystems(root)]
-#     sht_def.range((1,i+5)).value = 'measuringSystemId'
-#     sht_def.range((2,i+5)).value = [[ms] for ms in msucIds]
-#     sht_def.range((2,i+5)).expand('down').name = 'measuringSystemId'
-#     rng = sht.range((2,5),(1024,5))
-#     rng.api.Validation.Delete()
-#     rng.api.Validation.Add(Type=xlValidateList, Formula1='=measuringSystemId')
-
-#     tableIds = [elm.attrib['tableId'] for elm in dcchf.getTables(root)]
-#     sht_def.range((1,i+6)).value = 'tableId'
-#     sht_def.range((2,i+6)).value = [[tbl] for tbl in tableIds]
-#     sht_def.range((2,i+6)).expand('down').name = 'tableId'
-#     rng = sht.range((2,6),(1024,6))
-#     rng.api.Validation.Delete()
-#     rng.api.Validation.Add(Type=xlValidateList, Formula1='=tableId')
-
-#     #%% get schema restrictions and set validations 
-#     j = 7
-#     for r in ['metaDataCategoryType', 'scopeType','dataCategoryType', 'measurandType']: 
-#         rng = sht.range((2,j),(1024,j))
-#         rng.api.Validation.Delete()
-#         fml = "="+r
-#         rng.api.Validation.Add(Type=xlValidateList, Formula1=fml)
-#         j += 1
-
-
-
-#     #%% Do the lookup  
-#     vals = sht.range("A1").expand("down").value
-#     [print(v) for v in vals]
-#     n_rows = vals.index("--END--")+1
-#     print(n_rows)
-
-#     for i in range(1, n_rows):
-#         queryType = sht.range((i,3)).value
-
-#         if queryType == 'xpath':
-#             xpath_str = sht.range((i,4)).value
-#             val = dcchf.xpath_query(root, xpath_str)
-#             print(vals[i-1], queryType, val)
-#             if len(val)>0:
-#                 sht[f"M{i}"].value = val[0].text
-#             else:
-#                 sht[f"M{i}"].value = "ERROR not Found"
-#         elif queryType == 'data':
-#             dtbl = dict(zip(["measuringSystemRef", "tableId"], sht.range((i,5),(i,6)).value))
-#             dcol = dict(zip(["metaDataCategory", "scope", "dataCategory","measurand"], sht.range((i,7), (i,10)).value))
-#             unit = sht.range((i,11)).value
-#             customerTag = sht.range((i,12)).value
-#             if customerTag is None:
-#                 data = search(root, dtbl, dcol, unit)
-#             else: 
-#                 data = search(root, dtbl, dcol, unit, rowTags=[customerTag])
-#             print(dtbl, dcol, unit, customerTag, ":", data)
-#             if len(data) == 0 : 
-#                 data_val = "ERROR not Found"
-#             else:
-#                 data_val = list(data.values())
-#             # elif len(data) > 1: 
-#                 # data_val = "ERROR too many values"
-#             sht[f"M{i}"].value = data_val
-#         #     cell = sht.range((i, 14, value=data)
-#         # else: 
-#         #     cell = sht.range((i, 14, value="FAILED")
 
 
 
