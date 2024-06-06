@@ -2860,6 +2860,16 @@ quantities of specified kinds
                 The measurandType is restricting the value of the measurand attribute of the columnType.
                 For data columns this attribute is used to describe the data.
                 For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+				
+				ISO 80000-1:2019:
+				
+				https://si-digital-framework.org/SI/
+				TODO: Description on how to parse the restriction expressions. 
+						5-2|Celcius Temperature|°C |  
+				TODO: How to manage special characters such as: 
+				
+					Ω | Ω |  ±  |  ° | °
+				
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
