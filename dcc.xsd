@@ -1301,10 +1301,19 @@ quantities of specified kinds
             <xs:enumeration value="noFail"/>
         </xs:restriction>
     </xs:simpleType>
+    
     <xs:simpleType name="approachToTargetType">
+        <xs:annotation>
+            <xs:documentation>
+                For some measurements hysteresis is of importance and it is desirable to know the condition approaching the measurement. 
+                E.g. Temperature fix-point measurements. 
+                a : from above, prior measurements approached the target with higher values than measurement value recorded. 
+                b : from below, prior measuremetns approached the target with lower values than measurement value recorded. 
+            </xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="from above"/>
-            <xs:enumeration value="from below"/>
+            <xs:enumeration value="a"/>
+            <xs:enumeration value="b"/>
         </xs:restriction>
     </xs:simpleType>
     

@@ -311,13 +311,13 @@
                     </dcc:value>
             </dcc:column>
             <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="-">
-                <dcc:heading lang="en">Approach to target</dcc:heading>
-                <dcc:heading lang="da">Tilnærmelse til målværdi (nedefra [from below], oppefra [from above])</dcc:heading>
+                <dcc:heading lang="en">Approach to target (a: from above, b: from below)</dcc:heading>
+                <dcc:heading lang="da">Tilnærmelse til målværdi (oppefra [a], nedefra [b])</dcc:heading>
                 <dcc:unit>µL</dcc:unit>
                     <dcc:approachToTarget>
-                        <dcc:row idx="1">from below</dcc:row> 
-                        <dcc:row idx="2">from below</dcc:row> 
-                        <dcc:row idx="3">from below</dcc:row>
+                        <dcc:row idx="1">b</dcc:row> 
+                        <dcc:row idx="2">b</dcc:row> 
+                        <dcc:row idx="3">b</dcc:row>
                     </dcc:approachToTarget>
             </dcc:column>
             <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias">
@@ -600,7 +600,7 @@
             <dcc:column dataCategoryRef="value" measurand="quantityUnitRef" scope="environment" quantityUnitRef="ms1">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
-                <dcc:unit>1</dcc:unit>
+                <dcc:unit>-</dcc:unit>
                     <dcc:methodRef>
                         <dcc:row idx="1">meth3</dcc:row> 
                         <dcc:row idx="2">meth3 </dcc:row>
