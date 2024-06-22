@@ -1017,6 +1017,20 @@
             </dcc:column>
         </dcc:measurementSeries>
     </dcc:measurementResults>
+    
+    <dcc:quantityUnitDefs>
+        <dcc:heading lang="en">Definition of Units and Qauntities</dcc:heading>
+        <dcc:quantityUnitDef quantityUnitDefId="QU-Zfactor" statementRefs="meth3">
+            <dcc:quantityName>Z-factor</dcc:quantityName>
+            <dcc:unitName>1</dcc:unitName>
+            <dcc:calcToSIunit unitSI="1">
+                <dcc:calcStep mathOp="+" param="0"/>
+                <dcc:calcStep mathOp="*" param="1"/>
+                <dcc:calcStep mathOp="end" />
+            </dcc:calcToSIunit>
+        </dcc:quantityUnitDef>
+    </dcc:quantityUnitDefs>
+
 	<dcc:embeddedFiles>
 		<dcc:heading lang="en">Embedded files</dcc:heading>
 		<dcc:heading lang="da">Indlejrede filer</dcc:heading>

@@ -95,6 +95,7 @@
                     <xs:field xpath="@customServiceCategory"/>
                 </xs:unique>
             </xs:element>
+            <xs:element name="quantityUnitDefs" type="dcc:quantityUnitDefListType"/>
             <xs:element name="embeddedFiles" type="dcc:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
 
             <xs:element name="comment" minOccurs="0">
@@ -450,10 +451,67 @@ quantities of specified kinds
             <xs:element name="unit" type="dcc:notEmptyStringType" minOccurs="0"/>
 			<xs:element name="softwareInstruction" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>		</xs:sequence>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>		
+        </xs:sequence>
         <xs:attribute name="settingId" type="xs:ID" use="required"/>
         <xs:attribute name="equipmentRef" type="xs:IDREFS" use="required"/>
     </xs:complexType>
+
+    <xs:complexType name="quantityUnitDefListType">
+        <xs:annotation>
+            <xs:documentation>
+                List of definitions for quantities and units. 
+                Can be used to introduce quantities and units which are not defined within this schema, and/or to specifiy the definition of a unit.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="quantityUnitDef" type="dcc:quantityUnitDefType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="quantityUnitDefType">
+        <xs:sequence>
+            <xs:element name="quantityName" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="unitName" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="externalRefs" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="calcToSIunit" type="dcc:calculeToSIunitStepListType" minOccurs="0"/>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="quantityUnitDefId" type="xs:ID" use="required"/>
+        <xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="calculeToSIunitStepListType">
+        <xs:sequence>
+            <xs:element name='calcStep' minOccurs='1' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:attribute name='mathOp' type="dcc:mathOperatorType" use="required"/>
+                    <xs:attribute name="param" type="dcc:decimalType" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="unitSI" type="dcc:unitType" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="mathOperatorType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="+" /> 
+                <xs:enumeration value="-" /> 
+                <xs:enumeration value="*" /> 
+                <xs:enumeration value="/" /> 
+                <xs:enumeration value="ln" /> 
+                <xs:enumeration value="e^" /> 
+                <xs:enumeration value="log10" /> 
+                <xs:enumeration value="10^" /> 
+                <xs:enumeration value="end" /> 
+            </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="statementListType">
         <xs:annotation>
