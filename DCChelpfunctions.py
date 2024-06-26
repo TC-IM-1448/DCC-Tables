@@ -1,3 +1,4 @@
+#%%
 import io
 from lxml import etree as et
 from urllib.request import urlopen
@@ -5,7 +6,7 @@ from xml.dom import minidom
 import openpyxl as pyxl
 import openpyxl as pyxl
 
-
+#%%
 # xsd_ns = {'xs':"http://www.w3.org/2001/XMLSchema"}
 # DCC='{https://dfm.dk}'
 # SI='{https://ptb.de/si}'
@@ -68,6 +69,8 @@ class DccTabel():
         self.numRows = numRows
         self.numColumns = numColumns
         self.columns = columns
+
+#%%
 
 def validate(xml_path: str, xsd_path: str) -> bool:
     if xsd_path[0:5]=="https":
@@ -342,9 +345,9 @@ def get_setting(root, settingId='*', lang='en', show=False) -> list:
     """ Returns a list of elements fullfilling ID requirements"""
     ns = root.nsmap
     returnsetting=[]
-    settings=settings = root.find("dcc:administrativeData/dcc:settings",ns)
+    settings=settings = root.findall("dcc:settings/dcc:setting",ns)
     for setting in settings:
-        if settingId==setting.attrib['id'] or settingId=='*':
+        if settingId==setting.attrib['settingId'] or settingId=='*':
             returnsetting.append(setting)
             if show:
                 print('---------------'+setting.attrib['id']+'-------------')
@@ -384,7 +387,9 @@ def schema_get_restrictions(xsd_root: et._Element,
                                         'dataCategoryType', 
                                         'measurandType',
                                         'tableCategoryType',
-                                        'approachToTargetType'
+                                        'approachToTargetType',
+                                        'quantityCodeSystemType',
+                                        'mathOperatorType'
                                         ]
                             ) -> dict: 
     """schema_get_restrictions is used for finding the valid tokens for as specified in type_name:
@@ -439,9 +444,9 @@ def schemaFindAdministrativeDataChildren(xsd_root):
 def getNodeById(root, ID:str):
     nodes = root.xpath(f'//*[@*="{ID}"]')
     if len(nodes) == 0: 
-        raise(KeyError, "No elements found")
+        raise KeyError( "No elements found")
     elif len(nodes)>1: 
-        raise(KeyError, f"Too many elements: found {len(nodes)} elements expected 1.")
+        raise KeyError( f"Too many elements: found {len(nodes)} elements expected 1.")
     node = nodes[0]
     nTag = rev_ns_tag(node)
     return nTag, node
@@ -543,7 +548,7 @@ def print_node(node):
 
 # print_node(root)
 #%% Run tests on dcc-xml-file
-if False: 
+if True: 
     #%%
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="*")
@@ -551,10 +556,15 @@ if False:
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(measurand="Volume", dataCategoryRef="*", scope="reference")
-    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="\micro\litre")[0]
+    dcol = dict(measurand="3-4|volume|m3", dataCategoryRef="*", scope="reference")
+    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="µL")[0]
+
+    # dcol = dict(measurand="quantityUnitDefRef", dataCategoryRef="-", scope="environment", quantityUnitDefRef="ms1")
+    # dataCategoryRef="-" measurand="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1"
+    # col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="*")[0]
     print(col)
     print_node(col)
+    #%%
     rowtag = "1"
     idxs = [1,3]
     search_data = getRowData(col, idxs)
@@ -562,35 +572,42 @@ if False:
 
     tagCols = getRowTagColumns(tbl)
     print(tagCols)
+    print_node(tagCols[0])
 
     print(getRowTagsFromRowTagColumn(tagCols[0]))
     print(rowTagsToIndexs(tagCols[0]))
 
 
-    #%%
-    search_result = search(root, dtbl, dcol, "value", "\micro\litre", tableType="dcc:calibrationResult")
+    search_result = search(root, dtbl, dcol, "value", "µL", tableType="dcc:calibrationResult")
     print("SEARCH RESULT for Column: ", search_result)
+    #%%
 
-    search_result = search(root, dtbl, dcol, "value", "\micro\litre", rowTags=['pt1','pt3'] ,idxs=[1,2])
+    search_result = search(root, dtbl, dcol, "value", "µL", rowTags=['pt1','pt3'] ,idxs=[1,2])
     print("SEARCH RESULT for specific Rows", search_result)
 
+    #%%
     print("----------------------GET MeasuringSystem----------------")
     for n in get_measuringSystems(root,"ms1"): print_node(n)
+    #%%
+    get_setting(root)
     print_node(get_setting(root)[0])
     print_node(getTables(root,dict(tableId="ser13"))[0])
+    #%%
     
-    statementIds = [elm.attrib['statementId'] for elm in get_statements(root)]
+    statementIds = [elm.attrib['id'] for elm in get_statements(root)]
     statementIds
     #%%
-    dtbl = dict(tableId='*',measuringSystemRef="ms2")
+    dtbl = dict(tableId='*',measuringSystemRef="ms1")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(dataCategory="value", measurand="Volume", metaDataCategory="data", scope="reference")
-    col = getColumnsFromTable(tbl,dcol,searchunit="*")[0]
-    
-    search(root, dtbl, dcol, '\micro\litre', rowTags=['p1'])
+    #%%
+    dcol = dict( measurand="3-4|volume|m3", dataCategoryRef='*', scope='reference')
+    col = getColumnsFromTable(tbl,dcol,searchunit="*", searchDataCategory="value")
+    print_node(col[0])
+    #%%
+    search(root, dtbl, dcol, dataCategory='value', unit='µL', rowTags=['pt1'])
 
 
 

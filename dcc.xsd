@@ -97,15 +97,7 @@
             </xs:element>
             <xs:element name="quantityUnitDefs" type="dcc:quantityUnitDefListType"/>
             <xs:element name="embeddedFiles" type="dcc:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
-
-            <xs:element name="comment" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-
+            <xs:element name="comment" type="dcc:anyType" minOccurs="0"/>
             <!--xs:element ref="ds:Signature" minOccurs="0" maxOccurs="unbounded"/-->
 
         </xs:sequence>
@@ -117,6 +109,12 @@
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="anyType">
+        <xs:sequence>
+            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="administrativeDataType">
@@ -262,8 +260,8 @@ quantities of specified kinds
         </xs:annotation>
         <xs:sequence>
             <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type"/>
-            <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
-            <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type" maxOccurs="unbounded"/>
+            <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type"/>
+            <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
             <xs:element name="customerIdentification" type="dcc:identificationType" minOccurs="0"/>
             <xs:element name="receiptDate" type="xs:date" minOccurs="0"/>
@@ -473,15 +471,34 @@ quantities of specified kinds
 
     <xs:complexType name="quantityUnitDefType">
         <xs:sequence>
-            <xs:element name="quantityName" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="unitName" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="quantityCode" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="unitUsed" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="externalRefs" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="calcToSIunit" type="dcc:calculeToSIunitStepListType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <!--<xs:element name="quantityUnitElement" type="dcc:anyType"/> -->
         </xs:sequence>
-        <xs:attribute name="quantityUnitDefId" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="quantityCodeSystem" type="dcc:quantityCodeSystemType" use="required"/>
         <xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
+
+    <xs:simpleType name="quantityCodeSystemType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="ISO/IEC 80000" /> 
+                <xs:enumeration value="si-digital-framework.org" /> 
+                <xs:enumeration value="electropedia.org"/>
+                <xs:enumeration value="qudt.org" /> 
+                <xs:enumeration value="ucum.org" /> 
+                <xs:enumeration value="mlayer.org" /> 
+                <xs:enumeration value="other" /> 
+            </xs:restriction>
+    </xs:simpleType>
+
 
     <xs:complexType name="calculeToSIunitStepListType">
         <xs:sequence>
@@ -608,7 +625,7 @@ quantities of specified kinds
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@measurand"/>
-					<xs:field xpath="@quantityUnitRef"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="dcc:unit"/>
                     <xs:field xpath="dcc:dataList/*/@dataCategory"/>
                 </xs:unique>
@@ -626,7 +643,7 @@ quantities of specified kinds
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@measurand"/>
-					<xs:field xpath="@quantityUnitRef"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="dcc:unit"/>
                     <xs:field xpath="dcc:dataList/*/@dataCategory"/>
                 </xs:unique>
@@ -991,7 +1008,7 @@ quantities of specified kinds
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategoryRef" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
-		<xs:attribute name="quantityUnitRef" type="xs:IDREFS" use="optional"/>
+		<xs:attribute name="quantityUnitDefRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
         
     <xs:complexType name="dataListType">
@@ -1324,7 +1341,7 @@ quantities of specified kinds
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:pattern value="quantityUnitRef|-|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)((\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*)?"/>
+            <xs:pattern value="quantityUnitDefRef|-|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)((\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*)?"/>
             <!-- <xs:pattern value="quantityUnitRef|1|%|ppm|(((Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)([-]?[1-9]\d*)?)(\.(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)*)?)"/> -->
             <!-- "quantityUnitRef|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)(?:\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*" -->
         </xs:restriction>
@@ -2947,8 +2964,8 @@ quantities of specified kinds
 				Example: 
 				"5-2|Celcius Temperature|°C"
 				
-				If one needs to define a quantity not covered in the restriction list, one may use the "quantityUnitRef",
-				in which case an "id" from quantityUnits should be provided in the quantityUnitRef attribute. 
+				If one needs to define a quantity not covered in the restriction list, one may use the "quantityUnitDefRef",
+				in which case an "id" from quantityUnits should be provided in the quantityUnitDefRef attribute. 
 				
 				Included from the ISO 80000 Series
 				-----------------------------------
@@ -2977,7 +2994,7 @@ quantities of specified kinds
         </xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="-" /> 
-			<xs:enumeration value="quantityUnitRef"/>  <!--the quantity may be expressed in the quantityUnitTable -->
+			<xs:enumeration value="quantityUnitDefRef"/>  <!--the quantity may be expressed in the quantityUnitTable -->
 			<xs:enumeration value="3-1.1|length|m"/>
 			<xs:enumeration value="3-1.2|width, breadth|m"/>
 			<xs:enumeration value="3-1.3|altitude, depth, height|m"/>

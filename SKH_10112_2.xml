@@ -13,8 +13,8 @@
         </dcc:dccSoftware>
         <dcc:coreData>
             <dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
-            <dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
             <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+            <dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
             <dcc:uniqueIdentifier>
                 <dcc:heading lang="en">Certificate number</dcc:heading>
                 <dcc:heading lang="da">Certifikatnummer</dcc:heading>
@@ -393,7 +393,7 @@
                     </dcc:conformity>
             </dcc:column>
 
-            <dcc:column  dataCategoryRef="-" measurand="quantityUnitRef" scope="environment" quantityUnitRef="ms1">
+            <dcc:column  dataCategoryRef="-" measurand="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Z-factor</dcc:heading>
                 <dcc:heading lang="da">Z faktor</dcc:heading>
                 <dcc:unit>1</dcc:unit>
@@ -442,7 +442,7 @@
                         <dcc:row idx="3">2</dcc:row>
                     </dcc:uncertaintyCoverageFactor_k>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="quantityUnitRef" scope="environment" quantityUnitRef="ms1">
+            <dcc:column dataCategoryRef="value" measurand="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                 <dcc:unit>1</dcc:unit>
@@ -587,7 +587,7 @@
                         <dcc:row idx="3">0.05</dcc:row>
                     </dcc:repeatability>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="quantityUnitRef"  scope="environment" quantityUnitRef="ms1">
+            <dcc:column dataCategoryRef="value" measurand="quantityUnitDefRef"  scope="environment" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Z-factor</dcc:heading>
                 <dcc:heading lang="da">Z faktor</dcc:heading>
                 <dcc:unit>1</dcc:unit>
@@ -597,7 +597,7 @@
                         <dcc:row idx="3">1.003</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="quantityUnitRef" scope="environment" quantityUnitRef="ms1">
+            <dcc:column dataCategoryRef="value" measurand="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                 <dcc:unit>-</dcc:unit>
@@ -1020,14 +1020,20 @@
     
     <dcc:quantityUnitDefs>
         <dcc:heading lang="en">Definition of Units and Qauntities</dcc:heading>
-        <dcc:quantityUnitDef quantityUnitDefId="QU-Zfactor" statementRefs="meth3">
-            <dcc:quantityName>Z-factor</dcc:quantityName>
-            <dcc:unitName>1</dcc:unitName>
+        <dcc:quantityUnitDef id="QU-Zfactor" quantityCodeSystem="other" statementRefs="meth3">
+            <dcc:quantityCode>Z-factor</dcc:quantityCode>
+            <dcc:unitUsed>1</dcc:unitUsed>
             <dcc:calcToSIunit unitSI="1">
                 <dcc:calcStep mathOp="+" param="0"/>
                 <dcc:calcStep mathOp="*" param="1"/>
                 <dcc:calcStep mathOp="end" />
             </dcc:calcToSIunit>
+            <dcc:heading lang="en">Z-factor</dcc:heading>
+            <dcc:heading lang="da">Z-faktor</dcc:heading>
+        </dcc:quantityUnitDef>
+        <dcc:quantityUnitDef id="QU_IEC_60050" quantityCodeSystem="ISO/IEC 80000">
+            <dcc:heading lang="en">Z-factor</dcc:heading>
+            <dcc:heading lang="da">Z-faktor</dcc:heading>
         </dcc:quantityUnitDef>
     </dcc:quantityUnitDefs>
 
