@@ -474,12 +474,13 @@ quantities of specified kinds
             <xs:element name="quantityCode" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="unitUsed" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="externalRefs" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="calcToSIunit" type="dcc:calculeToSIunitStepListType" minOccurs="0"/>
+            <xs:element name="calcExprForMeasValueToSIunit" type="dcc:calculateToSIunitExprType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <!--<xs:element name="quantityUnitElement" type="dcc:anyType"/> -->
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="quantityCodeSystem" type="dcc:quantityCodeSystemType" use="required"/>
+        <xs:attribute name="unitSI" type="dcc:unitType" use="required"/>
         <xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
@@ -499,6 +500,21 @@ quantities of specified kinds
             </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="calculateToSIunitExprType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+				Based on xs:string.
+                Should provide the mathematical expression to convert measurement values from the used unit to value in SI-unit 
+                only allowed mathematical functions are: 
+                    +, -, *, /, abs, exp, pwr, ln, log, sin, cos, tan, arcsin, arccos, arctan, 				
+                    decimal numbers
+                    value : identification of value in usedUnit
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="((([-+]?[0-9]+\.?[0-9]*)|\(|-|\+|\*|\/|abs\(|exp\(|pwr10\(|ln\(|\)|log\()*)value((([-+]?[0-9]+\.?[0-9]*)|\(|-|\+|\*|\/|abs\(|exp\(|pwr10\(|ln\(|\)|log10\()*)"/>
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:complexType name="calculeToSIunitStepListType">
         <xs:sequence>

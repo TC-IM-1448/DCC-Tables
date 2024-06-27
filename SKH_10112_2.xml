@@ -294,11 +294,11 @@
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                 <dcc:unit>1</dcc:unit>
-                    <dcc:rowTag>
-                        <dcc:row idx="1">pt1</dcc:row>
-                        <dcc:row idx="2">pt2</dcc:row> 
-                        <dcc:row idx="3">pt3</dcc:row>
-                    </dcc:rowTag>
+                <dcc:rowTag>
+                    <dcc:row idx="1">pt1</dcc:row>
+                    <dcc:row idx="2">pt2</dcc:row> 
+                    <dcc:row idx="3">pt3</dcc:row>
+                </dcc:rowTag>
             </dcc:column>
             <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="indication">
                 <dcc:heading lang="en">Item indication</dcc:heading>
@@ -968,18 +968,18 @@
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                 <dcc:unit>µL</dcc:unit>
-                    <dcc:targetValue>
-                        <dcc:row idx="1">1200</dcc:row> 
-                        <dcc:row idx="2">1200</dcc:row> 
-                        <dcc:row idx="3">1200</dcc:row> 
-                        <dcc:row idx="4">1200</dcc:row> 
-                        <dcc:row idx="5">1200</dcc:row> 
-                        <dcc:row idx="6">1200</dcc:row> 
-                        <dcc:row idx="7">1200</dcc:row> 
-                        <dcc:row idx="8">1200</dcc:row> 
-                        <dcc:row idx="9">1200</dcc:row> 
-                        <dcc:row idx="10">1200</dcc:row>
-                    </dcc:targetValue>
+                <dcc:targetValue>
+                    <dcc:row idx="1">1200</dcc:row> 
+                    <dcc:row idx="2">1200</dcc:row> 
+                    <dcc:row idx="3">1200</dcc:row> 
+                    <dcc:row idx="4">1200</dcc:row> 
+                    <dcc:row idx="5">1200</dcc:row> 
+                    <dcc:row idx="6">1200</dcc:row> 
+                    <dcc:row idx="7">1200</dcc:row> 
+                    <dcc:row idx="8">1200</dcc:row> 
+                    <dcc:row idx="9">1200</dcc:row> 
+                    <dcc:row idx="10">1200</dcc:row>
+                </dcc:targetValue>
             </dcc:column>
             <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference">
                 <dcc:heading lang="en">Reference value</dcc:heading>
@@ -1020,18 +1020,14 @@
     
     <dcc:quantityUnitDefs>
         <dcc:heading lang="en">Definition of Units and Qauntities</dcc:heading>
-        <dcc:quantityUnitDef id="QU-Zfactor" quantityCodeSystem="other" statementRefs="meth3">
+        <dcc:quantityUnitDef id="QU-Zfactor" quantityCodeSystem="other" statementRefs="meth3" unitSI="1">
             <dcc:quantityCode>Z-factor</dcc:quantityCode>
             <dcc:unitUsed>1</dcc:unitUsed>
-            <dcc:calcToSIunit unitSI="1">
-                <dcc:calcStep mathOp="+" param="0"/>
-                <dcc:calcStep mathOp="*" param="1"/>
-                <dcc:calcStep mathOp="end" />
-            </dcc:calcToSIunit>
+            <dcc:calcExprForMeasValueToSIunit>1+0*value</dcc:calcExprForMeasValueToSIunit>
             <dcc:heading lang="en">Z-factor</dcc:heading>
             <dcc:heading lang="da">Z-faktor</dcc:heading>
         </dcc:quantityUnitDef>
-        <dcc:quantityUnitDef id="QU_IEC_60050" quantityCodeSystem="ISO/IEC 80000">
+        <dcc:quantityUnitDef id="QU_IEC_60050" quantityCodeSystem="ISO/IEC 80000" unitSI="1">
             <dcc:heading lang="en">Z-factor</dcc:heading>
             <dcc:heading lang="da">Z-faktor</dcc:heading>
         </dcc:quantityUnitDef>

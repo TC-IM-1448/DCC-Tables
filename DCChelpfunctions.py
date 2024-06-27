@@ -256,6 +256,9 @@ def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:cali
     search result as string (or list of strings if customerTag is not specified)
     warnings as strings 
     NOTE: rowTags takes prior rank to idxs if both are provided. 
+    Kan nok udskiftes med : 
+    root.findall('*//dcc:calibrationResult[@measuringSystemRef="ms1"]/dcc:column[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"]/dcc:value/dcc:row[@idx="1"]',root.nsmap)
+    root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
     """
     ns = root.nsmap
 

@@ -60,21 +60,12 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                 '@quantityCodeSystem',
                                 'quantityCode',
                                 'unitUsed',
-                                'externalReference',
+                                'externalRefs',
                                 'heading[en]',
                                 'heading[da]',
                                 '@statementRefs',
                                 '@unitSI',
-                                '@op0',
-                                '@par0',
-                                '@op1',
-                                '@par1',
-                                '@op2',
-                                '@par2',
-                                '@op3',
-                                '@par3',
-                                '@op4',
-                                '@par4'
+                                'calcExprForMeasValueToSIunit'
                                 ],
 
     administrativeDataHeadings = [ "heading[en]", 
@@ -293,18 +284,6 @@ class DccGuiTool():
                         sht.pictures.add(filePath, name=fileId, anchor=sht.range((4+idx,1+cidx+idx)))
                     sht.range((tblRowIdx+1+idx,cidx)).value = filePath
                     sht.range((1,2)).column_width = 27
-            if nodeTag == "dcc:quantityUnitDefs" and len(subNode.findall("dcc:calcToSIunit",ns)) > 0:
-                calc2SInode = subNode.find("dcc:calcToSIunit",ns)
-                unitSI = calc2SInode.attrib['unitSI'] 
-                i = heading.index('@unitSI')
-                rowData[i] = unitSI
-                i += 1
-                calcSteps = calc2SInode.getchildren()
-                for cs in calcSteps: 
-                    rowData[i] = cs.attrib['mathOp']
-                    if 'param' in cs.attrib.keys():
-                        rowData[i+1] = cs.attrib['param']
-                    i += 2
 
 
             rng = sht.range((tblRowIdx+1+idx,1))
@@ -350,9 +329,6 @@ class DccGuiTool():
             self.applyValidationToRange(rng, 'quantityCodeSystemType')
             quIdRng = sht.range("Table_"+shtName+"['@id]") 
             quIdRng.name = "quantityUnitDefIdRange"
-            for i in range(5):
-                rng = sht.range("Table_"+shtName+f"['@op{i}]")
-                self.applyValidationToRange(rng, 'mathOperatorType')
 
         # Apply Validation
         # validatorMap= {'dcc:statements': }
@@ -491,9 +467,7 @@ class DccGuiTool():
                 # instert the unit
                 unit = col.find("dcc:unit",ns).text
                 rowIdx = colInitRowIdx + columnHeading.index('unit')
-                sht.range(((rowIdx,cIdx))).value = unit
-
-                
+                sht.range(((rowIdx,cIdx))).value = unit                
 
                 # Insert human readable heading in two languages. 
                 for idx, lang in enumerate(self.langs):
@@ -742,6 +716,8 @@ def exportToXmlFile(wb, fileName='output.xml'):
         print(tblId)
         exportDataTable(measurementResultsNode, elmMaker, wb, tblId)
     
+    quDefNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='quantityUnitDefs')
+    exportEmbeddedFiles(exportRoot, elmMaker, wb, quDefNode)
     efNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='embeddedFiles')
     exportEmbeddedFiles(exportRoot, elmMaker, wb, efNode)
 
@@ -935,7 +911,7 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
 
     colHeadDict = dict(zip(colAttrNames,colAttrValues))
 
-    colAttrKeys = ['scope', 'dataCategoryRef', 'measurand', 'quantityUnitDefRef'] 
+    colAttrKeys = ['scope', 'dataCategoryRef', 'measurand', 'unit', 'quantityUnitDefRef'] 
     colAttr = {k: colHeadDict[k] for k in colAttrKeys if colHeadDict[k]!=None}
     # colNode = elmMaker('column', **dict(zip(colAttrNames[:4], colAttrValues[:4])))
     colNode = elmMaker('column', **colAttr)
