@@ -290,7 +290,7 @@
         <dcc:calibrationResult tableId="calRes0" measuringSystemRef="ms1" serviceCategory="M/FF-9.10.3 Quantity of fluid" numRows='3' numCols='14'>
             <dcc:heading lang="en">New format of calibration data</dcc:heading>
             <dcc:heading lang="da">Kalibreringsresultat nyt format</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="1">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="1">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                 <dcc:rowTag>
@@ -299,7 +299,7 @@
                     <dcc:row idx="3">pt3</dcc:row>
                 </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" unit="µL" scope="indication">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL" scope="indication">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
                     <dcc:value>
@@ -308,7 +308,7 @@
                         <dcc:row idx="3">1200</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="-" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="-" unit="µL">
                 <dcc:heading lang="en">Approach to target (a: from above, b: from below)</dcc:heading>
                 <dcc:heading lang="da">Tilnærmelse til målværdi (oppefra [a], nedefra [b])</dcc:heading>
                     <dcc:approachToTarget>
@@ -317,7 +317,7 @@
                         <dcc:row idx="3">b</dcc:row>
                     </dcc:approachToTarget>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="µL">
                 <dcc:heading lang="en">Systematic error</dcc:heading>
                 <dcc:heading lang="da">Systematisk fejl</dcc:heading>
                     <dcc:value>
@@ -326,7 +326,7 @@
                         <dcc:row idx="3">-0.9</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3" scope="bias" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3" scope="bias" unit="µL">
                 <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
                 <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
                     <dcc:expandedUncertainty>
@@ -335,7 +335,7 @@
                         <dcc:row idx="3">2.4</dcc:row>
                     </dcc:expandedUncertainty>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias" unit="%">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="%">
                 <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
                 <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
                     <dcc:value>
@@ -344,7 +344,7 @@
                         <dcc:row idx="3">-0.08</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3" scope="bias" unit="%">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3" scope="bias" unit="%">
                 <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
                 <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
                     <dcc:expandedUncertainty>
@@ -353,7 +353,7 @@
                         <dcc:row idx="3">0.2</dcc:row>
                     </dcc:expandedUncertainty>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="µL">
                 <dcc:heading lang="en">Repeatability</dcc:heading>
                 <dcc:heading lang="da">Repeterbarhed</dcc:heading>
                     <dcc:repeatability>
@@ -363,7 +363,7 @@
                     </dcc:repeatability>
             </dcc:column>
 
-            <dcc:column  dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias" unit="%">
+            <dcc:column  dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="%">
                 <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
                 <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
                     <dcc:repeatability>
@@ -373,7 +373,7 @@
                     </dcc:repeatability>
             </dcc:column>
 
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="-">
                 <dcc:heading lang="en">Conformaty statement</dcc:heading>
                 <dcc:heading lang="da">Overensstemmelseserklæring</dcc:heading>
                     <dcc:conformity>
@@ -383,7 +383,7 @@
                     </dcc:conformity>
             </dcc:column>
 
-            <dcc:column  dataCategoryRef="-" measurand="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="ms1">
+            <dcc:column  dataCategoryRef="-" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Z-factor</dcc:heading>
                 <dcc:heading lang="da">Z faktor</dcc:heading>
                     <dcc:value>
@@ -393,7 +393,7 @@
                     </dcc:value>
             </dcc:column>
 
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference Value</dcc:heading>
                 <dcc:heading lang="da">Referencens værdi</dcc:heading>
                     <dcc:value>
@@ -402,7 +402,7 @@
                         <dcc:row idx="3">1199.1</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3" scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3" scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -411,14 +411,14 @@
                         <dcc:row idx="3">1200</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="-" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="-" unit="-">
                 <dcc:heading lang="en">Exception to accreditation</dcc:heading>
                 <dcc:heading lang="da">Undtagelse fra akkreditering</dcc:heading>
                     <dcc:accreditationExceptionRef>
                         <dcc:row idx="3">accex</dcc:row>
                     </dcc:accreditationExceptionRef>
             </dcc:column>
-            <dcc:column dataCategoryRef="expandedUncertainty" measurand="-"  scope="-" unit="-">
+            <dcc:column dataCategoryRef="expandedUncertainty" quantity="-"  scope="-" unit="-">
                 <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
                 <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
                     <dcc:uncertaintyCoverageFactor_k>
@@ -427,7 +427,7 @@
                         <dcc:row idx="3">2</dcc:row>
                     </dcc:uncertaintyCoverageFactor_k>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="ms1">
+            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                     <dcc:methodRef>
@@ -436,7 +436,7 @@
                         <dcc:row idx="3">meth3</dcc:row>
                     </dcc:methodRef>
             </dcc:column>
-            <dcc:column dataCategoryRef="conformity" measurand="-" scope="bias" unit="-">
+            <dcc:column dataCategoryRef="conformity" quantity="-" scope="bias" unit="-">
                 <dcc:heading lang="en">Conformaty status decision rule</dcc:heading>
                 <dcc:heading lang="da">Grundlag for overensstemmelseserklæring</dcc:heading>
                     <dcc:decisionRuleRef>
@@ -445,7 +445,7 @@
                         <dcc:row idx="3">conf1</dcc:row>
                     </dcc:decisionRuleRef>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" scope="bias" unit="1">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="1">
                 <dcc:heading lang="en">Data-series used for calculation of repeatability and systematic error</dcc:heading>
                 <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed og systematisk fejl</dcc:heading>
                     <dcc:measurementSeriesRef>
@@ -459,7 +459,7 @@
         <dcc:calibrationResult  tableId="calRes2" measuringSystemRef="ms2" serviceCategory="M/FF-9.10.3 Quantity of fluid" numRows='3' numCols='13'>
             <dcc:heading lang="en">Calibration result chanel 2</dcc:heading>
             <dcc:heading lang="da">Kalibreringsresultat kanal 2</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="1">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="1">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -468,7 +468,7 @@
                         <dcc:row idx="3">p3</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -477,7 +477,7 @@
                         <dcc:row idx="3">1200</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference Value</dcc:heading>
                 <dcc:heading lang="da">Referencens værdi</dcc:heading>
                     <dcc:value>
@@ -486,7 +486,7 @@
                         <dcc:row idx="3">1198.901</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3"  scope="indication" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="indication" unit="µL">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
                     <dcc:value>
@@ -495,7 +495,7 @@
                         <dcc:row idx="3">1200</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3"  scope="bias" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="bias" unit="µL">
                 <dcc:heading lang="en">Systematic error</dcc:heading>
                 <dcc:heading lang="da">Systematisk fejl</dcc:heading>
                     <dcc:value>
@@ -504,7 +504,7 @@
                         <dcc:row idx="3">-1.1</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="bias" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="bias" unit="µL">
                 <dcc:heading lang="en">Calibration uncertainty</dcc:heading>
                 <dcc:heading lang="da">Kalibreringsusikkerhed</dcc:heading>
                     <dcc:expandedUncertainty>
@@ -513,7 +513,7 @@
                         <dcc:row idx="3">2.4</dcc:row>
                     </dcc:expandedUncertainty>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3"  scope="bias" unit="%">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="bias" unit="%">
                 <dcc:heading lang="en">Systematic error (relative)</dcc:heading>
                 <dcc:heading lang="da">Systematisk fejl (relativ)</dcc:heading>
                     <dcc:value>
@@ -522,7 +522,7 @@
                         <dcc:row idx="3">-0.09</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="bias" unit="%">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="bias" unit="%">
                 <dcc:heading lang="en">Calibration uncertainty (relative)</dcc:heading>
                 <dcc:heading lang="da">Kalibreringsusikkerhed (relativ)</dcc:heading>
                     <dcc:expandedUncertainty>
@@ -531,7 +531,7 @@
                         <dcc:row idx="3">0.2</dcc:row>
                     </dcc:expandedUncertainty>
             </dcc:column>
-            <dcc:column dataCategoryRef="expandedUncertainty" measurand="-" scope="-" unit="-">
+            <dcc:column dataCategoryRef="expandedUncertainty" quantity="-" scope="-" unit="-">
                 <dcc:heading lang="en">Uncertainty k factor</dcc:heading>
                 <dcc:heading lang="da">Usikkerhed k-faktor</dcc:heading>
                     <dcc:uncertaintyCoverageFactor_k>
@@ -540,7 +540,7 @@
                         <dcc:row idx="3">2</dcc:row>
                     </dcc:uncertaintyCoverageFactor_k>
             </dcc:column>
-            <dcc:column dataCategoryRef="repeatability" measurand="3-4|volume|m3"  scope="bias" unit="µL">
+            <dcc:column dataCategoryRef="repeatability" quantity="3-4|volume|m3"  scope="bias" unit="µL">
                 <dcc:heading lang="en">Repeatability</dcc:heading>
                 <dcc:heading lang="da">Repeterbarhed</dcc:heading>
                     <dcc:repeatability>
@@ -549,7 +549,7 @@
                         <dcc:row idx="3">0.6</dcc:row>
                     </dcc:repeatability>
             </dcc:column>
-            <dcc:column dataCategoryRef="repeatability" measurand="3-4|volume|m3"  scope="bias" unit="%">
+            <dcc:column dataCategoryRef="repeatability" quantity="3-4|volume|m3"  scope="bias" unit="%">
                 <dcc:heading lang="en">Repeatability (relative)</dcc:heading>
                 <dcc:heading lang="da">Repeterbarhed (relativ)</dcc:heading>
                     <dcc:repeatability>
@@ -558,7 +558,7 @@
                         <dcc:row idx="3">0.05</dcc:row>
                     </dcc:repeatability>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="quantityUnitDefRef"  scope="environment" unit="1" quantityUnitDefRef="ms1">
+            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef"  scope="environment" unit="1" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Z-factor</dcc:heading>
                 <dcc:heading lang="da">Z faktor</dcc:heading>
                     <dcc:value>
@@ -567,7 +567,7 @@
                         <dcc:row idx="3">1.003</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="quantityUnitDefRef" scope="environment" unit="-" quantityUnitDefRef="ms1">
+            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="-" quantityUnitDefRef="ms1">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                     <dcc:methodRef>
@@ -576,7 +576,7 @@
                         <dcc:row idx="3">meth3</dcc:row>
                     </dcc:methodRef>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3" unit="1" scope="bias">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="1" scope="bias">
                 <dcc:heading lang="en">Data-series used for calculation of repeatability</dcc:heading>
                 <dcc:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed</dcc:heading>
                     <dcc:measurementSeriesRef>
@@ -589,7 +589,7 @@
         <dcc:measurementSeries  tableId="ser11" measuringSystemRef="ms1" numRows='10' numCols='3'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -605,7 +605,7 @@
                         <dcc:row idx="10">p10</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="targetValue" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -621,7 +621,7 @@
                         <dcc:row idx="10">120</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference value</dcc:heading>
                 <dcc:heading lang="da">Referenceværdi</dcc:heading>
                     <dcc:value>
@@ -641,7 +641,7 @@
         <dcc:measurementSeries  tableId="ser12" measuringSystemRef="ms1"  numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -657,7 +657,7 @@
                         <dcc:row idx="10">p10</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="targetValue" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -673,7 +673,7 @@
                         <dcc:row idx="10">600</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference value</dcc:heading>
                 <dcc:heading lang="da">Referenceværdi</dcc:heading>
                     <dcc:value>
@@ -689,7 +689,7 @@
                         <dcc:row idx="10">600.1952</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="indication" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="indication" unit="µL">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
                     <dcc:value>
@@ -709,7 +709,7 @@
         <dcc:measurementSeries  tableId="ser13" measuringSystemRef="ms1"  numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 1</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 1</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" unit="-" scope="-">
+            <dcc:column dataCategoryRef="-" quantity="-" unit="-" scope="-">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -725,7 +725,7 @@
                         <dcc:row idx="10">p10</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="targetValue" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -741,7 +741,7 @@
                         <dcc:row idx="10">1200</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference value</dcc:heading>
                 <dcc:heading lang="da">Referenceværdi</dcc:heading>
                     <dcc:value>
@@ -757,7 +757,7 @@
                         <dcc:row idx="10">1199.247</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="indication" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="indication" unit="µL">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
                     <dcc:value>
@@ -777,7 +777,7 @@
         <dcc:measurementSeries  tableId="ser21" measuringSystemRef="ms2" numRows='10' numCols='3'>
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -793,7 +793,7 @@
                         <dcc:row idx="10">p10</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="targetValue" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -809,7 +809,7 @@
                         <dcc:row idx="10">120</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference value</dcc:heading>
                 <dcc:heading lang="da">Referenceværdi</dcc:heading>
                     <dcc:value>
@@ -829,7 +829,7 @@
         <dcc:measurementSeries  tableId="ser22" measuringSystemRef="ms2" numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -845,7 +845,7 @@
                         <dcc:row idx="10">p10</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="targetValue" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                     <dcc:targetValue>
@@ -861,7 +861,7 @@
                         <dcc:row idx="10">600</dcc:row>
                     </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference value</dcc:heading>
                 <dcc:heading lang="da">Referenceværdi</dcc:heading>
                     <dcc:value>
@@ -877,7 +877,7 @@
                         <dcc:row idx="10">599.9043</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="indication" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="indication" unit="µL">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
                     <dcc:value>
@@ -897,7 +897,7 @@
         <dcc:measurementSeries  tableId="ser23" measuringSystemRef="ms2" numRows='10' numCols='4'>
             <dcc:heading lang="en">Series of measurement channel 2</dcc:heading>
             <dcc:heading lang="da">Måleserie kanal 2</dcc:heading>
-            <dcc:column dataCategoryRef="-" measurand="-" scope="-" unit="-">
+            <dcc:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
                 <dcc:heading lang="en">Customer Tags</dcc:heading>
                 <dcc:heading lang="da">Kundens kode</dcc:heading>
                     <dcc:rowTag>
@@ -913,7 +913,7 @@
                         <dcc:row idx="10">p10</dcc:row>
                     </dcc:rowTag>
             </dcc:column>
-            <dcc:column dataCategoryRef="targetValue" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Calibration Point</dcc:heading>
                 <dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
                 <dcc:targetValue>
@@ -929,7 +929,7 @@
                     <dcc:row idx="10">1200</dcc:row>
                 </dcc:targetValue>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" measurand="3-4|volume|m3"  scope="reference" unit="µL">
+            <dcc:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
                 <dcc:heading lang="en">Reference value</dcc:heading>
                 <dcc:heading lang="da">Referenceværdi</dcc:heading>
                     <dcc:value>
@@ -945,7 +945,7 @@
                         <dcc:row idx="10">1198.986</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" measurand="3-4|volume|m3"  scope="indication" unit="µL">
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="indication" unit="µL">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
                     <dcc:value>

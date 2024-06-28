@@ -18,7 +18,7 @@ class DccTableColumn():
     """ """
     scopeType = ""
     columnType = ""
-    measurandType = ""
+    quantityType = ""
     unit = ""
     metaDataCategory=""
     humanHeading = {}
@@ -27,7 +27,7 @@ class DccTableColumn():
     def __init__(self,
                 scopeType="",
                 columnType="",
-                measurandType="",
+                quantityType="",
                 unit="",
                 metaDataCategory="",
                 humanHeading = {},
@@ -35,7 +35,7 @@ class DccTableColumn():
         """ """
         self.columnType = columnType
         self.scopeType = scopeType
-        self.measurandType = measurandType
+        self.quantityType = quantityType
         self.unit = unit
         self.metaDataCategory = metaDataCategory
         self.humanHeading = {}
@@ -106,7 +106,7 @@ def xml2dccColumn(col, unit: str):
 
     """
     dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'],
-                          measurandType=col.attrib['measurand'], unit=unit,
+                          quantityType=col.attrib['quantity'], unit=unit,
                           humanHeading=col.find(DCC+'name').find(DCC+'content').text,
                           columnData=col.find(SI+'ValueXMLList').text.split())
     return dcccol
@@ -117,7 +117,7 @@ def xml2dcctable(xmltable):
         unit=""
         if type(col.find(SI+'unit')) !=type(None):
             unit=col.find(SI+'unit').text
-        # dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'], measurandType=col.attrib['measurand'], unit=unit, humanHeading=col.find(DCC+'name').find(DCC+'content').text, columnData=col.find(SI+'ValueXMLList').text.split())
+        # dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'], quantityType=col.attrib['quantity'], unit=unit, humanHeading=col.find(DCC+'name').find(DCC+'content').text, columnData=col.find(SI+'ValueXMLList').text.split())
         dcccol = xml2dccColumn(col, unit)
         dcccolumns.append(dcccol)
     length=len(col.find(SI+'ValueXMLList').text.split())
@@ -245,7 +245,7 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibratio
     INPUT: 
     root: etree root element of the DCC
     tableAttributes itemRef, settingRef and tableId as dictionary of string values
-    coAttributes scope, dataCategory and measurand  as dictionary of string values
+    coAttributes scope, dataCategory and quantity  as dictionary of string values
     unit as string
     customerTag (optional)  as string
     OUTPUT:
@@ -253,8 +253,8 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibratio
     warnings as strings 
     NOTE: rowTags takes prior rank to idxs if both are provided. 
     Kan nok udskiftes med : 
-    root.findall('*//dcc:calibrationResult[@measuringSystemRef="ms1"]/dcc:column[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"]/dcc:value/dcc:row[@idx="1"]',root.nsmap)
-    root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
+    root.findall('*//dcc:calibrationResult[@measuringSystemRef="ms1"]/dcc:column[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/dcc:row[@idx="1"]',root.nsmap)
+    root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
     """
     ns = root.nsmap
 
@@ -302,7 +302,7 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibratio
     return searchValue
 
 # dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
-# dcol = dict(dataCategory="Value", measurand="Measure.Volume", metaDataCategory="Data", scope="reference")
+# dcol = dict(dataCategory="Value", quantity="Measure.Volume", metaDataCategory="Data", scope="reference")
 # rowtag = "p5"
 # print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
 # search(root,dtbl, dcol, "\micro\litre", customerTag="p5" )
@@ -384,7 +384,7 @@ def schema_get_restrictions(xsd_root: et._Element,
                                         'conformityStatusType',
                                         'scopeType',
                                         'dataCategoryType', 
-                                        'measurandType',
+                                        'quantityType',
                                         'tableCategoryType',
                                         'approachToTargetType',
                                         'quantityCodeSystemType',
@@ -397,7 +397,7 @@ def schema_get_restrictions(xsd_root: et._Element,
         - scopeType
         - dataCategoryType
         - metaDataCategoryType
-        - measurandType
+        - quantityType
         - and more 
 
         returns: 
@@ -406,13 +406,13 @@ def schema_get_restrictions(xsd_root: et._Element,
     """
     def get_restrictions(type_name, xsd_root=xsd_root):
         # xsd_ns = {'xs':"http://www.w3.org/2001/XMLSchema"}
-        # type_name = 'measurandType'
+        # type_name = 'quantityType'
         xsd_ns = xsd_root.nsmap
         s = f"xs:simpleType[@name='{type_name}']"
         r = xsd_root.findall(s, xsd_ns)
-        measurandTypes = r[0].find("xs:restriction", xsd_ns)
-        measurandTypes = measurandTypes.findall("xs:enumeration", xsd_ns)
-        strs = [mt.get('value') for mt in measurandTypes]
+        quantityTypes = r[0].find("xs:restriction", xsd_ns)
+        quantityTypes = quantityTypes.findall("xs:enumeration", xsd_ns)
+        strs = [mt.get('value') for mt in quantityTypes]
         return strs
 
     if type(type_names) is str: 
@@ -548,18 +548,19 @@ def print_node(node):
 # print_node(root)
 #%% Run tests on dcc-xml-file
 if False: 
-    #%%
+    1
+    #%%    
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="*")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(measurand="3-4|volume|m3", dataCategoryRef="*", scope="reference", unit='µL')
+    dcol = dict(quantity="3-4|volume|m3", dataCategoryRef="*", scope="reference", unit='µL')
     col = getColumnsFromTable(tbl,dcol, searchDataCategory="value")[0]
 
-    # dcol = dict(measurand="quantityUnitDefRef", dataCategoryRef="-", scope="environment", quantityUnitDefRef="ms1")
-    # dataCategoryRef="-" measurand="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1"
+    # dcol = dict(quantity="quantityUnitDefRef", dataCategoryRef="-", scope="environment", quantityUnitDefRef="ms1")
+    # dataCategoryRef="-" quantity="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1"
     # col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="*")[0]
     print(col)
     print_node(col)
@@ -602,7 +603,7 @@ if False:
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
     #%%
-    dcol = dict( measurand="3-4|volume|m3", dataCategoryRef='*', scope='reference', unit="*")
+    dcol = dict( quantity="3-4|volume|m3", dataCategoryRef='*', scope='reference', unit="*")
     col = getColumnsFromTable(tbl,dcol,searchDataCategory="value")
     print_node(col[0])
     #%%
@@ -623,8 +624,9 @@ if True:
 #%%
 if True:
     tree, root = load_xml("SKH_10112_2.xml")
-    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
-    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)
     print(nodes)
     print_node(nodes[0])
 

@@ -494,9 +494,10 @@ quantities of specified kinds
                 <xs:enumeration value="ISO/IEC 80000" /> 
                 <xs:enumeration value="si-digital-framework.org" /> 
                 <xs:enumeration value="electropedia.org"/>
+                <xs:enumeration value="mlayer.org" /> 
                 <xs:enumeration value="qudt.org" /> 
                 <xs:enumeration value="ucum.org" /> 
-                <xs:enumeration value="mlayer.org" /> 
+                <xs:enumeration value="ptb.de" /> 
                 <xs:enumeration value="other" /> 
             </xs:restriction>
     </xs:simpleType>
@@ -641,7 +642,7 @@ quantities of specified kinds
                     <xs:selector xpath="dcc:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
-                    <xs:field xpath="@measurand"/>
+                    <xs:field xpath="@quantity"/>
                     <xs:field xpath="@dcc:unit"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="dcc:dataList/*/@dataCategory"/>
@@ -659,7 +660,7 @@ quantities of specified kinds
                     <xs:selector xpath="dcc:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
-                    <xs:field xpath="@measurand"/>
+                    <xs:field xpath="@quantity"/>
                     <xs:field xpath="@dcc:unit"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="dcc:dataList/*/@dataCategory"/>
@@ -768,7 +769,7 @@ quantities of specified kinds
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
-            Columns for measurement data and annotatin of data. Each column is ordered directly by the customer from the lists of allowed colTypes and measurandTypes.
+            Columns for measurement data and annotatin of data. Each column is ordered directly by the customer from the lists of allowed colTypes and quantityTypes.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -1024,7 +1025,7 @@ quantities of specified kinds
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategoryRef" type="dcc:dataCategoryType" use="required"/>
-        <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
+        <xs:attribute name="quantity" type="dcc:quantityType" use="required"/>
         <xs:attribute name="unit" type="dcc:unitType" use="required"/>
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
@@ -1546,7 +1547,7 @@ quantities of specified kinds
     <xs:simpleType name="serviceCategoryType">
         <xs:annotation>
             <xs:documentation>
-                The measurandType is restricting the value of the serviceCategory attribute of the tableType.
+                The quantityType is restricting the value of the serviceCategory attribute of the tableType.
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
@@ -2967,10 +2968,10 @@ quantities of specified kinds
     </xs:simpleType>
 	
 	
-    <xs:simpleType name="measurandType">
+    <xs:simpleType name="quantityType">
         <xs:annotation>
             <xs:documentation>
-                The measurandType is restricting the value of the measurand attribute of the columnType.
+                The quantityType is restricting the value of the quantity attribute of the columnType.
                 For data columns this attribute is used to describe the data.
                 For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
 				

@@ -84,7 +84,7 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                     '@numRows', 
                                     '@numCols'], 
 
-    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'measurand', 'unit', 'quantityUnitDefRef', 'heading[da]', 'heading[en]', 'idx']
+    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[da]', 'heading[en]', 'idx']
     )
 
 #%%
@@ -439,7 +439,7 @@ class DccGuiTool():
 
             # Now load the columns
             columns = tbl.findall("dcc:column", ns)
-            columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'measurand', 'unit', 'quantityUnitDefRef', 'heading[da]', 'heading[en]', 'idx']
+            columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[da]', 'heading[en]', 'idx']
             columnHeading = HEADINGS['columnHeading']
             headingColors = ['yellow', 'yellow', 'light_yellow', 'green', 'green', 'light_green', 'light_blue', 'light_blue', 'light_gray']
             headingColors = [self.colors[k] for k in headingColors]
@@ -914,7 +914,7 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
 
     colHeadDict = dict(zip(colAttrNames,colAttrValues))
 
-    colAttrKeys = ['scope', 'dataCategoryRef', 'measurand', 'unit', 'quantityUnitDefRef'] 
+    colAttrKeys = ['scope', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef'] 
     colAttr = {k: colHeadDict[k] for k in colAttrKeys if colHeadDict[k]!=None}
     # colNode = elmMaker('column', **dict(zip(colAttrNames[:4], colAttrValues[:4])))
     colNode = elmMaker('column', **colAttr)
