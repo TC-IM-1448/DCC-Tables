@@ -169,20 +169,18 @@ def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
     return returntable
     
 #%%
-def match_column_attributes(att,searchatt, dataCategory, searchDataCategory, unit="-", searchunit='*'):
+def match_column_attributes(att,searchatt, dataCategory, searchDataCategory, unit="-"):
     # print(f"On Column with: {att}, {dataCategory}, {unit}")
     for key in att.keys():
         if att[key]!='-' and searchatt[key]!='*' and att[key]!=searchatt[key]:
             return False
-    if unit!='-' and searchunit!='*' and unit!=searchunit:
-        return False
     if dataCategory!='-' and searchDataCategory!='*' and dataCategory!=searchDataCategory:
         return False
     return True
 
 
 
-def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchunit="") -> list:
+def getColumnsFromTable(table,searchattributes, searchDataCategory="") -> list:
     #INPUT: xml-element of type dcc:table
     #INPUT: attribute dictionary
     #INPUT: searchunit as string.
@@ -192,11 +190,9 @@ def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchuni
     # print(f"searching for: {searchattributes}, {searchDataCategory}, {searchunit}")
     for col in table.findall('dcc:column',ns):
         unit=""
-        if type(col.find('dcc:unit',ns)) !=type(None):
-            unit=col.find('dcc:unit',ns).text
         dataCategory=rev_ns_tag(col.getchildren()[-1]).replace("dcc:","")
         #if col.attrib==searchattributes and searchunit==unit:
-        if match_column_attributes(col.attrib, searchattributes, dataCategory, searchDataCategory, unit,searchunit):
+        if match_column_attributes(col.attrib, searchattributes, dataCategory, searchDataCategory):
             cols.append(col)
             #return col
     if len(cols)==0: 
@@ -244,7 +240,7 @@ def rowTagsToIndexs(rowTagColumn: et._Element) -> dict:
     return {v: k for k, v in rowTags.items()}
 
 #%%
-def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
+def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
     """
     INPUT: 
     root: etree root element of the DCC
@@ -278,7 +274,7 @@ def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:cali
         print(tbl.attrib['tableId'])
         try:
             """Find the rigt column using attributes and unit"""
-            cols=getColumnsFromTable(tbl,colAttrib,dataCategory, unit)
+            cols=getColumnsFromTable(tbl,colAttrib,dataCategory)
             # print(cols)
             if len(cols) != 1: 
                 raise Exception("Found multiple columns - search should be unique")
@@ -551,7 +547,7 @@ def print_node(node):
 
 # print_node(root)
 #%% Run tests on dcc-xml-file
-if True: 
+if False: 
     #%%
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="*")
@@ -559,8 +555,8 @@ if True:
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(measurand="3-4|volume|m3", dataCategoryRef="*", scope="reference")
-    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="µL")[0]
+    dcol = dict(measurand="3-4|volume|m3", dataCategoryRef="*", scope="reference", unit='µL')
+    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value")[0]
 
     # dcol = dict(measurand="quantityUnitDefRef", dataCategoryRef="-", scope="environment", quantityUnitDefRef="ms1")
     # dataCategoryRef="-" measurand="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1"
@@ -581,11 +577,11 @@ if True:
     print(rowTagsToIndexs(tagCols[0]))
 
 
-    search_result = search(root, dtbl, dcol, "value", "µL", tableType="dcc:calibrationResult")
+    search_result = search(root, dtbl, dcol, "value", tableType="dcc:calibrationResult")
     print("SEARCH RESULT for Column: ", search_result)
     #%%
 
-    search_result = search(root, dtbl, dcol, "value", "µL", rowTags=['pt1','pt3'] ,idxs=[1,2])
+    search_result = search(root, dtbl, dcol, "value", rowTags=['pt1','pt3'] ,idxs=[1,2])
     print("SEARCH RESULT for specific Rows", search_result)
 
     #%%
@@ -606,11 +602,12 @@ if True:
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
     #%%
-    dcol = dict( measurand="3-4|volume|m3", dataCategoryRef='*', scope='reference')
-    col = getColumnsFromTable(tbl,dcol,searchunit="*", searchDataCategory="value")
+    dcol = dict( measurand="3-4|volume|m3", dataCategoryRef='*', scope='reference', unit="*")
+    col = getColumnsFromTable(tbl,dcol,searchDataCategory="value")
     print_node(col[0])
     #%%
-    search(root, dtbl, dcol, dataCategory='value', unit='µL', rowTags=['pt1'])
+    search(root, dtbl, dcol, dataCategory='value', rowTags=['pt1'])
+
 
 
 
@@ -620,9 +617,17 @@ if True:
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)
     v = validate( "SKH_10112_2.xml", "dcc.xsd")
+    v = validate( "output.xml", "dcc.xsd")
     print(v)
     # print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))
 #%%
+if True:
+    tree, root = load_xml("SKH_10112_2.xml")
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@measurand="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)
+    print(nodes)
+    print_node(nodes[0])
 
+#%%
 if __name__ == "__main__":
     validate( "SKH_10112_2.xml", "dcc.xsd")

@@ -60,13 +60,12 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                 '@quantityCodeSystem',
                                 'quantityCode',
                                 'unitUsed',
+                                'functionToSIunit',
+                                'unitSI',
                                 'externalRefs',
                                 'heading[en]',
                                 'heading[da]',
-                                '@statementRefs',
-                                '@unitSI',
-                                'calcExprForMeasValueToSIunit'
-                                ],
+                                '@statementRefs'],
 
     administrativeDataHeadings = [ "heading[en]", 
                                     "heading[da]", 
@@ -270,6 +269,10 @@ class DccGuiTool():
                         rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subSubNode, what))
                     else:
                         rowData.append(None)
+                elif nodeTag == "dcc:quantityUnitDefs" and h.find("unit") >= 0: 
+                    nodes =  subNode.findall(f'./dcc:{h}', ns)
+                    if len(nodes)>0: rowData.append("'"+nodes[0].text)
+                    else: rowData.append(None)
                 else: 
                     nodes =  subNode.findall(f'./dcc:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text)
@@ -455,7 +458,7 @@ class DccGuiTool():
                 cIdx = colIdx + 2
                 for k, a in col.attrib.items():
                     rowIdx = colInitRowIdx + columnHeading.index(k)
-                    sht.range((rowIdx,cIdx)).value = a 
+                    sht.range((rowIdx,cIdx)).value = "'"+a 
 
                 # insert the dataCategory. 
                 # dataList = col.find('dcc:dataList',ns)
@@ -465,9 +468,9 @@ class DccGuiTool():
                 sht.range((rowIdx,cIdx)).value = dataCategory 
 
                 # instert the unit
-                unit = col.find("dcc:unit",ns).text
-                rowIdx = colInitRowIdx + columnHeading.index('unit')
-                sht.range(((rowIdx,cIdx))).value = unit                
+                # unit = col.find("dcc:unit",ns).text
+                # rowIdx = colInitRowIdx + columnHeading.index('unit')
+                # sht.range(((rowIdx,cIdx))).value = unit                
 
                 # Insert human readable heading in two languages. 
                 for idx, lang in enumerate(self.langs):
@@ -893,12 +896,12 @@ def exportDataTable(parentNode, elmMaker, wb, tableId):
     parentNode.append(tblNode)
 
 def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx): 
-    typecast_dict = {'int': int, 'real': float, 'string': str, 'bool': bool, 'conformityStatus': str, 'ref': str}
+    typecast_dict = {'int': int, 'real': float, 'string': str, 'bool': bool, 'conformityStatus': str, 'ref': str} # Deprecated 
     numRows = int(parentNode.attrib['numRows'])
     # print('numRows = ', numRows)
     colHeading = HEADINGS['columnHeading']
     dataInitRowIdx = rowInitIdx+len(colHeading)-1
-    colAttrRange = tblSheet.range((rowInitIdx,colIdx),(dataInitRowIdx, colIdx)) 
+    colAttrRange = tblSheet.range((rowInitIdx,colIdx),(dataInitRowIdx, colIdx))
     colAttrNameRange = tblSheet.range((rowInitIdx,1),(dataInitRowIdx, 1)) 
     colDataRange = tblSheet.range((dataInitRowIdx+1,colIdx),(dataInitRowIdx+numRows, colIdx)) 
     colIndexRange = tblSheet.range((dataInitRowIdx+1,1),(dataInitRowIdx+numRows, 1)) 
@@ -923,8 +926,8 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
             elm = elmMaker('heading', v,lang=lang)
             colNode.append(elm)
     # I AM HERE
-    unitNode = elmMaker('unit', colHeadDict['unit'])
-    colNode.append(unitNode)
+    # unitNode = elmMaker('unit', colHeadDict['unit'])
+    # colNode.append(unitNode)
 
     # print(colAttrNames)
     # print(colAttrValues)

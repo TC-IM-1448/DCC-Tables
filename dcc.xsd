@@ -473,14 +473,15 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="quantityCode" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="unitUsed" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="functionToSIunit" type="dcc:calculateToSIunitExprType" minOccurs="0"/>
+            <xs:element name="unitSI" type="dcc:unitType" />
             <xs:element name="externalRefs" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="calcExprForMeasValueToSIunit" type="dcc:calculateToSIunitExprType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <!--<xs:element name="quantityUnitElement" type="dcc:anyType"/> -->
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="idRef" type="xs:IDREF" use="optional"/>
         <xs:attribute name="quantityCodeSystem" type="dcc:quantityCodeSystemType" use="required"/>
-        <xs:attribute name="unitSI" type="dcc:unitType" use="required"/>
         <xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
@@ -641,8 +642,8 @@ quantities of specified kinds
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@measurand"/>
+                    <xs:field xpath="@dcc:unit"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
-                    <xs:field xpath="dcc:unit"/>
                     <xs:field xpath="dcc:dataList/*/@dataCategory"/>
                 </xs:unique>
             </xs:element>
@@ -659,8 +660,8 @@ quantities of specified kinds
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@measurand"/>
+                    <xs:field xpath="@dcc:unit"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
-                    <xs:field xpath="dcc:unit"/>
                     <xs:field xpath="dcc:dataList/*/@dataCategory"/>
                 </xs:unique>
             </xs:element>
@@ -772,7 +773,7 @@ quantities of specified kinds
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="unit" type="dcc:unitType" minOccurs="0"/>
+            <!-- <xs:element name="unit" type="dcc:unitType" minOccurs="0"/> -->
             <!--xs:element name="dataList" type="dcc:dataListType" minOccurs='0' maxOccurs="unbounded">
                 <xs:unique name="idx0">
                 <xs:selector xpath="dcc:*"/>
@@ -1024,6 +1025,7 @@ quantities of specified kinds
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategoryRef" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="measurand" type="dcc:measurandType" use="required"/>
+        <xs:attribute name="unit" type="dcc:unitType" use="required"/>
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
         
