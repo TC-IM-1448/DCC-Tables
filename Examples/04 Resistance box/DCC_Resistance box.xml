@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<dcc:digitalCalibrationCertificate xmlns:dcc="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="3.0.0" xsi:schemaLocation="https://dfm.dk dcc.xsd">
+<dcc:digitalCalibrationCertificate xmlns:dcc="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="3.0.0" xsi:schemaLocation="https://dfm.dk ../../dcc.xsd">
 	<dcc:heading lang="en">Calibration certificate</dcc:heading>
 	<dcc:heading lang="da">Kalibreringscertifikat</dcc:heading>
 	<dcc:administrativeData>
@@ -13,8 +13,8 @@
 		</dcc:dccSoftware>
 		<dcc:coreData>
 			<dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
-			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
 			<dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
 			<dcc:uniqueIdentifier>
 				<dcc:heading lang="en">Certificate number</dcc:heading>
 				<dcc:heading lang="da">Certifikatnummer</dcc:heading>
@@ -204,13 +204,12 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 		</dcc:measuringSystem>
 	</dcc:measuringSystems>
 	<dcc:measurementResults>
-		<dcc:calibrationResult tableId="R_AbsCal_Ohm" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measuringSystemRef="ms1" numRows="74" numCols="8">
+		<dcc:calibrationResult tableId="R_AbsCal_Ohm" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measuringSystemRef="ms1" numRows="74" numCols="17">
 			<dcc:heading lang="da">-</dcc:heading>
 			<dcc:heading lang="en">Relative Resistance Accuracy</dcc:heading>
-			<dcc:column scope="-" dataCategoryRef="-" measurand="-">
+			<dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
 				<dcc:heading lang="da">Kundens kode</dcc:heading>
 				<dcc:heading lang="en">Customer Tags</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:rowTag>
 					<dcc:row idx="1">01</dcc:row>
 					<dcc:row idx="2">02</dcc:row>
@@ -288,9 +287,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">74</dcc:row>
 				</dcc:rowTag>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Nominal</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">1</dcc:row>
 					<dcc:row idx="2">2</dcc:row>
@@ -368,9 +366,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">900000000</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Measured</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">0.99957</dcc:row>
 					<dcc:row idx="2">1.99976</dcc:row>
@@ -448,9 +445,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">89783000</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Deviation</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">-0.00043</dcc:row>
 					<dcc:row idx="2">-0.00024</dcc:row>
@@ -528,9 +524,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">-217000</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="%">
 				<dcc:heading lang="en">Relative Deviation</dcc:heading>
-				<dcc:unit>\percent</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">-0.04302</dcc:row>
 					<dcc:row idx="2">-0.012</dcc:row>
@@ -608,9 +603,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">-0.24169</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Uncertainty</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">0.00035</dcc:row>
 					<dcc:row idx="2">0.00036</dcc:row>
@@ -688,9 +682,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">580000</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">MPE</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:acceptanceLimitUpper>
 					<dcc:row idx="1">0.21982</dcc:row>
 					<dcc:row idx="2">0.41982</dcc:row>
@@ -768,9 +761,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">27000000</dcc:row>
 				</dcc:acceptanceLimitUpper>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
 				<dcc:heading lang="en">Nominal</dcc:heading>
-				<dcc:unit>\kilo\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="28">1</dcc:row>
 					<dcc:row idx="29">2</dcc:row>
@@ -802,9 +794,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="55">900</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
 				<dcc:heading lang="en">Measured</dcc:heading>
-				<dcc:unit>\kilo\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="28">1.000271</dcc:row>
 					<dcc:row idx="29">2.000681</dcc:row>
@@ -836,9 +827,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="55">900.564</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
 				<dcc:heading lang="en">Deviation</dcc:heading>
-				<dcc:unit>\kilo\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="28">0.000271</dcc:row>
 					<dcc:row idx="29">0.000681</dcc:row>
@@ -870,9 +860,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="55">0.564</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
 				<dcc:heading lang="en">Uncertainty</dcc:heading>
-				<dcc:unit>\kilo\Ohm</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="28">0.000014</dcc:row>
 					<dcc:row idx="29">0.000047</dcc:row>
@@ -904,9 +893,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="55">0.021</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="kΩ">
 				<dcc:heading lang="en">MPE</dcc:heading>
-				<dcc:unit>\kilo\Ohm</dcc:unit>
 				<dcc:acceptanceLimitUpper>
 					<dcc:row idx="28">0.03</dcc:row>
 					<dcc:row idx="29">0.06</dcc:row>
@@ -938,9 +926,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="55">27</dcc:row>
 				</dcc:acceptanceLimitUpper>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω"  unit="MΩ">
 				<dcc:heading lang="en">Nominal</dcc:heading>
-				<dcc:unit>\Mega\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="56">1</dcc:row>
 					<dcc:row idx="57">2</dcc:row>
@@ -963,9 +950,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">900</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="MΩ">
 				<dcc:heading lang="en">Measured</dcc:heading>
-				<dcc:unit>\Mega\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="56">1.001592</dcc:row>
 					<dcc:row idx="57">2.00356</dcc:row>
@@ -988,9 +974,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">89.783</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="MΩ">
 				<dcc:heading lang="en">Deviation</dcc:heading>
-				<dcc:unit>\Mega\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="56">0.001592</dcc:row>
 					<dcc:row idx="57">0.00356</dcc:row>
@@ -1013,9 +998,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">-0.217</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="MΩ">
 				<dcc:heading lang="en">Uncertainty</dcc:heading>
-				<dcc:unit>\Mega\Ohm</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="56">0.000022</dcc:row>
 					<dcc:row idx="57">0.00026</dcc:row>
@@ -1038,9 +1022,8 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 					<dcc:row idx="74">0.58</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" measurand="Resistance">
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="MΩ">
 				<dcc:heading lang="en">MPE</dcc:heading>
-				<dcc:unit>\Mega\Ohm</dcc:unit>
 				<dcc:acceptanceLimitUpper>
 					<dcc:row idx="56">0.03</dcc:row>
 					<dcc:row idx="57">0.06</dcc:row>
@@ -1067,37 +1050,43 @@ Nominal value includes the measured zero Ω resistance.</dcc:body>
 		<dcc:measurementSeries tableId="cal_ZERO" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measuringSystemRef="ms1" numRows="1" numCols="4">
 			<dcc:heading lang="da">-</dcc:heading>
 			<dcc:heading lang="en">Absolute Resistance Accuracy</dcc:heading>
-			<dcc:column scope="-" dataCategoryRef="-" measurand="-">
+			<dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
 				<dcc:heading lang="da">Kundens kode</dcc:heading>
 				<dcc:heading lang="en">Customer Tags</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:rowTag>
 					<dcc:row idx="1">ZERO</dcc:row>
 				</dcc:rowTag>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Object mean value (°C)</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">0.09908</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Resistance">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Error (°C)</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">0.00027</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="expandedUncertainty" measurand="Resistance">
+			<dcc:column scope="reference" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="Ω">
 				<dcc:heading lang="en">Uncertainty of reading (°C)</dcc:heading>
-				<dcc:unit>\Ohm</dcc:unit>
 				<dcc:acceptanceLimitUpper>
 					<dcc:row idx="1">0.25</dcc:row>
 				</dcc:acceptanceLimitUpper>
 			</dcc:column>
 		</dcc:measurementSeries>
 	</dcc:measurementResults>
+
+	<dcc:quantityUnitDefs>
+		<dcc:heading lang="en">Quantity and Units definitions</dcc:heading>
+		<dcc:quantityUnitDef id="megaOhm" quantityCodeSystem="ISO/IEC 80000">
+			<dcc:unitUsed>MΩ</dcc:unitUsed>
+			<dcc:functionToSIunit>1000000*value</dcc:functionToSIunit>
+			<dcc:unitSI>Ω</dcc:unitSI>
+		</dcc:quantityUnitDef>
+	</dcc:quantityUnitDefs>
+
 	<dcc:embeddedFiles>
 		<dcc:heading lang="da">Indlejrede filer</dcc:heading>
 		<dcc:heading lang="en">Embedded files</dcc:heading>

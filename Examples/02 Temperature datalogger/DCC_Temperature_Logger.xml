@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<dcc:digitalCalibrationCertificate xmlns:dcc="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="3.0.0" xsi:schemaLocation="https://dfm.dk dcc.xsd">
+<dcc:digitalCalibrationCertificate xmlns:dcc="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="3.0.0" xsi:schemaLocation="https://dfm.dk ../../dcc.xsd">
 	<dcc:heading lang="en">Calibration certificate</dcc:heading>
 	<dcc:heading lang="da">Kalibreringscertifikat</dcc:heading>
 	<dcc:administrativeData>
@@ -13,8 +13,8 @@
 		</dcc:dccSoftware>
 		<dcc:coreData>
 			<dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
-			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
 			<dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
 			<dcc:uniqueIdentifier>
 				<dcc:heading lang="en">Certificate number</dcc:heading>
 				<dcc:heading lang="da">Certifikatnummer</dcc:heading>
@@ -179,10 +179,9 @@ covers the calibrated items.</dcc:body>
 		<dcc:calibrationResult tableId="cal_1_T1" serviceCategory="T/T-2.2.3 Thermistors and other resistive thermometers" measuringSystemRef="ms1" numRows="5" numCols="7">
 			<dcc:heading lang="da">-</dcc:heading>
 			<dcc:heading lang="en">calibrationResult 1_T1</dcc:heading>
-			<dcc:column scope="-" dataCategoryRef="-" measurand="-">
+			<dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
 				<dcc:heading lang="da">Kundens kode</dcc:heading>
 				<dcc:heading lang="en">Customer Tags</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:rowTag>
 					<dcc:row idx="1">T1</dcc:row>
 					<dcc:row idx="2">T2</dcc:row>
@@ -191,9 +190,8 @@ covers the calibrated items.</dcc:body>
 					<dcc:row idx="5">T5</dcc:row>
 				</dcc:rowTag>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="en">True mean value (°C)</dcc:heading>
-				<dcc:unit>\degreeCelcius</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">-40.006</dcc:row>
 					<dcc:row idx="2">-20.014</dcc:row>
@@ -202,9 +200,8 @@ covers the calibrated items.</dcc:body>
 					<dcc:row idx="5">40</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="en">Object mean value (°C)</dcc:heading>
-				<dcc:unit>\degreeCelcius</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">-39.9</dcc:row>
 					<dcc:row idx="2">-19.9</dcc:row>
@@ -213,9 +210,8 @@ covers the calibrated items.</dcc:body>
 					<dcc:row idx="5">40</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="en">Repeatability (°C)</dcc:heading>
-				<dcc:unit>\degreeCelcius</dcc:unit>
 				<dcc:repeatability>
 					<dcc:row idx="1">0</dcc:row>
 					<dcc:row idx="2">0</dcc:row>
@@ -224,9 +220,8 @@ covers the calibrated items.</dcc:body>
 					<dcc:row idx="5">0</dcc:row>
 				</dcc:repeatability>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="en">Error (°C)</dcc:heading>
-				<dcc:unit>\degreeCelcius</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">0.106</dcc:row>
 					<dcc:row idx="2">0.114</dcc:row>
@@ -235,9 +230,8 @@ covers the calibrated items.</dcc:body>
 					<dcc:row idx="5">0</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="value" measurand="Temperature">
+			<dcc:column scope="indication" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="en">Uncertainty of reading (°C)</dcc:heading>
-				<dcc:unit>\degreeCelcius</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">0.1</dcc:row>
 					<dcc:row idx="2">0.1</dcc:row>
@@ -246,9 +240,8 @@ covers the calibrated items.</dcc:body>
 					<dcc:row idx="5">0.1</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="en">Measurement uncertainty (°C)</dcc:heading>
-				<dcc:unit>\degreeCelcius</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">0.089</dcc:row>
 					<dcc:row idx="2">0.089</dcc:row>
@@ -259,6 +252,19 @@ covers the calibrated items.</dcc:body>
 			</dcc:column>
 		</dcc:calibrationResult>
 	</dcc:measurementResults>
+
+	<dcc:quantityUnitDefs>
+		<dcc:heading lang="en">Definition of Units and Qauntities</dcc:heading>
+		<dcc:quantityUnitDef id="QU-Zfactor" quantityCodeSystem="other" statementRefs="meth3" >
+			<dcc:quantityCode>degC</dcc:quantityCode>
+			<dcc:unitUsed>1</dcc:unitUsed>
+			<dcc:functionToSIunit>value+273.15</dcc:functionToSIunit>
+			<dcc:unitSI>1</dcc:unitSI>
+			<dcc:heading lang="en">Celsius temperatur</dcc:heading>
+			<dcc:heading lang="da">Celsius temperatur</dcc:heading>
+		</dcc:quantityUnitDef>
+	</dcc:quantityUnitDefs>
+	
 	<dcc:embeddedFiles>
 		<dcc:heading lang="da">Indlejrede filer</dcc:heading>
 		<dcc:heading lang="en">Embedded files</dcc:heading>

@@ -13,8 +13,8 @@
 		</dcc:dccSoftware>
 		<dcc:coreData>
 			<dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
-			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
 			<dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
 			<dcc:uniqueIdentifier>
 				<dcc:heading lang="en">Certificate number</dcc:heading>
 				<dcc:heading lang="da">Certifikatnummer</dcc:heading>
@@ -241,170 +241,153 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 		<dcc:calibrationResult tableId="TempCal" serviceCategory="T/T-2.2.3 Thermistors and other resistive thermometers" measuringSystemRef="ms1" numRows="3" numCols="17">
 			<dcc:heading lang="da">-</dcc:heading>
 			<dcc:heading lang="en">calibrationResult 1_T1</dcc:heading>
-			<dcc:column scope="-" dataCategoryRef="-" measurand="-">
+			<dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
 				<dcc:heading lang="da">Kundens kode</dcc:heading>
 				<dcc:heading lang="en">Customer Tags</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:rowTag>
 					<dcc:row idx="1">T1</dcc:row>
 					<dcc:row idx="2">T2</dcc:row>
 					<dcc:row idx="3">T3</dcc:row>
 				</dcc:rowTag>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
 				<dcc:heading lang="en">Calibration Point</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:targetValue>
 					<dcc:row idx="1">-6.000</dcc:row>
 					<dcc:row idx="2">5.000</dcc:row>
 					<dcc:row idx="3">27.000</dcc:row>
 				</dcc:targetValue>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Referencetemperatur i instrumentenheder</dcc:heading>
 				<dcc:heading lang="en">Reference Temperature in instrument units</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">-6.076</dcc:row>
 					<dcc:row idx="2">5.017</dcc:row>
 					<dcc:row idx="3">27.054</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Instrumentvisning</dcc:heading>
 				<dcc:heading lang="en">Instrument indication  </dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">-6.060</dcc:row>
 					<dcc:row idx="2">5.050</dcc:row>
 					<dcc:row idx="3">27.160</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Visningsfejl</dcc:heading>
 				<dcc:heading lang="en">Instrument Error</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:value>
 					<dcc:row idx="1">0.016</dcc:row>
 					<dcc:row idx="2">0.033</dcc:row>
 					<dcc:row idx="3">0.106</dcc:row>
 				</dcc:value>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="value" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Ekspanderet kalibreringsusikkerhed</dcc:heading>
 				<dcc:heading lang="en">Uncertainty</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">0.108</dcc:row>
 					<dcc:row idx="2">0.108</dcc:row>
 					<dcc:row idx="3">0.108</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="5-2|Celsius temperature|℃"  unit="℃">
 				<dcc:heading lang="da">k</dcc:heading>
 				<dcc:heading lang="en">k</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:uncertaintyCoverageFactor_k>
 					<dcc:row idx="1">2</dcc:row>
 					<dcc:row idx="2">2</dcc:row>
 					<dcc:row idx="3">2</dcc:row>
 				</dcc:uncertaintyCoverageFactor_k>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="value" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃"  unit="℃">
 				<dcc:heading lang="da">Øvre tolerancegrænse</dcc:heading>
 				<dcc:heading lang="en">Upper tolerance limit for item bias</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:toleranceLimitUpper>
 					<dcc:row idx="1">0.5</dcc:row>
 					<dcc:row idx="2">0.5</dcc:row>
 					<dcc:row idx="3">0.5</dcc:row>
 				</dcc:toleranceLimitUpper>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="value" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃"  unit="℃">
 				<dcc:heading lang="da">Nedre tolerancegrænse for visningsfejl</dcc:heading>
 				<dcc:heading lang="en">Lower tolerance limit for item bias</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:toleranceLimitLower>
 					<dcc:row idx="1">-0.5</dcc:row>
 					<dcc:row idx="2">-0.5</dcc:row>
 					<dcc:row idx="3">-0.5</dcc:row>
 				</dcc:toleranceLimitLower>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="-">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="-"  unit="-">
 				<dcc:heading lang="da">Konformitetsudsagn</dcc:heading>
 				<dcc:heading lang="en">Conformity</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:conformity>
 					<dcc:row idx="1">pass</dcc:row>
 					<dcc:row idx="2">pass</dcc:row>
 					<dcc:row idx="3">pass</dcc:row>
 				</dcc:conformity>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="other">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃"  unit="℃">
 				<dcc:heading lang="da">Visningsfejl+kalibreringsusikkerhed</dcc:heading>
 				<dcc:heading lang="en">Error+uncertianty</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">0.124</dcc:row>
 					<dcc:row idx="2">0.141</dcc:row>
 					<dcc:row idx="3">0.214</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Beregning af visningsfej+usikkerhed</dcc:heading>
 				<dcc:heading lang="en">Calculation of Error+uncertainty</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:methodRef>
 					<dcc:row idx="1">s03</dcc:row>
 					<dcc:row idx="2">s03</dcc:row>
 					<dcc:row idx="3">s03</dcc:row>
 				</dcc:methodRef>
 			</dcc:column>
-			<dcc:column scope="-" dataCategoryRef="conformity" measurand="Temperature">
+			<dcc:column scope="-" dataCategoryRef="conformity" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Basis for konformitetsudsagn</dcc:heading>
 				<dcc:heading lang="en">Basis of conformity statement</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:decisionRuleRef>
 					<dcc:row idx="1">s05</dcc:row>
 					<dcc:row idx="2">s05</dcc:row>
 					<dcc:row idx="3">s05</dcc:row>
 				</dcc:decisionRuleRef>
 			</dcc:column>
-			<dcc:column scope="-" dataCategoryRef="value" measurand="Temperature">
+			<dcc:column scope="-" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Anvendt reference</dcc:heading>
 				<dcc:heading lang="en">Reference Used</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:usedReferenceRef>
 					<dcc:row idx="1">equip1</dcc:row>
 					<dcc:row idx="2">equip1</dcc:row>
 					<dcc:row idx="3">equip1</dcc:row>
 				</dcc:usedReferenceRef>
 			</dcc:column>
-			<dcc:column scope="environment" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="environment" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Omgivelsestemperatur</dcc:heading>
 				<dcc:heading lang="en">Environment temperature</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">22</dcc:row>
 					<dcc:row idx="2">22</dcc:row>
 					<dcc:row idx="3">22</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="environment" dataCategoryRef="-" measurand="Temperature">
+			<dcc:column scope="environment" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
 				<dcc:heading lang="da">Usikkerhed Omgivelsestemperatur</dcc:heading>
 				<dcc:heading lang="en">Uncertainty Environment temperature</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">1</dcc:row>
 					<dcc:row idx="2">1</dcc:row>
 					<dcc:row idx="3">1</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="environment" dataCategoryRef="-" measurand="Pressure.Hydraulic.Static">
-				<dcc:heading lang="da">Omgivelsestryk</dcc:heading>
-				<dcc:heading lang="en">Environment pressure</dcc:heading>
-				<dcc:unit>\hecto\pascal</dcc:unit>
+			<dcc:column scope="environment" dataCategoryRef="-" quantity="4-14.1|pressure|Pa"  unit="hPa">
+				<dcc:heading lang="da">Omgivelsestryk (hPa)</dcc:heading>
+				<dcc:heading lang="en">Environment pressure (hPa)</dcc:heading>
 				<dcc:expandedUncertainty>
 					<dcc:row idx="1">1013</dcc:row>
 					<dcc:row idx="2">1013</dcc:row>
@@ -413,6 +396,14 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 			</dcc:column>
 		</dcc:calibrationResult>
 	</dcc:measurementResults>
+	<dcc:quantityUnitDefs>
+		<dcc:heading lang="en">Quantity and Units</dcc:heading>
+		<dcc:quantityUnitDef id="degC" quantityCodeSystem="ISO/IEC 80000">
+			<dcc:unitUsed>℃</dcc:unitUsed>
+			<dcc:functionToSIunit>1.0*value+273.15</dcc:functionToSIunit>
+			<dcc:unitSI>K</dcc:unitSI>
+		</dcc:quantityUnitDef>
+	</dcc:quantityUnitDefs>
 	<dcc:embeddedFiles>
 		<dcc:heading lang="da">Indlejrede filer</dcc:heading>
 		<dcc:heading lang="en">Embedded files</dcc:heading>
