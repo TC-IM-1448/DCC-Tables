@@ -397,12 +397,14 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 		</dcc:calibrationResult>
 	</dcc:measurementResults>
 	<dcc:quantityUnitDefs>
+		<!-- 
 		<dcc:heading lang="en">Quantity and Units</dcc:heading>
 		<dcc:quantityUnitDef id="degC" quantityCodeSystem="ISO/IEC 80000">
 			<dcc:unitUsed>℃</dcc:unitUsed>
 			<dcc:functionToSIunit>1.0*value+273.15</dcc:functionToSIunit>
 			<dcc:unitSI>K</dcc:unitSI>
 		</dcc:quantityUnitDef>
+		-->
 	</dcc:quantityUnitDefs>
 	<dcc:embeddedFiles>
 		<dcc:heading lang="da">Indlejrede filer</dcc:heading>

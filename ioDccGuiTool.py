@@ -238,7 +238,7 @@ class DccGuiTool():
             sht.range((1,i+1)).column_width = 50
 
         # load the information into the table
-        ids = []
+        tableData = []
         rows = node.findall(subNodeTag,ns)
         issuerIdMap = {'customer_id':'customer', 'manufact_id': 'manufacturer', 'calLab_id': 'calibrationLaboratory'}
         for idx, subNode in enumerate(rows):
@@ -288,14 +288,17 @@ class DccGuiTool():
                     sht.range((tblRowIdx+1+idx,cidx)).value = filePath
                     sht.range((1,2)).column_width = 27
 
-
-            rng = sht.range((tblRowIdx+1+idx,1))
-            rng.value = rowData
+            tableData.append(rowData)
+            # rng = sht.range((tblRowIdx+1+idx,1))
+            # rng.value = rowData
 
             if nodeTag == "dcc:measuringSystems": 
                 sht.range((1,3)).column_width = 30
-        
-        rng = sht.range((tblRowIdx,1),(tblRowIdx+1+idx,len(heading)))
+
+
+        rng = sht.range((tblRowIdx+1,1))
+        rng.value = tableData
+        rng = sht.range((tblRowIdx,1),(tblRowIdx+len(rows),len(heading)))
         self.resizeXlTable(rng,sht,'Table_'+shtName)
         rng.api.WrapText = True
         rng.columns
