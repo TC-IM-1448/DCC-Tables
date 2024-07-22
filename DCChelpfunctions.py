@@ -625,7 +625,7 @@ if False:
 
 
 #%% Run tests on dcc-xml-file
-if True: 
+if False: 
     xsd_tree, xsd_root = load_xml("dcc.xsd")
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)
@@ -634,7 +634,7 @@ if True:
     print(v)
     # print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))
 #%%
-if True:
+if False:
     tree, root = load_xml("SKH_10112_2.xml")
     nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
     nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)

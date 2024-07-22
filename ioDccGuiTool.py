@@ -654,7 +654,8 @@ def exportToXmlFile(wb, fileName='output.xml'):
     # wb = xw.Book('DCC_pipette_blank.xlsx')
     
     adminSht = wb.sheets['administrativeData']
-    adminHeading = self.headings['administrativeDataHeadings']
+    global dccGuiTool 
+    adminHeading = dccGuiTool.headings['administrativeDataHeadings']
     
     colIdxXpath = adminHeading.index('XPath')+1
     rowInitXpath = 2
@@ -900,7 +901,8 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     typecast_dict = {'int': int, 'real': float, 'string': str, 'bool': bool, 'conformityStatus': str, 'ref': str} # Deprecated 
     numRows = int(parentNode.attrib['numRows'])
     # print('numRows = ', numRows)
-    colHeading = self.headings['columnHeading']
+    global dccGuiTool
+    colHeading = dccGuiTool.headings['columnHeading']
     dataInitRowIdx = rowInitIdx+len(colHeading)-1
     colAttrRange = tblSheet.range((rowInitIdx,colIdx),(dataInitRowIdx, colIdx))
     colAttrNameRange = tblSheet.range((rowInitIdx,1),(dataInitRowIdx, 1)) 
