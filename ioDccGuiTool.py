@@ -609,29 +609,6 @@ class DccGuiTool():
         rng = sht.range((1,1)).expand()
         sht.autofit(axis="columns")
 
-        # heading = ['in DCC', 'settingId', 'refId', 
-        #            'value', 'unit',  
-        #            'heading lang1', 'body lang1', 
-        #            'heading lang2', 'body lang2']
-
-        # sht.range((1,1), (1,7)).value = heading
-
-        # for idx, setting in enumerate(settingList):
-        #     inDCC = 'y'
-        #     settingRefId = setting.attrib['refId'] if 'refId' in setting.attrib else None
-        #     settingId = setting.attrib['settingId']
-        #     ids = [inDCC, settingId, settingRefId]
-        #     headingLang1 = setting.findall(f'./dcc:heading[@lang="{lang1}"]',ns)
-        #     bodyLang1 = setting.findall(f'./dcc:body[@lang="{lang1}"]',ns)
-        #     headingLang2 = setting.findall(f'./dcc:heading[@lang="{lang2}"]',ns)
-        #     bodyLang2 = setting.findall(f'./dcc:body[@lang="{lang2}"]',ns)
-        #     value = setting.findall('dcc:value',ns)
-        #     unit = setting.findall('dcc:unit',ns)
-        #     tmp = [value, unit, headingLang1, bodyLang1, headingLang2, bodyLang2]
-        #     tmp =  [None if i == [] else i[0].text for i in tmp]
-        #     ids = ids+tmp
-        #     rng = sht.range((idx+2,1))
-        #     rng.value = ids            
 
 def extractHeadingLang(s):
     r = re.findall(r'\[(.*?)\]', s)
@@ -1073,3 +1050,5 @@ if __name__=="__main__":
     #     print(helpstatement)
 
          
+
+# %%

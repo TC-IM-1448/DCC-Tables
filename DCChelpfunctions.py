@@ -373,6 +373,8 @@ def printelement(element):
 #%%
 def schema_get_restrictions(xsd_root: et._Element, 
                             type_names=[
+                                        'stringISO3166Type',
+                                        'stringISO639Type',
                                         'serviceCategoryType',
                                         'yesno', 
                                         'statementCategoryType', 
@@ -388,7 +390,6 @@ def schema_get_restrictions(xsd_root: et._Element,
                                         'tableCategoryType',
                                         'approachToTargetType',
                                         'quantityCodeSystemType',
-                                        'mathOperatorType'
                                         ]
                             ) -> dict: 
     """schema_get_restrictions is used for finding the valid tokens for as specified in type_name:
