@@ -16,6 +16,7 @@ from  lxml import etree as et
 from lxml import builder as etb
 from lxml.builder import ElementMaker 
 import tkinter as tk
+from tkinter import ttk
 import tkinter.filedialog as tkfd
 import DCChelpfunctions as dcchf
 from DCChelpfunctions import search
@@ -26,33 +27,33 @@ DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
 HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
-                                        'heading[en]', 'heading[da]', 
-                                        'body[en]', 'body[da]', 
+                                        'heading[1]', 'heading[2]', 
+                                        'body[1]', 'body[2]', 
                                         'externalReference'],
 
     equipmentHeadings = ['in DCC', '@id', '@category',
-                            'heading[da]', 'heading[en]', 'manufacturer', 'productName', 'productType',
-                            'customer_id heading[en]', 'customer_id heading[da]','customer_id value', 
-                            'manufact_id heading[en]', 'manufact_id heading[da]','manufact_id value', 
-                            'calLab_id heading[en]', 'calLab_id heading[da]', 'calLab_id value'],
+                            'heading[1]', 'heading[2]', 'manufacturer', 'productName', 'productType',
+                            'customer_id heading[1]', 'customer_id heading[2]','customer_id value', 
+                            'manufact_id heading[1]', 'manufact_id heading[2]','manufact_id value', 
+                            'calLab_id heading[1]', 'calLab_id heading[2]', 'calLab_id value'],
 
     settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
                         'parameter', 'value', 'unit', 'softwareInstruction', 
-                        'heading[en]', 'heading[da]', 'body[en]', 'body[da]'
+                        'heading[1]', 'heading[2]', 'body[1]', 'body[2]'
                         ],
 
     measuringSystemsHeadings = ['in DCC', '@id', 
-                                'heading[en]', 'heading[da]', 
+                                'heading[1]', 'heading[2]', 
                                 'equipmentRefs', 'settingRefs', 'statementRefs',
                                 'operationalStatus',
-                                'body[en]', 'body[da]'
+                                'body[1]', 'body[2]'
                                 ], 
 
     embeddedFilesHeadings = ['in DCC', '@id', 
-                             'heading[da]', 
-                             'heading[en]',
-                             'body[da]',
-                             'body[en]',
+                             'heading[1]',
+                             'heading[2]', 
+                             'body[1]',
+                             'body[2]',
                              'fileExtension'],
 
     quantityUnitDefsHeadings = ['in DCC', 
@@ -63,12 +64,12 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                 'functionToSIunit',
                                 'unitSI',
                                 'externalRefs',
-                                'heading[en]',
-                                'heading[da]',
+                                'heading[1]',
+                                'heading[2]',
                                 '@statementRefs'],
 
-    administrativeDataHeadings = [ "heading[en]", 
-                                    "heading[da]", 
+    administrativeDataHeadings = [ "heading[1]", 
+                                    "heading[2]", 
                                     "Description", 
                                     "Value", 
                                     "XPath"], 
@@ -79,12 +80,12 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                     '@measuringSystemRef', 
                                     '@customServiceCategory', 
                                     'statementRef',
-                                    'heading[da]', 
-                                    'heading[en]', 
+                                    'heading[1]', 
+                                    'heading[2]', 
                                     '@numRows', 
                                     '@numCols'], 
 
-    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[da]', 'heading[en]', 'idx']
+    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
     )
 
 #%%
@@ -129,9 +130,12 @@ class DccGuiTool():
         for sht in self.wb.sheets: 
             if not sht.name == "Definitions": sht.delete()
         self.loadSchemaRestrictions()
+        langs = dcchf.get_languages(self.dccRoot)
+        self.chooseLanguages(langs + ['---']+self.xsdRestrictions['stringISO639Type'])
+        self.updateHeadings(self.langs)
         self.loadDccSequence()
         return errors
-        
+
     def loadSchemaRestrictions(self): 
         xsd_root = self.xsdRoot
         sht_def = self.sheetDef
@@ -146,6 +150,23 @@ class DccGuiTool():
             rng.offset(1,0).expand('down').name = k  
             rng.font.bold = True
         self.dccDefInitCol = i+1
+        self.xsdRestrictions = drestr
+        return drestr
+
+    def chooseLanguages(self, languages):
+        global app
+        languageDialog = MyLanguageDialog(app, languages)
+        app.wait_window(languageDialog.top)
+
+    def updateHeadings(self, langs):
+        global HEADINGS
+        lang1, lang2 = langs
+        self.headings = {}
+        for k,v in HEADINGS.items():
+            new_v = [s.replace('1', lang1) for s in v]
+            new_v = [s.replace('2', lang2) for s in new_v]
+            self.headings[k] = new_v
+        return self.headings
 
     def resizeXlTable(self,rng,sht,tableName:str):
         if tableName not in [tbl.name for tbl in sht.tables]:
@@ -165,41 +186,41 @@ class DccGuiTool():
 
     def loadDccSequence(self):
         self.loadDCCAdministrativeInformation(after='Definitions',
-                                              heading=HEADINGS['administrativeDataHeadings'])
+                                              heading=self.headings['administrativeDataHeadings'])
         
-        self.loadDccInfoTable(heading = HEADINGS['statementHeadings'], 
+        self.loadDccInfoTable(heading = self.headings['statementHeadings'], 
                                 nodeTag="dcc:statements",
                                 subNodeTag="dcc:statement",
                                 place_sheet_after='AdministrativeData')
         
-        self.loadDccInfoTable(heading = HEADINGS['equipmentHeadings'], 
+        self.loadDccInfoTable(heading = self.headings['equipmentHeadings'], 
                                 nodeTag="dcc:equipment", 
                                 subNodeTag="dcc:equipmentItem",
                                 place_sheet_after='statements')
         
-        self.loadDccInfoTable( heading = HEADINGS['settingsHeadings'], 
+        self.loadDccInfoTable( heading = self.headings['settingsHeadings'], 
                                 nodeTag="dcc:settings", 
                                 subNodeTag="dcc:setting",
                                 place_sheet_after='equipment')
-        self.loadDccInfoTable( heading = HEADINGS['measuringSystemsHeadings'], 
+        self.loadDccInfoTable( heading = self.headings['measuringSystemsHeadings'], 
                                 nodeTag="dcc:measuringSystems", 
                                 subNodeTag="dcc:measuringSystem",
                                 place_sheet_after='settings')
-        self.loadDccInfoTable( heading = HEADINGS['embeddedFilesHeadings'], 
+        self.loadDccInfoTable( heading = self.headings['embeddedFilesHeadings'], 
                                 nodeTag="dcc:embeddedFiles", 
                                 subNodeTag="dcc:embeddedFile",
                                 place_sheet_after='measuringSystems')
-        self.loadDccInfoTable(heading=HEADINGS['quantityUnitDefsHeadings'],
+        self.loadDccInfoTable(heading=self.headings['quantityUnitDefsHeadings'],
                               nodeTag="dcc:quantityUnitDefs", 
                               subNodeTag="dcc:quantityUnitDef",
                               place_sheet_after="embeddedFiles")
-        self.loadDCCMeasurementResults(heading=HEADINGS['measurementResultHeadings'])
+        self.loadDCCMeasurementResults(heading=self.headings['measurementResultHeadings'])
 
 
     def loadDccInfoTable(self, 
                          heading=['in DCC', '@category', '@statementId', 
-                                  'heading[en]', 'body[en]', 
-                                  'heading[da]', 'body[da]'], 
+                                  'heading[1]', 'body[1]', 
+                                  'heading[2]', 'body[2]'], 
                          nodeTag="dcc:statements", 
                          subNodeTag="dcc:statement",
                          place_sheet_after='AdministrativeData' ): 
@@ -442,8 +463,8 @@ class DccGuiTool():
 
             # Now load the columns
             columns = tbl.findall("dcc:column", ns)
-            columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[da]', 'heading[en]', 'idx']
-            columnHeading = HEADINGS['columnHeading']
+            columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
+            columnHeading = self.headings['columnHeading']
             headingColors = ['yellow', 'yellow', 'light_yellow', 'green', 'green', 'light_green', 'light_blue', 'light_blue', 'light_gray']
             headingColors = [self.colors[k] for k in headingColors]
 
@@ -565,8 +586,8 @@ class DccGuiTool():
 
                 
     def loadDCCAdministrativeInformation(self, after='Definitions', 
-                                         heading=["heading[en]", 
-                                                  "heading[da]", 
+                                         heading=["heading[1]", 
+                                                  "heading[2]", 
                                                   "Description", 
                                                   "Value", 
                                                   "XPath"]):
@@ -633,7 +654,7 @@ def exportToXmlFile(wb, fileName='output.xml'):
     # wb = xw.Book('DCC_pipette_blank.xlsx')
     
     adminSht = wb.sheets['administrativeData']
-    adminHeading = HEADINGS['administrativeDataHeadings']
+    adminHeading = self.headings['administrativeDataHeadings']
     
     colIdxXpath = adminHeading.index('XPath')+1
     rowInitXpath = 2
@@ -879,7 +900,7 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     typecast_dict = {'int': int, 'real': float, 'string': str, 'bool': bool, 'conformityStatus': str, 'ref': str} # Deprecated 
     numRows = int(parentNode.attrib['numRows'])
     # print('numRows = ', numRows)
-    colHeading = HEADINGS['columnHeading']
+    colHeading = self.headings['columnHeading']
     dataInitRowIdx = rowInitIdx+len(colHeading)-1
     colAttrRange = tblSheet.range((rowInitIdx,colIdx),(dataInitRowIdx, colIdx))
     colAttrNameRange = tblSheet.range((rowInitIdx,1),(dataInitRowIdx, 1)) 
@@ -970,7 +991,7 @@ class MainApp(tk.Tk):
     def setup_gui(self,app):
         self.wm_title("DCC EXCEL UI Tool")
         # self.canvas = tk.Canvas(self, width = 1851, height = 1041)
-        self.geometry('300x200')
+        self.geometry('400x200')
         self.attributes('-topmost', True)
         # img = tk.PhotoImage(file = 'BG_design.png')
         # self.background_image = img
@@ -1022,7 +1043,38 @@ class MainApp(tk.Tk):
         exportToXmlFile(self.guiTool.wb, file_path)
         self.label2.config(text=f"exported to: {file_path}")
         
-# if __name__ == "__main__":
+class MyLanguageDialog:
+    def __init__(self, parent, languages):
+        top = self.top = tk.Toplevel(parent)
+        top.geometry('300x200')
+        top.attributes('-topmost', True)
+        self.myLabel = tk.Label(top, text='Select Language')
+        self.myLabel.pack()
+
+        self.lang1 = tk.StringVar()
+        self.cb_lang1 = ttk.Combobox(top, textvariable=self.lang1)
+        self.cb_lang1.pack()
+        self.cb_lang1['values'] = languages
+        self.lang1.set(languages[0])
+
+        self.lang2 = tk.StringVar()
+        self.cb_lang2 = ttk.Combobox(top, textvariable=self.lang2)
+        self.cb_lang2.pack()
+        self.cb_lang2['values'] = languages
+        l2 = languages[1] if len(languages)>1 else ""
+        self.lang2.set(l2)
+        
+        self.mySubmitButton = tk.Button(top, text='Submit', command=self.send)
+        self.mySubmitButton.pack()
+
+    def send(self):
+        global dccGuiTool
+        lang1 = self.lang1.get()
+        lang2 = self.lang2.get()
+        dccGuiTool.langs = [lang1,lang2]
+        print("Selected Languages: ", dccGuiTool.langs)
+        self.top.destroy()
+
 
 if __name__=="__main__":
     #################

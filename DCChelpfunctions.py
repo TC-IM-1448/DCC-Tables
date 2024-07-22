@@ -307,6 +307,17 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibratio
 # print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
 # search(root,dtbl, dcol, "\micro\litre", customerTag="p5" )
 #%%
+def get_languages(root) -> list:
+    ns = root.nsmap
+    mandatory_lang = root.findall(".//dcc:mandatoryLangCodeISO639_1",ns)
+    used_lang = root.findall(".//dcc:usedLangCodeISO639_1",ns)
+    langs = mandatory_lang + used_lang
+    langs = [x.text for x in langs]
+    unique_langs = []
+    [unique_langs.append(x) for x in langs if x not in unique_langs]
+    return unique_langs
+
+#%%
 def get_statements(root, ID='*') -> list:
     ns = root.nsmap
     statements=root.findall(".//dcc:statement", ns)
