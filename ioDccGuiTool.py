@@ -23,37 +23,37 @@ from DCChelpfunctions import search
 
 
 LANG='da'
+NUM_LANGS = 0
 DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
+#%%
 HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
-                                        'heading[1]', 'heading[2]', 
-                                        'body[1]', 'body[2]', 
+                                        'heading[1]',  
+                                        'body[1]', 
                                         'externalReference'],
 
     equipmentHeadings = ['in DCC', '@id', '@category',
-                            'heading[1]', 'heading[2]', 'manufacturer', 'productName', 'productType',
-                            'customer_id heading[1]', 'customer_id heading[2]','customer_id value', 
-                            'manufact_id heading[1]', 'manufact_id heading[2]','manufact_id value', 
-                            'calLab_id heading[1]', 'calLab_id heading[2]', 'calLab_id value'],
+                            'heading[1]', 'manufacturer', 'productName', 'productType',
+                            'customer_id heading[1]', 'customer_id value', 
+                            'manufact_id heading[1]', 'manufact_id value', 
+                            'calLab_id heading[1]', 'calLab_id value'],
 
     settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
                         'parameter', 'value', 'unit', 'softwareInstruction', 
-                        'heading[1]', 'heading[2]', 'body[1]', 'body[2]'
+                        'heading[1]', 'body[1]', 
                         ],
 
     measuringSystemsHeadings = ['in DCC', '@id', 
-                                'heading[1]', 'heading[2]', 
+                                'heading[1]', 
                                 'equipmentRefs', 'settingRefs', 'statementRefs',
                                 'operationalStatus',
-                                'body[1]', 'body[2]'
+                                'body[1]', 
                                 ], 
 
     embeddedFilesHeadings = ['in DCC', '@id', 
                              'heading[1]',
-                             'heading[2]', 
                              'body[1]',
-                             'body[2]',
                              'fileExtension'],
 
     quantityUnitDefsHeadings = ['in DCC', 
@@ -65,11 +65,9 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                 'unitSI',
                                 'externalRefs',
                                 'heading[1]',
-                                'heading[2]',
                                 '@statementRefs'],
 
-    administrativeDataHeadings = [ "heading[1]", 
-                                    "heading[2]", 
+    administrativeDataHeadings = [ "heading[1]",  
                                     "Description", 
                                     "Value", 
                                     "XPath"], 
@@ -81,11 +79,10 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                     '@customServiceCategory', 
                                     'statementRef',
                                     'heading[1]', 
-                                    'heading[2]', 
                                     '@numRows', 
                                     '@numCols'], 
 
-    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
+    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'idx']
     )
 
 #%%
@@ -132,7 +129,7 @@ class DccGuiTool():
         self.loadSchemaRestrictions()
         langs = dcchf.get_languages(self.dccRoot)
         self.chooseLanguages(langs + ['---']+self.xsdRestrictions['stringISO639Type'])
-        self.updateHeadings(self.langs)
+        self.updateHeadingLanguages(self.langs)
         self.loadDccSequence()
         return errors
 
@@ -158,14 +155,19 @@ class DccGuiTool():
         languageDialog = MyLanguageDialog(app, languages)
         app.wait_window(languageDialog.top)
 
-    def updateHeadings(self, langs):
+    def updateHeadingLanguages(self, langs):
         global HEADINGS
-        lang1, lang2 = langs
-        self.headings = {}
+        headings = {}
         for k,v in HEADINGS.items():
-            new_v = [s.replace('1', lang1) for s in v]
-            new_v = [s.replace('2', lang2) for s in new_v]
-            self.headings[k] = new_v
+            new_v = v[:]
+            for l in ['heading[1]', 'body[1]']:
+                hidxs = [i for i,s in enumerate(new_v) if l in s]
+                for i in hidxs[::-1]:
+                    h = new_v[i] 
+                    new_h = [h.replace('1', lang) for lang in langs]
+                    new_v[i:i+1] = new_h
+            headings[k] = new_v
+        self.headings = headings
         return self.headings
 
     def resizeXlTable(self,rng,sht,tableName:str):
@@ -227,6 +229,8 @@ class DccGuiTool():
         root = self.dccRoot
         ns = root.nsmap
         wb = self.wb
+        langs = self.langs
+        N = len(self.langs)
         lang1 = 'da'
         lang2 = 'en'
 
@@ -239,17 +243,18 @@ class DccGuiTool():
         node = root.find(".//"+nodeTag,ns) 
 
         # Write the Sheet headings
+        sht.range((1,1)).value = [[f'heading[{lang}]'] for lang in self.langs]
         nodeHeadings = node.findall("dcc:heading",ns)
-        sht.range((1,1)).value = [[f'heading[{self.langs[0]}]'], [f'heading[{self.langs[1]}]']]        
         for h in nodeHeadings:
-            if h.attrib['lang'] == lang1: sht.range((1,2)).value = h.text
-            if h.attrib['lang'] == lang2: sht.range((2,2)).value = h.text
-
+            lang = h.attrib['lang']
+            if lang in self.langs: 
+                sht.range((self.langs.index(lang)+1,2)).value = h.text
+            
         # Write the table column headings and set column widths
         
-        tblRowIdx = 3    
+        tblRowIdx = len(self.langs)+1
         sht.range((tblRowIdx,1)).value = heading
-        sht.range((1,1),(3,len(heading))).columns.autofit()
+        sht.range((1,1),(N,len(heading))).columns.autofit()
 
         hIdxs = [idx for idx,val in enumerate(heading) if val.startswith('heading')]
         bIdxs = [idx for idx,val in enumerate(heading) if val.startswith('body')]
@@ -465,8 +470,17 @@ class DccGuiTool():
             columns = tbl.findall("dcc:column", ns)
             columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
             columnHeading = self.headings['columnHeading']
+            headingColorDefs = {'scope': 'yellow',
+                                 'dataCategory': 'yellow', 
+                                 'dataCategoryRef': 'light_yellow',
+                                 'quantity': 'green',
+                                 'unit': 'green', 
+                                 'quantityUnitDefRef': 'light_green', 
+                                 'heading': 'light_blue', 
+                                 'idx': 'light_gray'
+                                 }
             headingColors = ['yellow', 'yellow', 'light_yellow', 'green', 'green', 'light_green', 'light_blue', 'light_blue', 'light_gray']
-            headingColors = [self.colors[k] for k in headingColors]
+            headingColors = [self.colors[headingColorDefs[k.split('[', 1)[0]]] for k in columnHeading]
 
             sht.range((colInitRowIdx,1)).value = [[h] for h in columnHeading]
             # insert the index column
@@ -553,32 +567,37 @@ class DccGuiTool():
 
 
     def write_to_admin(self, sht, root, startline, section) -> int:
+        N = numLangs = len(self.langs)
         line=startline
         for element in section.iter():
             head=[]
-            for child in element.getchildren():
-                if dcchf.rev_ns_tag(child) == "dcc:heading":
-                    head.append(child.text)
-            if len(head) > 0:
+            # for child in element.getchildren():
+            #     if dcchf.rev_ns_tag(child) == "dcc:heading":
+            #         head.append(child.text)
+
+            head = [child.text for child in element.getchildren() if dcchf.rev_ns_tag(child) == "dcc:heading"]
+            elmHeadings = {h.attrib['lang']: h.text for h in element.findall("dcc:heading",root.nsmap)}
+            head = [elmHeadings[lang] if lang in elmHeadings.keys() else '' for lang in self.langs ]
+            if any(head):
                 sht.range((line,1)).value = head + ['', '', self.dccTree.getpath(element)]
-                sht.range((line,1)).expand('right').color = self.colors["light_yellow"]
-                sht.range((line,3)).value = dcchf.rev_ns_tag(element).replace('dcc:','')
-                sht.range((line,3)).font.bold = True
+                sht.range((line,1),(line,N)).color = self.colors["light_yellow"]
+                sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace('dcc:','')
+                sht.range((line,N+1)).font.bold = True
                 line+=1
                 for k,v in element.attrib.items(): 
-                    sht.range((line,3)).value = "@"+k
-                    rng = sht.range((line,4))
+                    sht.range((line,N+1)).value = "@"+k
+                    rng = sht.range((line,N+2))
                     rng.value = str(v)
                     rng.color = self.colors["light_yellow"]
-                    sht.range((line,5)).value = self.dccTree.getpath(element)
+                    sht.range((line,N+3)).value = self.dccTree.getpath(element)
                     line+=1
             if type(element.text)!=type(None): 
                 if dcchf.rev_ns_tag(element)!="dcc:heading": 
                     if not(element.text.startswith('\n')):
                         # print(element)
-                        sht.range((line,3)).value = dcchf.rev_ns_tag(element).replace("dcc:",'')
-                        sht.range((line,5)).value = self.dccTree.getpath(element)
-                        rng = sht.range((line,4))
+                        sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace("dcc:",'')
+                        sht.range((line,N+3)).value = self.dccTree.getpath(element)
+                        rng = sht.range((line,N+2))
                         rng.value = str(element.text)
                         rng.color = self.colors["light_yellow"]
                         line+=1
@@ -594,8 +613,7 @@ class DccGuiTool():
         root = self.dccRoot
         ns = root.nsmap
         wb = self.wb
-        lang1 = 'da'
-        lang2 = 'en'
+        N = numLang = len(self.langs)
 
         if not 'administrativeData' in wb.sheet_names:
             wb.sheets.add('administrativeData', after=after)
@@ -610,9 +628,9 @@ class DccGuiTool():
         
         # head = [h.text for h in root.findall('./dcc:heading', ns)]
         sht.range((2,1)).value = titles
-        sht.range((2,1),(2,2)).color = self.colors["light_yellow"]
-        sht.range((2,3)).value = ['Certificate-Title', None, '/dcc:digitalCalibrationCertificate']
-        sht.range((2,3)).font.bold = True
+        sht.range((2,1),(2,N)).color = self.colors["light_yellow"]
+        sht.range((2,N+1)).value = ['Certificate-Title', None, '/dcc:digitalCalibrationCertificate']
+        sht.range((2,N+1)).font.bold = True
         lineIdx = 3
         adm=root.find("dcc:administrativeData", ns)
         soft=adm.find("dcc:dccSoftware", ns)
@@ -676,21 +694,29 @@ def exportToXmlFile(wb, fileName='output.xml'):
             rowIdx = idx + rowInitXpath
             data = adminSht.range((idx+rowInitXpath,colIdxXpath-1)).api.Text
             data = "" if data is None else str(data)
+            xpathTags = xpath.split('/')[1:]
             current_node = root
-            xpathTags = xpath.split('/')
-            for i, node in enumerate(xpathTags):
-                next_node = current_node.find(node, ns)
-                # print(node, next_node)
-                if next_node is None and i < len(xpathTags)-1:
-                    next_node = elmMaker(node.replace('dcc:','')) 
-                    current_node.append(next_node)
-                elif next_node is None:
-                    tag = node.replace('dcc:','')
-                    print(f'tag is: {tag}  data:{data} ', current_node)
-                    if not data == None:
+            for i, nodeTag in enumerate(xpathTags):
+                tag = nodeTag.replace('dcc:','')
+                sub_nodes = current_node.findall(nodeTag, ns)
+                sub_node = sub_nodes[-1] if len(sub_nodes) > 0 else None
+                if i < len(xpathTags)-1:
+                    if sub_node == None: 
+                        next_node = elmMaker(tag) 
+                        current_node.append(next_node)
+                        current_node = next_node
+                    else:
+                        current_node = sub_node
+                elif i == len(xpathTags)-1:
+                    if data == "":
+                        next_node = elmMaker(tag) 
+                        current_node.append(next_node)
+                        current_node = next_node
+                    else:
+                        print(f'tag is: {tag}  data:{data} ', current_node)
                         next_node = elmMaker(tag, data)
                         current_node.append(next_node)
-                current_node = next_node
+                        current_node = next_node
             if adminSht.range((rowIdx,colIdxXpath-2)).font.bold :
                 exportHeading(current_node, elmMaker, adminSht, adminHeading, rowIdx) 
                 
@@ -698,8 +724,8 @@ def exportToXmlFile(wb, fileName='output.xml'):
     xpath_list = [xpth.value.replace(s,'.') for xpth in rngXpath]
     add_subtree(exportRoot, xpath_list)
     # dcchf.print_node(exportRoot)
-    mainSignerNode = exportRoot.find('./dcc:administrativeData/dcc:respPersons/dcc:respPerson/dcc:mainSigner', ns)
-    if mainSignerNode != None: 
+    mainSignerNodes = exportRoot.findall('./dcc:administrativeData/dcc:respPersons/*/dcc:mainSigner', ns)
+    for mainSignerNode in mainSignerNodes: 
         mainSignerNode.text = mainSignerNode.text.lower()
 
     
@@ -738,7 +764,9 @@ def exportToXmlFile(wb, fileName='output.xml'):
     dcchf.validate(fileName, 'dcc.xsd')
 
 def exportSheetHeading(parentNode, sht, elmMaker): 
-    for i in range(1,3): 
+    global NUM_LANGS
+    N = NUM_LANGS+1
+    for i in range(1,N): 
         head = sht.range((i,1)).value
         lang = extractHeadingLang(head)
         txt = sht.range((i,2)).value if not sht.range((i,2)).value == None else "" 
@@ -766,8 +794,10 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
     print(rng_header.shape)
     dcchf.print_node(embeddedFilesNode)
 
+    global NUM_LANGS
+
     for i, efn in enumerate(embeddedFilesNode.findall("./dcc:embeddedFile",ns)): 
-        filepath = sht.range((4+i,ncols+1)).value
+        filepath = sht.range((NUM_LANGS+2+i,ncols+1)).value
         print(f"loading file: {filepath}")
         base64str = encode_file_to_base64(filepath)
         node = elmMaker('fileContent',base64str)
@@ -886,8 +916,11 @@ def exportDataTable(parentNode, elmMaker, wb, tableId):
     for i,h in enumerate(heading): 
         if h.startswith('heading['):
             lang = extractHeadingLang(h)
-            elm = elmMaker('heading', values[i],lang=lang)
-            tblNode.append(elm)
+            if values[i]:
+                elm = elmMaker('heading', values[i],lang=lang)
+                tblNode.append(elm)
+            else: 
+                continue
 
     ncols = sht.range((len(heading)+2,1)).expand('right')
     colIdxs = range(2,len(ncols)+1)
@@ -1051,30 +1084,34 @@ class MyLanguageDialog:
         top.geometry('300x200')
         top.attributes('-topmost', True)
         self.myLabel = tk.Label(top, text='Select Language')
-        self.myLabel.pack()
+        self.myLabel.grid(row=0,column=0, columnspan=2)
 
-        self.lang1 = tk.StringVar()
-        self.cb_lang1 = ttk.Combobox(top, textvariable=self.lang1)
-        self.cb_lang1.pack()
-        self.cb_lang1['values'] = languages
-        self.lang1.set(languages[0])
+        numLangInDCC = languages.index('---')
 
-        self.lang2 = tk.StringVar()
-        self.cb_lang2 = ttk.Combobox(top, textvariable=self.lang2)
-        self.cb_lang2.pack()
-        self.cb_lang2['values'] = languages
-        l2 = languages[1] if len(languages)>1 else ""
-        self.lang2.set(l2)
-        
+        N = 6
+        self.langs = [tk.StringVar() for k in range(N)]
+        lbls = ['Mandatory lang']+[f'Used lang {i}' for i in range(1,N)]
+        self.myLabels = [tk.Label(top, text=s) for s in lbls]
+        self.tkCboxs = [ttk.Combobox(top, textvariable=self.langs[k]) for k in range(N)]
+
+        for k in range(N): 
+            self.tkCboxs[k].grid(row=k+1, column=1)
+            self.tkCboxs[k]['values'] = languages
+            i = min(k,numLangInDCC)
+            self.langs[k].set(languages[i])
+            self.myLabels[k].grid(row=k+1, column=0)
+       
         self.mySubmitButton = tk.Button(top, text='Submit', command=self.send)
-        self.mySubmitButton.pack()
+        self.mySubmitButton.grid(row=N+2, column=0, columnspan=2)
 
     def send(self):
         global dccGuiTool
-        lang1 = self.lang1.get()
-        lang2 = self.lang2.get()
-        dccGuiTool.langs = [lang1,lang2]
+        langs = [l.get() for l in self.langs if l.get()!="---"]
+        global NUM_LANGS
+        dccGuiTool.langs = langs
         print("Selected Languages: ", dccGuiTool.langs)
+        NUM_LANGS = len(langs)
+        print(NUM_LANGS)
         self.top.destroy()
 
 
