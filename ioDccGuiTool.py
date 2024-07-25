@@ -77,8 +77,11 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                     '@serviceCategory', 
                                     '@measuringSystemRef', 
                                     '@customServiceCategory', 
-                                    'statementRef',
+                                    '@statementRefs',
+                                    '@embeddedFileRefs',
                                     'heading[1]', 
+                                    'conformityStatus', 
+                                    'conformityStatusRef',
                                     '@numRows', 
                                     '@numCols'], 
 
@@ -712,6 +715,9 @@ def exportToXmlFile(wb, fileName='output.xml'):
                         next_node = elmMaker(tag) 
                         current_node.append(next_node)
                         current_node = next_node
+                    elif data.startswith('@'):
+                        print(f'tag is: {tag}  data:{data} ', current_node)
+                        current_node.attrib[tag.split('@',1)[1]] = data
                     else:
                         print(f'tag is: {tag}  data:{data} ', current_node)
                         next_node = elmMaker(tag, data)

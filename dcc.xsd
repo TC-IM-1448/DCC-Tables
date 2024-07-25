@@ -124,15 +124,19 @@
                 The entries in this area are basically the same and regulated in all DCCs.
             </xs:documentation>
         </xs:annotation>
-        <xs:all>
+        <xs:sequence>
             <xs:element name="dccSoftware" type="dcc:softwareListType"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
             <xs:element name="calibrationLaboratory" type="dcc:contactType"/>
             <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
-            <xs:element name="customer" type="dcc:contactType"/>
-            <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>
-        </xs:all>
+            <xs:element name="customer" type="dcc:contactType"/> 
+            <xs:element name="equipmentReturnInfo" type="dcc:contactType" minOccurs="0"/>
+            <xs:element name="customerBillingInfo" type="dcc:contactType" minOccurs="0"/>
+            <xs:element name="certificateReturnInfo" type="dcc:contactType" minOccurs="0"/>
+            <!-- <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>-->
+            <xs:element name="performanceLocation" type="dcc:contactType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="measuringSystemListType">
@@ -270,9 +274,23 @@ quantities of specified kinds
             <xs:element name="performanceLocation" type="dcc:performanceLocationType"/>
             <xs:element name="issueDate" type="xs:date" minOccurs="0"/>            
             <xs:element name="previousReport" type="dcc:hashType" minOccurs="0"/>
+            <xs:element name="conformityResult" type="dcc:conformityResultType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     
+    <xs:complexType name="conformityResultType">
+        <xs:annotation>
+            <xs:documentation>
+                This element is a list of measuring instruments.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="conformityStatus" type="dcc:conformityStatusType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
+    </xs:complexType>
+
     <xs:simpleType name="notEmptyStringType">
         <xs:restriction base="xs:string">
             <xs:pattern value="[^\s]+(\s+[^\s]+)*"/>
@@ -518,6 +536,7 @@ quantities of specified kinds
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- 
     <xs:complexType name="calculeToSIunitStepListType">
         <xs:sequence>
             <xs:element name='calcStep' minOccurs='1' maxOccurs='unbounded'>
@@ -535,19 +554,20 @@ quantities of specified kinds
             <xs:documentation>
             </xs:documentation>
         </xs:annotation>
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="+" /> 
-                <xs:enumeration value="-" /> 
-                <xs:enumeration value="*" /> 
-                <xs:enumeration value="/" /> 
-                <xs:enumeration value="ln" /> 
-                <xs:enumeration value="e^" /> 
-                <xs:enumeration value="log10" /> 
-                <xs:enumeration value="10^" /> 
-                <xs:enumeration value="end" /> 
-            </xs:restriction>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="+" /> 
+            <xs:enumeration value="-" /> 
+            <xs:enumeration value="*" /> 
+            <xs:enumeration value="/" /> 
+            <xs:enumeration value="ln" /> 
+            <xs:enumeration value="e^" /> 
+            <xs:enumeration value="log10" /> 
+            <xs:enumeration value="10^" /> 
+            <xs:enumeration value="end" /> 
+        </xs:restriction>
     </xs:simpleType>
-
+    -->
+        
     <xs:complexType name="statementListType">
         <xs:annotation>
             <xs:documentation>
@@ -569,6 +589,7 @@ quantities of specified kinds
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="category" type="dcc:statementCategoryType" use="required"/>
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="statementCategoryType">
@@ -610,15 +631,18 @@ quantities of specified kinds
         <xs:sequence>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="conformityStatus" type="dcc:conformityStatusType" minOccurs="0"/>
+            <xs:element name="conformityStatusRef" type="xs:IDREF" minOccurs="0"/>
             <xs:element name="column" type="dcc:columnType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/> -->
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
 		<xs:attribute name="measuringSystemRef" type="xs:IDREF" use="required"/>
 		<xs:attribute name="numRows" type="xs:int" use="required"/>
 		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
-		<xs:attribute name="statementRef" type="xs:IDREFS" use="optional"/>		
+		<xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>		
+        <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
     </xs:complexType>
 
     <xs:complexType name="measurementResultsType">
@@ -701,6 +725,7 @@ quantities of specified kinds
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
         </xs:sequence>
         <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> --> 
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
     <xs:simpleType name="accreditationApplicabilityType">
@@ -740,6 +765,7 @@ quantities of specified kinds
             <xs:element name="contactInfo" type="dcc:contactInfo" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="contactInfo">
