@@ -135,7 +135,7 @@
             <xs:element name="customerBillingInfo" type="dcc:contactType" minOccurs="0"/>
             <xs:element name="certificateReturnInfo" type="dcc:contactType" minOccurs="0"/>
             <!-- <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>-->
-            <xs:element name="performanceLocation" type="dcc:contactType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="performanceSite" type="dcc:contactType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -269,7 +269,7 @@ quantities of specified kinds
             <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
             <xs:element name="customerIdentification" type="dcc:identificationType" minOccurs="0"/>
             <xs:element name="receiptDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="beginPerformanceDate" type="xs:date"/>
+            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
             <xs:element name="endPerformanceDate" type="xs:date"/>
             <xs:element name="performanceLocation" type="dcc:performanceLocationType"/>
             <xs:element name="issueDate" type="xs:date" minOccurs="0"/>            
@@ -395,10 +395,12 @@ quantities of specified kinds
     <xs:simpleType name="stringPerformanceLocationType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="laboratory"/>
-            <xs:enumeration value="customer"/>
-            <xs:enumeration value="laboratoryBranch"/>
-            <xs:enumeration value="customerBranch"/>
-            <xs:enumeration value="other"/>
+            <xs:enumeration value="on-site"/>
+            <xs:enumeration value="remote"/>
+            <!-- <xs:enumeration value="customer"/> -->
+            <!-- <xs:enumeration value="laboratoryBranch"/> -->
+            <!-- <xs:enumeration value="customerBranch"/> -->
+            <!-- <xs:enumeration value="other"/> -->
         </xs:restriction>
     </xs:simpleType>
 
@@ -741,31 +743,32 @@ quantities of specified kinds
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:complexType name="contactType">
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
+            <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcc:contactInfo" minOccurs="0"/>
+            <xs:element name="VATIN" type="dcc:contactInfo" minOccurs="0"/> <!-- e.g. VAT number -->
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
 
     <xs:complexType name="locationType">
         <xs:choice maxOccurs="unbounded">
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="city" type="dcc:notEmptyStringType"/>
-            <xs:element name="countryCode" type="dcc:stringISO3166Type"/>
-            <xs:element name="postCode" type="dcc:notEmptyStringType"/>
-            <xs:element name="postOfficeBox" type="dcc:notEmptyStringType"/>
-            <xs:element name="state" type="dcc:notEmptyStringType"/>
             <xs:element name="street" type="dcc:notEmptyStringType"/>
             <xs:element name="streetNo" type="dcc:notEmptyStringType"/>
+            <xs:element name="postOfficeBox" type="dcc:notEmptyStringType"/>
+            <xs:element name="city" type="dcc:notEmptyStringType"/>
+            <xs:element name="district" type="dcc:notEmptyStringType"/>
+            <xs:element name="state" type="dcc:notEmptyStringType"/>
+            <xs:element name="postCode" type="dcc:notEmptyStringType"/>
+            <xs:element name="countryCode" type="dcc:stringISO3166Type"/>
             <xs:element name="further" type="dcc:stringWithLangType"/>
-            <!--xs:element name="positionCoordinates" type="dcc:positionCoordinatesType"/-->
+            <!-- <xs:element name="positionCoordinates" type="dcc:positionCoordinatesType"/> -->
         </xs:choice>
-    </xs:complexType>
-
-    <xs:complexType name="contactType">
-        <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="companyName" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
-            <xs:element name="contactInfo" type="dcc:contactInfo" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="contactInfo">

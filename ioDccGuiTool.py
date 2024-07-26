@@ -31,6 +31,7 @@ xlValidateList = xw.constants.DVType.xlValidateList
 HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
                                         'heading[1]',  
                                         'body[1]', 
+                                        '@imageRef',
                                         'externalReference'],
 
     equipmentHeadings = ['in DCC', '@id', '@category',
@@ -636,19 +637,45 @@ class DccGuiTool():
         sht.range((2,N+1)).font.bold = True
         lineIdx = 3
         adm=root.find("dcc:administrativeData", ns)
-        soft=adm.find("dcc:dccSoftware", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx, soft)
-        core=adm.find("dcc:coreData", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx, core)
-        callab=adm.find("dcc:calibrationLaboratory", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx,callab)
-        respPers=adm.find("dcc:respPersons", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx,respPers)
-        accr=adm.find("dcc:accreditation", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx, accr)
-        cust=adm.find("dcc:customer", ns)
-        lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        rng = sht.range((1,1)).expand()
+        elements = [
+                    "dcc:dccSoftware",
+                    "dcc:coreData",
+                    "dcc:calibrationLaboratory",
+                    "dcc:accreditation",
+                    "dcc:respPersons",
+                    "dcc:customer",
+                    "dcc:equipmentReturnInfo",
+                    "dcc:customerBillingInfo",
+                    "dcc:certificateReturnInfo",
+                    "dcc:performanceSite",
+                   ]
+                
+        for elm in elements: 
+            sections = adm.findall(elm,ns)
+            for sec in sections: 
+                # print(f"write_to_admin(sec= {sec})")
+                lineIdx = self.write_to_admin(sht, root, lineIdx, sec)
+        # soft=adm.find("dcc:dccSoftware", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx, soft)
+        # core=adm.find("dcc:coreData", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx, core)
+        # callab=adm.find("dcc:calibrationLaboratory", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,callab)
+        # accr=adm.find("dcc:accreditation", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx, accr)
+        # respPers=adm.find("dcc:respPersons", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,respPers)
+        # cust=adm.find("dcc:customer", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
+        # cust=adm.find("dcc:equipmentReturnInfo", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
+        # cust=adm.find("dcc:customerBillingInfo", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
+        # cust=adm.find("dcc:certificateReturnInfo", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
+        # cust=adm.find("dcc:performanceLocation", ns)
+        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
+        # rng = sht.range((1,1)).expand()
         sht.autofit(axis="columns")
 
 
@@ -692,15 +719,17 @@ def exportToXmlFile(wb, fileName='output.xml'):
                 elm = elmMaker("heading", txt, lang=lang)
                 node.append(elm)
 
-    def add_subtree(root, xpath_list: list):
+    def add_subtree(parent, xpath_list: list):
         for idx, xpath in enumerate(xpath_list):
             rowIdx = idx + rowInitXpath
             data = adminSht.range((idx+rowInitXpath,colIdxXpath-1)).api.Text
             data = "" if data is None else str(data)
+            descr = adminSht.range((idx+rowInitXpath, colIdxXpath-2)).api.Text
             xpathTags = xpath.split('/')[1:]
-            current_node = root
+            current_node = parent
             for i, nodeTag in enumerate(xpathTags):
                 tag = nodeTag.replace('dcc:','')
+                tag = tag.split("[",1)[0]
                 sub_nodes = current_node.findall(nodeTag, ns)
                 sub_node = sub_nodes[-1] if len(sub_nodes) > 0 else None
                 if i < len(xpathTags)-1:
@@ -715,9 +744,9 @@ def exportToXmlFile(wb, fileName='output.xml'):
                         next_node = elmMaker(tag) 
                         current_node.append(next_node)
                         current_node = next_node
-                    elif data.startswith('@'):
-                        print(f'tag is: {tag}  data:{data} ', current_node)
-                        current_node.attrib[tag.split('@',1)[1]] = data
+                    elif descr.startswith('@'):
+                        print(f'tag is: {tag}  attrib[{descr}] = {data} ', current_node)
+                        sub_node.attrib[descr[1:]] = data
                     else:
                         print(f'tag is: {tag}  data:{data} ', current_node)
                         next_node = elmMaker(tag, data)
