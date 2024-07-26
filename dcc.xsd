@@ -79,9 +79,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            
             <xs:element name="administrativeData" type="dcc:administrativeDataType"/>
             <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
             <xs:element name="equipment" type="dcc:equipmentListType"/>
@@ -99,9 +97,7 @@
             <xs:element name="embeddedFiles" type="dcc:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
             <xs:element name="comment" type="dcc:anyType" minOccurs="0"/>
             <!--xs:element ref="ds:Signature" minOccurs="0" maxOccurs="unbounded"/-->
-
         </xs:sequence>
-
         <xs:attribute name="schemaVersion" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -109,12 +105,6 @@
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
-    </xs:complexType>
-
-    <xs:complexType name="anyType">
-        <xs:sequence>
-            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="administrativeDataType">
@@ -125,18 +115,42 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="dccSoftware" type="dcc:softwareListType"/>
             <xs:element name="coreData" type="dcc:coreDataType"/>
-            <xs:element name="calibrationLaboratory" type="dcc:contactType"/>
+            <xs:element name="serviceProvider" type="dcc:contactType"/>
             <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
             <xs:element name="respPersons" type="dcc:respPersonListType"/>
-            <xs:element name="customer" type="dcc:contactType"/> 
+            <xs:element name="client" type="dcc:contactType"/> 
             <xs:element name="equipmentReturnInfo" type="dcc:contactType" minOccurs="0"/>
-            <xs:element name="customerBillingInfo" type="dcc:contactType" minOccurs="0"/>
+            <xs:element name="clientBillingInfo" type="dcc:contactType" minOccurs="0"/>
             <xs:element name="certificateReturnInfo" type="dcc:contactType" minOccurs="0"/>
             <!-- <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>-->
             <xs:element name="performanceSite" type="dcc:contactType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="coreDataType">
+        <xs:annotation>
+            <xs:documentation>
+                Important metadata for the DCC containing the global unique identifier and other identifications.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
+            <xs:element name="clientIdentifier" type="dcc:identificationType" minOccurs="0"/>
+            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="endPerformanceDate" type="xs:date"/>
+            <xs:element name="performanceLocation" type="dcc:performanceLocationType"/>
+            <xs:element name="issueDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="previousReport" type="dcc:hashType" minOccurs="0"/>
+            <xs:element name="conformityResult" type="dcc:conformityResultType" minOccurs="0"/>
+            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type"/>
+            <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type"/>
+            <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="dccSoftware" type="dcc:softwareListType"/>
+        </xs:sequence>
+        <xs:attribute name="transactionContent" type="dcc:transactionContentType"/>
+        <xs:attribute name="requestedContent" type="dcc:requestedContentType"/>
     </xs:complexType>
 
     <xs:complexType name="measuringSystemListType">
@@ -227,6 +241,7 @@ quantities of specified kinds
         </xs:sequence>
     </xs:complexType>
 
+
     <xs:complexType name="softwareType">
         <xs:annotation>
             <xs:documentation>
@@ -255,28 +270,6 @@ quantities of specified kinds
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
 
-
-    <xs:complexType name="coreDataType">
-        <xs:annotation>
-            <xs:documentation>
-                Important metadata for the DCC containing the global unique identifier and other identifications.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type"/>
-            <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type"/>
-            <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
-            <xs:element name="customerIdentification" type="dcc:identificationType" minOccurs="0"/>
-            <xs:element name="receiptDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="endPerformanceDate" type="xs:date"/>
-            <xs:element name="performanceLocation" type="dcc:performanceLocationType"/>
-            <xs:element name="issueDate" type="xs:date" minOccurs="0"/>            
-            <xs:element name="previousReport" type="dcc:hashType" minOccurs="0"/>
-            <xs:element name="conformityResult" type="dcc:conformityResultType" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
     
     <xs:complexType name="conformityResultType">
         <xs:annotation>
@@ -372,9 +365,9 @@ quantities of specified kinds
 
     <xs:simpleType name="issuerType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="customer"/>
+			<xs:enumeration value="client"/>
 			<xs:enumeration value="manufacturer"/>
-			<xs:enumeration value="calibrationLaboratory"/>
+			<xs:enumeration value="serviceProvider"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -394,13 +387,31 @@ quantities of specified kinds
 
     <xs:simpleType name="stringPerformanceLocationType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="laboratory"/>
-            <xs:enumeration value="on-site"/>
-            <xs:enumeration value="remote"/>
-            <!-- <xs:enumeration value="customer"/> -->
+            <xs:enumeration value="atProvider"/>
+            <xs:enumeration value="inField"/>
+            <!-- <xs:enumeration value="remote"/> -->
+            <!-- <xs:enumeration value="client"/> -->
             <!-- <xs:enumeration value="laboratoryBranch"/> -->
-            <!-- <xs:enumeration value="customerBranch"/> -->
+            <!-- <xs:enumeration value="clientBranch"/> -->
             <!-- <xs:enumeration value="other"/> -->
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="transactionContentType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="request"/>
+            <xs:enumeration value="calibrationCertificate"/>
+            <xs:enumeration value="measurementReport"/>
+            <xs:enumeration value="testReport"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="requestedContentType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="calibrationCertificate"/>
+            <xs:enumeration value="measurementReport"/>
+            <xs:enumeration value="testReport"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -799,7 +810,7 @@ quantities of specified kinds
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
-            Columns for measurement data and annotatin of data. Each column is ordered directly by the customer from the lists of allowed colTypes and quantityTypes.
+            Columns for measurement data and annotatin of data. Each column is ordered directly by the client from the lists of allowed colTypes and quantityTypes.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -1376,6 +1387,13 @@ quantities of specified kinds
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    
+    <xs:complexType name="anyType">
+        <xs:sequence>
+            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 

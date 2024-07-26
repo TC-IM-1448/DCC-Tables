@@ -270,7 +270,7 @@ class DccGuiTool():
         # load the information into the table
         tableData = []
         rows = node.findall(subNodeTag,ns)
-        issuerIdMap = {'customer_id':'customer', 'manufact_id': 'manufacturer', 'calLab_id': 'calibrationLaboratory'}
+        issuerIdMap = {'customer_id':'customer', 'manufact_id': 'manufacturer', 'calLab_id': 'serviceProvider'}
         for idx, subNode in enumerate(rows):
             rowData = []
             for i, h in enumerate(heading):
@@ -874,7 +874,7 @@ def exportEquipment(adminNode, elmMaker,wb):
                 elif len(h.split('_id ')) > 1: 
                     issuer, what = h.split('_id ')
                     if issuer.startswith('manufac'): issuer = 'manufacturer'
-                    if issuer.startswith('calLab'): issuer = 'calibrationLaboratory'
+                    if issuer.startswith('calLab'): issuer = 'serviceProvider'
                     idNode = node.find(f'./dcc:identification[@issuer="{issuer}"]', ns)
                     if idNode is None:
                         idNode = elmMaker('identification',issuer=issuer)
