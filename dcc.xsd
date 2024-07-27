@@ -135,22 +135,23 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="transactionContent" type="dcc:transactionContentType" />
+            <xs:element name="requestedContent" type="dcc:requestedContentType" minOccurs="0"/>
             <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
             <xs:element name="clientIdentifier" type="dcc:identificationType" minOccurs="0"/>
-            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="issueDate" type="xs:date"/>
             <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
             <xs:element name="endPerformanceDate" type="xs:date"/>
+            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/>
             <xs:element name="performanceLocation" type="dcc:performanceLocationType"/>
-            <xs:element name="issueDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="previousReport" type="dcc:hashType" minOccurs="0"/>
             <xs:element name="conformityResult" type="dcc:conformityResultType" minOccurs="0"/>
+            <xs:element name="previousReport" type="dcc:hashType" minOccurs="0"/>
             <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type"/>
             <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type"/>
             <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="dccSoftware" type="dcc:softwareListType"/>
         </xs:sequence>
-        <xs:attribute name="transactionContent" type="dcc:transactionContentType"/>
-        <xs:attribute name="requestedContent" type="dcc:requestedContentType"/>
     </xs:complexType>
 
     <xs:complexType name="measuringSystemListType">
@@ -401,17 +402,21 @@ quantities of specified kinds
     <xs:simpleType name="transactionContentType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="request"/>
-            <xs:enumeration value="calibrationCertificate"/>
-            <xs:enumeration value="measurementReport"/>
-            <xs:enumeration value="testReport"/>
+            <xs:enumeration value="digitalCalibrationCertificate"/>
+            <xs:enumeration value="digitalMeasurementReport"/>
+            <xs:enumeration value="digitalExaminationCertificate"/>
+            <xs:enumeration value="digitalConformityCertificate"/>
+            <xs:enumeration value="digitalTestReport"/>
         </xs:restriction>
     </xs:simpleType>
-
+    
     <xs:simpleType name="requestedContentType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="calibrationCertificate"/>
-            <xs:enumeration value="measurementReport"/>
-            <xs:enumeration value="testReport"/>
+            <xs:enumeration value="digitalCalibrationCertificate"/>
+            <xs:enumeration value="digitalMeasurementReport"/>
+            <xs:enumeration value="digitalExaminationCertificate"/>
+            <xs:enumeration value="digitalConformityCertificate"/>
+            <xs:enumeration value="digitalTestReport"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -481,6 +486,7 @@ quantities of specified kinds
 			<xs:element name="softwareInstruction" type="dcc:notEmptyStringType" minOccurs="0"/>
             <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>		
+            <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0"/>		
         </xs:sequence>
         <xs:attribute name="settingId" type="xs:ID" use="required"/>
         <xs:attribute name="equipmentRef" type="xs:IDREFS" use="required"/>

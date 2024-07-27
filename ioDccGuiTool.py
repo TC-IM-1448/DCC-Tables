@@ -31,18 +31,18 @@ xlValidateList = xw.constants.DVType.xlValidateList
 HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
                                         'heading[1]',  
                                         'body[1]', 
-                                        '@imageRef',
+                                        '@imageRefs',
                                         'externalReference'],
 
     equipmentHeadings = ['in DCC', '@id', '@category',
                             'heading[1]', 'manufacturer', 'productName', 'productType',
-                            'customer_id heading[1]', 'customer_id value', 
+                            'client_id heading[1]', 'client_id value', 
                             'manufact_id heading[1]', 'manufact_id value', 
                             'calLab_id heading[1]', 'calLab_id value'],
 
     settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
                         'parameter', 'value', 'unit', 'softwareInstruction', 
-                        'heading[1]', 'body[1]', 
+                        'heading[1]', 'body[1]', 'statementRefs',
                         ],
 
     measuringSystemsHeadings = ['in DCC', '@id', 
@@ -270,7 +270,7 @@ class DccGuiTool():
         # load the information into the table
         tableData = []
         rows = node.findall(subNodeTag,ns)
-        issuerIdMap = {'customer_id':'customer', 'manufact_id': 'manufacturer', 'calLab_id': 'serviceProvider'}
+        issuerIdMap = {'client_id':'client', 'manufact_id': 'manufacturer', 'calLab_id': 'serviceProvider'}
         for idx, subNode in enumerate(rows):
             rowData = []
             for i, h in enumerate(heading):
@@ -337,6 +337,8 @@ class DccGuiTool():
             #Apply statement category validator to the statement@category column
             rng = sht.range("Table_"+shtName+"['@category]") 
             self.applyValidationToRange(rng, 'statementCategoryType')
+            statementIdRng = wb.sheets['statements'].range("Table_statements['@id]")
+            statementIdRng.name = "statementsIdRange"
         
         if shtName == "equipment":
             #Apply equipment category type validator to the equipment@category column
@@ -366,6 +368,12 @@ class DccGuiTool():
             quIdRng = sht.range("Table_"+shtName+"['@id]") 
             quIdRng.name = "quantityUnitDefIdRange"
 
+        if shtName == 'embeddedFiles': 
+            # Give a name to the measurementId column
+            measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
+            measuringSysIdRng.name = "embeddedFilesIdRange"
+            rng = wb.sheets['statements'].range("Table_statements['@imageRef]")
+            self.applyValidationToRange(rng, 'embeddedFileIdRange')
         # Apply Validation
         # validatorMap= {'dcc:statements': }
 
@@ -461,6 +469,10 @@ class DccGuiTool():
                         rng.value = nodes[0].text
                     else:
                         rng.value = None
+                    if h+"Type" in dcchf.XSD_RESTRICTION_NAMES: 
+                        self.applyValidationToRange(rng, h+'Type')
+                    elif h in "conformityStatusRef": 
+                        self.applyValidationToRange(rng,'statementsIdRange' )
 
             rng = sht.range((1,2), (idx,2))
             rng.color = self.colors["light_yellow"]
@@ -638,14 +650,13 @@ class DccGuiTool():
         lineIdx = 3
         adm=root.find("dcc:administrativeData", ns)
         elements = [
-                    "dcc:dccSoftware",
                     "dcc:coreData",
-                    "dcc:calibrationLaboratory",
+                    "dcc:serviceProvider",
                     "dcc:accreditation",
                     "dcc:respPersons",
-                    "dcc:customer",
+                    "dcc:client",
                     "dcc:equipmentReturnInfo",
-                    "dcc:customerBillingInfo",
+                    "dcc:clientBillingInfo",
                     "dcc:certificateReturnInfo",
                     "dcc:performanceSite",
                    ]

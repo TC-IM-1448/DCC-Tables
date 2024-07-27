@@ -11,6 +11,27 @@ import openpyxl as pyxl
 # DCC='{https://dfm.dk}'
 # SI='{https://ptb.de/si}'
 LANG='en'
+XSD_RESTRICTION_NAMES = [
+                        'stringISO3166Type',
+                        'stringISO639Type',
+                        'serviceCategoryType',
+                        'yesno', 
+                        "transactionContentType",
+                        "requestedContentType",
+                        'statementCategoryType', 
+                        'accreditationApplicabilityType',
+                        'equipmentCategoryType',
+                        'issuerType',
+                        'operationalStatusType', 
+                        'stringPerformanceLocationType',
+                        'conformityStatusType',
+                        'scopeType',
+                        'dataCategoryType', 
+                        'quantityType',
+                        'tableCategoryType',
+                        'approachToTargetType',
+                        'quantityCodeSystemType',
+                        ]
 # et.register_namespace("si", SI.strip('{}'))
 # et.register_namespace("dcc", DCC.strip('{}'))
 
@@ -383,25 +404,7 @@ def printelement(element):
 #------------------------------------------------------------------
 #%%
 def schema_get_restrictions(xsd_root: et._Element, 
-                            type_names=[
-                                        'stringISO3166Type',
-                                        'stringISO639Type',
-                                        'serviceCategoryType',
-                                        'yesno', 
-                                        'statementCategoryType', 
-                                        'accreditationApplicabilityType',
-                                        'equipmentCategoryType',
-                                        'issuerType',
-                                        'operationalStatusType', 
-                                        'stringPerformanceLocationType',
-                                        'conformityStatusType',
-                                        'scopeType',
-                                        'dataCategoryType', 
-                                        'quantityType',
-                                        'tableCategoryType',
-                                        'approachToTargetType',
-                                        'quantityCodeSystemType',
-                                        ]
+                            type_names=XSD_RESTRICTION_NAMES
                             ) -> dict: 
     """schema_get_restrictions is used for finding the valid tokens for as specified in type_name:
         - yesno
@@ -624,12 +627,13 @@ if False:
 
 
 
-#%% Run tests on dcc-xml-file
 if False: 
+    pass
+#%% Run tests on dcc-xml-file
     xsd_tree, xsd_root = load_xml("dcc.xsd")
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)
-    v = validate( "SKH_10112_2.xml", "dcc.xsd")
+    # v = validate( "SKH_10112_2.xml", "dcc.xsd")
     v = validate( "output.xml", "dcc.xsd")
     print(v)
     # print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))

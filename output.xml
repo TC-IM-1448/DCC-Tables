@@ -3,33 +3,35 @@
   <dcc:heading lang="en">Calibration certificate</dcc:heading>
   <dcc:heading lang="de">Kalibrierschein</dcc:heading>
   <dcc:administrativeData>
-    <dcc:dccSoftware>
-      <dcc:software>
-        <dcc:heading lang="en">This document was created with:</dcc:heading>
-        <dcc:name>ioDccGuiTool.py</dcc:name>
-        <dcc:release>v0.0.1</dcc:release>
-      </dcc:software>
-    </dcc:dccSoftware>
     <dcc:coreData>
-      <dcc:countryCodeISO3166_1>DE</dcc:countryCodeISO3166_1>
-      <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
-      <dcc:usedLangCodeISO639_1>de</dcc:usedLangCodeISO639_1>
+      <dcc:transactionContent>digitalCalibrationCertificate</dcc:transactionContent>
+      <dcc:requestedContent>digitalCalibrationCertificate</dcc:requestedContent>
       <dcc:uniqueIdentifier>
         <dcc:heading lang="en">Certificate number</dcc:heading>
         <dcc:value>V-008A119</dcc:value>
       </dcc:uniqueIdentifier>
-      <dcc:customerIdentification>
+      <dcc:clientIdentifier>
         <dcc:heading lang="en">Order no. </dcc:heading>
         <dcc:heading lang="de">Auftragsnummer</dcc:heading>
         <dcc:value>---</dcc:value>
-      </dcc:customerIdentification>
-      <dcc:receiptDate>2023-10-26</dcc:receiptDate>
+      </dcc:clientIdentifier>
+      <dcc:issueDate>2023-10-26</dcc:issueDate>
       <dcc:beginPerformanceDate>2023-10-26</dcc:beginPerformanceDate>
       <dcc:endPerformanceDate>2023-10-26</dcc:endPerformanceDate>
-      <dcc:performanceLocation>laboratory</dcc:performanceLocation>
-      <dcc:issueDate>2023-10-26</dcc:issueDate>
+      <dcc:equipmentReceiptDate>2023-10-26</dcc:equipmentReceiptDate>
+      <dcc:performanceLocation>atProvider</dcc:performanceLocation>
+      <dcc:countryCodeISO3166_1>DE</dcc:countryCodeISO3166_1>
+      <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+      <dcc:usedLangCodeISO639_1>de</dcc:usedLangCodeISO639_1>
+      <dcc:dccSoftware>
+        <dcc:software>
+          <dcc:heading lang="en">This document was created with:</dcc:heading>
+          <dcc:name>ioDccGuiTool.py</dcc:name>
+          <dcc:release>v0.0.1</dcc:release>
+        </dcc:software>
+      </dcc:dccSoftware>
     </dcc:coreData>
-    <dcc:calibrationLaboratory imageRefs="Sartorius_logo.png">
+    <dcc:serviceProvider imageRefs="Sartorius_logo.png">
       <dcc:heading lang="en">issued by the calibration laboratory</dcc:heading>
       <dcc:heading lang="de">erstellt durch das Kalibrierlaboratorium </dcc:heading>
       <dcc:name>Sartorius Lab Instrumetns GmbH &amp; Co KG</dcc:name>
@@ -47,7 +49,7 @@
         <dcc:eMail>-</dcc:eMail>
         <dcc:phone>-</dcc:phone>
       </dcc:contactInfo>
-    </dcc:calibrationLaboratory>
+    </dcc:serviceProvider>
     <dcc:accreditation>
       <dcc:heading lang="en">accredited according to the German version of DIN EN ISO/IEC 17025:2018</dcc:heading>
       <dcc:heading lang="de">akkreditiert nach DIN EN ISO/IEC 17025:2018</dcc:heading>
@@ -71,7 +73,7 @@
         <dcc:mainSigner>false</dcc:mainSigner>
       </dcc:respPerson>
     </dcc:respPersons>
-    <dcc:customer>
+    <dcc:client>
       <dcc:heading lang="en">Customer</dcc:heading>
       <dcc:name>Muster GmbH</dcc:name>
       <dcc:location>
@@ -87,7 +89,7 @@
         <dcc:eMail>-</dcc:eMail>
         <dcc:phone>-</dcc:phone>
       </dcc:contactInfo>
-    </dcc:customer>
+    </dcc:client>
     <dcc:performanceSite id="site1">
       <dcc:heading lang="en">Calibration Location:</dcc:heading>
       <dcc:name>Sartorius Lab Instruments GmbH &amp; Co. KG</dcc:name>
@@ -101,20 +103,20 @@
   <dcc:statements>
     <dcc:heading lang="en">Statements</dcc:heading>
     <dcc:heading lang="de"></dcc:heading>
-    <dcc:statement id="stgen1" category="general">
+    <dcc:statement id="gen1" category="general" imageRefs="DKD.png">
       <dcc:heading lang="en">Member of Deutschen Kalibrierdienst DKD</dcc:heading>
       <dcc:heading lang="de">Miglied im Kalibrierdienst DKD</dcc:heading>
     </dcc:statement>
-    <dcc:statement id="s01" category="general">
-      <dcc:heading lang="en">Reprint</dcc:heading>
-      <dcc:heading lang="de">Distribution</dcc:heading>
+    <dcc:statement id="gen2" category="general">
+      <dcc:heading lang="en">Reprint and validity</dcc:heading>
       <dcc:body lang="en">This calibration certificate may not be reproduced other than in full except with the permission of the issuing laboratory. Calibration certificates without
 signature are not valid.</dcc:body>
       <dcc:body lang="de">Dieser Kalibrierschein darf nur vollständig und unverändert weiterverbreitet werden. Auszüge oder Änderungen bedürfen der Genehmigung des
 ausstellenden Kalibrierlaboratoriums. Kalibrierscheine ohne Unterschrift haben keine Gültigkeit.</dcc:body>
     </dcc:statement>
-    <dcc:statement id="conf1" category="general">
-      <dcc:heading lang="en">Decision rule</dcc:heading>
+    <dcc:statement id="trace1" category="traceability">
+      <dcc:heading lang="en">Traceability</dcc:heading>
+      <dcc:heading lang="de">Rückführbarkeit </dcc:heading>
       <dcc:body lang="en">This calibration certificate documents the
 traceability to national standards, which realize
 the units of measurement according to the
@@ -147,59 +149,48 @@ Kalibrierscheine. Für die Einhaltung einer
 angemessenen Frist zur Wiederholung der
 Kalibrierung ist der Benutzer verantwortlich</dcc:body>
     </dcc:statement>
-    <dcc:statement id="accex" category="accreditationException">
-      <dcc:heading lang="en">Accreditation exception</dcc:heading>
-    </dcc:statement>
-    <dcc:statement id="meth1" category="method">
+    <dcc:statement id="norm1" category="norm">
       <dcc:heading lang="en">Calibration Procedure</dcc:heading>
       <dcc:heading lang="de">Kalibrerungs Procedure</dcc:heading>
       <dcc:body lang="en">Gravimetric test method according to ISO 8655-6:2022 DKD-R 8-1</dcc:body>
       <dcc:body lang="de">Gravimetrisch test metode ISO 8655-6:2022 DKD-R 8-1</dcc:body>
-      <dcc:externalReference>ISO 8655-6:2022 DKD-R 8-1</dcc:externalReference>
+      <dcc:externalReference>ISO 8655-6:2022|DKD-R 8-1</dcc:externalReference>
     </dcc:statement>
-    <dcc:statement id="meth2" category="method">
+    <dcc:statement id="meth1" category="method">
       <dcc:heading lang="en">Basis of Test</dcc:heading>
       <dcc:heading lang="de">Test grundlage</dcc:heading>
       <dcc:body lang="en">Ex (20 ℃)</dcc:body>
-      <dcc:body lang="de">Ex (20 ℃)</dcc:body>
     </dcc:statement>
-    <dcc:statement id="meth3" category="method">
+    <dcc:statement id="meth2" category="method">
+      <dcc:heading lang="en">Note:</dcc:heading>
+      <dcc:body lang="en">All balances have evaporation traps. Before measurement, the measured object was stored in the
+air-conditioned test room for at least 2 hours.</dcc:body>
+    </dcc:statement>
+    <dcc:statement id="rule1" category="decisionRule">
       <dcc:heading lang="en">Tolerance</dcc:heading>
       <dcc:heading lang="de">Tolerance</dcc:heading>
       <dcc:body lang="en">ISO 8655:2022 Tolerances</dcc:body>
       <dcc:body lang="de">ISO 8655:2022 Tolerances</dcc:body>
       <dcc:externalReference>ISO 8655:2022</dcc:externalReference>
     </dcc:statement>
-    <dcc:statement id="meth4" category="method">
-      <dcc:heading lang="en">Z-factor</dcc:heading>
+    <dcc:statement id="note1" category="method">
+      <dcc:heading lang="en">1</dcc:heading>
       <dcc:body lang="en">Calculation according to ISO 8655-6:2022 Formula (2).</dcc:body>
     </dcc:statement>
-    <dcc:statement id="rule1" category="decisionRule">
+    <dcc:statement id="note2" category="decisionRule">
+      <dcc:heading lang="en">2</dcc:heading>
       <dcc:body lang="en">The binary decision rule according to ILAC publication G8 section 4.2.1 is employed without taking uncertainties into account.</dcc:body>
     </dcc:statement>
-    <dcc:statement id="meth5" category="method">
+    <dcc:statement id="note3" category="method">
+      <dcc:heading lang="en">3</dcc:heading>
       <dcc:body lang="en">The reported expanded measurement uncertainty is stated as the standard measurement uncertainty multiplied with the expansion factor k = 2. It is determined according to DAkkS-DKD-3.
 There is a 95% probability that the value of the measurand will be in the assigned value range.</dcc:body>
+      <dcc:externalReference>DKD-3</dcc:externalReference>
     </dcc:statement>
-    <dcc:statement id="meth6" category="method">
+    <dcc:statement id="note4" category="exception">
+      <dcc:heading lang="en">4</dcc:heading>
       <dcc:body lang="en">Value or setting deviates from the reference method according to ISO 8655-6-2022.</dcc:body>
-    </dcc:statement>
-    <dcc:statement id="meth7" category="method">
-      <dcc:heading lang="en">Note:</dcc:heading>
-      <dcc:body lang="en">All balances have evaporation traps. Before measurement, the measured object was stored in the
-air-conditioned test room for at least 2 hours.</dcc:body>
-    </dcc:statement>
-    <dcc:statement id="env1" category="method">
-      <dcc:heading lang="en">Environment</dcc:heading>
-      <dcc:body lang="en">Pressure: 1011 hPa ±10 hPa</dcc:body>
-    </dcc:statement>
-    <dcc:statement id="env2" category="method">
-      <dcc:heading lang="en">Environment</dcc:heading>
-      <dcc:body lang="en">Temperature: 20.5°C±0,4°C</dcc:body>
-    </dcc:statement>
-    <dcc:statement id="env3" category="method">
-      <dcc:heading lang="en">Evironment</dcc:heading>
-      <dcc:body lang="en"> relative humidity: 59.4 %RH ±10 %RH</dcc:body>
+      <dcc:externalReference>ISO 8655-6-2022</dcc:externalReference>
     </dcc:statement>
   </dcc:statements>
   <dcc:equipment>
@@ -208,7 +199,7 @@ air-conditioned test room for at least 2 hours.</dcc:body>
     <dcc:equipmentItem id="item1" category="item">
       <dcc:heading lang="en">Pipette (Mechanical)</dcc:heading>
       <dcc:heading lang="de">Pipette (Mechanish)</dcc:heading>
-      <dcc:identification issuer="customer">
+      <dcc:identification issuer="client">
         <dcc:heading lang="en">Test Eq. ID</dcc:heading>
         <dcc:heading lang="de">Prüfmittel-Nr</dcc:heading>
         <dcc:value>122223333.0</dcc:value>
@@ -225,14 +216,15 @@ air-conditioned test room for at least 2 hours.</dcc:body>
     <dcc:equipmentItem id="ref0" category="reference">
       <dcc:heading lang="en">Water according to ISO 3696, Grade 3</dcc:heading>
       <dcc:heading lang="de">Water according to ISO 3696, Grade 3</dcc:heading>
-      <dcc:identification issuer="calibrationLaboratory">
+      <dcc:identification issuer="serviceProvider">
         <dcc:heading lang="en">Batch no</dcc:heading>
         <dcc:heading lang="de">Batch no</dcc:heading>
         <dcc:value>-</dcc:value>
       </dcc:identification>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="ref1" category="reference">
-      <dcc:heading lang="en">Weighing Instrument                calibrated: 2021-11-25.</dcc:heading>
+      <dcc:heading lang="en">Weighing Instrument                
+calibrated: 2021-11-25.</dcc:heading>
       <dcc:heading lang="de">Waage
 kalibriert: 2021-11-25</dcc:heading>
       <dcc:identification issuer="manufacturer">
@@ -240,7 +232,7 @@ kalibriert: 2021-11-25</dcc:heading>
         <dcc:heading lang="de">Serien no. </dcc:heading>
         <dcc:value>42107472.0</dcc:value>
       </dcc:identification>
-      <dcc:identification issuer="calibrationLaboratory">
+      <dcc:identification issuer="serviceProvider">
         <dcc:heading lang="en">Serial no.</dcc:heading>
         <dcc:heading lang="de">Serien no. </dcc:heading>
         <dcc:value>42107472.0</dcc:value>
@@ -261,27 +253,27 @@ kalibriert: 2021-11-25</dcc:heading>
       <dcc:value>Automatic</dcc:value>
       <dcc:heading lang="en">Channel</dcc:heading>
     </dcc:setting>
+    <dcc:setting settingId="set3" equipmentRef="item2">
+      <dcc:parameter>Tip Change</dcc:parameter>
+      <dcc:value>No Change</dcc:value>
+    </dcc:setting>
   </dcc:settings>
   <dcc:measuringSystems>
     <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
     <dcc:heading lang="de"></dcc:heading>
     <dcc:measuringSystem id="ms1">
       <dcc:equipmentRefs>item1 item2</dcc:equipmentRefs>
-      <dcc:settingRefs>set1</dcc:settingRefs>
-      <dcc:statementRefs>meth7</dcc:statementRefs>
+      <dcc:settingRefs>set1 set2 set3</dcc:settingRefs>
+      <dcc:statementRefs>norm1 meth1 meth2 rule1 note3</dcc:statementRefs>
       <dcc:operationalStatus>as found</dcc:operationalStatus>
       <dcc:body lang="en">-</dcc:body>
     </dcc:measuringSystem>
     <dcc:measuringSystem id="ms2">
       <dcc:equipmentRefs>item1 item2</dcc:equipmentRefs>
-      <dcc:settingRefs>set1</dcc:settingRefs>
-      <dcc:statementRefs>meth7</dcc:statementRefs>
+      <dcc:settingRefs>set1 set2 set3</dcc:settingRefs>
+      <dcc:statementRefs>norm1 meth1 meth2 rule1 note3</dcc:statementRefs>
       <dcc:operationalStatus>after maintenance and adjustme</dcc:operationalStatus>
       <dcc:body lang="en">-</dcc:body>
-    </dcc:measuringSystem>
-    <dcc:measuringSystem id="refernece1">
-      <dcc:equipmentRefs>ref1</dcc:equipmentRefs>
-      <dcc:statementRefs>meth2</dcc:statementRefs>
     </dcc:measuringSystem>
   </dcc:measuringSystems>
   <dcc:measurementResults>
@@ -338,13 +330,13 @@ kalibriert: 2021-11-25</dcc:heading>
         </dcc:conformity>
       </dcc:column>
       <dcc:column scope="reference" dataCategoryRef="-" quantity="3-4|volume|m3" unit="%">
-        <dcc:heading lang="en">Random Error Result (Relative (CV)  (%)</dcc:heading>
+        <dcc:heading lang="en">Random Error Result (Relative (CV))  (%)</dcc:heading>
         <dcc:repeatability>
           <dcc:row idx="1">0.06</dcc:row>
         </dcc:repeatability>
       </dcc:column>
       <dcc:column scope="reference" dataCategoryRef="repeatability" quantity="3-4|volume|m3" unit="%">
-        <dcc:heading lang="en">Random Error Tolerance (Relative (CV)  (%)</dcc:heading>
+        <dcc:heading lang="en">Random Error Tolerance (Relative (CV))  (%)</dcc:heading>
         <dcc:acceptanceLimitUpper>
           <dcc:row idx="1">0.3</dcc:row>
         </dcc:acceptanceLimitUpper>
@@ -358,7 +350,7 @@ kalibriert: 2021-11-25</dcc:heading>
       <dcc:column scope="-" dataCategoryRef="conformity" quantity="-" unit="-">
         <dcc:heading lang="en">Conformaty status decision rule</dcc:heading>
         <dcc:decisionRuleRef>
-          <dcc:row idx="1">rule1</dcc:row>
+          <dcc:row idx="1">note2</dcc:row>
         </dcc:decisionRuleRef>
       </dcc:column>
       <dcc:column scope="bias" dataCategoryRef="-" quantity="3-4|volume|m3" unit="%">
@@ -366,6 +358,12 @@ kalibriert: 2021-11-25</dcc:heading>
         <dcc:expandedUncertainty>
           <dcc:row idx="1">0.16</dcc:row>
         </dcc:expandedUncertainty>
+      </dcc:column>
+      <dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="-" unit="-">
+        <dcc:heading lang="en">Expanded measurement uncertainty (%)</dcc:heading>
+        <dcc:methodRef>
+          <dcc:row idx="1">note3</dcc:row>
+        </dcc:methodRef>
       </dcc:column>
       <dcc:column scope="environment" dataCategoryRef="-" quantity="-" unit="-">
         <dcc:heading lang="en">Test Conditions ref:</dcc:heading>
@@ -384,6 +382,18 @@ kalibriert: 2021-11-25</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">0.999983</dcc:row>
         </dcc:value>
+      </dcc:column>
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
+        <dcc:heading lang="en">Water temperature (℃)</dcc:heading>
+        <dcc:value>
+          <dcc:row idx="1">21.7</dcc:row>
+        </dcc:value>
+      </dcc:column>
+      <dcc:column scope="reference" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃" unit="℃">
+        <dcc:heading lang="en">Water temperature uncertainty (℃)</dcc:heading>
+        <dcc:expandedUncertainty>
+          <dcc:row idx="1">0.2</dcc:row>
+        </dcc:expandedUncertainty>
       </dcc:column>
     </dcc:calibrationResult>
     <dcc:calibrationResult tableId="calRes2" serviceCategory="M/FF-9.10.3 Quantity of fluid" measuringSystemRef="ms2" numRows="3" numCols="14">
@@ -439,13 +449,13 @@ kalibriert: 2021-11-25</dcc:heading>
         </dcc:conformity>
       </dcc:column>
       <dcc:column scope="reference" dataCategoryRef="-" quantity="3-4|volume|m3" unit="%">
-        <dcc:heading lang="en">Random Error Result (Relative (CV)  (%)</dcc:heading>
+        <dcc:heading lang="en">Random Error Result (Relative (CV))  (%)</dcc:heading>
         <dcc:repeatability>
           <dcc:row idx="1">0.07</dcc:row>
         </dcc:repeatability>
       </dcc:column>
       <dcc:column scope="reference" dataCategoryRef="repeatability" quantity="3-4|volume|m3" unit="%">
-        <dcc:heading lang="en">Random Error Tolerance (Relative (CV)  (%)</dcc:heading>
+        <dcc:heading lang="en">Random Error Tolerance (Relative (CV))  (%)</dcc:heading>
         <dcc:acceptanceLimitUpper>
           <dcc:row idx="1">0.3</dcc:row>
         </dcc:acceptanceLimitUpper>
@@ -459,7 +469,7 @@ kalibriert: 2021-11-25</dcc:heading>
       <dcc:column scope="-" dataCategoryRef="conformity" quantity="-" unit="-">
         <dcc:heading lang="en">Conformaty status decision rule</dcc:heading>
         <dcc:decisionRuleRef>
-          <dcc:row idx="1">rule1</dcc:row>
+          <dcc:row idx="1">note2</dcc:row>
         </dcc:decisionRuleRef>
       </dcc:column>
       <dcc:column scope="bias" dataCategoryRef="-" quantity="3-4|volume|m3" unit="%">
@@ -468,11 +478,29 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="1">0.16</dcc:row>
         </dcc:expandedUncertainty>
       </dcc:column>
+      <dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="-" unit="-">
+        <dcc:heading lang="en">Expanded measurement uncertainty (%)</dcc:heading>
+        <dcc:methodRef>
+          <dcc:row idx="1">note3</dcc:row>
+        </dcc:methodRef>
+      </dcc:column>
       <dcc:column scope="environment" dataCategoryRef="-" quantity="-" unit="-">
         <dcc:heading lang="en">Test Conditions ref:</dcc:heading>
         <dcc:measurementSeriesRef>
           <dcc:row idx="1">env2</dcc:row>
         </dcc:measurementSeriesRef>
+      </dcc:column>
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
+        <dcc:heading lang="en">Water temperature (℃)</dcc:heading>
+        <dcc:value>
+          <dcc:row idx="1">21.7</dcc:row>
+        </dcc:value>
+      </dcc:column>
+      <dcc:column scope="reference" dataCategoryRef="value" quantity="5-2|Celsius temperature|℃" unit="℃">
+        <dcc:heading lang="en">Water temperature uncertainty (℃)</dcc:heading>
+        <dcc:expandedUncertainty>
+          <dcc:row idx="1">0.2</dcc:row>
+        </dcc:expandedUncertainty>
       </dcc:column>
     </dcc:calibrationResult>
     <dcc:measurementSeries tableId="ser1" serviceCategory="M/FF-9.10.3 Quantity of fluid" measuringSystemRef="ms1" numRows="10" numCols="4">
@@ -492,7 +520,7 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="10">10</dcc:row>
         </dcc:rowTag>
       </dcc:column>
-      <dcc:column scope="indication" dataCategoryRef="value" quantity="3-4|volume|m3" unit="µL">
+      <dcc:column scope="indication" dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL">
         <dcc:heading lang="en">Reference value</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">1000</dcc:row>
@@ -507,11 +535,11 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="10">1000</dcc:row>
         </dcc:value>
       </dcc:column>
-      <dcc:column scope="reference" dataCategoryRef="value" quantity="4-1|mass|kg" unit="mg">
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="4-1|mass|kg" unit="mg">
         <dcc:heading lang="en">Calibration Point</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">998.9</dcc:row>
-          <dcc:row idx="2">999</dcc:row>
+          <dcc:row idx="2">999.0</dcc:row>
           <dcc:row idx="3">999.2</dcc:row>
           <dcc:row idx="4">999.9</dcc:row>
           <dcc:row idx="5">999.1</dcc:row>
@@ -522,11 +550,11 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="10">998.8</dcc:row>
         </dcc:value>
       </dcc:column>
-      <dcc:column scope="reference" dataCategoryRef="value" quantity="3-4|volume|m3" unit="µL">
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL">
         <dcc:heading lang="en">Reference value</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">1001.9</dcc:row>
-          <dcc:row idx="2">1002</dcc:row>
+          <dcc:row idx="2">1002.0</dcc:row>
           <dcc:row idx="3">1002.2</dcc:row>
           <dcc:row idx="4">1002.9</dcc:row>
           <dcc:row idx="5">1002.1</dcc:row>
@@ -537,8 +565,23 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="10">1001.8</dcc:row>
         </dcc:value>
       </dcc:column>
+      <dcc:column scope="reference" dataCategoryRef="value" quantity="3-4|volume|m3" unit="µL">
+        <dcc:heading lang="en">Reference value</dcc:heading>
+        <dcc:methodRef>
+          <dcc:row idx="1">note1</dcc:row>
+          <dcc:row idx="2">note1</dcc:row>
+          <dcc:row idx="3">note1</dcc:row>
+          <dcc:row idx="4">note1</dcc:row>
+          <dcc:row idx="5">note1</dcc:row>
+          <dcc:row idx="6">note1</dcc:row>
+          <dcc:row idx="7">note1</dcc:row>
+          <dcc:row idx="8">note1</dcc:row>
+          <dcc:row idx="9">note1</dcc:row>
+          <dcc:row idx="10">note1</dcc:row>
+        </dcc:methodRef>
+      </dcc:column>
     </dcc:measurementSeries>
-    <dcc:measurementSeries tableId="env_1" serviceCategory="M/FF-9.10.3 Quantity of fluid" measuringSystemRef="ms1" numRows="1" numCols="13">
+    <dcc:measurementSeries tableId="env1" serviceCategory="M/FF-9.10.3 Quantity of fluid" measuringSystemRef="ms1" numRows="1" numCols="13">
       <dcc:heading lang="en">Test Conditions</dcc:heading>
       <dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="1">
         <dcc:heading lang="en">Customer Tags</dcc:heading>
@@ -636,6 +679,21 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="10">10</dcc:row>
         </dcc:rowTag>
       </dcc:column>
+      <dcc:column scope="indication" dataCategoryRef="value" quantity="3-4|volume|m3" unit="µL">
+        <dcc:heading lang="en">Reference value</dcc:heading>
+        <dcc:value>
+          <dcc:row idx="1">1000</dcc:row>
+          <dcc:row idx="2">1000</dcc:row>
+          <dcc:row idx="3">1000</dcc:row>
+          <dcc:row idx="4">1000</dcc:row>
+          <dcc:row idx="5">1000</dcc:row>
+          <dcc:row idx="6">1000</dcc:row>
+          <dcc:row idx="7">1000</dcc:row>
+          <dcc:row idx="8">1000</dcc:row>
+          <dcc:row idx="9">1000</dcc:row>
+          <dcc:row idx="10">1000</dcc:row>
+        </dcc:value>
+      </dcc:column>
       <dcc:column scope="reference" dataCategoryRef="value" quantity="4-1|mass|kg" unit="mg">
         <dcc:heading lang="en">Calibration Point</dcc:heading>
         <dcc:value>
@@ -666,23 +724,23 @@ kalibriert: 2021-11-25</dcc:heading>
           <dcc:row idx="10">1002.9</dcc:row>
         </dcc:value>
       </dcc:column>
-      <dcc:column scope="indication" dataCategoryRef="value" quantity="3-4|volume|m3" unit="µL">
+      <dcc:column scope="reference" dataCategoryRef="value" quantity="3-4|volume|m3" unit="µL">
         <dcc:heading lang="en">Reference value</dcc:heading>
-        <dcc:value>
-          <dcc:row idx="1">1000</dcc:row>
-          <dcc:row idx="2">1000</dcc:row>
-          <dcc:row idx="3">1000</dcc:row>
-          <dcc:row idx="4">1000</dcc:row>
-          <dcc:row idx="5">1000</dcc:row>
-          <dcc:row idx="6">1000</dcc:row>
-          <dcc:row idx="7">1000</dcc:row>
-          <dcc:row idx="8">1000</dcc:row>
-          <dcc:row idx="9">1000</dcc:row>
-          <dcc:row idx="10">1000</dcc:row>
-        </dcc:value>
+        <dcc:methodRef>
+          <dcc:row idx="1">note1</dcc:row>
+          <dcc:row idx="2">note1</dcc:row>
+          <dcc:row idx="3">note1</dcc:row>
+          <dcc:row idx="4">note1</dcc:row>
+          <dcc:row idx="5">note1</dcc:row>
+          <dcc:row idx="6">note1</dcc:row>
+          <dcc:row idx="7">note1</dcc:row>
+          <dcc:row idx="8">note1</dcc:row>
+          <dcc:row idx="9">note1</dcc:row>
+          <dcc:row idx="10">note1</dcc:row>
+        </dcc:methodRef>
       </dcc:column>
     </dcc:measurementSeries>
-    <dcc:measurementSeries tableId="env_2" serviceCategory="M/FF-9.10.3 Quantity of fluid" measuringSystemRef="ms2" numRows="1" numCols="13">
+    <dcc:measurementSeries tableId="env2" serviceCategory="M/FF-9.10.3 Quantity of fluid" measuringSystemRef="ms2" numRows="1" numCols="13">
       <dcc:heading lang="en">Test Conditions</dcc:heading>
       <dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="1">
         <dcc:heading lang="en">Customer Tags</dcc:heading>

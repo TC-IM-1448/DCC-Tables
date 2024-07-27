@@ -4,6 +4,8 @@
   <dcc:heading lang="de">Kalibrierschein</dcc:heading>
   <dcc:administrativeData>
     <dcc:coreData>
+      <dcc:transactionContent>request</dcc:transactionContent>
+      <dcc:requestedContent>digitalCalibrationCertificate</dcc:requestedContent>
       <dcc:uniqueIdentifier>
         <dcc:heading lang="en">Certificate number</dcc:heading>
         <dcc:value>V-008A119</dcc:value>
@@ -13,11 +15,11 @@
         <dcc:heading lang="de">Auftragsnummer</dcc:heading>
         <dcc:value>---</dcc:value>
       </dcc:clientIdentifier>
-      <dcc:equipmentReceiptDate>2023-10-26</dcc:equipmentReceiptDate>
+      <dcc:issueDate>2023-10-26</dcc:issueDate>
       <dcc:beginPerformanceDate>2023-10-26</dcc:beginPerformanceDate>
       <dcc:endPerformanceDate>2023-10-26</dcc:endPerformanceDate>
+      <dcc:equipmentReceiptDate>2023-10-26</dcc:equipmentReceiptDate>
       <dcc:performanceLocation>atProvider</dcc:performanceLocation>
-      <dcc:issueDate>2023-10-26</dcc:issueDate>
       <dcc:countryCodeISO3166_1>DE</dcc:countryCodeISO3166_1>
       <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
       <dcc:usedLangCodeISO639_1>de</dcc:usedLangCodeISO639_1>
