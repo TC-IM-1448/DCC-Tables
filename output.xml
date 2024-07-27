@@ -174,21 +174,21 @@ air-conditioned test room for at least 2 hours.</dcc:body>
       <dcc:externalReference>ISO 8655:2022</dcc:externalReference>
     </dcc:statement>
     <dcc:statement id="note1" category="method">
-      <dcc:heading lang="en">1</dcc:heading>
+      <dcc:heading lang="en">1.0</dcc:heading>
       <dcc:body lang="en">Calculation according to ISO 8655-6:2022 Formula (2).</dcc:body>
     </dcc:statement>
     <dcc:statement id="note2" category="decisionRule">
-      <dcc:heading lang="en">2</dcc:heading>
+      <dcc:heading lang="en">2.0</dcc:heading>
       <dcc:body lang="en">The binary decision rule according to ILAC publication G8 section 4.2.1 is employed without taking uncertainties into account.</dcc:body>
     </dcc:statement>
     <dcc:statement id="note3" category="method">
-      <dcc:heading lang="en">3</dcc:heading>
+      <dcc:heading lang="en">3.0</dcc:heading>
       <dcc:body lang="en">The reported expanded measurement uncertainty is stated as the standard measurement uncertainty multiplied with the expansion factor k = 2. It is determined according to DAkkS-DKD-3.
 There is a 95% probability that the value of the measurand will be in the assigned value range.</dcc:body>
       <dcc:externalReference>DKD-3</dcc:externalReference>
     </dcc:statement>
     <dcc:statement id="note4" category="exception">
-      <dcc:heading lang="en">4</dcc:heading>
+      <dcc:heading lang="en">4.0</dcc:heading>
       <dcc:body lang="en">Value or setting deviates from the reference method according to ISO 8655-6-2022.</dcc:body>
       <dcc:externalReference>ISO 8655-6-2022</dcc:externalReference>
     </dcc:statement>
@@ -539,7 +539,7 @@ kalibriert: 2021-11-25</dcc:heading>
         <dcc:heading lang="en">Calibration Point</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">998.9</dcc:row>
-          <dcc:row idx="2">999.0</dcc:row>
+          <dcc:row idx="2">999</dcc:row>
           <dcc:row idx="3">999.2</dcc:row>
           <dcc:row idx="4">999.9</dcc:row>
           <dcc:row idx="5">999.1</dcc:row>
@@ -554,7 +554,7 @@ kalibriert: 2021-11-25</dcc:heading>
         <dcc:heading lang="en">Reference value</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">1001.9</dcc:row>
-          <dcc:row idx="2">1002.0</dcc:row>
+          <dcc:row idx="2">1002</dcc:row>
           <dcc:row idx="3">1002.2</dcc:row>
           <dcc:row idx="4">1002.9</dcc:row>
           <dcc:row idx="5">1002.1</dcc:row>

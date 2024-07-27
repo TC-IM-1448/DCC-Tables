@@ -29,9 +29,9 @@ DCC='{https://dfm.dk}'
 xlValidateList = xw.constants.DVType.xlValidateList
 #%%
 HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
+                                        '@imageRefs',
                                         'heading[1]',  
                                         'body[1]', 
-                                        '@imageRefs',
                                         'externalReference'],
 
     equipmentHeadings = ['in DCC', '@id', '@category',
@@ -372,8 +372,8 @@ class DccGuiTool():
             # Give a name to the measurementId column
             measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
             measuringSysIdRng.name = "embeddedFilesIdRange"
-            rng = wb.sheets['statements'].range("Table_statements['@imageRef]")
-            self.applyValidationToRange(rng, 'embeddedFileIdRange')
+            rng = wb.sheets['statements'].range("Table_statements['@imageRefs]")
+            self.applyValidationToRange(rng, 'embeddedFilesIdRange')
         # Apply Validation
         # validatorMap= {'dcc:statements': }
 
