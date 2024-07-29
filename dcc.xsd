@@ -136,7 +136,6 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="transactionContent" type="dcc:transactionContentType" />
-            <xs:element name="requestedContent" type="dcc:requestedContentType" minOccurs="0"/>
             <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
             <xs:element name="clientIdentifier" type="dcc:identificationType" minOccurs="0"/>
             <xs:element name="issueDate" type="xs:date"/>
@@ -401,25 +400,26 @@ quantities of specified kinds
 
     <xs:simpleType name="transactionContentType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="request"/>
             <xs:enumeration value="digitalCalibrationCertificate"/>
             <xs:enumeration value="digitalMeasurementReport"/>
             <xs:enumeration value="digitalExaminationCertificate"/>
             <xs:enumeration value="digitalConformityCertificate"/>
             <xs:enumeration value="digitalTestReport"/>
+
+            <xs:enumeration value="request:DigitalCalibrationCertificate"/>
+            <xs:enumeration value="request:digitalMeasurementReport"/>
+            <xs:enumeration value="request:digitalExaminationCertificate"/>
+            <xs:enumeration value="request:digitalConformityCertificate"/>
+            <xs:enumeration value="request:digitalTestReport"/>
+
+            <xs:enumeration value="template:DigitalCalibrationCertificate"/>
+            <xs:enumeration value="template:digitalMeasurementReport"/>
+            <xs:enumeration value="template:digitalExaminationCertificate"/>
+            <xs:enumeration value="template:digitalConformityCertificate"/>
+            <xs:enumeration value="template:digitalTestReport"/>
         </xs:restriction>
     </xs:simpleType>
     
-    <xs:simpleType name="requestedContentType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="digitalCalibrationCertificate"/>
-            <xs:enumeration value="digitalMeasurementReport"/>
-            <xs:enumeration value="digitalExaminationCertificate"/>
-            <xs:enumeration value="digitalConformityCertificate"/>
-            <xs:enumeration value="digitalTestReport"/>
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:complexType name="calibrationLaboratoryType">
         <xs:annotation>
             <xs:documentation>

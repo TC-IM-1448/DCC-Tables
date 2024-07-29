@@ -3,38 +3,39 @@
     <dcc:heading lang="en">Calibration certificate</dcc:heading>
     <dcc:heading lang="da">Kalibreringscertifikat</dcc:heading>
     <dcc:administrativeData>
-        <dcc:dccSoftware>
-            <dcc:software>
-                <dcc:heading lang="en">This document was created with:</dcc:heading>
-                <dcc:heading lang="da">Dette dokument blev genereret ved hjælp af:</dcc:heading>
-                <dcc:name>excel2dcc.py</dcc:name>
-                <dcc:release>v0.0.1</dcc:release>
-            </dcc:software>
-        </dcc:dccSoftware>
         <dcc:coreData>
-            <dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
-            <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
-            <dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
+            <dcc:transactionContent>digitalCalibrationCertificate</dcc:transactionContent>
             <dcc:uniqueIdentifier>
                 <dcc:heading lang="en">Certificate number</dcc:heading>
                 <dcc:heading lang="da">Certifikatnummer</dcc:heading>
                 <dcc:value>SKH_10112_2</dcc:value>
             </dcc:uniqueIdentifier>
-            <dcc:customerIdentification>
+            <dcc:clientIdentifier>
                 <dcc:heading lang="en">Order number</dcc:heading>
                 <dcc:heading lang="da">Ordrenummer</dcc:heading>
                 <dcc:value>xx28</dcc:value>
-            </dcc:customerIdentification>
-            <dcc:receiptDate>2022-02-09</dcc:receiptDate>
+            </dcc:clientIdentifier>
+            <dcc:issueDate>2022-02-11</dcc:issueDate>
             <dcc:beginPerformanceDate>2022-02-10</dcc:beginPerformanceDate>
             <dcc:endPerformanceDate>2022-02-10</dcc:endPerformanceDate>
-            <dcc:performanceLocation>laboratory</dcc:performanceLocation>
-            <dcc:issueDate>2022-02-11</dcc:issueDate>
+            <dcc:equipmentReceiptDate>2022-02-09</dcc:equipmentReceiptDate>
+            <dcc:performanceLocation>atProvider</dcc:performanceLocation>
+            <dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
+            <dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+            <dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
+            <dcc:dccSoftware>
+                <dcc:software>
+                    <dcc:heading lang="en">This document was created with:</dcc:heading>
+                    <dcc:heading lang="da">Dette dokument blev genereret ved hjælp af:</dcc:heading>
+                    <dcc:name>excel2dcc.py</dcc:name>
+                    <dcc:release>v0.0.1</dcc:release>
+                </dcc:software>
+            </dcc:dccSoftware>
         </dcc:coreData>
-        <dcc:calibrationLaboratory>
+        <dcc:serviceProvider>
             <dcc:heading lang="en">Calibration laboratory</dcc:heading>
             <dcc:heading lang="da">Kalibreringslaboratorium</dcc:heading>
-            <dcc:companyName>Dandiag A/S</dcc:companyName>
+            <dcc:name>Dandiag A/S</dcc:name>
             <dcc:location>
                 <dcc:heading lang="en"> Address </dcc:heading>
                 <dcc:heading lang="da">Addresse</dcc:heading>
@@ -50,7 +51,16 @@
                 <dcc:eMail>nln@dandiag.com</dcc:eMail>
                 <dcc:phone>2334 45 56</dcc:phone>
             </dcc:contactInfo>
-        </dcc:calibrationLaboratory>
+        </dcc:serviceProvider>
+        <dcc:accreditation>
+            <dcc:heading lang="en">Accreditation</dcc:heading>
+            <dcc:heading lang="da">Akkreditering</dcc:heading>
+            <dcc:accreditationCountry>DK</dcc:accreditationCountry>
+            <dcc:accreditationBody>DANAK</dcc:accreditationBody>
+            <dcc:accreditationLabId>490</dcc:accreditationLabId>
+            <dcc:accreditationNorm>17025</dcc:accreditationNorm>
+            <dcc:accreditationApplicability>partial</dcc:accreditationApplicability>
+        </dcc:accreditation>
         <dcc:respPersons>
             <dcc:respPerson>
                 <dcc:heading lang="en">Main signer</dcc:heading>
@@ -59,10 +69,10 @@
                 <dcc:mainSigner>true</dcc:mainSigner>
             </dcc:respPerson>
         </dcc:respPersons>
-        <dcc:customer>
+        <dcc:client>
             <dcc:heading lang="en">Customer</dcc:heading>
             <dcc:heading lang="da">Kunde</dcc:heading>
-            <dcc:companyName>Dandiag A/S</dcc:companyName>
+            <dcc:name>Dandiag A/S</dcc:name>
             <dcc:location>
                 <dcc:heading lang="en">Address</dcc:heading>
                 <dcc:heading lang="da">Addresse</dcc:heading>
@@ -79,16 +89,7 @@
                 <dcc:eMail>skh@dandiag.com</dcc:eMail>
                 <dcc:phone>23 34 3456</dcc:phone>
             </dcc:contactInfo>
-        </dcc:customer>
-        <dcc:accreditation>
-            <dcc:heading lang="en">Accreditation</dcc:heading>
-            <dcc:heading lang="da">Akkreditering</dcc:heading>
-            <dcc:accreditationCountry>DK</dcc:accreditationCountry>
-            <dcc:accreditationBody>DANAK</dcc:accreditationBody>
-            <dcc:accreditationLabId>490</dcc:accreditationLabId>
-            <dcc:accreditationNorm>17025</dcc:accreditationNorm>
-            <dcc:accreditationApplicability>partial</dcc:accreditationApplicability>
-        </dcc:accreditation>
+        </dcc:client>
     </dcc:administrativeData>
     <dcc:statements>
         <dcc:heading lang="en">Statements</dcc:heading>
@@ -178,7 +179,7 @@
             <dcc:heading lang="da">Pipette med 12 kanaler 50-1200 µm</dcc:heading>
             <dcc:manufacturer>Biohit</dcc:manufacturer>
             <dcc:productName>Picus</dcc:productName>
-            <dcc:identification issuer="customer">
+            <dcc:identification issuer="client">
                 <dcc:heading lang="en">Customer iD</dcc:heading>
                 <dcc:heading lang="da">Kundens ID</dcc:heading>
                 <dcc:value>ID107</dcc:value>
@@ -194,7 +195,7 @@
             <dcc:heading lang="da">Pipettespids</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
             <dcc:productName>Optifit</dcc:productName>
-            <dcc:identification issuer="customer">
+            <dcc:identification issuer="client">
                 <dcc:heading lang="en">-</dcc:heading>
                 <dcc:heading lang="da">-</dcc:heading>
                 <dcc:value>-</dcc:value>
@@ -213,7 +214,7 @@
                 Opløsning:  0,00001 g.  
                 Kalibreret: 2021-11-25</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
-            <dcc:identification issuer="calibrationLaboratory">
+            <dcc:identification issuer="serviceProvider">
                 <dcc:heading lang="en">Laboratory's ID for the used reference</dcc:heading>
                 <dcc:heading lang="da">Laboratoriets ID nummer</dcc:heading>
                 <dcc:value>ID148</dcc:value>

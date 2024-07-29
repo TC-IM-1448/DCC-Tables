@@ -17,7 +17,6 @@ XSD_RESTRICTION_NAMES = [
                         'serviceCategoryType',
                         'yesno', 
                         "transactionContentType",
-                        "requestedContentType",
                         'statementCategoryType', 
                         'accreditationApplicabilityType',
                         'equipmentCategoryType',
