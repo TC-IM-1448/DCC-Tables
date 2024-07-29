@@ -1,3 +1,4 @@
+#%%
 import io
 from lxml import etree as et
 from urllib.request import urlopen
@@ -5,11 +6,31 @@ from xml.dom import minidom
 import openpyxl as pyxl
 import openpyxl as pyxl
 
-
+#%%
 # xsd_ns = {'xs':"http://www.w3.org/2001/XMLSchema"}
 # DCC='{https://dfm.dk}'
 # SI='{https://ptb.de/si}'
 LANG='en'
+XSD_RESTRICTION_NAMES = [
+                        'stringISO3166Type',
+                        'stringISO639Type',
+                        'serviceCategoryType',
+                        'yesno', 
+                        "transactionContentType",
+                        'statementCategoryType', 
+                        'accreditationApplicabilityType',
+                        'equipmentCategoryType',
+                        'issuerType',
+                        'operationalStatusType', 
+                        'stringPerformanceLocationType',
+                        'conformityStatusType',
+                        'scopeType',
+                        'dataCategoryType', 
+                        'quantityType',
+                        'tableCategoryType',
+                        'approachToTargetType',
+                        'quantityCodeSystemType',
+                        ]
 # et.register_namespace("si", SI.strip('{}'))
 # et.register_namespace("dcc", DCC.strip('{}'))
 
@@ -17,7 +38,7 @@ class DccTableColumn():
     """ """
     scopeType = ""
     columnType = ""
-    measurandType = ""
+    quantityType = ""
     unit = ""
     metaDataCategory=""
     humanHeading = {}
@@ -26,7 +47,7 @@ class DccTableColumn():
     def __init__(self,
                 scopeType="",
                 columnType="",
-                measurandType="",
+                quantityType="",
                 unit="",
                 metaDataCategory="",
                 humanHeading = {},
@@ -34,7 +55,7 @@ class DccTableColumn():
         """ """
         self.columnType = columnType
         self.scopeType = scopeType
-        self.measurandType = measurandType
+        self.quantityType = quantityType
         self.unit = unit
         self.metaDataCategory = metaDataCategory
         self.humanHeading = {}
@@ -68,6 +89,8 @@ class DccTabel():
         self.numRows = numRows
         self.numColumns = numColumns
         self.columns = columns
+
+#%%
 
 def validate(xml_path: str, xsd_path: str) -> bool:
     if xsd_path[0:5]=="https":
@@ -103,7 +126,7 @@ def xml2dccColumn(col, unit: str):
 
     """
     dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'],
-                          measurandType=col.attrib['measurand'], unit=unit,
+                          quantityType=col.attrib['quantity'], unit=unit,
                           humanHeading=col.find(DCC+'name').find(DCC+'content').text,
                           columnData=col.find(SI+'ValueXMLList').text.split())
     return dcccol
@@ -114,7 +137,7 @@ def xml2dcctable(xmltable):
         unit=""
         if type(col.find(SI+'unit')) !=type(None):
             unit=col.find(SI+'unit').text
-        # dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'], measurandType=col.attrib['measurand'], unit=unit, humanHeading=col.find(DCC+'name').find(DCC+'content').text, columnData=col.find(SI+'ValueXMLList').text.split())
+        # dcccol=DccTableColumn( scopeType=col.attrib['scope'], columnType=col.attrib['dataCategory'], quantityType=col.attrib['quantity'], unit=unit, humanHeading=col.find(DCC+'name').find(DCC+'content').text, columnData=col.find(SI+'ValueXMLList').text.split())
         dcccol = xml2dccColumn(col, unit)
         dcccolumns.append(dcccol)
     length=len(col.find(SI+'ValueXMLList').text.split())
@@ -166,20 +189,18 @@ def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
     return returntable
     
 #%%
-def match_column_attributes(att,searchatt, dataCategory, searchDataCategory, unit="-", searchunit='*'):
+def match_column_attributes(att,searchatt, dataCategory, searchDataCategory, unit="-"):
     # print(f"On Column with: {att}, {dataCategory}, {unit}")
     for key in att.keys():
         if att[key]!='-' and searchatt[key]!='*' and att[key]!=searchatt[key]:
             return False
-    if unit!='-' and searchunit!='*' and unit!=searchunit:
-        return False
     if dataCategory!='-' and searchDataCategory!='*' and dataCategory!=searchDataCategory:
         return False
     return True
 
 
 
-def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchunit="") -> list:
+def getColumnsFromTable(table,searchattributes, searchDataCategory="") -> list:
     #INPUT: xml-element of type dcc:table
     #INPUT: attribute dictionary
     #INPUT: searchunit as string.
@@ -189,11 +210,9 @@ def getColumnsFromTable(table,searchattributes, searchDataCategory="", searchuni
     # print(f"searching for: {searchattributes}, {searchDataCategory}, {searchunit}")
     for col in table.findall('dcc:column',ns):
         unit=""
-        if type(col.find('dcc:unit',ns)) !=type(None):
-            unit=col.find('dcc:unit',ns).text
         dataCategory=rev_ns_tag(col.getchildren()[-1]).replace("dcc:","")
         #if col.attrib==searchattributes and searchunit==unit:
-        if match_column_attributes(col.attrib, searchattributes, dataCategory, searchDataCategory, unit,searchunit):
+        if match_column_attributes(col.attrib, searchattributes, dataCategory, searchDataCategory):
             cols.append(col)
             #return col
     if len(cols)==0: 
@@ -241,18 +260,21 @@ def rowTagsToIndexs(rowTagColumn: et._Element) -> dict:
     return {v: k for k, v in rowTags.items()}
 
 #%%
-def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
+def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibrationResult", rowTags=[], idxs=[], lang="en") -> list:
     """
     INPUT: 
     root: etree root element of the DCC
     tableAttributes itemRef, settingRef and tableId as dictionary of string values
-    coAttributes scope, dataCategory and measurand  as dictionary of string values
+    coAttributes scope, dataCategory and quantity  as dictionary of string values
     unit as string
     customerTag (optional)  as string
     OUTPUT:
     search result as string (or list of strings if customerTag is not specified)
     warnings as strings 
     NOTE: rowTags takes prior rank to idxs if both are provided. 
+    Kan nok udskiftes med : 
+    root.findall('*//dcc:calibrationResult[@measuringSystemRef="ms1"]/dcc:column[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/dcc:row[@idx="1"]',root.nsmap)
+    root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
     """
     ns = root.nsmap
 
@@ -272,7 +294,7 @@ def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:cali
         print(tbl.attrib['tableId'])
         try:
             """Find the rigt column using attributes and unit"""
-            cols=getColumnsFromTable(tbl,colAttrib,dataCategory, unit)
+            cols=getColumnsFromTable(tbl,colAttrib,dataCategory)
             # print(cols)
             if len(cols) != 1: 
                 raise Exception("Found multiple columns - search should be unique")
@@ -300,10 +322,21 @@ def search(root, tableAttrib, colAttrib, dataCategory, unit, tableType="dcc:cali
     return searchValue
 
 # dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
-# dcol = dict(dataCategory="Value", measurand="Measure.Volume", metaDataCategory="Data", scope="reference")
+# dcol = dict(dataCategory="Value", quantity="Measure.Volume", metaDataCategory="Data", scope="reference")
 # rowtag = "p5"
 # print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
 # search(root,dtbl, dcol, "\micro\litre", customerTag="p5" )
+#%%
+def get_languages(root) -> list:
+    ns = root.nsmap
+    mandatory_lang = root.findall(".//dcc:mandatoryLangCodeISO639_1",ns)
+    used_lang = root.findall(".//dcc:usedLangCodeISO639_1",ns)
+    langs = mandatory_lang + used_lang
+    langs = [x.text for x in langs]
+    unique_langs = []
+    [unique_langs.append(x) for x in langs if x not in unique_langs]
+    return unique_langs
+
 #%%
 def get_statements(root, ID='*') -> list:
     ns = root.nsmap
@@ -342,9 +375,9 @@ def get_setting(root, settingId='*', lang='en', show=False) -> list:
     """ Returns a list of elements fullfilling ID requirements"""
     ns = root.nsmap
     returnsetting=[]
-    settings=settings = root.find("dcc:administrativeData/dcc:settings",ns)
+    settings=settings = root.findall("dcc:settings/dcc:setting",ns)
     for setting in settings:
-        if settingId==setting.attrib['id'] or settingId=='*':
+        if settingId==setting.attrib['settingId'] or settingId=='*':
             returnsetting.append(setting)
             if show:
                 print('---------------'+setting.attrib['id']+'-------------')
@@ -370,22 +403,7 @@ def printelement(element):
 #------------------------------------------------------------------
 #%%
 def schema_get_restrictions(xsd_root: et._Element, 
-                            type_names=[
-                                        'serviceCategoryType',
-                                        'yesno', 
-                                        'statementCategoryType', 
-                                        'accreditationApplicabilityType',
-                                        'equipmentCategoryType',
-                                        'issuerType',
-                                        'operationalStatusType', 
-                                        'stringPerformanceLocationType',
-                                        'conformityStatusType',
-                                        'scopeType',
-                                        'dataCategoryType', 
-                                        'measurandType',
-                                        'tableCategoryType',
-                                        'approachToTargetType'
-                                        ]
+                            type_names=XSD_RESTRICTION_NAMES
                             ) -> dict: 
     """schema_get_restrictions is used for finding the valid tokens for as specified in type_name:
         - yesno
@@ -393,7 +411,7 @@ def schema_get_restrictions(xsd_root: et._Element,
         - scopeType
         - dataCategoryType
         - metaDataCategoryType
-        - measurandType
+        - quantityType
         - and more 
 
         returns: 
@@ -402,13 +420,13 @@ def schema_get_restrictions(xsd_root: et._Element,
     """
     def get_restrictions(type_name, xsd_root=xsd_root):
         # xsd_ns = {'xs':"http://www.w3.org/2001/XMLSchema"}
-        # type_name = 'measurandType'
+        # type_name = 'quantityType'
         xsd_ns = xsd_root.nsmap
         s = f"xs:simpleType[@name='{type_name}']"
         r = xsd_root.findall(s, xsd_ns)
-        measurandTypes = r[0].find("xs:restriction", xsd_ns)
-        measurandTypes = measurandTypes.findall("xs:enumeration", xsd_ns)
-        strs = [mt.get('value') for mt in measurandTypes]
+        quantityTypes = r[0].find("xs:restriction", xsd_ns)
+        quantityTypes = quantityTypes.findall("xs:enumeration", xsd_ns)
+        strs = [mt.get('value') for mt in quantityTypes]
         return strs
 
     if type(type_names) is str: 
@@ -439,9 +457,9 @@ def schemaFindAdministrativeDataChildren(xsd_root):
 def getNodeById(root, ID:str):
     nodes = root.xpath(f'//*[@*="{ID}"]')
     if len(nodes) == 0: 
-        raise(KeyError, "No elements found")
+        raise KeyError( "No elements found")
     elif len(nodes)>1: 
-        raise(KeyError, f"Too many elements: found {len(nodes)} elements expected 1.")
+        raise KeyError( f"Too many elements: found {len(nodes)} elements expected 1.")
     node = nodes[0]
     nTag = rev_ns_tag(node)
     return nTag, node
@@ -544,17 +562,23 @@ def print_node(node):
 # print_node(root)
 #%% Run tests on dcc-xml-file
 if False: 
-    #%%
+    1
+    #%%    
     tree, root = load_xml("SKH_10112_2.xml")
     dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="*")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(measurand="Volume", dataCategoryRef="*", scope="reference")
-    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="\micro\litre")[0]
+    dcol = dict(quantity="3-4|volume|m3", dataCategoryRef="*", scope="reference", unit='µL')
+    col = getColumnsFromTable(tbl,dcol, searchDataCategory="value")[0]
+
+    # dcol = dict(quantity="quantityUnitDefRef", dataCategoryRef="-", scope="environment", quantityUnitDefRef="ms1")
+    # dataCategoryRef="-" quantity="quantityUnitDefRef" scope="environment" quantityUnitDefRef="ms1"
+    # col = getColumnsFromTable(tbl,dcol, searchDataCategory="value", searchunit="*")[0]
     print(col)
     print_node(col)
+    #%%
     rowtag = "1"
     idxs = [1,3]
     search_data = getRowData(col, idxs)
@@ -562,47 +586,65 @@ if False:
 
     tagCols = getRowTagColumns(tbl)
     print(tagCols)
+    print_node(tagCols[0])
 
     print(getRowTagsFromRowTagColumn(tagCols[0]))
     print(rowTagsToIndexs(tagCols[0]))
 
 
-    #%%
-    search_result = search(root, dtbl, dcol, "value", "\micro\litre", tableType="dcc:calibrationResult")
+    search_result = search(root, dtbl, dcol, "value", tableType="dcc:calibrationResult")
     print("SEARCH RESULT for Column: ", search_result)
+    #%%
 
-    search_result = search(root, dtbl, dcol, "value", "\micro\litre", rowTags=['pt1','pt3'] ,idxs=[1,2])
+    search_result = search(root, dtbl, dcol, "value", rowTags=['pt1','pt3'] ,idxs=[1,2])
     print("SEARCH RESULT for specific Rows", search_result)
 
+    #%%
     print("----------------------GET MeasuringSystem----------------")
     for n in get_measuringSystems(root,"ms1"): print_node(n)
+    #%%
+    get_setting(root)
     print_node(get_setting(root)[0])
     print_node(getTables(root,dict(tableId="ser13"))[0])
+    #%%
     
-    statementIds = [elm.attrib['statementId'] for elm in get_statements(root)]
+    statementIds = [elm.attrib['id'] for elm in get_statements(root)]
     statementIds
     #%%
-    dtbl = dict(tableId='*',measuringSystemRef="ms2")
+    dtbl = dict(tableId='*',measuringSystemRef="ms1")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcc:calibrationResult")[0]
     print(tbl)
     # print_node(get_measuringSystem(root,show=True)[0])
-    dcol = dict(dataCategory="value", measurand="Volume", metaDataCategory="data", scope="reference")
-    col = getColumnsFromTable(tbl,dcol,searchunit="*")[0]
-    
-    search(root, dtbl, dcol, '\micro\litre', rowTags=['p1'])
+    #%%
+    dcol = dict( quantity="3-4|volume|m3", dataCategoryRef='*', scope='reference', unit="*")
+    col = getColumnsFromTable(tbl,dcol,searchDataCategory="value")
+    print_node(col[0])
+    #%%
+    search(root, dtbl, dcol, dataCategory='value', rowTags=['pt1'])
 
 
 
+
+if False: 
+    pass
 #%% Run tests on dcc-xml-file
-if True: 
     xsd_tree, xsd_root = load_xml("dcc.xsd")
     da = schema_find_all_restrictions(xsd_root)
     d = schema_get_restrictions(xsd_root)
-    v = validate( "SKH_10112_2.xml", "dcc.xsd")
+    # v = validate( "SKH_10112_2.xml", "dcc.xsd")
+    v = validate( "output.xml", "dcc.xsd")
     print(v)
     # print(validate("Examples\\Stip-230063-V1.xml", "dcc.xsd"))
 #%%
+if False:
+    tree, root = load_xml("SKH_10112_2.xml")
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcc:value/*[@idx="1"]',root.nsmap)
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)
+    nodes = root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@unit="µL"]/dcc:value/*[@idx="1"]',root.nsmap)
+    print(nodes)
+    print_node(nodes[0])
 
+#%%
 if __name__ == "__main__":
     validate( "SKH_10112_2.xml", "dcc.xsd")

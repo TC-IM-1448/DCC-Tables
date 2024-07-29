@@ -23,7 +23,7 @@ class DccQuerryTool():
     mapperHeading =['Client DB ref', 'client description', 'queryType', 
                     'xpath', 
                     'measuringSystemRef', 'serviceCategory', 'tableId', 
-                    'scope', 'dataCategory', 'dataCategoryRef', 'measurand', 'unit', 'customerTag', 
+                    'scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'idx', 
                     'query result']
     xsdDefInitCol = 3  
     def loadExcelWorkbook(self, workBookFilePath: str):
@@ -58,7 +58,7 @@ class DccQuerryTool():
 
         # Apply validators in the mapping sheet
         sht = self.sheetMap
-        for r in ['scopeType','dataCategoryType', 'dataCategoryType', 'measurandType']: 
+        for r in ['scopeType','dataCategoryType', 'dataCategoryType', 'quantityType']: 
             rng = sht.range((2,j),(1024,j))
             rng.api.Validation.Delete()
             fml = "="+r
@@ -102,6 +102,27 @@ class DccQuerryTool():
         rng.api.Validation.Delete()
         rng.api.Validation.Add(Type=xlValidateList, Formula1='=tableId') 
 
+        i+=1
+        units = ["'"+elm.attrib['unit'] for elm in root.findall('*//dcc:column',root.nsmap)]
+        units = list(set(units))
+        sht_def.range((1,i)).value = 'units'
+        sht_def.range((2,i)).value = [[tbl] for tbl in units]
+        sht_def.range((2,i)).expand('down').name = 'units'
+        cidx = self.mapperHeading.index('unit')+1
+        rng = sht_map.range((2,cidx),(1024,cidx))
+        rng.api.Validation.Delete()
+        rng.api.Validation.Add(Type=xlValidateList, Formula1='=units') 
+
+        i+=1
+        quDefs = [elm.attrib['id'] for elm in root.findall("*//dcc:quantityUnitDef",root.nsmap)]
+        sht_def.range((1,i)).value = 'quantityUnitsDefs'
+        sht_def.range((2,i)).value = [[tbl] for tbl in quDefs]
+        sht_def.range((2,i)).expand('down').name = 'quantityUnitDefRefs'
+        cidx = self.mapperHeading.index('quantityUnitDefRef')+1
+        rng = sht_map.range((2,cidx),(1024,cidx))
+        rng.api.Validation.Delete()
+        rng.api.Validation.Add(Type=xlValidateList, Formula1='=quantityUnitDefRefs') 
+
         sht_map.range((1,2)).value = [[v] for v in ['queryType', 'data', 'xpath']]
         sht_def.range((2,2)).expand('down').name = 'queryType'
         cidx = self.mapperHeading.index('queryType')+1
@@ -126,10 +147,11 @@ class DccQuerryTool():
             data_val = None
             if queryType == 'xpath':
                 xpath_str = sht.range((i,4)).value
-                val = dcchf.xpath_query(root, xpath_str)
+                # val = dcchf.xpath_query(root, xpath_str)
+                val = root.xpath(xpath_str, namespaces=root.nsmap)
                 print(vals[i-2], queryType, val)
                 if len(val)>0:
-                    data_val = val[0].text
+                    data_val = [val]
                 else:
                     data_val = "ERROR not Found"
             elif queryType == 'data':
@@ -154,6 +176,7 @@ class DccQuerryTool():
                     data_val = list(data.values())
                 # elif len(data) > 1: 
                     # data_val = "ERROR too many values"
+            sht.range((i,cidxQueryResult)).expand('right').clear_contents()
             sht.range((i,cidxQueryResult)).value = data_val
                 # sht[f"M{i}"].value = data_val
 

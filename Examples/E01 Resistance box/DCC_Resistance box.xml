@@ -3,38 +3,39 @@
 	<dcc:heading lang="en">Calibration certificate</dcc:heading>
 	<dcc:heading lang="da">Kalibreringscertifikat</dcc:heading>
 	<dcc:administrativeData>
-		<dcc:dccSoftware>
-			<dcc:software>
-				<dcc:heading lang="en">This document was created with:</dcc:heading>
-				<dcc:heading lang="da">Dette dokument blev genereret ved hjælp af:</dcc:heading>
-				<dcc:name>ioDccGuiTool.py</dcc:name>
-				<dcc:release>v0.0.2</dcc:release>
-			</dcc:software>
-		</dcc:dccSoftware>
 		<dcc:coreData>
-			<dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
-			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
-			<dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+			<dcc:transactionContent>digitalCalibrationCertificate</dcc:transactionContent>
 			<dcc:uniqueIdentifier>
 				<dcc:heading lang="en">Certificate number</dcc:heading>
 				<dcc:heading lang="da">Certifikatnummer</dcc:heading>
-				<dcc:value>Stip-230063-V1</dcc:value>
+				<dcc:value>1223842</dcc:value>
 			</dcc:uniqueIdentifier>
-			<dcc:customerIdentification>
+			<dcc:clientIdentifier>
 				<dcc:heading lang="en">Order number</dcc:heading>
 				<dcc:heading lang="da">Ordrenummer</dcc:heading>
-				<dcc:value>Q0795429</dcc:value>
-			</dcc:customerIdentification>
-			<dcc:receiptDate>2023-05-02</dcc:receiptDate>
-			<dcc:beginPerformanceDate>2023-05-02</dcc:beginPerformanceDate>
-			<dcc:endPerformanceDate>2023-05-02</dcc:endPerformanceDate>
-			<dcc:performanceLocation>laboratory</dcc:performanceLocation>
-			<dcc:issueDate>2023-05-12</dcc:issueDate>
+				<dcc:value>140000651312</dcc:value>
+			</dcc:clientIdentifier>
+			<dcc:issueDate>2023-05-03</dcc:issueDate>
+			<dcc:beginPerformanceDate>2024-05-03</dcc:beginPerformanceDate>
+			<dcc:endPerformanceDate>2024-05-03</dcc:endPerformanceDate>
+			<dcc:equipmentReceiptDate>2023-04-25</dcc:equipmentReceiptDate>
+			<dcc:performanceLocation>atProvider</dcc:performanceLocation>
+			<dcc:countryCodeISO3166_1>DK</dcc:countryCodeISO3166_1>
+			<dcc:mandatoryLangCodeISO639_1>en</dcc:mandatoryLangCodeISO639_1>
+			<dcc:usedLangCodeISO639_1>da</dcc:usedLangCodeISO639_1>
+			<dcc:dccSoftware>
+				<dcc:software>
+					<dcc:heading lang="en">This document was created with:</dcc:heading>
+					<dcc:heading lang="da">Dette dokument blev genereret ved hjælp af:</dcc:heading>
+					<dcc:name>ioDccGuiTool.py</dcc:name>
+					<dcc:release>v0.0.2</dcc:release>
+				</dcc:software>
+			</dcc:dccSoftware>
 		</dcc:coreData>
-		<dcc:calibrationLaboratory>
+		<dcc:serviceProvider>
 			<dcc:heading lang="en">Calibration laboratory</dcc:heading>
 			<dcc:heading lang="da">Kalibreringslaboratorium</dcc:heading>
-			<dcc:companyName>Dummy Metrology Lab GmBL</dcc:companyName>
+			<dcc:name>Dummy Metrology Lab GmBL</dcc:name>
 			<dcc:location>
 				<dcc:heading lang="en"> Address </dcc:heading>
 				<dcc:heading lang="da">Addresse</dcc:heading>
@@ -50,7 +51,16 @@
 				<dcc:eMail>info@dummymet.dk</dcc:eMail>
 				<dcc:phone>+45 25459026</dcc:phone>
 			</dcc:contactInfo>
-		</dcc:calibrationLaboratory>
+		</dcc:serviceProvider>
+		<dcc:accreditation>
+			<dcc:heading lang="en">Accreditation</dcc:heading>
+			<dcc:heading lang="da">Akkreditering</dcc:heading>
+			<dcc:accreditationCountry>DK</dcc:accreditationCountry>
+			<dcc:accreditationBody>DANAK</dcc:accreditationBody>
+			<dcc:accreditationLabId>255</dcc:accreditationLabId>
+			<dcc:accreditationNorm>17025</dcc:accreditationNorm>
+			<dcc:accreditationApplicability>wholly</dcc:accreditationApplicability>
+		</dcc:accreditation>
 		<dcc:respPersons>
 			<dcc:respPerson>
 				<dcc:heading lang="en">Main signer</dcc:heading>
@@ -59,19 +69,10 @@
 				<dcc:mainSigner>true</dcc:mainSigner>
 			</dcc:respPerson>
 		</dcc:respPersons>
-		<dcc:accreditation>
-			<dcc:heading lang="en">Accreditation</dcc:heading>
-			<dcc:heading lang="da">Akkreditering</dcc:heading>
-			<dcc:accreditationCountry>DK</dcc:accreditationCountry>
-			<dcc:accreditationBody>NAB</dcc:accreditationBody>
-			<dcc:accreditationLabId>255</dcc:accreditationLabId>
-			<dcc:accreditationNorm>17025</dcc:accreditationNorm>
-			<dcc:accreditationApplicability>wholly</dcc:accreditationApplicability>
-		</dcc:accreditation>
-		<dcc:customer>
+		<dcc:client>
 			<dcc:heading lang="en">Customer</dcc:heading>
 			<dcc:heading lang="da">Kunde</dcc:heading>
-			<dcc:companyName>Novo Nordisk A/S</dcc:companyName>
+			<dcc:name>Novo Nordisk A/S, AFD 1966</dcc:name>
 			<dcc:location>
 				<dcc:heading lang="en">Address</dcc:heading>
 				<dcc:heading lang="da">Addresse</dcc:heading>
@@ -79,7 +80,7 @@
 				<dcc:countryCode>DK</dcc:countryCode>
 				<dcc:postCode>3400</dcc:postCode>
 				<dcc:street>Brennum Park</dcc:street>
-				<dcc:streetNo>-</dcc:streetNo>
+				<dcc:streetNo>24A</dcc:streetNo>
 			</dcc:location>
 			<dcc:contactInfo>
 				<dcc:heading lang="en">Contact person</dcc:heading>
@@ -88,331 +89,1005 @@
 				<dcc:eMail>-</dcc:eMail>
 				<dcc:phone>-</dcc:phone>
 			</dcc:contactInfo>
-		</dcc:customer>
+		</dcc:client>
 	</dcc:administrativeData>
 	<dcc:statements>
 		<dcc:heading lang="da">Bemærkninger</dcc:heading>
 		<dcc:heading lang="en">Statements</dcc:heading>
-		<dcc:statement id="s01" category="general">
-			<dcc:heading lang="en">Reprint</dcc:heading>
-			<dcc:heading lang="da">-</dcc:heading>
-			<dcc:body lang="en">This certificate may not be reproduced other than in full, except with the prior written consent of Dummy Metrology Lab LmBh.</dcc:body>
-			<dcc:body lang="da">-</dcc:body>
+		<dcc:statement id="st1" category="general">
+			<dcc:body lang="en">All work and services carried out by Dummy Metrology Lab are subject to, and conducted in accordance with, the
+Metrology Dummy Lab Standard Terms and Conditions, which are available at www.dummymet.com/terms or
+upon request.</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="s02" category="general">
-			<dcc:heading lang="en">Uncertainty</dcc:heading>
-			<dcc:heading lang="da">-</dcc:heading>
-			<dcc:body lang="en">The Uncertainty is multiplicated by a coverage factor = 2, providing a level of confidence of approximately 95% (EA-4/02)</dcc:body>
-			<dcc:body lang="da">-</dcc:body>
-			<dcc:externalReference>III-2</dcc:externalReference>
+		<dcc:statement id="stAcc1" category="accreditation">
+			<dcc:heading lang="en">COMMISSION</dcc:heading>
+			<dcc:body lang="en">Accredited Calibration</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="meth01" category="method">
-			<dcc:heading lang="en">Method</dcc:heading>
-			<dcc:body lang="en">Dummy Metrology Lab procedure: SOP-MS-101</dcc:body>
+		<dcc:statement id="meth1" category="method">
+			<dcc:heading lang="en">EXTENT OF CALIBRATION</dcc:heading>
+			<dcc:body lang="en">Dumme Metrology Lab procedure P102-007 &amp; Novo Nordisk A/S, Afd. 1966 målepunkter og MPE værdier fra stamkort.</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="s03" category="general">
-			<dcc:heading lang="en">Calculation of error+uncertainty</dcc:heading>
-			<dcc:body lang="en">By the calculation the same signs is used for Error and Uncertainty.</dcc:body>
+		<dcc:statement id="st2" category="general">
+			<dcc:heading lang="en">RESULT OF CALIBRATION</dcc:heading>
+			<dcc:body lang="en">The measurements are NOT compared with tolerances.</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="e01" category="exception">
-			<dcc:heading lang="en">Increased uncertainty</dcc:heading>
-			<dcc:heading lang="da">Forhøjet måleusikkerhed</dcc:heading>
-			<dcc:body lang="en">Data marked with reference to this exception has increased uncertainty relative to the laboratory's best measurement capability  due to ill condition of the calibrated item. </dcc:body>
-			<dcc:body lang="da">Data markeret med reference til denne undtagelse har forhøjet måleusikkerhed pga. Kalibreringsemnets ringe tilstand.</dcc:body>
+		<dcc:statement id="meth2" category="method">
+			<dcc:heading lang="en">AMBIENT CONDITIONS</dcc:heading>
+			<dcc:body lang="en">Temperature: (23 ± 3) °C, Humidity: (50 ± 25) %rh</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="None" category="general"/>
+		<dcc:statement id="st3" category="traceability">
+			<dcc:body lang="en">This calibration certificate documents the metrological traceability to national or international standards, which realize the units of measurement according to
+the International System of Units (SI).
+</dcc:body>
+		</dcc:statement>
+		<dcc:statement id="norm1" category="norm">
+			<dcc:body lang="en">The applied quality management system is certified to DS/EN ISO 9001:2015 and the laboratory activities meet the requirements in DS/EN ISO/IEC 17025:2017.
+The measurement management system is in compliance with DS/EN ISO 10012:2003.</dcc:body>
+		</dcc:statement>
 		<dcc:statement id="acc1" category="accreditation">
-			<dcc:heading lang="en">Accreditation</dcc:heading>
-			<dcc:heading lang="da">Akkreditering</dcc:heading>
-			<dcc:body lang="en">The calibration is caried out under fictive NAB accreditation no..42.
-
-NAB is a dummy national accreditation body in no country in compliance with Regulation (EC) No. 765/2008 of the European Parliament and of the Council.
-
-NAB is not covered by the multilateral agreements for testing, medical examination, calibration, proficiency testing providers and reference material producers under European co-operation for Accreditation (EA) and under International Laboratory Accreditation Cooperation (ILAC) based on peer-evaluation. This implies that accredited reports and certificates issued by companies accredited by NAB are not recognized across borders by members of EA and ILAC equal to reports and certificates issued by companies accredited by these members</dcc:body>
-			<dcc:body lang="da">Kalibreringen er udført under NAB akkreditering nr. 42
-
-NAB er et fiktivt national akkrediteringsorgan i et land i overensstemmelse med Europa-Parlamentet og Rådetsforordning (EF) Nr. 765/2008.
-
-NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk undersøgelse, kalibrering, udbud af præstationsprøvning og produktion af referencematerialer i European co-operation for Accreditation (EA) og i International Laboratory Accreditation Cooperation (ILAC) baseret på peer-evaluering. Dette indebærer, at akkrediterede rapporter og certifikater udstedt af virksomheder akkrediteret af NAB ikke kan anerkendes på tværs af landegrænser af medlemmer i EA og ILAC på linje med rapporter og certifikater udstedt af disse medlemmers akkrediterede virksomheder.</dcc:body>
+			<dcc:body lang="en">Dummy Metrology Lab GmBL with accreditation number 255 is accredited by Dummy National Accreditation Body (NAB) for calibration according to DS/EN ISO/IEC 17025:2017
+The Dummy National Accreditation Body (NAB) is not signatory to the multilateral agreements of the European co-operation for Accreditation (EA) and of the International Laboratory Accreditation Cooperation (ILAC) for the mutual recognition of calibration certificates.</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="accex1" category="accreditationException">
-			<dcc:heading lang="en">Measurements not under accreditation</dcc:heading>
-			<dcc:heading lang="da">Ikke akkrediterede målinger</dcc:heading>
-			<dcc:body lang="en">Measurement of recistance between 1.5 and 3 \ohm is outside the scope of the laboratorys accreditation.</dcc:body>
-			<dcc:body lang="da">Måling af modstand i området fra 1.5 til 3 \ohm falder uden for laboratoriets kalibreringsområde.</dcc:body>
+		<dcc:statement id="st4" category="general">
+			<dcc:body lang="en">This calibration certificate may not be reproduced other than in full except with the permission of the issuing laboratory. Calibration certificates without signature are not valid.</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="s04" category="general">
-			<dcc:heading lang="en">CIPM MRA</dcc:heading>
-			<dcc:body lang="en">This certificate is not consistent with the capabilities that are included in Appendix C of the MRA drawn up by the CIPM. Under the MRA, all participating institutes recognize the validity of each other’s calibration and measurement certificates for the quantities, ranges and measurement uncertainties specified in Appendix C (for details see http://www.bipm.org).</dcc:body>
+		<dcc:statement id="meth3" category="method">
+			<dcc:heading lang="en">MEASUREMENT UNCERTAINTY</dcc:heading>
+			<dcc:body lang="en">The reported expanded measurement uncertainty is stated as the standard measurement uncertainty multiplied by the
+coverage factor k such that the coverage probability corresponds to approximately 95 %. If not otherwise stated the
+coverage factor is k=2, which for a normal distribution corresponds to a coverage probability of approximately 95 %, for the
+reported expanded measurement uncertainty.
+
+The measurement uncertainty is determined in accordance with EA Publication EA-4/02 M: 2013 Evaluation of the
+Uncertainty of Measurement in Calibration and the measurement uncertainty is stated in accordance with ILAC publication
+ILAC-P14:09/2020 ILAC Policy for Measurement Uncertainty in Calibration.
+
+The calibration and measurement procedures and measuring equipment used have been selected to provide a
+measurement uncertainty of less than a third of the specification of the device under test, i.e. a Test Uncertainty Ratio
+(TUR) &gt; 3, where possible. The reported measurement uncertainty applies only to the measured value and do not imply
+anything regarding the long-term stability of the device under test.</dcc:body>
 		</dcc:statement>
-		<dcc:statement id="s05" category="general">
-			<dcc:heading lang="en">Conformity</dcc:heading>
-			<dcc:heading lang="da">Konformitetsudsagn</dcc:heading>
-			<dcc:body lang="en">Statements of conformaty is based on the tolerance limits provided by the customer.  The statement 'pass' indicates that the value including its uncertainty is within the tolerance limits. Otherwise the statement is 'fail'.</dcc:body>
-			<dcc:body lang="da">Konformitetsudsagn er baseret på kundens tolerancegrænser. Udsagnet 'pass' inidkerer at måleværdien inklusive usikkerhed ligger inden for tolerancegrænserne. Ellers gives udsagnet 'fail'.</dcc:body>
+		<dcc:statement id="methAbs" category="method">
+			<dcc:heading lang="en">Absolute Resistance Accuracy Method</dcc:heading>
+			<dcc:body lang="en">Measurements are made as absolute resistance including the measured zero ohm resistance.
+Nominal value includes the measured zero Ω resistance.</dcc:body>
+		</dcc:statement>
+		<dcc:statement id="methRel" category="method">
+			<dcc:heading lang="en">Relative Resistance Accuracy Method</dcc:heading>
+			<dcc:body lang="en">Measurements are made relative to zero Ω resistance.</dcc:body>
 		</dcc:statement>
 	</dcc:statements>
 	<dcc:equipment>
 		<dcc:heading lang="da"/>
 		<dcc:heading lang="en"/>
 		<dcc:equipmentItem id="item1" category="item">
-			<dcc:heading lang="da">Temperature sensor</dcc:heading>
-			<dcc:heading lang="en">Temperatursensor</dcc:heading>
-			<dcc:identification issuer="customer">
-				<dcc:heading lang="en">Customer iD</dcc:heading>
-				<dcc:heading lang="da">Kundens ID</dcc:heading>
-				<dcc:value>1695550</dcc:value>
+			<dcc:heading lang="en">Device Under Test</dcc:heading>
+			<dcc:identification issuer="client">
+				<dcc:heading lang="en">ID No. </dcc:heading>
+				<dcc:value>1463548.0</dcc:value>
 			</dcc:identification>
 			<dcc:identification issuer="manufacturer">
 				<dcc:heading lang="en">Serial number</dcc:heading>
 				<dcc:heading lang="da">Serienummer</dcc:heading>
-				<dcc:value>X34hwk4579</dcc:value>
+				<dcc:value>2.007e+18</dcc:value>
+			</dcc:identification>
+			<dcc:identification issuer="serviceProvider">
+				<dcc:heading lang="en">METECH No. </dcc:heading>
+				<dcc:value>1463548.0</dcc:value>
 			</dcc:identification>
 		</dcc:equipmentItem>
-		<dcc:equipmentItem id="item2" category="item">
-			<dcc:heading lang="da">display unit</dcc:heading>
-			<dcc:heading lang="en">Visningsenhed</dcc:heading>
-			<dcc:identification issuer="customer">
-				<dcc:heading lang="en">Customer iD</dcc:heading>
-				<dcc:heading lang="da">Kundens ID</dcc:heading>
-				<dcc:value>NN13</dcc:value>
-			</dcc:identification>
-			<dcc:identification issuer="manufacturer">
-				<dcc:value>afl234jfeee</dcc:value>
-			</dcc:identification>
-		</dcc:equipmentItem>
-		<dcc:equipmentItem id="item3" category="item">
-			<dcc:heading lang="da">another display unit</dcc:heading>
-			<dcc:heading lang="en">Ekstra visningsenhed</dcc:heading>
-			<dcc:identification issuer="customer">
-				<dcc:heading lang="en">Customer iD</dcc:heading>
-				<dcc:heading lang="da">Kundens ID</dcc:heading>
-				<dcc:value>NN14</dcc:value>
-			</dcc:identification>
-			<dcc:identification issuer="manufacturer">
-				<dcc:value>lqmdu2498710</dcc:value>
-			</dcc:identification>
-		</dcc:equipmentItem>
-		<dcc:equipmentItem id="equip1" category="reference">
-			<dcc:heading lang="da">Reference</dcc:heading>
-			<dcc:heading lang="en">Standard</dcc:heading>
-			<dcc:identification issuer="manufacturer">
-				<dcc:value>245</dcc:value>
-			</dcc:identification>
-			<dcc:identification issuer="calibrationLaboratory">
-				<dcc:heading lang="en">Cal Lab Id</dcc:heading>
-				<dcc:heading lang="da">Kal lab id</dcc:heading>
-				<dcc:value>TN-0439</dcc:value>
+		<dcc:equipmentItem id="refInst1" category="reference">
+			<dcc:heading lang="en">Multimeter</dcc:heading>
+			<dcc:identification issuer="serviceProvider">
+				<dcc:heading lang="en">ID NO.</dcc:heading>
+				<dcc:value>D2206</dcc:value>
 			</dcc:identification>
 		</dcc:equipmentItem>
 	</dcc:equipment>
 	<dcc:settings>
 		<dcc:heading lang="da">Indstillinger</dcc:heading>
 		<dcc:heading lang="en">Settings</dcc:heading>
-		<dcc:setting settingId="setting1" equipmentRef="item1">
-			<dcc:parameter>B coefficient</dcc:parameter>
-			<dcc:value>0.0</dcc:value>
-			<dcc:heading lang="en">Coefficient B</dcc:heading>
-			<dcc:heading lang="da">Koefficient B</dcc:heading>
-			<dcc:body lang="en">Reading from OceViewApp</dcc:body>
-			<dcc:body lang="da">Aflæsning i OceaViewApp</dcc:body>
-		</dcc:setting>
-		<dcc:setting settingId="setting2" equipmentRef="item1">
-			<dcc:parameter>A coefficient</dcc:parameter>
-			<dcc:value>1.0</dcc:value>
-			<dcc:heading lang="en">Coefficient A</dcc:heading>
-			<dcc:heading lang="da">Koefficient A</dcc:heading>
-			<dcc:body lang="en">Reading from OceViewApp</dcc:body>
-			<dcc:body lang="da">Aflæsning i OceaViewApp</dcc:body>
+		<dcc:setting settingId="dial" equipmentRef="item1">
+			<dcc:parameter>Resistance</dcc:parameter>
+			<dcc:heading lang="en">Resistance is manually set as provided in the TargetValue. </dcc:heading>
 		</dcc:setting>
 	</dcc:settings>
 	<dcc:measuringSystems>
 		<dcc:heading lang="da">Målesystemer</dcc:heading>
 		<dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
 		<dcc:measuringSystem id="ms1">
-			<dcc:heading lang="en">Data logger measuring system</dcc:heading>
-			<dcc:equipmentRefs>item1 item2 item3 equipment1</dcc:equipmentRefs>
-			<dcc:settingRefs>setting1 setting2</dcc:settingRefs>
+			<dcc:heading lang="en">Relative Resistance Setup</dcc:heading>
+			<dcc:equipmentRefs>item1 refInst1</dcc:equipmentRefs>
+			<dcc:settingRefs>dial</dcc:settingRefs>
+			<dcc:statementRefs>methAbs</dcc:statementRefs>
 			<dcc:operationalStatus>as found</dcc:operationalStatus>
 			<dcc:body lang="en">-</dcc:body>
 		</dcc:measuringSystem>
 	</dcc:measuringSystems>
 	<dcc:measurementResults>
-		<dcc:calibrationResult tableId="TempCal" serviceCategory="T/T-2.2.3 Thermistors and other resistive thermometers" measuringSystemRef="ms1" numRows="3" numCols="17">
+		<dcc:calibrationResult tableId="R_AbsCal_Ohm" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measuringSystemRef="ms1" numRows="74" numCols="17">
 			<dcc:heading lang="da">-</dcc:heading>
-			<dcc:heading lang="en">calibrationResult 1_T1</dcc:heading>
-			<dcc:column scope="-" dataCategoryRef="-" measurand="-">
+			<dcc:heading lang="en">Relative Resistance Accuracy</dcc:heading>
+			<dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
 				<dcc:heading lang="da">Kundens kode</dcc:heading>
 				<dcc:heading lang="en">Customer Tags</dcc:heading>
-				<dcc:unit>-</dcc:unit>
 				<dcc:rowTag>
-					<dcc:row idx="1">T1</dcc:row>
-					<dcc:row idx="2">T2</dcc:row>
-					<dcc:row idx="3">T3</dcc:row>
+					<dcc:row idx="1">01</dcc:row>
+					<dcc:row idx="2">02</dcc:row>
+					<dcc:row idx="3">03</dcc:row>
+					<dcc:row idx="4">04</dcc:row>
+					<dcc:row idx="5">05</dcc:row>
+					<dcc:row idx="6">06</dcc:row>
+					<dcc:row idx="7">07</dcc:row>
+					<dcc:row idx="8">08</dcc:row>
+					<dcc:row idx="9">09</dcc:row>
+					<dcc:row idx="10">10</dcc:row>
+					<dcc:row idx="11">11</dcc:row>
+					<dcc:row idx="12">12</dcc:row>
+					<dcc:row idx="13">13</dcc:row>
+					<dcc:row idx="14">14</dcc:row>
+					<dcc:row idx="15">15</dcc:row>
+					<dcc:row idx="16">16</dcc:row>
+					<dcc:row idx="17">17</dcc:row>
+					<dcc:row idx="18">18</dcc:row>
+					<dcc:row idx="19">19</dcc:row>
+					<dcc:row idx="20">20</dcc:row>
+					<dcc:row idx="21">21</dcc:row>
+					<dcc:row idx="22">22</dcc:row>
+					<dcc:row idx="23">23</dcc:row>
+					<dcc:row idx="24">24</dcc:row>
+					<dcc:row idx="25">25</dcc:row>
+					<dcc:row idx="26">26</dcc:row>
+					<dcc:row idx="27">27</dcc:row>
+					<dcc:row idx="28">28</dcc:row>
+					<dcc:row idx="29">29</dcc:row>
+					<dcc:row idx="30">30</dcc:row>
+					<dcc:row idx="31">31</dcc:row>
+					<dcc:row idx="32">32</dcc:row>
+					<dcc:row idx="33">33</dcc:row>
+					<dcc:row idx="34">34</dcc:row>
+					<dcc:row idx="35">35</dcc:row>
+					<dcc:row idx="36">36</dcc:row>
+					<dcc:row idx="37">37</dcc:row>
+					<dcc:row idx="38">38</dcc:row>
+					<dcc:row idx="39">39</dcc:row>
+					<dcc:row idx="40">40</dcc:row>
+					<dcc:row idx="41">41</dcc:row>
+					<dcc:row idx="42">42</dcc:row>
+					<dcc:row idx="43">43</dcc:row>
+					<dcc:row idx="44">44</dcc:row>
+					<dcc:row idx="45">45</dcc:row>
+					<dcc:row idx="46">46</dcc:row>
+					<dcc:row idx="47">47</dcc:row>
+					<dcc:row idx="48">48</dcc:row>
+					<dcc:row idx="49">49</dcc:row>
+					<dcc:row idx="50">50</dcc:row>
+					<dcc:row idx="51">51</dcc:row>
+					<dcc:row idx="52">52</dcc:row>
+					<dcc:row idx="53">53</dcc:row>
+					<dcc:row idx="54">54</dcc:row>
+					<dcc:row idx="55">55</dcc:row>
+					<dcc:row idx="56">56</dcc:row>
+					<dcc:row idx="57">57</dcc:row>
+					<dcc:row idx="58">58</dcc:row>
+					<dcc:row idx="59">59</dcc:row>
+					<dcc:row idx="60">60</dcc:row>
+					<dcc:row idx="61">61</dcc:row>
+					<dcc:row idx="62">62</dcc:row>
+					<dcc:row idx="63">63</dcc:row>
+					<dcc:row idx="64">64</dcc:row>
+					<dcc:row idx="65">65</dcc:row>
+					<dcc:row idx="66">66</dcc:row>
+					<dcc:row idx="67">67</dcc:row>
+					<dcc:row idx="68">68</dcc:row>
+					<dcc:row idx="69">69</dcc:row>
+					<dcc:row idx="70">70</dcc:row>
+					<dcc:row idx="71">71</dcc:row>
+					<dcc:row idx="72">72</dcc:row>
+					<dcc:row idx="73">73</dcc:row>
+					<dcc:row idx="74">74</dcc:row>
 				</dcc:rowTag>
 			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Kalibreringspunkt</dcc:heading>
-				<dcc:heading lang="en">Calibration Point</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:targetValue>
-					<dcc:row idx="1">-6.000</dcc:row>
-					<dcc:row idx="2">5.000</dcc:row>
-					<dcc:row idx="3">27.000</dcc:row>
-				</dcc:targetValue>
-			</dcc:column>
-			<dcc:column scope="reference" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Referencetemperatur i instrumentenheder</dcc:heading>
-				<dcc:heading lang="en">Reference Temperature in instrument units</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Nominal</dcc:heading>
 				<dcc:value>
-					<dcc:row idx="1">-6.076</dcc:row>
-					<dcc:row idx="2">5.017</dcc:row>
-					<dcc:row idx="3">27.054</dcc:row>
-				</dcc:value>
-			</dcc:column>
-			<dcc:column scope="indication" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Instrumentvisning</dcc:heading>
-				<dcc:heading lang="en">Instrument indication  </dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:value>
-					<dcc:row idx="1">-6.060</dcc:row>
-					<dcc:row idx="2">5.050</dcc:row>
-					<dcc:row idx="3">27.160</dcc:row>
-				</dcc:value>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Visningsfejl</dcc:heading>
-				<dcc:heading lang="en">Instrument Error</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:value>
-					<dcc:row idx="1">0.016</dcc:row>
-					<dcc:row idx="2">0.033</dcc:row>
-					<dcc:row idx="3">0.106</dcc:row>
-				</dcc:value>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="value" measurand="Temperature">
-				<dcc:heading lang="da">Ekspanderet kalibreringsusikkerhed</dcc:heading>
-				<dcc:heading lang="en">Uncertainty</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:expandedUncertainty>
-					<dcc:row idx="1">0.108</dcc:row>
-					<dcc:row idx="2">0.108</dcc:row>
-					<dcc:row idx="3">0.108</dcc:row>
-				</dcc:expandedUncertainty>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" measurand="Temperature">
-				<dcc:heading lang="da">k</dcc:heading>
-				<dcc:heading lang="en">k</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:uncertaintyCoverageFactor_k>
-					<dcc:row idx="1">2</dcc:row>
-					<dcc:row idx="2">2</dcc:row>
-					<dcc:row idx="3">2</dcc:row>
-				</dcc:uncertaintyCoverageFactor_k>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="value" measurand="Temperature">
-				<dcc:heading lang="da">Øvre tolerancegrænse</dcc:heading>
-				<dcc:heading lang="en">Upper tolerance limit for item bias</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:toleranceLimitUpper>
-					<dcc:row idx="1">0.5</dcc:row>
-					<dcc:row idx="2">0.5</dcc:row>
-					<dcc:row idx="3">0.5</dcc:row>
-				</dcc:toleranceLimitUpper>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="value" measurand="Temperature">
-				<dcc:heading lang="da">Nedre tolerancegrænse for visningsfejl</dcc:heading>
-				<dcc:heading lang="en">Lower tolerance limit for item bias</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:toleranceLimitLower>
-					<dcc:row idx="1">-0.5</dcc:row>
-					<dcc:row idx="2">-0.5</dcc:row>
-					<dcc:row idx="3">-0.5</dcc:row>
-				</dcc:toleranceLimitLower>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="-">
-				<dcc:heading lang="da">Konformitetsudsagn</dcc:heading>
-				<dcc:heading lang="en">Conformity</dcc:heading>
-				<dcc:unit>-</dcc:unit>
-				<dcc:conformity>
-					<dcc:row idx="1">pass</dcc:row>
-					<dcc:row idx="2">pass</dcc:row>
-					<dcc:row idx="3">pass</dcc:row>
-				</dcc:conformity>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="other">
-				<dcc:heading lang="da">Visningsfejl+kalibreringsusikkerhed</dcc:heading>
-				<dcc:heading lang="en">Error+uncertianty</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:expandedUncertainty>
-					<dcc:row idx="1">0.124</dcc:row>
-					<dcc:row idx="2">0.141</dcc:row>
-					<dcc:row idx="3">0.214</dcc:row>
-				</dcc:expandedUncertainty>
-			</dcc:column>
-			<dcc:column scope="bias" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Beregning af visningsfej+usikkerhed</dcc:heading>
-				<dcc:heading lang="en">Calculation of Error+uncertainty</dcc:heading>
-				<dcc:unit>-</dcc:unit>
-				<dcc:methodRef>
-					<dcc:row idx="1">s03</dcc:row>
-					<dcc:row idx="2">s03</dcc:row>
-					<dcc:row idx="3">s03</dcc:row>
-				</dcc:methodRef>
-			</dcc:column>
-			<dcc:column scope="-" dataCategoryRef="conformity" measurand="Temperature">
-				<dcc:heading lang="da">Basis for konformitetsudsagn</dcc:heading>
-				<dcc:heading lang="en">Basis of conformity statement</dcc:heading>
-				<dcc:unit>-</dcc:unit>
-				<dcc:decisionRuleRef>
-					<dcc:row idx="1">s05</dcc:row>
-					<dcc:row idx="2">s05</dcc:row>
-					<dcc:row idx="3">s05</dcc:row>
-				</dcc:decisionRuleRef>
-			</dcc:column>
-			<dcc:column scope="-" dataCategoryRef="value" measurand="Temperature">
-				<dcc:heading lang="da">Anvendt reference</dcc:heading>
-				<dcc:heading lang="en">Reference Used</dcc:heading>
-				<dcc:unit>-</dcc:unit>
-				<dcc:usedReferenceRef>
-					<dcc:row idx="1">equip1</dcc:row>
-					<dcc:row idx="2">equip1</dcc:row>
-					<dcc:row idx="3">equip1</dcc:row>
-				</dcc:usedReferenceRef>
-			</dcc:column>
-			<dcc:column scope="environment" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Omgivelsestemperatur</dcc:heading>
-				<dcc:heading lang="en">Environment temperature</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:expandedUncertainty>
-					<dcc:row idx="1">22</dcc:row>
-					<dcc:row idx="2">22</dcc:row>
-					<dcc:row idx="3">22</dcc:row>
-				</dcc:expandedUncertainty>
-			</dcc:column>
-			<dcc:column scope="environment" dataCategoryRef="-" measurand="Temperature">
-				<dcc:heading lang="da">Usikkerhed Omgivelsestemperatur</dcc:heading>
-				<dcc:heading lang="en">Uncertainty Environment temperature</dcc:heading>
-				<dcc:unit>\degreecelsius</dcc:unit>
-				<dcc:expandedUncertainty>
 					<dcc:row idx="1">1</dcc:row>
-					<dcc:row idx="2">1</dcc:row>
-					<dcc:row idx="3">1</dcc:row>
+					<dcc:row idx="2">2</dcc:row>
+					<dcc:row idx="3">3</dcc:row>
+					<dcc:row idx="4">4</dcc:row>
+					<dcc:row idx="5">5</dcc:row>
+					<dcc:row idx="6">6</dcc:row>
+					<dcc:row idx="7">7</dcc:row>
+					<dcc:row idx="8">8</dcc:row>
+					<dcc:row idx="9">9</dcc:row>
+					<dcc:row idx="10">10</dcc:row>
+					<dcc:row idx="11">20</dcc:row>
+					<dcc:row idx="12">30</dcc:row>
+					<dcc:row idx="13">40</dcc:row>
+					<dcc:row idx="14">50</dcc:row>
+					<dcc:row idx="15">60</dcc:row>
+					<dcc:row idx="16">70</dcc:row>
+					<dcc:row idx="17">80</dcc:row>
+					<dcc:row idx="18">90</dcc:row>
+					<dcc:row idx="19">100</dcc:row>
+					<dcc:row idx="20">200</dcc:row>
+					<dcc:row idx="21">300</dcc:row>
+					<dcc:row idx="22">400</dcc:row>
+					<dcc:row idx="23">500</dcc:row>
+					<dcc:row idx="24">600</dcc:row>
+					<dcc:row idx="25">700</dcc:row>
+					<dcc:row idx="26">800</dcc:row>
+					<dcc:row idx="27">900</dcc:row>
+					<dcc:row idx="28">1000</dcc:row>
+					<dcc:row idx="29">2000</dcc:row>
+					<dcc:row idx="30">3000</dcc:row>
+					<dcc:row idx="31">4000</dcc:row>
+					<dcc:row idx="32">5000</dcc:row>
+					<dcc:row idx="33">6000</dcc:row>
+					<dcc:row idx="34">7000</dcc:row>
+					<dcc:row idx="35">8000</dcc:row>
+					<dcc:row idx="36">9000</dcc:row>
+					<dcc:row idx="37">10000</dcc:row>
+					<dcc:row idx="38">20000</dcc:row>
+					<dcc:row idx="39">30000</dcc:row>
+					<dcc:row idx="40">40000</dcc:row>
+					<dcc:row idx="41">50000</dcc:row>
+					<dcc:row idx="42">60000</dcc:row>
+					<dcc:row idx="43">70000</dcc:row>
+					<dcc:row idx="44">80000</dcc:row>
+					<dcc:row idx="45">90000</dcc:row>
+					<dcc:row idx="46">100000</dcc:row>
+					<dcc:row idx="47">200000</dcc:row>
+					<dcc:row idx="48">300000</dcc:row>
+					<dcc:row idx="49">400000</dcc:row>
+					<dcc:row idx="50">500000</dcc:row>
+					<dcc:row idx="51">600000</dcc:row>
+					<dcc:row idx="52">700000</dcc:row>
+					<dcc:row idx="53">750000</dcc:row>
+					<dcc:row idx="54">800000</dcc:row>
+					<dcc:row idx="55">900000</dcc:row>
+					<dcc:row idx="56">1000000</dcc:row>
+					<dcc:row idx="57">2000000</dcc:row>
+					<dcc:row idx="58">3000000</dcc:row>
+					<dcc:row idx="59">4000000</dcc:row>
+					<dcc:row idx="60">5000000</dcc:row>
+					<dcc:row idx="61">6000000</dcc:row>
+					<dcc:row idx="62">7000000</dcc:row>
+					<dcc:row idx="63">8000000</dcc:row>
+					<dcc:row idx="64">9000000</dcc:row>
+					<dcc:row idx="65">100000000</dcc:row>
+					<dcc:row idx="66">200000000</dcc:row>
+					<dcc:row idx="67">300000000</dcc:row>
+					<dcc:row idx="68">350000000</dcc:row>
+					<dcc:row idx="69">400000000</dcc:row>
+					<dcc:row idx="70">500000000</dcc:row>
+					<dcc:row idx="71">600000000</dcc:row>
+					<dcc:row idx="72">700000000</dcc:row>
+					<dcc:row idx="73">800000000</dcc:row>
+					<dcc:row idx="74">900000000</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Measured</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="1">0.99957</dcc:row>
+					<dcc:row idx="2">1.99976</dcc:row>
+					<dcc:row idx="3">3.00257</dcc:row>
+					<dcc:row idx="4">4.00124</dcc:row>
+					<dcc:row idx="5">5.01523</dcc:row>
+					<dcc:row idx="6">5.99356</dcc:row>
+					<dcc:row idx="7">6.99064</dcc:row>
+					<dcc:row idx="8">7.9921</dcc:row>
+					<dcc:row idx="9">8.98349</dcc:row>
+					<dcc:row idx="10">10.00589</dcc:row>
+					<dcc:row idx="11">20.00932</dcc:row>
+					<dcc:row idx="12">29.99662</dcc:row>
+					<dcc:row idx="13">40.00492</dcc:row>
+					<dcc:row idx="14">50.01222</dcc:row>
+					<dcc:row idx="15">60.01922</dcc:row>
+					<dcc:row idx="16">69.99872</dcc:row>
+					<dcc:row idx="17">79.97012</dcc:row>
+					<dcc:row idx="18">89.93132</dcc:row>
+					<dcc:row idx="19">100.00812</dcc:row>
+					<dcc:row idx="20">200.01842</dcc:row>
+					<dcc:row idx="21">300.04582</dcc:row>
+					<dcc:row idx="22">400.10312</dcc:row>
+					<dcc:row idx="23">500.08892</dcc:row>
+					<dcc:row idx="24">600.21642</dcc:row>
+					<dcc:row idx="25">700.24692</dcc:row>
+					<dcc:row idx="26">800.32692</dcc:row>
+					<dcc:row idx="27">900.40592</dcc:row>
+					<dcc:row idx="28">1000.270901</dcc:row>
+					<dcc:row idx="29">2000.680901</dcc:row>
+					<dcc:row idx="30">3000.709901</dcc:row>
+					<dcc:row idx="31">4001.650901</dcc:row>
+					<dcc:row idx="32">5001.986901</dcc:row>
+					<dcc:row idx="33">6002.615901</dcc:row>
+					<dcc:row idx="34">7003.249901</dcc:row>
+					<dcc:row idx="35">8004.249901</dcc:row>
+					<dcc:row idx="36">9004.609901</dcc:row>
+					<dcc:row idx="37">10017.1099</dcc:row>
+					<dcc:row idx="38">20036.9099</dcc:row>
+					<dcc:row idx="39">30051.6399</dcc:row>
+					<dcc:row idx="40">40067.4399</dcc:row>
+					<dcc:row idx="41">50070.1599</dcc:row>
+					<dcc:row idx="42">60087.2799</dcc:row>
+					<dcc:row idx="43">70091.2799</dcc:row>
+					<dcc:row idx="44">80109.2999</dcc:row>
+					<dcc:row idx="45">90127.6999</dcc:row>
+					<dcc:row idx="46">100046.9999</dcc:row>
+					<dcc:row idx="47">200161.8999</dcc:row>
+					<dcc:row idx="48">300177.0999</dcc:row>
+					<dcc:row idx="49">400250.9999</dcc:row>
+					<dcc:row idx="50">500340.9999</dcc:row>
+					<dcc:row idx="51">600454.9999</dcc:row>
+					<dcc:row idx="52">700446.9999</dcc:row>
+					<dcc:row idx="53">750512.9999</dcc:row>
+					<dcc:row idx="54">800505.9999</dcc:row>
+					<dcc:row idx="55">900563.9999</dcc:row>
+					<dcc:row idx="56">1001592</dcc:row>
+					<dcc:row idx="57">2003560</dcc:row>
+					<dcc:row idx="58">3004250</dcc:row>
+					<dcc:row idx="59">4006920</dcc:row>
+					<dcc:row idx="60">5008640</dcc:row>
+					<dcc:row idx="61">6012090</dcc:row>
+					<dcc:row idx="62">7015020</dcc:row>
+					<dcc:row idx="63">8018460</dcc:row>
+					<dcc:row idx="64">9019670</dcc:row>
+					<dcc:row idx="65">9975150</dcc:row>
+					<dcc:row idx="66">19945000</dcc:row>
+					<dcc:row idx="67">29900000</dcc:row>
+					<dcc:row idx="68">34926000</dcc:row>
+					<dcc:row idx="69">39878000</dcc:row>
+					<dcc:row idx="70">49860000</dcc:row>
+					<dcc:row idx="71">59845000</dcc:row>
+					<dcc:row idx="72">69853000</dcc:row>
+					<dcc:row idx="73">79804000</dcc:row>
+					<dcc:row idx="74">89783000</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Deviation</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="1">-0.00043</dcc:row>
+					<dcc:row idx="2">-0.00024</dcc:row>
+					<dcc:row idx="3">0.00257</dcc:row>
+					<dcc:row idx="4">0.00124</dcc:row>
+					<dcc:row idx="5">0.01523</dcc:row>
+					<dcc:row idx="6">-0.00644</dcc:row>
+					<dcc:row idx="7">-0.00936</dcc:row>
+					<dcc:row idx="8">-0.0079</dcc:row>
+					<dcc:row idx="9">-0.01651</dcc:row>
+					<dcc:row idx="10">0.00589</dcc:row>
+					<dcc:row idx="11">0.00932</dcc:row>
+					<dcc:row idx="12">-0.00338</dcc:row>
+					<dcc:row idx="13">0.00492</dcc:row>
+					<dcc:row idx="14">0.01222</dcc:row>
+					<dcc:row idx="15">0.01922</dcc:row>
+					<dcc:row idx="16">-0.00128</dcc:row>
+					<dcc:row idx="17">-0.02988</dcc:row>
+					<dcc:row idx="18">-0.06868</dcc:row>
+					<dcc:row idx="19">0.00812</dcc:row>
+					<dcc:row idx="20">0.01842</dcc:row>
+					<dcc:row idx="21">0.04582</dcc:row>
+					<dcc:row idx="22">0.10312</dcc:row>
+					<dcc:row idx="23">0.08892</dcc:row>
+					<dcc:row idx="24">0.21642</dcc:row>
+					<dcc:row idx="25">0.24692</dcc:row>
+					<dcc:row idx="26">0.32692</dcc:row>
+					<dcc:row idx="27">0.40592</dcc:row>
+					<dcc:row idx="28">0.270901</dcc:row>
+					<dcc:row idx="29">0.680901</dcc:row>
+					<dcc:row idx="30">0.709901</dcc:row>
+					<dcc:row idx="31">1.650901</dcc:row>
+					<dcc:row idx="32">1.986901</dcc:row>
+					<dcc:row idx="33">2.615901</dcc:row>
+					<dcc:row idx="34">3.249901</dcc:row>
+					<dcc:row idx="35">4.249901</dcc:row>
+					<dcc:row idx="36">4.609901</dcc:row>
+					<dcc:row idx="37">17.1099</dcc:row>
+					<dcc:row idx="38">36.9099</dcc:row>
+					<dcc:row idx="39">51.6399</dcc:row>
+					<dcc:row idx="40">67.4399</dcc:row>
+					<dcc:row idx="41">70.1599</dcc:row>
+					<dcc:row idx="42">87.2799</dcc:row>
+					<dcc:row idx="43">91.2799</dcc:row>
+					<dcc:row idx="44">109.2999</dcc:row>
+					<dcc:row idx="45">127.6999</dcc:row>
+					<dcc:row idx="46">46.9999</dcc:row>
+					<dcc:row idx="47">161.8999</dcc:row>
+					<dcc:row idx="48">177.0999</dcc:row>
+					<dcc:row idx="49">250.9999</dcc:row>
+					<dcc:row idx="50">340.9999</dcc:row>
+					<dcc:row idx="51">454.9999</dcc:row>
+					<dcc:row idx="52">446.9999</dcc:row>
+					<dcc:row idx="53">512.9999</dcc:row>
+					<dcc:row idx="54">505.9999</dcc:row>
+					<dcc:row idx="55">563.9999</dcc:row>
+					<dcc:row idx="56">1592</dcc:row>
+					<dcc:row idx="57">3560</dcc:row>
+					<dcc:row idx="58">4250</dcc:row>
+					<dcc:row idx="59">6920</dcc:row>
+					<dcc:row idx="60">8640</dcc:row>
+					<dcc:row idx="61">12090</dcc:row>
+					<dcc:row idx="62">15020</dcc:row>
+					<dcc:row idx="63">18460</dcc:row>
+					<dcc:row idx="64">19670</dcc:row>
+					<dcc:row idx="65">-24850</dcc:row>
+					<dcc:row idx="66">-55000</dcc:row>
+					<dcc:row idx="67">-100000</dcc:row>
+					<dcc:row idx="68">-74000</dcc:row>
+					<dcc:row idx="69">-122000</dcc:row>
+					<dcc:row idx="70">-140000</dcc:row>
+					<dcc:row idx="71">-155000</dcc:row>
+					<dcc:row idx="72">-147000</dcc:row>
+					<dcc:row idx="73">-196000</dcc:row>
+					<dcc:row idx="74">-217000</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="%">
+				<dcc:heading lang="en">Relative Deviation</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="1">-0.04302</dcc:row>
+					<dcc:row idx="2">-0.012</dcc:row>
+					<dcc:row idx="3">0.085593</dcc:row>
+					<dcc:row idx="4">0.03099</dcc:row>
+					<dcc:row idx="5">0.303675</dcc:row>
+					<dcc:row idx="6">-0.10745</dcc:row>
+					<dcc:row idx="7">-0.13389</dcc:row>
+					<dcc:row idx="8">-0.09885</dcc:row>
+					<dcc:row idx="9">-0.18378</dcc:row>
+					<dcc:row idx="10">0.058865</dcc:row>
+					<dcc:row idx="11">0.046578</dcc:row>
+					<dcc:row idx="12">-0.01127</dcc:row>
+					<dcc:row idx="13">0.012298</dcc:row>
+					<dcc:row idx="14">0.024434</dcc:row>
+					<dcc:row idx="15">0.032023</dcc:row>
+					<dcc:row idx="16">-0.00183</dcc:row>
+					<dcc:row idx="17">-0.03736</dcc:row>
+					<dcc:row idx="18">-0.07637</dcc:row>
+					<dcc:row idx="19">0.008119</dcc:row>
+					<dcc:row idx="20">0.009209</dcc:row>
+					<dcc:row idx="21">0.015271</dcc:row>
+					<dcc:row idx="22">0.025773</dcc:row>
+					<dcc:row idx="23">0.017781</dcc:row>
+					<dcc:row idx="24">0.036057</dcc:row>
+					<dcc:row idx="25">0.035262</dcc:row>
+					<dcc:row idx="26">0.040848</dcc:row>
+					<dcc:row idx="27">0.045082</dcc:row>
+					<dcc:row idx="28">0.027083</dcc:row>
+					<dcc:row idx="29">0.034033</dcc:row>
+					<dcc:row idx="30">0.023658</dcc:row>
+					<dcc:row idx="31">0.041255</dcc:row>
+					<dcc:row idx="32">0.039722</dcc:row>
+					<dcc:row idx="33">0.043579</dcc:row>
+					<dcc:row idx="34">0.046406</dcc:row>
+					<dcc:row idx="35">0.053096</dcc:row>
+					<dcc:row idx="36">0.051195</dcc:row>
+					<dcc:row idx="37">0.170807</dcc:row>
+					<dcc:row idx="38">0.18421</dcc:row>
+					<dcc:row idx="39">0.171837</dcc:row>
+					<dcc:row idx="40">0.168316</dcc:row>
+					<dcc:row idx="41">0.140123</dcc:row>
+					<dcc:row idx="42">0.145255</dcc:row>
+					<dcc:row idx="43">0.13023</dcc:row>
+					<dcc:row idx="44">0.136438</dcc:row>
+					<dcc:row idx="45">0.141688</dcc:row>
+					<dcc:row idx="46">0.046978</dcc:row>
+					<dcc:row idx="47">0.080884</dcc:row>
+					<dcc:row idx="48">0.058998</dcc:row>
+					<dcc:row idx="49">0.062711</dcc:row>
+					<dcc:row idx="50">0.068153</dcc:row>
+					<dcc:row idx="51">0.075776</dcc:row>
+					<dcc:row idx="52">0.063816</dcc:row>
+					<dcc:row idx="53">0.068353</dcc:row>
+					<dcc:row idx="54">0.06321</dcc:row>
+					<dcc:row idx="55">0.062627</dcc:row>
+					<dcc:row idx="56">0.158947</dcc:row>
+					<dcc:row idx="57">0.177684</dcc:row>
+					<dcc:row idx="58">0.141466</dcc:row>
+					<dcc:row idx="59">0.172701</dcc:row>
+					<dcc:row idx="60">0.172502</dcc:row>
+					<dcc:row idx="61">0.201095</dcc:row>
+					<dcc:row idx="62">0.214112</dcc:row>
+					<dcc:row idx="63">0.230219</dcc:row>
+					<dcc:row idx="64">0.218079</dcc:row>
+					<dcc:row idx="65">-0.24912</dcc:row>
+					<dcc:row idx="66">-0.27576</dcc:row>
+					<dcc:row idx="67">-0.33445</dcc:row>
+					<dcc:row idx="68">-0.21188</dcc:row>
+					<dcc:row idx="69">-0.30593</dcc:row>
+					<dcc:row idx="70">-0.28079</dcc:row>
+					<dcc:row idx="71">-0.259</dcc:row>
+					<dcc:row idx="72">-0.21044</dcc:row>
+					<dcc:row idx="73">-0.2456</dcc:row>
+					<dcc:row idx="74">-0.24169</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Uncertainty</dcc:heading>
+				<dcc:expandedUncertainty>
+					<dcc:row idx="1">0.00035</dcc:row>
+					<dcc:row idx="2">0.00036</dcc:row>
+					<dcc:row idx="3">0.00037</dcc:row>
+					<dcc:row idx="4">0.00037</dcc:row>
+					<dcc:row idx="5">0.00038</dcc:row>
+					<dcc:row idx="6">0.00039</dcc:row>
+					<dcc:row idx="7">0.0004</dcc:row>
+					<dcc:row idx="8">0.00041</dcc:row>
+					<dcc:row idx="9">0.00042</dcc:row>
+					<dcc:row idx="10">0.00043</dcc:row>
+					<dcc:row idx="11">0.0035</dcc:row>
+					<dcc:row idx="12">0.0036</dcc:row>
+					<dcc:row idx="13">0.0036</dcc:row>
+					<dcc:row idx="14">0.0037</dcc:row>
+					<dcc:row idx="15">0.0038</dcc:row>
+					<dcc:row idx="16">0.0038</dcc:row>
+					<dcc:row idx="17">0.0039</dcc:row>
+					<dcc:row idx="18">0.004</dcc:row>
+					<dcc:row idx="19">0.004</dcc:row>
+					<dcc:row idx="20">0.0047</dcc:row>
+					<dcc:row idx="21">0.0056</dcc:row>
+					<dcc:row idx="22">0.0066</dcc:row>
+					<dcc:row idx="23">0.0077</dcc:row>
+					<dcc:row idx="24">0.0089</dcc:row>
+					<dcc:row idx="25">0.01</dcc:row>
+					<dcc:row idx="26">0.011</dcc:row>
+					<dcc:row idx="27">0.012</dcc:row>
+					<dcc:row idx="28">0.014</dcc:row>
+					<dcc:row idx="29">0.047</dcc:row>
+					<dcc:row idx="30">0.056</dcc:row>
+					<dcc:row idx="31">0.066</dcc:row>
+					<dcc:row idx="32">0.077</dcc:row>
+					<dcc:row idx="33">0.089</dcc:row>
+					<dcc:row idx="34">0.1</dcc:row>
+					<dcc:row idx="35">0.11</dcc:row>
+					<dcc:row idx="36">0.12</dcc:row>
+					<dcc:row idx="37">0.14</dcc:row>
+					<dcc:row idx="38">0.34</dcc:row>
+					<dcc:row idx="39">0.46</dcc:row>
+					<dcc:row idx="40">0.59</dcc:row>
+					<dcc:row idx="41">0.72</dcc:row>
+					<dcc:row idx="42">0.85</dcc:row>
+					<dcc:row idx="43">0.97</dcc:row>
+					<dcc:row idx="44">1.1</dcc:row>
+					<dcc:row idx="45">1.2</dcc:row>
+					<dcc:row idx="46">1.4</dcc:row>
+					<dcc:row idx="47">6.9</dcc:row>
+					<dcc:row idx="48">8.8</dcc:row>
+					<dcc:row idx="49">11</dcc:row>
+					<dcc:row idx="50">12</dcc:row>
+					<dcc:row idx="51">15</dcc:row>
+					<dcc:row idx="52">16</dcc:row>
+					<dcc:row idx="53">17</dcc:row>
+					<dcc:row idx="54">19</dcc:row>
+					<dcc:row idx="55">21</dcc:row>
+					<dcc:row idx="56">22</dcc:row>
+					<dcc:row idx="57">260</dcc:row>
+					<dcc:row idx="58">340</dcc:row>
+					<dcc:row idx="59">370</dcc:row>
+					<dcc:row idx="60">480</dcc:row>
+					<dcc:row idx="61">590</dcc:row>
+					<dcc:row idx="62">650</dcc:row>
+					<dcc:row idx="63">670</dcc:row>
+					<dcc:row idx="64">710</dcc:row>
+					<dcc:row idx="65">7400</dcc:row>
+					<dcc:row idx="66">150000</dcc:row>
+					<dcc:row idx="67">220000</dcc:row>
+					<dcc:row idx="68">240000</dcc:row>
+					<dcc:row idx="69">270000</dcc:row>
+					<dcc:row idx="70">330000</dcc:row>
+					<dcc:row idx="71">390000</dcc:row>
+					<dcc:row idx="72">480000</dcc:row>
+					<dcc:row idx="73">670000</dcc:row>
+					<dcc:row idx="74">580000</dcc:row>
 				</dcc:expandedUncertainty>
 			</dcc:column>
-			<dcc:column scope="environment" dataCategoryRef="-" measurand="Pressure.Hydraulic.Static">
-				<dcc:heading lang="da">Omgivelsestryk</dcc:heading>
-				<dcc:heading lang="en">Environment pressure</dcc:heading>
-				<dcc:unit>\hecto\pascal</dcc:unit>
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">MPE</dcc:heading>
+				<dcc:acceptanceLimitUpper>
+					<dcc:row idx="1">0.21982</dcc:row>
+					<dcc:row idx="2">0.41982</dcc:row>
+					<dcc:row idx="3">0.61982</dcc:row>
+					<dcc:row idx="4">0.81982</dcc:row>
+					<dcc:row idx="5">1.01982</dcc:row>
+					<dcc:row idx="6">1.21982</dcc:row>
+					<dcc:row idx="7">1.41982</dcc:row>
+					<dcc:row idx="8">1.61982</dcc:row>
+					<dcc:row idx="9">1.81982</dcc:row>
+					<dcc:row idx="10">0.30297</dcc:row>
+					<dcc:row idx="11">0.603</dcc:row>
+					<dcc:row idx="12">0.903</dcc:row>
+					<dcc:row idx="13">1.203</dcc:row>
+					<dcc:row idx="14">1.503</dcc:row>
+					<dcc:row idx="15">1.803</dcc:row>
+					<dcc:row idx="16">2.103</dcc:row>
+					<dcc:row idx="17">2.403</dcc:row>
+					<dcc:row idx="18">2.703</dcc:row>
+					<dcc:row idx="19">3</dcc:row>
+					<dcc:row idx="20">6</dcc:row>
+					<dcc:row idx="21">9</dcc:row>
+					<dcc:row idx="22">12</dcc:row>
+					<dcc:row idx="23">15</dcc:row>
+					<dcc:row idx="24">18</dcc:row>
+					<dcc:row idx="25">21</dcc:row>
+					<dcc:row idx="26">24</dcc:row>
+					<dcc:row idx="27">27</dcc:row>
+					<dcc:row idx="28">30</dcc:row>
+					<dcc:row idx="29">60</dcc:row>
+					<dcc:row idx="30">90</dcc:row>
+					<dcc:row idx="31">120</dcc:row>
+					<dcc:row idx="32">150</dcc:row>
+					<dcc:row idx="33">180</dcc:row>
+					<dcc:row idx="34">210</dcc:row>
+					<dcc:row idx="35">240</dcc:row>
+					<dcc:row idx="36">270</dcc:row>
+					<dcc:row idx="37">300</dcc:row>
+					<dcc:row idx="38">600</dcc:row>
+					<dcc:row idx="39">900</dcc:row>
+					<dcc:row idx="40">1200</dcc:row>
+					<dcc:row idx="41">1500</dcc:row>
+					<dcc:row idx="42">1800</dcc:row>
+					<dcc:row idx="43">2100</dcc:row>
+					<dcc:row idx="44">2400</dcc:row>
+					<dcc:row idx="45">2700</dcc:row>
+					<dcc:row idx="46">3000</dcc:row>
+					<dcc:row idx="47">6000</dcc:row>
+					<dcc:row idx="48">9000</dcc:row>
+					<dcc:row idx="49">12000</dcc:row>
+					<dcc:row idx="50">15000</dcc:row>
+					<dcc:row idx="51">18000</dcc:row>
+					<dcc:row idx="52">21000</dcc:row>
+					<dcc:row idx="53">22500</dcc:row>
+					<dcc:row idx="54">24000</dcc:row>
+					<dcc:row idx="55">27000</dcc:row>
+					<dcc:row idx="56">30000</dcc:row>
+					<dcc:row idx="57">60000</dcc:row>
+					<dcc:row idx="58">90000</dcc:row>
+					<dcc:row idx="59">120000</dcc:row>
+					<dcc:row idx="60">150000</dcc:row>
+					<dcc:row idx="61">180000</dcc:row>
+					<dcc:row idx="62">210000</dcc:row>
+					<dcc:row idx="63">240000</dcc:row>
+					<dcc:row idx="64">270000</dcc:row>
+					<dcc:row idx="65">3000000</dcc:row>
+					<dcc:row idx="66">6000000</dcc:row>
+					<dcc:row idx="67">9000000</dcc:row>
+					<dcc:row idx="68">10500000</dcc:row>
+					<dcc:row idx="69">12000000</dcc:row>
+					<dcc:row idx="70">15000000</dcc:row>
+					<dcc:row idx="71">18000000</dcc:row>
+					<dcc:row idx="72">21000000</dcc:row>
+					<dcc:row idx="73">24000000</dcc:row>
+					<dcc:row idx="74">27000000</dcc:row>
+				</dcc:acceptanceLimitUpper>
+			</dcc:column>
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
+				<dcc:heading lang="en">Nominal</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="28">1</dcc:row>
+					<dcc:row idx="29">2</dcc:row>
+					<dcc:row idx="30">3</dcc:row>
+					<dcc:row idx="31">4</dcc:row>
+					<dcc:row idx="32">5</dcc:row>
+					<dcc:row idx="33">6</dcc:row>
+					<dcc:row idx="34">7</dcc:row>
+					<dcc:row idx="35">8</dcc:row>
+					<dcc:row idx="36">9</dcc:row>
+					<dcc:row idx="37">10</dcc:row>
+					<dcc:row idx="38">20</dcc:row>
+					<dcc:row idx="39">30</dcc:row>
+					<dcc:row idx="40">40</dcc:row>
+					<dcc:row idx="41">50</dcc:row>
+					<dcc:row idx="42">60</dcc:row>
+					<dcc:row idx="43">70</dcc:row>
+					<dcc:row idx="44">80</dcc:row>
+					<dcc:row idx="45">90</dcc:row>
+					<dcc:row idx="46">100</dcc:row>
+					<dcc:row idx="47">200</dcc:row>
+					<dcc:row idx="48">300</dcc:row>
+					<dcc:row idx="49">400</dcc:row>
+					<dcc:row idx="50">500</dcc:row>
+					<dcc:row idx="51">600</dcc:row>
+					<dcc:row idx="52">700</dcc:row>
+					<dcc:row idx="53">750</dcc:row>
+					<dcc:row idx="54">800</dcc:row>
+					<dcc:row idx="55">900</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
+				<dcc:heading lang="en">Measured</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="28">1.000271</dcc:row>
+					<dcc:row idx="29">2.000681</dcc:row>
+					<dcc:row idx="30">3.00071</dcc:row>
+					<dcc:row idx="31">4.001651</dcc:row>
+					<dcc:row idx="32">5.001987</dcc:row>
+					<dcc:row idx="33">6.002616</dcc:row>
+					<dcc:row idx="34">7.00325</dcc:row>
+					<dcc:row idx="35">8.00425</dcc:row>
+					<dcc:row idx="36">9.00461</dcc:row>
+					<dcc:row idx="37">10.01711</dcc:row>
+					<dcc:row idx="38">20.03691</dcc:row>
+					<dcc:row idx="39">30.05164</dcc:row>
+					<dcc:row idx="40">40.06744</dcc:row>
+					<dcc:row idx="41">50.07016</dcc:row>
+					<dcc:row idx="42">60.08728</dcc:row>
+					<dcc:row idx="43">70.09128</dcc:row>
+					<dcc:row idx="44">80.1093</dcc:row>
+					<dcc:row idx="45">90.1277</dcc:row>
+					<dcc:row idx="46">100.047</dcc:row>
+					<dcc:row idx="47">200.1619</dcc:row>
+					<dcc:row idx="48">300.1771</dcc:row>
+					<dcc:row idx="49">400.251</dcc:row>
+					<dcc:row idx="50">500.341</dcc:row>
+					<dcc:row idx="51">600.455</dcc:row>
+					<dcc:row idx="52">700.447</dcc:row>
+					<dcc:row idx="53">750.513</dcc:row>
+					<dcc:row idx="54">800.506</dcc:row>
+					<dcc:row idx="55">900.564</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
+				<dcc:heading lang="en">Deviation</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="28">0.000271</dcc:row>
+					<dcc:row idx="29">0.000681</dcc:row>
+					<dcc:row idx="30">0.00071</dcc:row>
+					<dcc:row idx="31">0.001651</dcc:row>
+					<dcc:row idx="32">0.001987</dcc:row>
+					<dcc:row idx="33">0.002616</dcc:row>
+					<dcc:row idx="34">0.00325</dcc:row>
+					<dcc:row idx="35">0.00425</dcc:row>
+					<dcc:row idx="36">0.00461</dcc:row>
+					<dcc:row idx="37">0.01711</dcc:row>
+					<dcc:row idx="38">0.03691</dcc:row>
+					<dcc:row idx="39">0.05164</dcc:row>
+					<dcc:row idx="40">0.06744</dcc:row>
+					<dcc:row idx="41">0.07016</dcc:row>
+					<dcc:row idx="42">0.08728</dcc:row>
+					<dcc:row idx="43">0.09128</dcc:row>
+					<dcc:row idx="44">0.1093</dcc:row>
+					<dcc:row idx="45">0.1277</dcc:row>
+					<dcc:row idx="46">0.047</dcc:row>
+					<dcc:row idx="47">0.1619</dcc:row>
+					<dcc:row idx="48">0.1771</dcc:row>
+					<dcc:row idx="49">0.251</dcc:row>
+					<dcc:row idx="50">0.341</dcc:row>
+					<dcc:row idx="51">0.455</dcc:row>
+					<dcc:row idx="52">0.447</dcc:row>
+					<dcc:row idx="53">0.513</dcc:row>
+					<dcc:row idx="54">0.506</dcc:row>
+					<dcc:row idx="55">0.564</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="kΩ">
+				<dcc:heading lang="en">Uncertainty</dcc:heading>
 				<dcc:expandedUncertainty>
-					<dcc:row idx="1">1013</dcc:row>
-					<dcc:row idx="2">1013</dcc:row>
-					<dcc:row idx="3">1013</dcc:row>
+					<dcc:row idx="28">0.000014</dcc:row>
+					<dcc:row idx="29">0.000047</dcc:row>
+					<dcc:row idx="30">0.000056</dcc:row>
+					<dcc:row idx="31">0.000066</dcc:row>
+					<dcc:row idx="32">0.000077</dcc:row>
+					<dcc:row idx="33">0.000089</dcc:row>
+					<dcc:row idx="34">0.0001</dcc:row>
+					<dcc:row idx="35">0.00011</dcc:row>
+					<dcc:row idx="36">0.00012</dcc:row>
+					<dcc:row idx="37">0.00014</dcc:row>
+					<dcc:row idx="38">0.00034</dcc:row>
+					<dcc:row idx="39">0.00046</dcc:row>
+					<dcc:row idx="40">0.00059</dcc:row>
+					<dcc:row idx="41">0.00072</dcc:row>
+					<dcc:row idx="42">0.00085</dcc:row>
+					<dcc:row idx="43">0.00097</dcc:row>
+					<dcc:row idx="44">0.0011</dcc:row>
+					<dcc:row idx="45">0.0012</dcc:row>
+					<dcc:row idx="46">0.0014</dcc:row>
+					<dcc:row idx="47">0.0069</dcc:row>
+					<dcc:row idx="48">0.0088</dcc:row>
+					<dcc:row idx="49">0.011</dcc:row>
+					<dcc:row idx="50">0.012</dcc:row>
+					<dcc:row idx="51">0.015</dcc:row>
+					<dcc:row idx="52">0.016</dcc:row>
+					<dcc:row idx="53">0.017</dcc:row>
+					<dcc:row idx="54">0.019</dcc:row>
+					<dcc:row idx="55">0.021</dcc:row>
 				</dcc:expandedUncertainty>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="kΩ">
+				<dcc:heading lang="en">MPE</dcc:heading>
+				<dcc:acceptanceLimitUpper>
+					<dcc:row idx="28">0.03</dcc:row>
+					<dcc:row idx="29">0.06</dcc:row>
+					<dcc:row idx="30">0.09</dcc:row>
+					<dcc:row idx="31">0.12</dcc:row>
+					<dcc:row idx="32">0.15</dcc:row>
+					<dcc:row idx="33">0.18</dcc:row>
+					<dcc:row idx="34">0.21</dcc:row>
+					<dcc:row idx="35">0.24</dcc:row>
+					<dcc:row idx="36">0.27</dcc:row>
+					<dcc:row idx="37">0.3</dcc:row>
+					<dcc:row idx="38">0.6</dcc:row>
+					<dcc:row idx="39">0.9</dcc:row>
+					<dcc:row idx="40">1.2</dcc:row>
+					<dcc:row idx="41">1.5</dcc:row>
+					<dcc:row idx="42">1.8</dcc:row>
+					<dcc:row idx="43">2.1</dcc:row>
+					<dcc:row idx="44">2.4</dcc:row>
+					<dcc:row idx="45">2.7</dcc:row>
+					<dcc:row idx="46">3</dcc:row>
+					<dcc:row idx="47">6</dcc:row>
+					<dcc:row idx="48">9</dcc:row>
+					<dcc:row idx="49">12</dcc:row>
+					<dcc:row idx="50">15</dcc:row>
+					<dcc:row idx="51">18</dcc:row>
+					<dcc:row idx="52">21</dcc:row>
+					<dcc:row idx="53">22.5</dcc:row>
+					<dcc:row idx="54">24</dcc:row>
+					<dcc:row idx="55">27</dcc:row>
+				</dcc:acceptanceLimitUpper>
+			</dcc:column>
+			<dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω"  unit="MΩ">
+				<dcc:heading lang="en">Nominal</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="56">1</dcc:row>
+					<dcc:row idx="57">2</dcc:row>
+					<dcc:row idx="58">3</dcc:row>
+					<dcc:row idx="59">4</dcc:row>
+					<dcc:row idx="60">5</dcc:row>
+					<dcc:row idx="61">6</dcc:row>
+					<dcc:row idx="62">7</dcc:row>
+					<dcc:row idx="63">8</dcc:row>
+					<dcc:row idx="64">9</dcc:row>
+					<dcc:row idx="65">100</dcc:row>
+					<dcc:row idx="66">200</dcc:row>
+					<dcc:row idx="67">300</dcc:row>
+					<dcc:row idx="68">350</dcc:row>
+					<dcc:row idx="69">400</dcc:row>
+					<dcc:row idx="70">500</dcc:row>
+					<dcc:row idx="71">600</dcc:row>
+					<dcc:row idx="72">700</dcc:row>
+					<dcc:row idx="73">800</dcc:row>
+					<dcc:row idx="74">900</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="MΩ">
+				<dcc:heading lang="en">Measured</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="56">1.001592</dcc:row>
+					<dcc:row idx="57">2.00356</dcc:row>
+					<dcc:row idx="58">3.00425</dcc:row>
+					<dcc:row idx="59">4.00692</dcc:row>
+					<dcc:row idx="60">5.00864</dcc:row>
+					<dcc:row idx="61">6.01209</dcc:row>
+					<dcc:row idx="62">7.01502</dcc:row>
+					<dcc:row idx="63">8.01846</dcc:row>
+					<dcc:row idx="64">9.01967</dcc:row>
+					<dcc:row idx="65">9.97515</dcc:row>
+					<dcc:row idx="66">19.945</dcc:row>
+					<dcc:row idx="67">29.9</dcc:row>
+					<dcc:row idx="68">34.926</dcc:row>
+					<dcc:row idx="69">39.878</dcc:row>
+					<dcc:row idx="70">49.86</dcc:row>
+					<dcc:row idx="71">59.845</dcc:row>
+					<dcc:row idx="72">69.853</dcc:row>
+					<dcc:row idx="73">79.804</dcc:row>
+					<dcc:row idx="74">89.783</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="MΩ">
+				<dcc:heading lang="en">Deviation</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="56">0.001592</dcc:row>
+					<dcc:row idx="57">0.00356</dcc:row>
+					<dcc:row idx="58">0.00425</dcc:row>
+					<dcc:row idx="59">0.00692</dcc:row>
+					<dcc:row idx="60">0.00864</dcc:row>
+					<dcc:row idx="61">0.01209</dcc:row>
+					<dcc:row idx="62">0.01502</dcc:row>
+					<dcc:row idx="63">0.01846</dcc:row>
+					<dcc:row idx="64">0.01967</dcc:row>
+					<dcc:row idx="65">-0.02485</dcc:row>
+					<dcc:row idx="66">-0.055</dcc:row>
+					<dcc:row idx="67">-0.1</dcc:row>
+					<dcc:row idx="68">-0.074</dcc:row>
+					<dcc:row idx="69">-0.122</dcc:row>
+					<dcc:row idx="70">-0.14</dcc:row>
+					<dcc:row idx="71">-0.155</dcc:row>
+					<dcc:row idx="72">-0.147</dcc:row>
+					<dcc:row idx="73">-0.196</dcc:row>
+					<dcc:row idx="74">-0.217</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="MΩ">
+				<dcc:heading lang="en">Uncertainty</dcc:heading>
+				<dcc:expandedUncertainty>
+					<dcc:row idx="56">0.000022</dcc:row>
+					<dcc:row idx="57">0.00026</dcc:row>
+					<dcc:row idx="58">0.00034</dcc:row>
+					<dcc:row idx="59">0.00037</dcc:row>
+					<dcc:row idx="60">0.00048</dcc:row>
+					<dcc:row idx="61">0.00059</dcc:row>
+					<dcc:row idx="62">0.00065</dcc:row>
+					<dcc:row idx="63">0.00067</dcc:row>
+					<dcc:row idx="64">0.00071</dcc:row>
+					<dcc:row idx="65">0.0074</dcc:row>
+					<dcc:row idx="66">0.15</dcc:row>
+					<dcc:row idx="67">0.22</dcc:row>
+					<dcc:row idx="68">0.24</dcc:row>
+					<dcc:row idx="69">0.27</dcc:row>
+					<dcc:row idx="70">0.33</dcc:row>
+					<dcc:row idx="71">0.39</dcc:row>
+					<dcc:row idx="72">0.48</dcc:row>
+					<dcc:row idx="73">0.67</dcc:row>
+					<dcc:row idx="74">0.58</dcc:row>
+				</dcc:expandedUncertainty>
+			</dcc:column>
+			<dcc:column scope="bias" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="MΩ">
+				<dcc:heading lang="en">MPE</dcc:heading>
+				<dcc:acceptanceLimitUpper>
+					<dcc:row idx="56">0.03</dcc:row>
+					<dcc:row idx="57">0.06</dcc:row>
+					<dcc:row idx="58">0.09</dcc:row>
+					<dcc:row idx="59">0.12</dcc:row>
+					<dcc:row idx="60">0.15</dcc:row>
+					<dcc:row idx="61">0.18</dcc:row>
+					<dcc:row idx="62">0.21</dcc:row>
+					<dcc:row idx="63">0.24</dcc:row>
+					<dcc:row idx="64">0.27</dcc:row>
+					<dcc:row idx="65">3</dcc:row>
+					<dcc:row idx="66">6</dcc:row>
+					<dcc:row idx="67">9</dcc:row>
+					<dcc:row idx="68">10.5</dcc:row>
+					<dcc:row idx="69">12</dcc:row>
+					<dcc:row idx="70">15</dcc:row>
+					<dcc:row idx="71">18</dcc:row>
+					<dcc:row idx="72">21</dcc:row>
+					<dcc:row idx="73">24</dcc:row>
+					<dcc:row idx="74">27</dcc:row>
+				</dcc:acceptanceLimitUpper>
 			</dcc:column>
 		</dcc:calibrationResult>
+		<dcc:measurementSeries tableId="cal_ZERO" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measuringSystemRef="ms1" numRows="1" numCols="4">
+			<dcc:heading lang="da">-</dcc:heading>
+			<dcc:heading lang="en">Absolute Resistance Accuracy</dcc:heading>
+			<dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
+				<dcc:heading lang="da">Kundens kode</dcc:heading>
+				<dcc:heading lang="en">Customer Tags</dcc:heading>
+				<dcc:rowTag>
+					<dcc:row idx="1">ZERO</dcc:row>
+				</dcc:rowTag>
+			</dcc:column>
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Object mean value (°C)</dcc:heading>
+				<dcc:value>
+					<dcc:row idx="1">0.09908</dcc:row>
+				</dcc:value>
+			</dcc:column>
+			<dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Error (°C)</dcc:heading>
+				<dcc:expandedUncertainty>
+					<dcc:row idx="1">0.00027</dcc:row>
+				</dcc:expandedUncertainty>
+			</dcc:column>
+			<dcc:column scope="reference" dataCategoryRef="expandedUncertainty" quantity="6-46|resistance|Ω" unit="Ω">
+				<dcc:heading lang="en">Uncertainty of reading (°C)</dcc:heading>
+				<dcc:acceptanceLimitUpper>
+					<dcc:row idx="1">0.25</dcc:row>
+				</dcc:acceptanceLimitUpper>
+			</dcc:column>
+		</dcc:measurementSeries>
 	</dcc:measurementResults>
+
+	<dcc:quantityUnitDefs>
+		<dcc:heading lang="en">Quantity and Units definitions</dcc:heading>
+		<dcc:quantityUnitDef id="megaOhm" quantityCodeSystem="ISO/IEC 80000">
+			<dcc:unitUsed>MΩ</dcc:unitUsed>
+			<dcc:functionToSIunit>1000000*value</dcc:functionToSIunit>
+			<dcc:unitSI>Ω</dcc:unitSI>
+		</dcc:quantityUnitDef>
+	</dcc:quantityUnitDefs>
+
 	<dcc:embeddedFiles>
 		<dcc:heading lang="da">Indlejrede filer</dcc:heading>
 		<dcc:heading lang="en">Embedded files</dcc:heading>
