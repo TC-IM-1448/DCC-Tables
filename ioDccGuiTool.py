@@ -35,7 +35,7 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                         'externalReference'],
 
     equipmentHeadings = ['in DCC', '@id', '@category',
-                            'heading[1]', 'manufacturer', 'productName', 'productType',
+                            'heading[1]', 'manufacturer', 'productName', 'productType', 'productNumber',
                             'client_id heading[1]', 'client_id value', 
                             'manufact_id heading[1]', 'manufact_id value', 
                             'calLab_id heading[1]', 'calLab_id value'],
