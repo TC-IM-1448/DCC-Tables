@@ -26,6 +26,26 @@ To run the gui interface run the following program:
 # Examples 
 * the Examples folder contains several Certificate examples for different measurement areas. 
 
+# Querries using XPATH
+`*//*[@measuringSystemRef="ms2"][@tableId="calRes2"]/*[@scope="reference"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="2"]/text()` outputs 600.0417
+
+`*//*[@measuringSystemRef="ms2"][@serviceCategory="M/FF-9.10.3 Quantity of fluid"][@tableId="calRes2"]/*[@scope="indication"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="2"]/text()` outputs 600
+
+`*//*[@measuringSystemRef="ms2"][@serviceCategory="M/FF-9.10.3 Quantity of fluid"][@tableId="calRes2"]/*[@scope="bias"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:value/*[@idx="2"]/text()` ourputs 0.04
+
+`*//*[@measuringSystemRef="ms2"][@serviceCategory="M/FF-9.10.3 Quantity of fluid"][@tableId="calRes2"]/*[@scope="bias"][@dataCategoryRef="value"][@quantity="3-4|volume|m3"][@unit="µL"]/dcc:expandedUncertainty/*[@idx="2"]/text()` outputs 1.5
+
+`*//*[@measuringSystemRef="ms2"][@serviceCategory="M/FF-9.10.3 Quantity of fluid"][@tableId="calRes2"]/*[@scope="bias"][@dataCategoryRef="value"][@quantity="3-4|volume|m3"][@unit="%"]/dcc:expandedUncertainty/*[@idx="2"]/text()` outputs 0.25
+
+
+## Xpath tool
+http://xpather.com/ can be used to check xpaths. 
+
+Notpad++ has the XPatherizerNPP plugin to execute xpath queries. 
+
+In this repository the SKH_10112_2_mapping.xlsx provides a tool for building xpaths and when run with dccQueryGui.py the querry results will be added directly into the excel-file. 
+
+![image](docs/img/query_gui_excel-interface.png)
 
 # Screenshots
 
