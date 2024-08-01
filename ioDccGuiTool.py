@@ -38,7 +38,9 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                             'heading[1]', 'manufacturer', 'productName', 'productType', 'productNumber',
                             'client_id heading[1]', 'client_id value', 
                             'manufact_id heading[1]', 'manufact_id value', 
-                            'calLab_id heading[1]', 'calLab_id value'],
+                            'calLab_id heading[1]', 'calLab_id value',
+                            'calDate','calDueDate', 'certId', 'certProvider',
+                            ],
 
     settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
                         'parameter', 'value', 'unit', 'softwareInstruction', 
@@ -111,7 +113,7 @@ class DccGuiTool():
         self.wb = wb
         self.loadSchemaFile()
         self.loadSchemaRestrictions()
-        self.langs = ['da','en']
+        self.langs = ['en']
         wb.activate(steal_focus=True)
         self.createEmbeddedFilesFolder(wb)
 
@@ -783,7 +785,7 @@ def exportToXmlFile(wb, fileName='output.xml'):
     dcchf.print_node(exportRoot)
 
     exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'statements')
-    exportEquipment(exportRoot, elmMaker, wb)
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'equipment')
     exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'settings')
     exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'measuringSystems')
     msIdx = wb.sheet_names.index('quantityUnitDefs')+1
@@ -850,66 +852,12 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
         efn.append(node)
 
 
-def exportEquipment(adminNode, elmMaker,wb): 
-    ns = adminNode.nsmap
-    shtIdx = wb.sheet_names.index('equipment')
-    sht = wb.sheets[shtIdx]
-    equipmentNode = elmMaker.equipment()
-
-    exportSheetHeading(equipmentNode, sht, elmMaker)
-    ns = equipmentNode.nsmap
-    tbl = sht.tables['Table_equipment']
-    rng = tbl.data_body_range
-    rng_header = tbl.header_row_range
-    headings = rng_header.value
-    nrow, ncols = rng.shape
-    tbl_data = rng.value
-    # print(rng.value) 
-    for row in tbl_data: 
-        if row[0].startswith('y'):
-            a = {h[1:]:  row[i] for i,h in enumerate(headings) if h.startswith('@')}
-            node = elmMaker('equipmentItem', **a)
-            for i, h in enumerate(headings):
-                if i == 0 or row[i] == None: 
-                    continue
-                if h.startswith('@'):
-                    continue
-                elif h.startswith('heading['): 
-                    lang = extractHeadingLang(h)
-                    elm = elmMaker('heading', str(row[i]),lang=lang)
-                    node.append(elm)
-                elif h.startswith('body['):
-                    lang = extractHeadingLang(h)
-                    elm = elmMaker('body', str(row[i]),lang=lang)
-                    node.append(elm)
-                elif len(h.split('_id ')) > 1: 
-                    issuer, what = h.split('_id ')
-                    if issuer.startswith('manufac'): issuer = 'manufacturer'
-                    if issuer.startswith('calLab'): issuer = 'serviceProvider'
-                    idNode = node.find(f'./dcc:identification[@issuer="{issuer}"]', ns)
-                    if idNode is None:
-                        idNode = elmMaker('identification',issuer=issuer)
-                        node.append(idNode)
-                    if what.startswith('heading'): 
-                        # print(what)
-                        lang = extractHeadingLang(what)
-                        elm = elmMaker('heading',row[i], lang=lang)
-                        idNode.append(elm)
-                    else: 
-                        elm = elmMaker('value',str(row[i]))
-                        idNode.append(elm)
-                else: 
-                    elm = elmMaker(h,str(row[i]))
-        equipmentNode.append(node)
-    adminNode.append(equipmentNode)
-
 def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'): 
     shtIdx = wb.sheet_names.index(nodeName)
     sht = wb.sheets[shtIdx]
     statementsNode = elmMaker(nodeName)
 
     exportSheetHeading(statementsNode, sht, elmMaker)
-
     tbl = sht.tables['Table_'+nodeName]
     rng = tbl.data_body_range
     rng_header = tbl.header_row_range
@@ -923,7 +871,10 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
             if row[0].startswith('y'):
                 a = {h[1:]:  row[i] for i,h in enumerate(headings) if h.startswith('@')}
                 a = {k:v for k,v in a.items() if v != None}
-                node = elmMaker(nodeName[:-1], **a)
+                if nodeName != 'equipment':
+                    node = elmMaker(nodeName[:-1], **a)
+                else: 
+                    node = elmMaker('equipmentItem', **a)
                 for i, h in enumerate(headings):
                     if i == 0 or row[i] == None: 
                         continue
@@ -935,6 +886,22 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
                     elif h.startswith('body['):
                         lang = extractHeadingLang(h)
                         elm = elmMaker('body', str(row[i]),lang=lang)
+                    elif len(h.split('_id')) > 1: #this elif handles equipment. 
+                        issuer, what = h.split('_id ')
+                        if issuer.startswith('client'): issuer = 'client'
+                        if issuer.startswith('manufac'): issuer = 'manufacturer'
+                        if issuer.startswith('calLab'): issuer = 'serviceProvider'
+                        if what.startswith('heading'):
+                            lang = extractHeadingLang(what)
+                            elm = elmMaker('heading',row[i], lang=lang)
+                        else: 
+                            elm = elmMaker('value',str(row[i]))
+                        idNode = node.find(f'./dcc:identification[@issuer="{issuer}"]', node.nsmap)
+                        if idNode is None:
+                            idNode = elmMaker('identification',issuer=issuer)
+                            node.append(idNode)
+                        idNode.append(elm)
+                        continue
                     else: 
                         elm = elmMaker(h,str(row[i]))
                     node.append(elm)

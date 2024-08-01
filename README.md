@@ -22,6 +22,17 @@ To run the gui interface run the following program:
     - [xsd-schema](#schema-extracts)
     - [DCC xml example](#digital-calibration-certificate-xml-example)
 
+# Quantity and Units model
+## Default Qauntity system
+The default quantity system is to use the definitions from ISO 80000 Series on Qauntity and Units. These  
+qauntities are specified wihtin the dcc.xsd schema as shown in [XSD Sxhema quantity value restrictions](#xsd-schema-quantity-value-restrictions) and hence only these values can be selected by default. 
+
+## Default units system 
+The defaulet system for units is based the BIPM SI Digital Framework i.e. unit expressions allowed by the unit expression parser at [SI Digital Reference Point](https://si-digital-framework.org/SI/unitExpr]). The allowed expressions are enforced by a regular expression wihtin the dcc.xsd schema-file see [xsd unit value restriction](#xsd-schema-si-unit-value-restriction)
+
+## Custom unit systems
+If the default Quantity Unit system does not apply to a specific case, other quantity unit systems can be defined in the quantityUnitDefs element, see [XSD Schema for customizing quantities and units (quantityUnitDef)](#xsd-schema-elements-for-custom-quantity-unit).
+
 
 # Examples 
 * the Examples folder contains several Certificate examples for different measurement areas. 
@@ -82,17 +93,20 @@ Keywords restricted by the xsd-schema is loaded into this tab, and used in the o
 
 
 # Schema Extracts
-## Structure of AdministrativeDataType and coreDataType
+## XSD Schema Structure of AdministrativeDataType and coreDataType
 ![image](docs/img/xml_administrativeData.png)
 
-## Column scope and dataCategory restrictions.
+## XSD Schema Column scope and dataCategory restrictions.
 ![image](docs/img/xsd_scope_and_dataCategory.png)
 
-## SI unit value restriction 
+## XSD Schema SI unit value restriction 
 ![image](docs/img/xsd_unitType.png)
 
-## quantity value restrictions
+## XSD Schema Quantity value restrictions
 ![image](docs/img/xsd_quantityType.png)
+
+## XSD Schema Elements for Custom Quantity Unit
+![image](docs/img/xsd_quantityUnitDefType.png)
 
 
 # Digital Calibration Certificate XML example

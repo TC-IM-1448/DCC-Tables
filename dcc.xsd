@@ -316,6 +316,10 @@ quantities of specified kinds
         <xs:element name="productType" type="xs:string" minOccurs="0"/>
         <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
         <xs:element name="identification" type="dcc:identificationType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="calDate" type="xs:date" minOccurs="0"/>
+        <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
+        <xs:element name="certId" type="xs:string" minOccurs="0"/> 
+        <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
         </xs:sequence>
         <xs:attribute name="category"  type="dcc:equipmentCategoryType" use="required">
                <!-- <xs:simpleType>
@@ -401,16 +405,18 @@ quantities of specified kinds
     <xs:simpleType name="transactionContentType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="digitalCalibrationCertificate"/>
+            <xs:enumeration value="digitalTestReport"/>
+            <xs:enumeration value="digitalReportOfSampling"/>
             <xs:enumeration value="digitalMeasurementReport"/>
             <xs:enumeration value="digitalExaminationCertificate"/>
             <xs:enumeration value="digitalConformityCertificate"/>
-            <xs:enumeration value="digitalTestReport"/>
-
+            
             <xs:enumeration value="request:DigitalCalibrationCertificate"/>
+            <xs:enumeration value="request:digitalTestReport"/>
+            <xs:enumeration value="request:digitalReportOfSampling"/>
             <xs:enumeration value="request:digitalMeasurementReport"/>
             <xs:enumeration value="request:digitalExaminationCertificate"/>
             <xs:enumeration value="request:digitalConformityCertificate"/>
-            <xs:enumeration value="request:digitalTestReport"/>
 
             <xs:enumeration value="template:DigitalCalibrationCertificate"/>
             <xs:enumeration value="template:digitalMeasurementReport"/>
@@ -637,6 +643,7 @@ quantities of specified kinds
         </xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="calibrationResult" /> 
+			<xs:enumeration value="dataFittingResult" /> 
 			<xs:enumeration value="measurementSeries" /> 
 		</xs:restriction>
     </xs:simpleType>
@@ -682,6 +689,24 @@ quantities of specified kinds
                     </xs:complexContent>
                 </xs:complexType>
                 <xs:unique name="column">
+                    <xs:selector xpath="dcc:column"/>
+                    <xs:field xpath="@dataCategoryRef"/>
+                    <xs:field xpath="@scope"/>
+                    <xs:field xpath="@quantity"/>
+                    <xs:field xpath="@dcc:unit"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="dcc:dataList/*/@dataCategory"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element name="dataFittingResult"  maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:unique name="calibFitCurveColumn">
                     <xs:selector xpath="dcc:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
@@ -743,7 +768,7 @@ quantities of specified kinds
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type with specific values i.e. 17025, 17035, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
         </xs:sequence>
-        <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> --> 
+        <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> -->
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
@@ -766,6 +791,7 @@ quantities of specified kinds
             <xs:element name="name" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
             <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
             <xs:element name="contactInfo" type="dcc:contactInfo" minOccurs="0"/>
+            <xs:element name="url" type="xs:string" minOccurs="0"/>
             <xs:element name="VATIN" type="dcc:contactInfo" minOccurs="0"/> <!-- e.g. VAT number -->
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
@@ -3469,7 +3495,7 @@ quantities of specified kinds
 				"[Item number] | [Quantity Name] | [Unit]"
 				
 				Example: 
-				"5-2|Celcius Temperature|°C"
+				"5-2|Celsius temperature|℃"
 				
 				If one needs to define a quantity not covered in the restriction list, one may use the "quantityUnitDefRef",
 				in which case an "id" from quantityUnits should be provided in the quantityUnitDefRef attribute. 
