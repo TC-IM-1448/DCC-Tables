@@ -153,8 +153,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Serial number</dcc:heading>
         <dcc:value>2286.0</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2022-06-21</dcc:calDate>
-      <dcc:calDueDate>2023-06-21</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst1" category="reference">
       <dcc:heading lang="en">Standard used </dcc:heading>
@@ -165,8 +163,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>5683-4442</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2021-05-04</dcc:calDate>
-      <dcc:calDueDate>2024-05-04</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst2" category="reference">
       <dcc:manufacturer>Fluke Calibration</dcc:manufacturer>
@@ -176,8 +172,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>1595A-B2B000</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2021-07-12</dcc:calDate>
-      <dcc:calDueDate>2022-07-12</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst3" category="reference">
       <dcc:manufacturer>Fluke Calibration</dcc:manufacturer>
@@ -187,8 +181,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>5683-4437</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2020-02-10</dcc:calDate>
-      <dcc:calDueDate>2023-02-10</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst4" category="reference">
       <dcc:manufacturer>Fluke Calibration</dcc:manufacturer>
@@ -198,8 +190,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>1595A-B0C034</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2021-12-21</dcc:calDate>
-      <dcc:calDueDate>2022-12-21</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst5" category="reference">
       <dcc:manufacturer>Fluke Calibration</dcc:manufacturer>
@@ -209,8 +199,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>1595A-B27094</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2021-08-30</dcc:calDate>
-      <dcc:calDueDate>2022-08-30</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst6" category="reference">
       <dcc:manufacturer>FLUKE CALIBRATION</dcc:manufacturer>
@@ -220,8 +208,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>5914A-S9004 </dcc:value>
       </dcc:identification>
-      <dcc:calDate>2020-06-03</dcc:calDate>
-      <dcc:calDueDate>2023-07-01</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst7" category="reference">
       <dcc:manufacturer>FLUKE CALIBRATION</dcc:manufacturer>
@@ -231,8 +217,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>5945-S7005</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2022-06-03</dcc:calDate>
-      <dcc:calDueDate>2023-06-03</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst8" category="reference">
       <dcc:manufacturer>FLUKE CALIBRATION</dcc:manufacturer>
@@ -242,8 +226,6 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>5916A-16057</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2020-03-13</dcc:calDate>
-      <dcc:calDueDate>2023-04-30</dcc:calDueDate>
     </dcc:equipmentItem>
     <dcc:equipmentItem id="refInst9" category="reference">
       <dcc:manufacturer>Fluke Calibration</dcc:manufacturer>
@@ -253,8 +235,16 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         <dcc:heading lang="en">Asset</dcc:heading>
         <dcc:value>5917A-17102</dcc:value>
       </dcc:identification>
-      <dcc:calDate>2022-06-20</dcc:calDate>
-      <dcc:calDueDate>2022-12-20</dcc:calDueDate>
+    </dcc:equipmentItem>
+    <dcc:equipmentItem id="calModel1" category="reference">
+      <dcc:heading lang="en">Cal Model</dcc:heading>
+      <dcc:manufacturer>?</dcc:manufacturer>
+      <dcc:productName>4846.0</dcc:productName>
+      <dcc:identification issuer="serviceProvider">
+        <dcc:heading lang="en">Test ID</dcc:heading>
+        <dcc:value>4846.0</dcc:value>
+      </dcc:identification>
+      <dcc:certId>C2159154946718</dcc:certId>
     </dcc:equipmentItem>
   </dcc:equipment>
   <dcc:settings>
@@ -264,31 +254,56 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
       <dcc:value>1.0</dcc:value>
       <dcc:unit>mA</dcc:unit>
     </dcc:setting>
-    <dcc:setting settingId="calModel1" equipmentRef="item1">
-      <dcc:parameter>Cal Model</dcc:parameter>
-      <dcc:value>1913-04-07</dcc:value>
-      <dcc:unit>-</dcc:unit>
-    </dcc:setting>
     <dcc:setting settingId="testId1" equipmentRef="item1">
       <dcc:parameter>Test ID</dcc:parameter>
       <dcc:value>C2159154946718</dcc:value>
       <dcc:unit>-</dcc:unit>
+    </dcc:setting>
+    <dcc:setting settingId="fit_RTPW" equipmentRef="calModel1">
+      <dcc:parameter>RTPW</dcc:parameter>
+      <dcc:value>25.0</dcc:value>
+    </dcc:setting>
+    <dcc:setting settingId="fit_a4" equipmentRef="calModel1">
+      <dcc:parameter>a4</dcc:parameter>
+      <dcc:value>-0.000103</dcc:value>
+    </dcc:setting>
+    <dcc:setting settingId="fit_b4" equipmentRef="calModel1">
+      <dcc:parameter>b4</dcc:parameter>
+      <dcc:value>3.79e-06</dcc:value>
+    </dcc:setting>
+    <dcc:setting settingId="fit_a7" equipmentRef="calModel1">
+      <dcc:parameter>a7</dcc:parameter>
+      <dcc:value>-0.000189</dcc:value>
+    </dcc:setting>
+    <dcc:setting settingId="fit_b7" equipmentRef="calModel1">
+      <dcc:parameter>b7</dcc:parameter>
+      <dcc:value>4.93e-05</dcc:value>
+    </dcc:setting>
+    <dcc:setting settingId="fit_c7" equipmentRef="calModel1">
+      <dcc:parameter>c7</dcc:parameter>
+      <dcc:value>-2.18e-05</dcc:value>
     </dcc:setting>
   </dcc:settings>
   <dcc:measuringSystems>
     <dcc:heading lang="en">Measuring Systems Under Calibration</dcc:heading>
     <dcc:measuringSystem id="ms1">
       <dcc:heading lang="en">Found-Left</dcc:heading>
-      <dcc:equipmentRefs>item1 refInst1 refInst2 refInst3 refInst4 refInst5 refInst6 refInst7 refInst8 refInst9</dcc:equipmentRefs>
-      <dcc:settingRefs>setting1 calModel1 testId1</dcc:settingRefs>
+      <dcc:equipmentRefs>item1 refInst1 refInst2 refInst3 refInst4 refInst5 refInst6 refInst7 refInst8 refInst9  calModel1 </dcc:equipmentRefs>
+      <dcc:settingRefs>setting1 testId1</dcc:settingRefs>
       <dcc:statementRefs>meth1 meth2 meth3 meth4</dcc:statementRefs>
       <dcc:operationalStatus>as found</dcc:operationalStatus>
       <dcc:body lang="en">-</dcc:body>
     </dcc:measuringSystem>
     <dcc:measuringSystem id="ms2">
       <dcc:heading lang="en">Found-Left</dcc:heading>
-      <dcc:equipmentRefs>item1 refInst1 refInst2 refInst3 refInst4 refInst5 refInst6 refInst7 refInst8 refInst9</dcc:equipmentRefs>
-      <dcc:settingRefs>setting1 calModel1 testId1</dcc:settingRefs>
+      <dcc:equipmentRefs>item1 calModel1</dcc:equipmentRefs>
+      <dcc:settingRefs>testId1
+fit_RTPW
+fit_a4
+fit_b4
+fit_a7
+fit_b7
+fit_c7</dcc:settingRefs>
       <dcc:statementRefs>meth1 meth2 meth3 meth5</dcc:statementRefs>
       <dcc:operationalStatus>as found</dcc:operationalStatus>
       <dcc:body lang="en">-</dcc:body>
@@ -297,7 +312,7 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
   <dcc:measurementResults>
     <dcc:calibrationResult tableId="calRes1" serviceCategory="T/T-2.2.2 Platinum resistance thermometers (PRTs)" measuringSystemRef="ms1" numRows="8" numCols="5">
       <dcc:heading lang="en">Calibration Data</dcc:heading>
-      <dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
+      <dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-" equipmentRef="item1">
         <dcc:heading lang="en">Description</dcc:heading>
         <dcc:rowTag>
           <dcc:row idx="1">Comparison</dcc:row>
@@ -310,7 +325,7 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
           <dcc:row idx="8">Fixed Point</dcc:row>
         </dcc:rowTag>
       </dcc:column>
-      <dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃" equipmentRef="item1">
         <dcc:heading lang="en">Reference Value (℃)</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">-197</dcc:row>
@@ -355,9 +370,9 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         </dcc:measurementSeriesRef>
       </dcc:column>
     </dcc:calibrationResult>
-    <dcc:dataFittingResult tableId="fitResult1" serviceCategory="T/T-2.2.2 Platinum resistance thermometers (PRTs)" measuringSystemRef="ms1" numRows="6" numCols="2">
+    <dcc:dataFittingResult tableId="fitResult1" serviceCategory="T/T-2.2.2 Platinum resistance thermometers (PRTs)" measuringSystemRef="ms1" numRows="6" numCols="3">
       <dcc:heading lang="en">Calibration Coefficients</dcc:heading>
-      <dcc:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
+      <dcc:column scope="Other" dataCategoryRef="-" quantity="-" unit="-">
         <dcc:heading lang="en">Description</dcc:heading>
         <dcc:rowTag>
           <dcc:row idx="1">RTPW</dcc:row>
@@ -390,9 +405,9 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
         </dcc:measurementSeriesRef>
       </dcc:column>
     </dcc:dataFittingResult>
-    <dcc:dataFittingResult tableId="fitResult2" serviceCategory="T/T-2.2.2 Platinum resistance thermometers (PRTs)" measuringSystemRef="ms2" numRows="87" numCols="3">
+    <dcc:dataFittingResult tableId="fitResult2" serviceCategory="T/T-2.2.2 Platinum resistance thermometers (PRTs)" measuringSystemRef="ms2" numRows="87" numCols="4">
       <dcc:heading lang="en">Temperature vs. Resistance Table</dcc:heading>
-      <dcc:column scope="indication" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="5-2|Celsius temperature|℃" unit="℃">
         <dcc:heading lang="en">Temp (℃)</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">-200</dcc:row>
@@ -484,7 +499,7 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
           <dcc:row idx="87">670</dcc:row>
         </dcc:value>
       </dcc:column>
-      <dcc:column scope="indication" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="6-46|resistance|Ω" unit="Ω">
         <dcc:heading lang="en">Res (ohms</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">4.30235</dcc:row>
@@ -576,7 +591,7 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
           <dcc:row idx="87">86.29096</dcc:row>
         </dcc:value>
       </dcc:column>
-      <dcc:column scope="indication" dataCategoryRef="-" quantity="quantityUnitDefRef" unit="quantityUnitDefRef" quantityUnitDefRef="dR.dT-1">
+      <dcc:column scope="reference" dataCategoryRef="-" quantity="quantityUnitDefRef" unit="quantityUnitDefRef" quantityUnitDefRef="dR.dT-1">
         <dcc:heading lang="en">dR/ dT (ohms/ K)</dcc:heading>
         <dcc:value>
           <dcc:row idx="1">0.10892</dcc:row>
@@ -668,95 +683,95 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
           <dcc:row idx="87">0.08086</dcc:row>
         </dcc:value>
       </dcc:column>
-      <dcc:column scope="Other" dataCategoryRef="value" quantity="-" unit="-">
+      <dcc:column scope="reference" dataCategoryRef="value" quantity="-" unit="-">
         <dcc:measurementSeriesRef>
-          <dcc:row idx="1">calRes1</dcc:row>
-          <dcc:row idx="2">calRes1</dcc:row>
-          <dcc:row idx="3">calRes1</dcc:row>
-          <dcc:row idx="4">calRes1</dcc:row>
-          <dcc:row idx="5">calRes1</dcc:row>
-          <dcc:row idx="6">calRes1</dcc:row>
-          <dcc:row idx="7">calRes1</dcc:row>
-          <dcc:row idx="8">calRes1</dcc:row>
-          <dcc:row idx="9">calRes1</dcc:row>
-          <dcc:row idx="10">calRes1</dcc:row>
-          <dcc:row idx="11">calRes1</dcc:row>
-          <dcc:row idx="12">calRes1</dcc:row>
-          <dcc:row idx="13">calRes1</dcc:row>
-          <dcc:row idx="14">calRes1</dcc:row>
-          <dcc:row idx="15">calRes1</dcc:row>
-          <dcc:row idx="16">calRes1</dcc:row>
-          <dcc:row idx="17">calRes1</dcc:row>
-          <dcc:row idx="18">calRes1</dcc:row>
-          <dcc:row idx="19">calRes1</dcc:row>
-          <dcc:row idx="20">calRes1</dcc:row>
-          <dcc:row idx="21">calRes1</dcc:row>
-          <dcc:row idx="22">calRes1</dcc:row>
-          <dcc:row idx="23">calRes1</dcc:row>
-          <dcc:row idx="24">calRes1</dcc:row>
-          <dcc:row idx="25">calRes1</dcc:row>
-          <dcc:row idx="26">calRes1</dcc:row>
-          <dcc:row idx="27">calRes1</dcc:row>
-          <dcc:row idx="28">calRes1</dcc:row>
-          <dcc:row idx="29">calRes1</dcc:row>
-          <dcc:row idx="30">calRes1</dcc:row>
-          <dcc:row idx="31">calRes1</dcc:row>
-          <dcc:row idx="32">calRes1</dcc:row>
-          <dcc:row idx="33">calRes1</dcc:row>
-          <dcc:row idx="34">calRes1</dcc:row>
-          <dcc:row idx="35">calRes1</dcc:row>
-          <dcc:row idx="36">calRes1</dcc:row>
-          <dcc:row idx="37">calRes1</dcc:row>
-          <dcc:row idx="38">calRes1</dcc:row>
-          <dcc:row idx="39">calRes1</dcc:row>
-          <dcc:row idx="40">calRes1</dcc:row>
-          <dcc:row idx="41">calRes1</dcc:row>
-          <dcc:row idx="42">calRes1</dcc:row>
-          <dcc:row idx="43">calRes1</dcc:row>
-          <dcc:row idx="44">calRes1</dcc:row>
-          <dcc:row idx="45">calRes1</dcc:row>
-          <dcc:row idx="46">calRes1</dcc:row>
-          <dcc:row idx="47">calRes1</dcc:row>
-          <dcc:row idx="48">calRes1</dcc:row>
-          <dcc:row idx="49">calRes1</dcc:row>
-          <dcc:row idx="50">calRes1</dcc:row>
-          <dcc:row idx="51">calRes1</dcc:row>
-          <dcc:row idx="52">calRes1</dcc:row>
-          <dcc:row idx="53">calRes1</dcc:row>
-          <dcc:row idx="54">calRes1</dcc:row>
-          <dcc:row idx="55">calRes1</dcc:row>
-          <dcc:row idx="56">calRes1</dcc:row>
-          <dcc:row idx="57">calRes1</dcc:row>
-          <dcc:row idx="58">calRes1</dcc:row>
-          <dcc:row idx="59">calRes1</dcc:row>
-          <dcc:row idx="60">calRes1</dcc:row>
-          <dcc:row idx="61">calRes1</dcc:row>
-          <dcc:row idx="62">calRes1</dcc:row>
-          <dcc:row idx="63">calRes1</dcc:row>
-          <dcc:row idx="64">calRes1</dcc:row>
-          <dcc:row idx="65">calRes1</dcc:row>
-          <dcc:row idx="66">calRes1</dcc:row>
-          <dcc:row idx="67">calRes1</dcc:row>
-          <dcc:row idx="68">calRes1</dcc:row>
-          <dcc:row idx="69">calRes1</dcc:row>
-          <dcc:row idx="70">calRes1</dcc:row>
-          <dcc:row idx="71">calRes1</dcc:row>
-          <dcc:row idx="72">calRes1</dcc:row>
-          <dcc:row idx="73">calRes1</dcc:row>
-          <dcc:row idx="74">calRes1</dcc:row>
-          <dcc:row idx="75">calRes1</dcc:row>
-          <dcc:row idx="76">calRes1</dcc:row>
-          <dcc:row idx="77">calRes1</dcc:row>
-          <dcc:row idx="78">calRes1</dcc:row>
-          <dcc:row idx="79">calRes1</dcc:row>
-          <dcc:row idx="80">calRes1</dcc:row>
-          <dcc:row idx="81">calRes1</dcc:row>
-          <dcc:row idx="82">calRes1</dcc:row>
-          <dcc:row idx="83">calRes1</dcc:row>
-          <dcc:row idx="84">calRes1</dcc:row>
-          <dcc:row idx="85">calRes1</dcc:row>
-          <dcc:row idx="86">calRes1</dcc:row>
-          <dcc:row idx="87">calRes1</dcc:row>
+          <dcc:row idx="1">fitResult1</dcc:row>
+          <dcc:row idx="2">fitResult1</dcc:row>
+          <dcc:row idx="3">fitResult1</dcc:row>
+          <dcc:row idx="4">fitResult1</dcc:row>
+          <dcc:row idx="5">fitResult1</dcc:row>
+          <dcc:row idx="6">fitResult1</dcc:row>
+          <dcc:row idx="7">fitResult1</dcc:row>
+          <dcc:row idx="8">fitResult1</dcc:row>
+          <dcc:row idx="9">fitResult1</dcc:row>
+          <dcc:row idx="10">fitResult1</dcc:row>
+          <dcc:row idx="11">fitResult1</dcc:row>
+          <dcc:row idx="12">fitResult1</dcc:row>
+          <dcc:row idx="13">fitResult1</dcc:row>
+          <dcc:row idx="14">fitResult1</dcc:row>
+          <dcc:row idx="15">fitResult1</dcc:row>
+          <dcc:row idx="16">fitResult1</dcc:row>
+          <dcc:row idx="17">fitResult1</dcc:row>
+          <dcc:row idx="18">fitResult1</dcc:row>
+          <dcc:row idx="19">fitResult1</dcc:row>
+          <dcc:row idx="20">fitResult1</dcc:row>
+          <dcc:row idx="21">fitResult1</dcc:row>
+          <dcc:row idx="22">fitResult1</dcc:row>
+          <dcc:row idx="23">fitResult1</dcc:row>
+          <dcc:row idx="24">fitResult1</dcc:row>
+          <dcc:row idx="25">fitResult1</dcc:row>
+          <dcc:row idx="26">fitResult1</dcc:row>
+          <dcc:row idx="27">fitResult1</dcc:row>
+          <dcc:row idx="28">fitResult1</dcc:row>
+          <dcc:row idx="29">fitResult1</dcc:row>
+          <dcc:row idx="30">fitResult1</dcc:row>
+          <dcc:row idx="31">fitResult1</dcc:row>
+          <dcc:row idx="32">fitResult1</dcc:row>
+          <dcc:row idx="33">fitResult1</dcc:row>
+          <dcc:row idx="34">fitResult1</dcc:row>
+          <dcc:row idx="35">fitResult1</dcc:row>
+          <dcc:row idx="36">fitResult1</dcc:row>
+          <dcc:row idx="37">fitResult1</dcc:row>
+          <dcc:row idx="38">fitResult1</dcc:row>
+          <dcc:row idx="39">fitResult1</dcc:row>
+          <dcc:row idx="40">fitResult1</dcc:row>
+          <dcc:row idx="41">fitResult1</dcc:row>
+          <dcc:row idx="42">fitResult1</dcc:row>
+          <dcc:row idx="43">fitResult1</dcc:row>
+          <dcc:row idx="44">fitResult1</dcc:row>
+          <dcc:row idx="45">fitResult1</dcc:row>
+          <dcc:row idx="46">fitResult1</dcc:row>
+          <dcc:row idx="47">fitResult1</dcc:row>
+          <dcc:row idx="48">fitResult1</dcc:row>
+          <dcc:row idx="49">fitResult1</dcc:row>
+          <dcc:row idx="50">fitResult1</dcc:row>
+          <dcc:row idx="51">fitResult1</dcc:row>
+          <dcc:row idx="52">fitResult1</dcc:row>
+          <dcc:row idx="53">fitResult1</dcc:row>
+          <dcc:row idx="54">fitResult1</dcc:row>
+          <dcc:row idx="55">fitResult1</dcc:row>
+          <dcc:row idx="56">fitResult1</dcc:row>
+          <dcc:row idx="57">fitResult1</dcc:row>
+          <dcc:row idx="58">fitResult1</dcc:row>
+          <dcc:row idx="59">fitResult1</dcc:row>
+          <dcc:row idx="60">fitResult1</dcc:row>
+          <dcc:row idx="61">fitResult1</dcc:row>
+          <dcc:row idx="62">fitResult1</dcc:row>
+          <dcc:row idx="63">fitResult1</dcc:row>
+          <dcc:row idx="64">fitResult1</dcc:row>
+          <dcc:row idx="65">fitResult1</dcc:row>
+          <dcc:row idx="66">fitResult1</dcc:row>
+          <dcc:row idx="67">fitResult1</dcc:row>
+          <dcc:row idx="68">fitResult1</dcc:row>
+          <dcc:row idx="69">fitResult1</dcc:row>
+          <dcc:row idx="70">fitResult1</dcc:row>
+          <dcc:row idx="71">fitResult1</dcc:row>
+          <dcc:row idx="72">fitResult1</dcc:row>
+          <dcc:row idx="73">fitResult1</dcc:row>
+          <dcc:row idx="74">fitResult1</dcc:row>
+          <dcc:row idx="75">fitResult1</dcc:row>
+          <dcc:row idx="76">fitResult1</dcc:row>
+          <dcc:row idx="77">fitResult1</dcc:row>
+          <dcc:row idx="78">fitResult1</dcc:row>
+          <dcc:row idx="79">fitResult1</dcc:row>
+          <dcc:row idx="80">fitResult1</dcc:row>
+          <dcc:row idx="81">fitResult1</dcc:row>
+          <dcc:row idx="82">fitResult1</dcc:row>
+          <dcc:row idx="83">fitResult1</dcc:row>
+          <dcc:row idx="84">fitResult1</dcc:row>
+          <dcc:row idx="85">fitResult1</dcc:row>
+          <dcc:row idx="86">fitResult1</dcc:row>
+          <dcc:row idx="87">fitResult1</dcc:row>
         </dcc:measurementSeriesRef>
       </dcc:column>
     </dcc:dataFittingResult>
@@ -816,6 +831,7 @@ As-Left: Data collected after the unit has been adjusted and/or repaired.</dcc:b
       <dcc:heading lang="en">Change in RTPW</dcc:heading>
     </dcc:quantityUnitDef>
     <dcc:quantityUnitDef id="dR.dT-1" quantityCodeSystem="other">
+      <dcc:quantityCode>Conversion factor</dcc:quantityCode>
       <dcc:unitUsed>Ω.K-1</dcc:unitUsed>
       <dcc:unitSI>Ω.K-1</dcc:unitSI>
       <dcc:heading lang="en">dR/dT: Resistance Temperature dependence </dcc:heading>

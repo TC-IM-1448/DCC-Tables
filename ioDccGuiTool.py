@@ -4,9 +4,9 @@
 # Uses xlwings see following references: 
 # https://docs.xlwings.org/en/stable/syntax_overview.html 
 # https://docs.xlwings.org/en/latest/ 
-#%%
+
 __ver__ = "DCC-EXCEL-GUI v. 0.0.3"
-#%%
+
 import os
 import re
 import base64
@@ -27,7 +27,7 @@ NUM_LANGS = 0
 DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
-#%%
+
 HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
                                         '@imageRefs',
                                         'heading[1]',  
@@ -88,10 +88,18 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                     '@numRows', 
                                     '@numCols'], 
 
-    columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'idx']
+    columnHeading = ['scope', 
+                     'dataCategory', 
+                     'dataCategoryRef', 
+                     'quantity', 
+                     'unit', 
+                     'quantityUnitDefRef', 
+                     'equipmentRef', 
+                     'heading[1]', 
+                     'idx']
     )
 
-#%%
+
 class DccGuiTool(): 
     xsdDefInitCol = 3  
 
@@ -494,10 +502,11 @@ class DccGuiTool():
                                  'quantity': 'green',
                                  'unit': 'green', 
                                  'quantityUnitDefRef': 'light_green', 
+                                 'equipmentRef': 'blue', 
                                  'heading': 'light_blue', 
                                  'idx': 'light_gray'
                                  }
-            headingColors = ['yellow', 'yellow', 'light_yellow', 'green', 'green', 'light_green', 'light_blue', 'light_blue', 'light_gray']
+            # headingColors = ['yellow', 'yellow', 'light_yellow', 'green', 'green', 'light_green', 'light_blue', 'light_blue', 'light_gray']
             headingColors = [self.colors[headingColorDefs[k.split('[', 1)[0]]] for k in columnHeading]
 
             sht.range((colInitRowIdx,1)).value = [[h] for h in columnHeading]
@@ -568,6 +577,10 @@ class DccGuiTool():
             rng = sht.range((colInitRowIdx+5,2),(colInitRowIdx+5,numCols+2))
             rng.api.Validation.Delete()
             rng.api.Validation.Add(Type=xlValidateList, Formula1="=quantityUnitDefIdRange")
+
+            rng = sht.range((colInitRowIdx+6,2),(colInitRowIdx+6,numCols+2))
+            rng.api.Validation.Delete()
+            rng.api.Validation.Add(Type=xlValidateList, Formula1="=equipIdRange")
 
             
             # Set the column widths
@@ -963,7 +976,7 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
 
     colHeadDict = dict(zip(colAttrNames,colAttrValues))
 
-    colAttrKeys = ['scope', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef'] 
+    colAttrKeys = ['scope', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'equipmentRef'] 
     colAttr = {k: colHeadDict[k] for k in colAttrKeys if colHeadDict[k]!=None}
     # colNode = elmMaker('column', **dict(zip(colAttrNames[:4], colAttrValues[:4])))
     colNode = elmMaker('column', **colAttr)

@@ -47,6 +47,7 @@
         <xs:selector xpath="dcc:measurementResults/dcc:measurementSeries"/>
         <xs:field xpath="@tableId"/>
     </xs:key>
+
     <xs:keyref name="ms2equip" refer="dcc:PKequipment">
         <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:equipmentRef"/>
         <xs:field xpath="@equipmentItemRef"/>
@@ -138,6 +139,7 @@
             <xs:element name="transactionContent" type="dcc:transactionContentType" />
             <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
             <xs:element name="clientIdentifier" type="dcc:identificationType" minOccurs="0"/>
+            <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/>
             <xs:element name="issueDate" type="xs:date"/>
             <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
             <xs:element name="endPerformanceDate" type="xs:date"/>
@@ -334,12 +336,17 @@ quantities of specified kinds
 
     <xs:simpleType name="equipmentCategoryType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="item"/>
-			<xs:enumeration value="indicating"/>
-			<xs:enumeration value="transfering"/>
-			<xs:enumeration value="sensing"/>
-			<xs:enumeration value="reference"/>
-			<xs:enumeration value="environment"/>
+			<xs:enumeration value="item"/> <!-- not used in VIM3 *TODO -->
+			<xs:enumeration value="device"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="sensor"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="detector"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="transducer"/> <!-- -->
+			<xs:enumeration value="transferDevice"/>
+			<xs:enumeration value="reference"/> <!-- not used in VIM3-->
+			<xs:enumeration value="referenceStandard"/> <!-- is used in VIM3, or Etalon -->
+			<xs:enumeration value="referenceMaterial"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="model"/> <!-- is used in VIM3 2.48 -->
+			<xs:enumeration value="environment"/> 
 			<xs:enumeration value="other"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -643,6 +650,7 @@ quantities of specified kinds
         </xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="calibrationResult" /> 
+			<xs:enumeration value="calibrationCurve" /> 
 			<xs:enumeration value="dataFittingResult" /> 
 			<xs:enumeration value="measurementSeries" /> 
 		</xs:restriction>
@@ -706,7 +714,25 @@ quantities of specified kinds
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
-                <xs:unique name="calibFitCurveColumn">
+                <xs:unique name="dataFittingColumn">
+                    <xs:selector xpath="dcc:column"/>
+                    <xs:field xpath="@dataCategoryRef"/>
+                    <xs:field xpath="@scope"/>
+                    <xs:field xpath="@quantity"/>
+                    <xs:field xpath="@dcc:unit"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="dcc:dataList/*/@dataCategory"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element name="calibrationCurve"  maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:unique name="calibrationCurveColumn">
                     <xs:selector xpath="dcc:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
@@ -1101,6 +1127,7 @@ quantities of specified kinds
         <xs:attribute name="quantity" type="dcc:quantityType" use="required"/>
         <xs:attribute name="unit" type="dcc:unitType" use="required"/>
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREFS" use="optional"/>
+		<xs:attribute name="equipmentRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
         
     <xs:complexType name="dataListType">
@@ -2014,6 +2041,8 @@ quantities of specified kinds
 			<xs:enumeration value="indication" /> 
 			<xs:enumeration value="bias" /> 
 			<xs:enumeration value="environment" /> 
+			<xs:enumeration value="modelIn" /> 
+			<xs:enumeration value="modelOut" /> 
 			<xs:enumeration value="Other" />  
 			<xs:enumeration value="-" />  
 		</xs:restriction>
