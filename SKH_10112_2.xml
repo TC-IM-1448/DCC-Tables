@@ -303,11 +303,20 @@
             <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL" scope="indication">
                 <dcc:heading lang="en">Item indication</dcc:heading>
                 <dcc:heading lang="da">Emnets visning</dcc:heading>
-                    <dcc:value>
-                        <dcc:row idx="1">120</dcc:row> 
-                        <dcc:row idx="2">600</dcc:row> 
-                        <dcc:row idx="3">1200</dcc:row>
-                    </dcc:value>
+                <dcc:value>
+                    <dcc:row idx="1">120</dcc:row> 
+                    <dcc:row idx="2">600</dcc:row> 
+                    <dcc:row idx="3">1200</dcc:row>
+                </dcc:value>
+            </dcc:column>
+            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL" scope="indication">
+                <dcc:heading lang="en">Item indication</dcc:heading>
+                <dcc:heading lang="da">Emnets visning</dcc:heading>
+                <dcc:value>
+                    <dcc:row idx="1">120</dcc:row> 
+                    <dcc:row idx="2">600</dcc:row> 
+                    <dcc:row idx="3">1200</dcc:row>
+                </dcc:value>
             </dcc:column>
             <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="-" unit="µL">
                 <dcc:heading lang="en">Approach to target (a: from above, b: from below)</dcc:heading>
@@ -384,7 +393,7 @@
                     </dcc:conformity>
             </dcc:column>
 
-            <dcc:column  dataCategoryRef="-" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="ms1">
+            <dcc:column  dataCategoryRef="-" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="QU-Zfactor">
                 <dcc:heading lang="en">Z-factor</dcc:heading>
                 <dcc:heading lang="da">Z faktor</dcc:heading>
                     <dcc:value>
@@ -428,7 +437,7 @@
                         <dcc:row idx="3">2</dcc:row>
                     </dcc:uncertaintyCoverageFactor_k>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="ms1">
+            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="QU-Zfactor">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                     <dcc:methodRef>
@@ -559,7 +568,7 @@
                         <dcc:row idx="3">0.05</dcc:row>
                     </dcc:repeatability>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef"  scope="environment" unit="1" quantityUnitDefRef="ms1">
+            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef"  scope="environment" unit="1" quantityUnitDefRef="QU-Zfactor">
                 <dcc:heading lang="en">Z-factor</dcc:heading>
                 <dcc:heading lang="da">Z faktor</dcc:heading>
                     <dcc:value>
@@ -568,7 +577,7 @@
                         <dcc:row idx="3">1.003</dcc:row>
                     </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="-" quantityUnitDefRef="ms1">
+            <dcc:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="-" quantityUnitDefRef="QU-Zfactor">
                 <dcc:heading lang="en">Calculation of Z-factor</dcc:heading>
                 <dcc:heading lang="da">Bergning af Z-faktor</dcc:heading>
                     <dcc:methodRef>

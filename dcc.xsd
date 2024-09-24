@@ -640,128 +640,10 @@ quantities of specified kinds
                 <xs:enumeration value="accreditationException" /> 
                 <xs:enumeration value="decisionRule" /> 
                 <xs:enumeration value="norm" /> 
+                <xs:enumeration value="clientRequirement" /> 
             </xs:restriction>
     </xs:simpleType>
-	
-	<xs:simpleType name="tableCategoryType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="calibrationResult" /> 
-			<xs:enumeration value="calibrationCurve" /> 
-			<xs:enumeration value="dataFittingResult" /> 
-			<xs:enumeration value="measurementSeries" /> 
-		</xs:restriction>
-    </xs:simpleType>
 
-    <xs:complexType name="tableType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is for arranging any measurement data into a table with rows and columns. It is also allowed to include images and plots in the form of references to embedded files.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="conformityStatus" type="dcc:conformityStatusType" minOccurs="0"/>
-            <xs:element name="conformityStatusRef" type="xs:IDREF" minOccurs="0"/>
-            <xs:element name="column" type="dcc:columnType" minOccurs="0" maxOccurs="unbounded"/>
-            <!-- <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/> -->
-        </xs:sequence>
-		<xs:attribute name="tableId" type="xs:ID" use="required"/>
-		<xs:attribute name="measuringSystemRef" type="xs:IDREF" use="required"/>
-		<xs:attribute name="numRows" type="xs:int" use="required"/>
-		<xs:attribute name="numCols" type="xs:int" use="required"/>
-		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
-		<xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>		
-        <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
-    </xs:complexType>
-
-    <xs:complexType name="measurementResultsType">
-        <xs:annotation>
-        <xs:documentation>
-        Measurement results consists of a number of tables containing the calibration results with reference to relevant measuring systems under calibration, references used and applicalble statments.
-        </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0"/>
-            <xs:element name="calibrationResult"  maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-                <xs:unique name="column">
-                    <xs:selector xpath="dcc:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
-                    <xs:field xpath="@scope"/>
-                    <xs:field xpath="@quantity"/>
-                    <xs:field xpath="@dcc:unit"/>
-					<xs:field xpath="@quantityUnitDefRef"/>
-                    <xs:field xpath="dcc:dataList/*/@dataCategory"/>
-                </xs:unique>
-            </xs:element>
-            <xs:element name="dataFittingResult"  maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-                <xs:unique name="dataFittingColumn">
-                    <xs:selector xpath="dcc:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
-                    <xs:field xpath="@scope"/>
-                    <xs:field xpath="@quantity"/>
-                    <xs:field xpath="@dcc:unit"/>
-					<xs:field xpath="@quantityUnitDefRef"/>
-                    <xs:field xpath="dcc:dataList/*/@dataCategory"/>
-                </xs:unique>
-            </xs:element>
-            <xs:element name="calibrationCurve"  maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-                <xs:unique name="calibrationCurveColumn">
-                    <xs:selector xpath="dcc:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
-                    <xs:field xpath="@scope"/>
-                    <xs:field xpath="@quantity"/>
-                    <xs:field xpath="@dcc:unit"/>
-					<xs:field xpath="@quantityUnitDefRef"/>
-                    <xs:field xpath="dcc:dataList/*/@dataCategory"/>
-                </xs:unique>
-            </xs:element>
-            <xs:element name="measurementSeries" maxOccurs="unbounded" minOccurs="0">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="optional"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-                <xs:unique name="measSerDataColumn">
-                    <xs:selector xpath="dcc:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
-                    <xs:field xpath="@scope"/>
-                    <xs:field xpath="@quantity"/>
-                    <xs:field xpath="@dcc:unit"/>
-					<xs:field xpath="@quantityUnitDefRef"/>
-                    <xs:field xpath="dcc:dataList/*/@dataCategory"/>
-                </xs:unique>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
 
     <xs:complexType name="CMCListType">
         <xs:annotation>
@@ -865,6 +747,134 @@ quantities of specified kinds
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
 
+
+	<xs:simpleType name="tableCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="calibrationResult" /> 
+			<xs:enumeration value="calibrationCurve" /> 
+			<xs:enumeration value="dataFittingResult" /> 
+			<xs:enumeration value="measurementSeries" /> 
+		</xs:restriction>
+    </xs:simpleType>
+
+
+<!--    ============================================================
+                DATA TABLE & DATA COLUMN DEFINITIONS 
+        ============================================================ -->
+
+
+    <xs:complexType name="tableType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is for arranging any measurement data into a table with rows and columns. It is also allowed to include images and plots in the form of references to embedded files.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="conformityStatus" type="dcc:conformityStatusType" minOccurs="0"/>
+            <xs:element name="conformityStatusRef" type="xs:IDREF" minOccurs="0"/>
+            <xs:element name="column" type="dcc:columnType" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/> -->
+        </xs:sequence>
+		<xs:attribute name="tableId" type="xs:ID" use="required"/>
+		<xs:attribute name="measuringSystemRef" type="xs:IDREF" use="required"/>
+		<xs:attribute name="numRows" type="xs:int" use="required"/>
+		<xs:attribute name="numCols" type="xs:int" use="required"/>
+		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
+		<xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>		
+        <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
+    </xs:complexType>
+
+    <xs:complexType name="measurementResultsType">
+        <xs:annotation>
+        <xs:documentation>
+        Measurement results consists of a number of tables containing the calibration results with reference to relevant measuring systems under calibration, references used and applicalble statments.
+        </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0"/>
+            <xs:element name="calibrationResult"  maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:unique name="column">
+                    <xs:selector xpath="dcc:column"/>
+                    <xs:field xpath="@dataCategoryRef"/>
+                    <xs:field xpath="@scope"/>
+                    <xs:field xpath="@quantity"/>
+                    <xs:field xpath="@unit"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="*/@dataCategory"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element name="dataFittingResult"  maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:unique name="dataFittingColumn">
+                    <xs:selector xpath="dcc:column"/>
+                    <xs:field xpath="@dataCategoryRef"/>
+                    <xs:field xpath="@scope"/>
+                    <xs:field xpath="@quantity"/>
+                    <xs:field xpath="@unit"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="*/@dataCategory"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element name="calibrationCurve"  maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:unique name="calibrationCurveColumn">
+                    <xs:selector xpath="dcc:column"/>
+                    <xs:field xpath="@dataCategoryRef"/>
+                    <xs:field xpath="@scope"/>
+                    <xs:field xpath="@quantity"/>
+                    <xs:field xpath="@unit"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="*/@dataCategory"/>
+                </xs:unique>
+            </xs:element>
+            <xs:element name="measurementSeries" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base='dcc:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="optional"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:unique name="measSerDataColumn">
+                    <xs:selector xpath="dcc:column"/>
+                    <xs:field xpath="@dataCategoryRef"/>
+                    <xs:field xpath="@scope"/>
+                    <xs:field xpath="@quantity"/>
+                    <xs:field xpath="@unit"/>
+					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="*/@dataCategory"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
@@ -881,534 +891,422 @@ quantities of specified kinds
                 </xs:unique>
             </xs:element-->
             <xs:choice>
-                <xs:element name="value">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="value"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="targetValue">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="expandedUncertainty">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="expandedUncertainty"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="correlation">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="correlation"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="correction">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="repeatability">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="repeatability"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="conformity">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
-                                <xs:complexType>
-                                    <xs:simpleContent>
-                                        <xs:extension base='dcc:conformityStatusType'>
-                                            <xs:attribute name='idx' type='xs:int'/>
-                                        </xs:extension>
-                                    </xs:simpleContent>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="dataCategory" type="xs:string" fixed="conformity"/>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="rowTag"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:stringDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="rowTag"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="usedReferenceRef">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="usedReferenceRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="methodRef">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="methoedRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="exceptionRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="exceptionRefType"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="traceabilityRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="traceabilityRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="attentionRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="attentionRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="commentRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="commentRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="decisionRuleRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="decisionRuleRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="accreditationExceptionRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="accreditationExceptionRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="normRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="normRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="measurementSeriesRef"> 
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:refDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="measurementSeriesRef"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="uncertaintyCoverageFactor_k">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="uncertaintyCoverageProbability">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="toleranceLimitLower">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimitLower"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="toleranceLimitUpper">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimiUpper"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="acceptanceLimitLower">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitLower"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="acceptanceLimitUpper">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base='dcc:realDataType'>
-                                <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitUpper"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="approachToTarget">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
-                                <xs:complexType>
-                                    <xs:simpleContent>
-                                        <xs:extension base='dcc:approachToTargetType'>
-                                            <xs:attribute name='idx' type='xs:int'/>
-                                        </xs:extension>
-                                    </xs:simpleContent>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="dataCategory" type="xs:string" fixed="approachToTarget"/>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="value" type="dcc:valueType" />  <!-- used for measured quantities -->
+                <xs:element name="conventionalValue" type="dcc:conventionalValueType" />  <!-- used for measured quantities -->
+                <xs:element name="targetValue" type="dcc:targetValueType"/> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
+                <xs:element name="expandedUncertainty"  type="dcc:expandedUncertaintyType"/> 
+                <xs:element name="repeatability" type="dcc:repeatabilityType" /> 
+                <xs:element name="correction" type="dcc:correctionType" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
+                <xs:element name="conformity" type="dcc:conformityType"/>   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
+                <xs:element name="correlation" type="dcc:correlationType" /> 
+                <xs:element name="rowTag" type="dcc:rowTagType" /> 
+                <xs:element name="usedReferenceRef" type="dcc:usedReferenceRefType" />
+                <xs:element name="methodRef" type="dcc:methodRefType" />
+                <xs:element name="exceptionRef" type="dcc:exceptionRefType" /> 
+                <xs:element name="traceabilityRef" type="dcc:traceabilityRefType" /> 
+                <xs:element name="attentionRef" type="dcc:attentionRefType" /> 
+                <xs:element name="commentRef" type="dcc:commentRefType" /> 
+                <xs:element name="decisionRuleRef" type="dcc:decisionRuleRefType" /> 
+                <xs:element name="accreditationExceptionRef" type="dcc:accreditationExceptionRefType" /> 
+                <xs:element name="normRef" type="dcc:normRefType" /> 
+                <xs:element name="measurementSeriesRef" type="dcc:measurementSeriesRefType" /> 
+                <xs:element name="uncertaintyCoverageFactor_k" type="dcc:uncertaintyCoverageFactor_kType" />
+                <xs:element name="uncertaintyCoverageProbability" type="dcc:uncertaintyCoverageProbabilityType" />
+                <xs:element name="toleranceLimitLower" type="dcc:toleranceLimitLowerType" />
+                <xs:element name="toleranceLimitUpper" type="dcc:toleranceLimitUpperType" />
+                <xs:element name="acceptanceLimitLower" type="dcc:acceptanceLimitLowerType" />
+                <xs:element name="acceptanceLimitUpper" type="dcc:acceptanceLimitUpperType" />
+                <xs:element name="approachToTarget" type="dcc:approachToTargetType" />
+                <xs:element name="other" type="dcc:otherType" />  
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
         <xs:attribute name="dataCategoryRef" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="quantity" type="dcc:quantityType" use="required"/>
         <xs:attribute name="unit" type="dcc:unitType" use="required"/>
-		<xs:attribute name="quantityUnitDefRef" type="xs:IDREFS" use="optional"/>
-		<xs:attribute name="equipmentRef" type="xs:IDREFS" use="optional"/>
+		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
+		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
-        
-    <xs:complexType name="dataListType">
+    
+
+
+    <xs:complexType name="valueType">
         <xs:annotation>
             <xs:documentation>
-                Data list type defines the data types allowed for a collumns.
-                This ensures that i.e. a column containing the dataList element expandedUncertainty only contains data blonging to the realDataType.
-                Each data type element is extended with a dataCategory attribute with a fixed value equal to the name of the element. This is because uniqueness statement apply to attributes but not element names. 
+                List of statements attached to a DCC.
             </xs:documentation>
         </xs:annotation>
-        <xs:choice>
-            <xs:element name="value">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="value"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="targetValue">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="expandedUncertainty">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="expandedUncertainty"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="correlation">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="correlation"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="correction">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="repeatability">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="repeatability"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="conformity">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
-                            <xs:complexType>
-                                <xs:simpleContent>
-                                    <xs:extension base='dcc:conformityStatusType'>
-                                        <xs:attribute name='idx' type='xs:int'/>
-                                    </xs:extension>
-                                </xs:simpleContent>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                    <xs:attribute name="dataCategory" type="xs:string" fixed="conformity"/>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="rowTag"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:stringDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="rowTag"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="usedReferenceRef">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="usedReferenceRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="methodRef">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="methoedRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="exceptionRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="exceptionRefType"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="traceabilityRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="traceabilityRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="attentionRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="attentionRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="commentRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="commentRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="decisionRuleRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="decisionRuleRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="accreditationExceptionRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="accreditationExceptionRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="normRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="normRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="measurementSeriesRef"> 
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:refDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="measurementSeriesRef"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="uncertaintyCoverageFactor_k">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="uncertaintyCoverageProbability">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="toleranceLimitLower">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimitLower"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="toleranceLimitUpper">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimiUpper"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="acceptanceLimitLower">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitLower"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="acceptanceLimitUpper">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base='dcc:realDataType'>
-                            <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitUpper"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="approachToTarget">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
-                            <xs:complexType>
-                                <xs:simpleContent>
-                                    <xs:extension base='dcc:approachToTargetType'>
-                                        <xs:attribute name='idx' type='xs:int'/>
-                                    </xs:extension>
-                                </xs:simpleContent>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                    <xs:attribute name="dataCategory" type="xs:string" fixed="approachToTarget"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:choice>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="value"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
-    <!--xs:complexType name='exceptionRefType'>
+    <xs:complexType name="conventionalValueType">
+        <xs:annotation>
+            <xs:documentation>
+                List of statements attached to a DCC.
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
-           <xs:extension base='dcc:refDataType'>
-              <xs:attribute name="dataCategory" type="xs:string" fixed="exceptionRef"/>
-           </xs:extension>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="conventionalValue"/>
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name='accreditationExceptionRefType'>
+
+    <xs:complexType name="targetValueType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
-           <xs:extension base='dcc:refDataType'>
-              <xs:attribute name="dataCategory" type="xs:string" fixed="accreditationExceptionRef"/>
-           </xs:extension>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name='measurementSeriesRefType'>
+
+
+    <xs:complexType name="expandedUncertaintyType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
-           <xs:extension base='dcc:refDataType'>
-              <xs:attribute name="dataCategory" type="xs:string" fixed="measurementSeriesRef"/>
-           </xs:extension>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="expandedUncertainty"/>
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name='uncertaintyCoverageFactor_kType'>
+
+
+    <xs:complexType name="correlationType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
-           <xs:extension base='dcc:realDataType'>
-              <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
-           </xs:extension>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="correlation"/>
+            </xs:extension>
         </xs:complexContent>
-    </xs:complexType-->
+    </xs:complexType>
+
+    <xs:complexType name="correctionType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="repeatabilityType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="repeatability"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="conformityType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='dcc:conformityStatusType'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="dataCategory" type="xs:string" fixed="conformity"/>
+    </xs:complexType>
+
+ 
+    <xs:complexType name="rowTagType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:stringDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="rowTag"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="usedReferenceRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="usedReferenceRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="methodRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="methoedRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="exceptionRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="exceptionRefType"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="traceabilityRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="traceabilityRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="attentionRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="attentionRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="commentRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="commentRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="decisionRuleRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="decisionRuleRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="accreditationExceptionRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="accreditationExceptionRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="normRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="normRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="measurementSeriesRefType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:refDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="measurementSeriesRef"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="uncertaintyCoverageFactor_kType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="uncertaintyCoverageProbabilityType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType  name="toleranceLimitLowerType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimitLower"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="toleranceLimitUpperType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimiUpper"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="acceptanceLimitLowerType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitLower"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="acceptanceLimitUpperType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:realDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitUpper"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="approachToTargetType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='dcc:approachToTargetRestrictType'>
+                            <xs:attribute name='idx' type='xs:int'/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="dataCategory" type="xs:string" fixed="approachToTarget"/>
+    </xs:complexType>
+
+    <xs:complexType name="otherType">
+        <xs:annotation>
+            <xs:documentation>
+                Documentation not written yet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base='dcc:stringDataType'>
+                <xs:attribute name="dataCategory" type="xs:string" fixed="other"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- BASIC DATA-TYPES for dataColumn row-elements.  -->
+
     <xs:complexType name='realDataType'>
         <xs:sequence>
             <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
@@ -1422,6 +1320,7 @@ quantities of specified kinds
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name='stringDataType'>
         <xs:sequence>
             <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
@@ -1435,6 +1334,7 @@ quantities of specified kinds
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+
     <xs:complexType name='refDataType'>
         <xs:sequence>
             <xs:element name='row'  minOccurs='0' maxOccurs='unbounded'>
@@ -1503,7 +1403,7 @@ quantities of specified kinds
         </xs:restriction>
     </xs:simpleType>
     
-    <xs:simpleType name="approachToTargetType">
+    <xs:simpleType name="approachToTargetRestrictType">
         <xs:annotation>
             <xs:documentation>
                 For some measurements hysteresis is of importance and it is desirable to know the condition approaching the measurement. 
