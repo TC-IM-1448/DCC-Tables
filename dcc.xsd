@@ -169,6 +169,7 @@
         </xs:sequence>
         <xs:attribute name="column" type="xs:string" use="required"/>
     </xs:complexType>
+
     <xs:complexType name="fieldHeadingType">
         <xs:annotation>
             <xs:documentation>
@@ -414,17 +415,17 @@
 			<xs:enumeration value="as found"/>
 			<xs:enumeration value="after adjustment"/>
 			<xs:enumeration value="after maintenance"/>
-			<xs:enumeration value="after maintenance and adjustme"/>
+			<xs:enumeration value="after maintenance and adjustment"/>
 		</xs:restriction>
 	</xs:simpleType>
 
-    <xs:simpleType name="issuerType">
+    <!--xs:simpleType name="issuerType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="client"/>
 			<xs:enumeration value="manufacturer"/>
 			<xs:enumeration value="serviceProvider"/>
 		</xs:restriction>
-	</xs:simpleType>
+	</xs:simpleType-->
 
     <xs:complexType name="performanceLocationType">
         <xs:annotation>
@@ -563,6 +564,7 @@
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="quantityUnitDef" type="dcx:quantityUnitDefType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -944,7 +946,7 @@
             </xs:element-->
             <xs:choice>
                 <xs:element name="value" type="dcx:valueType" />  <!-- used for measured quantities -->
-                <xs:element name="conventionalValue" type="dcx:conventionalValueType" />  <!-- used for measured quantities -->
+                <!--xs:element name="conventionalValue" type="dcx:conventionalValueType" /-->  <!-- used for measured quantities -->
                 <xs:element name="targetValue" type="dcx:targetValueType"/> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
                 <xs:element name="expandedUncertainty"  type="dcx:expandedUncertaintyType"/> 
                 <xs:element name="repeatability" type="dcx:repeatabilityType" /> 
@@ -995,7 +997,7 @@
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="conventionalValueType">
+    <!--xs:complexType name="conventionalValueType">
         <xs:annotation>
             <xs:documentation>
                 List of statements attached to a DCC.
@@ -1006,7 +1008,7 @@
                 <xs:attribute name="dataCategory" type="xs:string" fixed="conventionalValue"/>
             </xs:extension>
         </xs:complexContent>
-    </xs:complexType>
+    </xs:complexType-->
 
     <xs:complexType name="targetValueType">
         <xs:annotation>
@@ -4072,8 +4074,7 @@
 			<xs:enumeration value="12-36.1|thermodynamic critical magnetic flux density|T"/>
 			<xs:enumeration value="12-36.2|lower critical magnetic flux density|T"/>
 			<xs:enumeration value="12-36.3|upper critical magnetic flux density|T"/>
-			<xs:enumeration value="12-37|superconductor energy gap|J"/>
-			<xs:enumeration value="12-38.1|London penetration depth|m"/>
+			<xs:enumeration value="12-37|superconductor energy gap|J"/> <xs:enumeration value="12-38.1|London penetration depth|m"/>
 			<xs:enumeration value="12-38.2|coherence length|m"/>
 		</xs:restriction>
     </xs:simpleType>
