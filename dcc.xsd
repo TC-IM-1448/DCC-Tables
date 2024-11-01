@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema version="3.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:dcc="https://dfm.dk"
+           xmlns:dcx="https://dfm.dk"
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
            targetNamespace="https://dfm.dk"
            elementFormDefault="qualified">
@@ -22,54 +22,54 @@
         </xs:documentation>
     </xs:annotation>
 
-    <xs:element name="digitalCalibrationCertificate" type="dcc:digitalCalibrationCertificateType">
+    <xs:element name="digitalCalibrationCertificate" type="dcx:digitalCalibrationCertificateType">
     <xs:key name="heading">
-        <xs:selector xpath='dcc:statements/dcc:heading'/>
+        <xs:selector xpath='dcx:statements/dcx:heading'/>
         <xs:field xpath="@lang"/>
     </xs:key>
     <xs:key name="PKequipment">
-        <xs:selector xpath="dcc:equipment/dcc:equipmentItem"/>
+        <xs:selector xpath="dcx:equipment/dcx:equipmentItem"/>
         <xs:field xpath="@id"/>
     </xs:key>
     <xs:key name="PKsetting">
-        <xs:selector xpath="dcc:settings/dcc:setting"/>
+        <xs:selector xpath="dcx:settings/dcx:setting"/>
         <xs:field xpath="@settingId"/>
     </xs:key>
     <xs:key name="PKstatement">
-        <xs:selector xpath="dcc:statements/dcc:statement"/>
+        <xs:selector xpath="dcx:statements/dcx:statement"/>
         <xs:field xpath="@id"/>
     </xs:key>
     <xs:key name="PKmeasuringSystem">
-        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem"/>
+        <xs:selector xpath="dcx:measuringSystems/dcx:measuringSystem"/>
         <xs:field xpath="@id"/>
     </xs:key>
     <xs:key name="PKmeasurementSeries">
-        <xs:selector xpath="dcc:measurementResults/dcc:measurementSeries"/>
+        <xs:selector xpath="dcx:measurementResults/dcx:measurementSeries"/>
         <xs:field xpath="@tableId"/>
     </xs:key>
 
-    <xs:keyref name="ms2equip" refer="dcc:PKequipment">
-        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:equipmentRef"/>
+    <xs:keyref name="ms2equip" refer="dcx:PKequipment">
+        <xs:selector xpath="dcx:measuringSystems/dcx:measuringSystem/dcx:equipmentRef"/>
         <xs:field xpath="@equipmentItemRef"/>
     </xs:keyref>
-    <xs:keyref name="ms2statetment" refer="dcc:PKstatement">
-        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:statementRef"/>
+    <xs:keyref name="ms2statetment" refer="dcx:PKstatement">
+        <xs:selector xpath="dcx:measuringSystems/dcx:measuringSystem/dcx:statementRef"/>
         <xs:field xpath="."/>
     </xs:keyref>
-    <xs:keyref name="table2ms" refer="dcc:PKmeasuringSystem">
-        <xs:selector xpath="dcc:measurementResults/dcc:calibrationResult"/>
+    <xs:keyref name="table2ms" refer="dcx:PKmeasuringSystem">
+        <xs:selector xpath="dcx:measurementResults/dcx:calibrationResult"/>
         <xs:field xpath="@measuringSystemRef"/>
     </xs:keyref>
-    <xs:keyref name="msequip2setting" refer="dcc:PKsetting">
-        <xs:selector xpath="dcc:measuringSystems/dcc:measuringSystem/dcc:equipmentRef/dcc:settingRef"/>
+    <xs:keyref name="msequip2setting" refer="dcx:PKsetting">
+        <xs:selector xpath="dcx:measuringSystems/dcx:measuringSystem/dcx:equipmentRef/dcx:settingRef"/>
         <xs:field xpath="."/>
     </xs:keyref>
-    <xs:keyref name="exceptionRefColumn2statement" refer="dcc:PKstatement">
-        <xs:selector xpath="dcc:measurementResults/dcc:calibrationResult/dcc:ataColumn/dcc:dataList/dcc:exceptionRef/dcc:row"/>
+    <xs:keyref name="exceptionRefColumn2statement" refer="dcx:PKstatement">
+        <xs:selector xpath="dcx:measurementResults/dcx:calibrationResult/dcx:ataColumn/dcx:dataList/dcx:exceptionRef/dcx:row"/>
         <xs:field xpath="."/>
     </xs:keyref>
-    <xs:keyref name="measurementSeriesRefColumn2measurementSeries" refer="dcc:PKmeasurementSeries">
-        <xs:selector xpath="dcc:measurementResults/dcc:calibrationResult/dcc:column/dcc:dataList/dcc:measurementSeriesRef/dcc:row"/>
+    <xs:keyref name="measurementSeriesRefColumn2measurementSeries" refer="dcx:PKmeasurementSeries">
+        <xs:selector xpath="dcx:measurementResults/dcx:calibrationResult/dcx:column/dcx:dataList/dcx:measurementSeriesRef/dcx:row"/>
         <xs:field xpath="."/>
     </xs:keyref>
     </xs:element>
@@ -80,23 +80,23 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="administrativeData" type="dcc:administrativeDataType"/>
-            <xs:element name="statements" type="dcc:statementListType" minOccurs="0"/>
-            <xs:element name="equipment" type="dcc:equipmentListType"/>
-            <xs:element name="settings" type="dcc:settingListType" minOccurs="0"/>
-            <xs:element name="measuringSystems" type="dcc:measuringSystemListType"/>
-            <xs:element name="measurementResults" type="dcc:measurementResultsType" maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="administrativeData" type="dcx:administrativeDataType"/>
+            <xs:element name="statements" type="dcx:statementListType" minOccurs="0"/>
+            <xs:element name="equipment" type="dcx:equipmentListType"/>
+            <xs:element name="settings" type="dcx:settingListType" minOccurs="0"/>
+            <xs:element name="measuringSystems" type="dcx:measuringSystemListType"/>
+            <xs:element name="measurementResults" type="dcx:measurementResultsType" maxOccurs="unbounded" minOccurs="0">
                 <xs:unique name="calibrationResult">
-                    <xs:selector xpath="dcc:calibrationResult"/>
+                    <xs:selector xpath="dcx:calibrationResult"/>
                     <xs:field xpath="@measuringSystemRef"/>
-                    <xs:field xpath="@serviceCategory"/>
-                    <xs:field xpath="@customServiceCategory"/>
+                    <!--xs:field xpath="@serviceCategory"/>
+                    <xs:field xpath="@customServiceCategory"/-->
                 </xs:unique>
             </xs:element>
-            <xs:element name="quantityUnitDefs" type="dcc:quantityUnitDefListType"/>
-            <xs:element name="embeddedFiles" type="dcc:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
-            <xs:element name="comment" type="dcc:anyType" minOccurs="0"/>
+            <xs:element name="quantityUnitDefs" type="dcx:quantityUnitDefListType"/>
+            <xs:element name="embeddedFiles" type="dcx:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="comment" type="dcx:anyType" minOccurs="0"/>
             <!--xs:element ref="ds:Signature" minOccurs="0" maxOccurs="unbounded"/-->
         </xs:sequence>
         <xs:attribute name="schemaVersion" use="required">
@@ -116,16 +116,17 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="coreData" type="dcc:coreDataType"/>
-            <xs:element name="serviceProvider" type="dcc:contactType"/>
-            <xs:element name="accreditation" type="dcc:accreditationType" minOccurs="0"/>
-            <xs:element name="respPersons" type="dcc:respPersonListType"/>
-            <xs:element name="client" type="dcc:contactType"/> 
-            <xs:element name="equipmentReturnInfo" type="dcc:contactType" minOccurs="0"/>
-            <xs:element name="clientBillingInfo" type="dcc:contactType" minOccurs="0"/>
-            <xs:element name="certificateReturnInfo" type="dcc:contactType" minOccurs="0"/>
-            <!-- <xs:element name="usedSoftware" type="dcc:softwareListType" minOccurs="0"/>-->
-            <xs:element name="performanceSite" type="dcc:contactType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="coreData" type="dcx:coreDataType"/>
+            <xs:element name="serviceProvider" type="dcx:contactType"/>
+            <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
+            <xs:element name="respPersons" type="dcx:respPersonListType"/>
+            <xs:element name="client" type="dcx:contactType"/> 
+            <xs:element name="equipmentReturnInfo" type="dcx:contactType" minOccurs="0"/>
+            <xs:element name="clientBillingInfo" type="dcx:contactType" minOccurs="0"/>
+            <xs:element name="certificateReturnInfo" type="dcx:contactType" minOccurs="0"/>
+            <!-- <xs:element name="usedSoftware" type="dcx:softwareListType" minOccurs="0"/>-->
+            <xs:element name="performanceSite" type="dcx:contactType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -136,23 +137,49 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="transactionContent" type="dcc:transactionContentType" />
-            <xs:element name="uniqueIdentifier" type="dcc:identificationType"/>
-            <xs:element name="clientIdentifier" type="dcc:identificationType" minOccurs="0"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="transactionContent" type="dcx:transactionContentType" />
+            <xs:element name="uniqueIdentifier" type="xs:string"/>
+            <xs:element name="clientIdentifier" type="xs:string" minOccurs="0"/>
             <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/>
             <xs:element name="issueDate" type="xs:date"/>
             <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
             <xs:element name="endPerformanceDate" type="xs:date"/>
             <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/>
             <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="performanceLocation" type="dcc:performanceLocationType"/>
-            <xs:element name="conformityResult" type="dcc:conformityResultType" minOccurs="0"/>
-            <xs:element name="previousReport" type="dcc:hashType" minOccurs="0"/>
-            <xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type"/>
-            <xs:element name="mandatoryLangCodeISO639_1" type="dcc:stringISO639Type"/>
-            <xs:element name="usedLangCodeISO639_1" type="dcc:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="dccSoftware" type="dcc:softwareListType"/>
+            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/>
+            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/>
+            <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/>
+            <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/>
+            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/>
+            <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="dccSoftware" type="dcx:softwareListType"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="columnHeadingType">
+        <xs:annotation>
+            <xs:documentation>
+                A human readable heading of one of the columns in a sections.
+                The attribute 'column' must refer to an element type of the section.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="column" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="fieldHeadingType">
+        <xs:annotation>
+            <xs:documentation>
+                A human readable heading of one of the fields in a sections.
+                The attribute 'field' must refer to an element type of the section.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="field" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="measuringSystemListType">
@@ -162,8 +189,9 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="measuringSystem" type="dcc:measuringSystemType" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="measuringSystem" type="dcx:measuringSystemType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -181,12 +209,12 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="equipmentRefs" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='xs:IDREFS'>
-                            <xs:attribute name="type" type="dcc:refTypeType" use="optional"/>
+                            <xs:attribute name="type" type="dcx:refTypeType" use="optional"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -195,14 +223,23 @@
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='xs:IDREFS'>
-                            <xs:attribute name="type" type="dcc:refTypeType" use="optional"/>
+                            <xs:attribute name="type" type="dcx:refTypeType" use="optional"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="referenceRefs" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base='xs:IDREFS'>
+                            <xs:attribute name="type" type="dcx:refTypeType" use="optional"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
             <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="operationalStatus" type="dcc:operationalStatusType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="operationalStatus" type="dcx:operationalStatusType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
@@ -231,7 +268,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="refId" type="xs:IDREFS" use="required"/>
     </xs:complexType-->
@@ -243,7 +280,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="software" type="dcc:softwareType" maxOccurs="unbounded"/>
+            <xs:element name="software" type="dcx:softwareType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -255,9 +292,9 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcc:notEmptyStringType"/>
-            <xs:element name="release" type="dcc:notEmptyStringType"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType"/>
+            <xs:element name="release" type="dcx:notEmptyStringType"/>
             <xs:element name="type" minOccurs="0">
                <xs:simpleType>
                    <xs:restriction base="xs:string">
@@ -284,8 +321,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="conformityStatus" type="dcc:conformityStatusType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="conformityStatus" type="dcx:conformityStatusType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
     </xs:complexType>
@@ -304,8 +341,9 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="equipmentItem" type="dcc:equipmentItemType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="equipmentItem" type="dcx:equipmentItemType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -316,18 +354,20 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
         <xs:element name="productName" type="xs:string" minOccurs="0"/>
         <xs:element name="productType" type="xs:string" minOccurs="0"/>
         <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
-        <xs:element name="identification" type="dcc:identificationType" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:element name="clientId" type="xs:string" minOccurs="0"/>
+        <xs:element name="manufacturerId" type="xs:string" minOccurs="0"/>
+        <xs:element name="serviceProviderId" type="xs:string" minOccurs="0"/>
         <xs:element name="calDate" type="xs:date" minOccurs="0"/>
         <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
         <xs:element name="certId" type="xs:string" minOccurs="0"/> 
         <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
         </xs:sequence>
-        <xs:attribute name="category"  type="dcc:equipmentCategoryType" use="required">
+        <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required">
                <!-- <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="item"/>
@@ -355,19 +395,19 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-    <xs:complexType name="identificationType">
+    <!--xs:complexType name="identificationType">
         <xs:annotation>
             <xs:documentation>
                 Identification: I.e. serial number or identification number.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="value" type="xs:string" minOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="issuer" type="dcc:issuerType">
+        <xs:attribute name="issuer" type="dcx:issuerType">
         </xs:attribute>
-    </xs:complexType>
+    </xs:complexType-->
 
     <xs:simpleType name="operationalStatusType">
 		<xs:restriction base="xs:string">
@@ -393,7 +433,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:simpleContent>
-            <xs:extension base="dcc:stringPerformanceLocationType">
+            <xs:extension base="dcx:stringPerformanceLocationType">
                 <xs:attribute name="id" type="xs:ID" use="optional"/>
                 <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
             </xs:extension>
@@ -444,8 +484,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="calibrationLaboratoryCode" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="contact" type="dcc:contactType"/>		
+            <xs:element name="calibrationLaboratoryCode" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="contact" type="dcx:contactType"/>		
             <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
@@ -458,8 +498,10 @@
                 List of responsible persons for a DCC.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="respPerson" type="dcc:respPersonType" maxOccurs="unbounded"/>
+        <xs:sequence>			
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="respPerson" type="dcx:respPersonType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -470,8 +512,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcc:notEmptyStringType"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType"/>
             <xs:element name="mainSigner" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
@@ -487,22 +529,23 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="setting" type="dcc:settingType" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="setting" type="dcx:settingType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="settingType">
         <xs:sequence>
-            <!--<xs:element name="countryCodeISO3166_1" type="dcc:stringISO3166Type" minOccurs="0"
+            <!--<xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>-->
-            <xs:element name="parameter" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="value" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="unit" type="dcc:notEmptyStringType" minOccurs="0"/>
-			<xs:element name="softwareInstruction" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>		
+            <xs:element name="parameter" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="value" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="unit" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="softwareInstruction" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
             <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0"/>		
         </xs:sequence>
         <xs:attribute name="settingId" type="xs:ID" use="required"/>
@@ -517,25 +560,25 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="quantityUnitDef" type="dcc:quantityUnitDefType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="quantityUnitDef" type="dcx:quantityUnitDefType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="quantityUnitDefType">
         <xs:sequence>
-            <xs:element name="quantityCode" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="unitUsed" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="functionToSIunit" type="dcc:calculateToSIunitExprType" minOccurs="0"/>
-            <xs:element name="unitSI" type="dcc:unitType" />
-            <xs:element name="externalRefs" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <!--<xs:element name="quantityUnitElement" type="dcc:anyType"/> -->
+            <xs:element name="quantityCode" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="unitUsed" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="functionToSIunit" type="dcx:calculateToSIunitExprType" minOccurs="0"/>
+            <xs:element name="unitSI" type="dcx:unitType" />
+            <xs:element name="externalRefs" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <!--<xs:element name="quantityUnitElement" type="dcx:anyType"/> -->
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="idRef" type="xs:IDREF" use="optional"/>
-        <xs:attribute name="quantityCodeSystem" type="dcc:quantityCodeSystemType" use="required"/>
+        <xs:attribute name="quantityCodeSystem" type="dcx:quantityCodeSystemType" use="required"/>
         <xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
@@ -577,12 +620,12 @@
         <xs:sequence>
             <xs:element name='calcStep' minOccurs='1' maxOccurs='unbounded'>
                 <xs:complexType>
-                    <xs:attribute name='mathOp' type="dcc:mathOperatorType" use="required"/>
-                    <xs:attribute name="param" type="dcc:decimalType" />
+                    <xs:attribute name='mathOp' type="dcx:mathOperatorType" use="required"/>
+                    <xs:attribute name="param" type="dcx:decimalType" />
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="unitSI" type="dcc:unitType" use="required"/>
+        <xs:attribute name="unitSI" type="dcx:unitType" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="mathOperatorType">
@@ -611,20 +654,20 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="statement" type="dcc:statementType" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="statement" type="dcx:statementType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="statementType">
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="externalReference" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="externalReference" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
-        <xs:attribute name="category" type="dcc:statementCategoryType" use="required"/>
+        <xs:attribute name="category" type="dcx:statementCategoryType" use="required"/>
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
@@ -656,8 +699,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="CMC" type="dcc:accreditationType" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="CMC" type="dcx:accreditationType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
     
@@ -673,12 +716,13 @@
             </xs:documentation>
         </xs:annotation>
 		<xs:sequence>
-			<xs:element name="heading" type="dcc:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+	    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
             <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationLabId" minOccurs="1"/>
             <xs:element name="accreditationNorm" minOccurs="0"/> <!--type with specific values i.e. 17025, 17035, ... -->
-            <xs:element name="accreditationApplicability" minOccurs="1" type="dcc:accreditationApplicabilityType"/>
+            <xs:element name="accreditationApplicability" minOccurs="1" type="dcx:accreditationApplicabilityType"/>
         </xs:sequence>
         <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> -->
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
@@ -699,12 +743,13 @@
 
     <xs:complexType name="contactType">
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcc:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
-            <xs:element name="location" type="dcc:locationType" minOccurs="0"/>
-            <xs:element name="contactInfo" type="dcc:contactInfo" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
+            <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcx:contactInfo" minOccurs="0"/>
             <xs:element name="url" type="xs:string" minOccurs="0"/>
-            <xs:element name="VATIN" type="dcc:contactInfo" minOccurs="0"/> <!-- e.g. VAT number -->
+            <xs:element name="VATIN" type="dcx:contactInfo" minOccurs="0"/> <!-- e.g. VAT number -->
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
@@ -712,41 +757,44 @@
 
     <xs:complexType name="locationType">
         <xs:choice maxOccurs="unbounded">
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="street" type="dcc:notEmptyStringType"/>
-            <xs:element name="streetNo" type="dcc:notEmptyStringType"/>
-            <xs:element name="postOfficeBox" type="dcc:notEmptyStringType"/>
-            <xs:element name="city" type="dcc:notEmptyStringType"/>
-            <xs:element name="district" type="dcc:notEmptyStringType"/>
-            <xs:element name="state" type="dcc:notEmptyStringType"/>
-            <xs:element name="postCode" type="dcc:notEmptyStringType"/>
-            <xs:element name="countryCode" type="dcc:stringISO3166Type"/>
-            <xs:element name="further" type="dcc:stringWithLangType"/>
-            <!-- <xs:element name="positionCoordinates" type="dcc:positionCoordinatesType"/> -->
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="street" type="dcx:notEmptyStringType"/>
+            <xs:element name="streetNo" type="dcx:notEmptyStringType"/>
+            <xs:element name="postOfficeBox" type="dcx:notEmptyStringType"/>
+            <xs:element name="city" type="dcx:notEmptyStringType"/>
+            <xs:element name="district" type="dcx:notEmptyStringType"/>
+            <xs:element name="state" type="dcx:notEmptyStringType"/>
+            <xs:element name="postCode" type="dcx:notEmptyStringType"/>
+            <xs:element name="countryCode" type="dcx:stringISO3166Type"/>
+            <xs:element name="further" type="dcx:stringWithLangType"/>
+            <!-- <xs:element name="positionCoordinates" type="dcx:positionCoordinatesType"/> -->
         </xs:choice>
     </xs:complexType>
 
     <xs:complexType name="contactInfo">
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="attPerson" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="eMail" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="phone" type="dcc:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="fax" type="dcc:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="attPerson" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="hashType">
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="referral" type="dcc:notEmptyStringType"/>
-            <xs:element name="referralID" type="dcc:notEmptyStringType"/>
-            <xs:element name="procedure" type="dcc:notEmptyStringType"/>
-            <xs:element name="value" type="dcc:notEmptyStringType"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="referral" type="dcx:notEmptyStringType"/>
+            <xs:element name="referralID" type="dcx:notEmptyStringType"/>
+            <xs:element name="procedure" type="dcx:notEmptyStringType"/>
+            <xs:element name="value" type="dcx:notEmptyStringType"/>
             <xs:element name="inValidityRange" type="xs:boolean" minOccurs="0"/>
             <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="linkedReport" type="dcc:hashType" minOccurs="0"/>            
+            <xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/>            
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
@@ -778,11 +826,11 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="conformityStatus" type="dcc:conformityStatusType" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="conformityStatus" type="dcx:conformityStatusType" minOccurs="0"/>
             <xs:element name="conformityStatusRef" type="xs:IDREF" minOccurs="0"/>
-            <xs:element name="column" type="dcc:columnType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="column" type="dcx:columnType" minOccurs="0" maxOccurs="unbounded"/>
             <!-- <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/> -->
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
@@ -791,7 +839,7 @@
 		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
 		<xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>		
-        <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
+                <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
     </xs:complexType>
 
     <xs:complexType name="measurementResultsType">
@@ -801,18 +849,18 @@
         </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0"/>
             <xs:element name="calibrationResult"  maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        <xs:extension base='dcx:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
                 <xs:unique name="column">
-                    <xs:selector xpath="dcc:column"/>
+                    <xs:selector xpath="dcx:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
@@ -824,13 +872,13 @@
             <xs:element name="dataFittingResult"  maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        <xs:extension base='dcx:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
                 <xs:unique name="dataFittingColumn">
-                    <xs:selector xpath="dcc:column"/>
+                    <xs:selector xpath="dcx:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
@@ -842,13 +890,13 @@
             <xs:element name="calibrationCurve"  maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="required"/>
+                        <xs:extension base='dcx:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
                 <xs:unique name="calibrationCurveColumn">
-                    <xs:selector xpath="dcc:column"/>
+                    <xs:selector xpath="dcx:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
@@ -860,18 +908,18 @@
             <xs:element name="measurementSeries" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base='dcc:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcc:serviceCategoryType" use="optional"/>
+                        <xs:extension base='dcx:tableType'>
+                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
                 <xs:unique name="measSerDataColumn">
-                    <xs:selector xpath="dcc:column"/>
+                    <xs:selector xpath="dcx:column"/>
                     <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
                     <xs:field xpath="@unit"/>
-					<xs:field xpath="@quantityUnitDefRef"/>
+                    <xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="*/@dataCategory"/>
                 </xs:unique>
             </xs:element>
@@ -886,48 +934,48 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <!-- <xs:element name="unit" type="dcc:unitType" minOccurs="0"/> -->
-            <!--xs:element name="dataList" type="dcc:dataListType" minOccurs='0' maxOccurs="unbounded">
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- <xs:element name="unit" type="dcx:unitType" minOccurs="0"/> -->
+            <!--xs:element name="dataList" type="dcx:dataListType" minOccurs='0' maxOccurs="unbounded">
                 <xs:unique name="idx0">
-                <xs:selector xpath="dcc:*"/>
+                <xs:selector xpath="dcx:*"/>
                 <xs:field xpath="@idx"/>
                 </xs:unique>
             </xs:element-->
             <xs:choice>
-                <xs:element name="value" type="dcc:valueType" />  <!-- used for measured quantities -->
-                <xs:element name="conventionalValue" type="dcc:conventionalValueType" />  <!-- used for measured quantities -->
-                <xs:element name="targetValue" type="dcc:targetValueType"/> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
-                <xs:element name="expandedUncertainty"  type="dcc:expandedUncertaintyType"/> 
-                <xs:element name="repeatability" type="dcc:repeatabilityType" /> 
-                <xs:element name="correction" type="dcc:correctionType" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
-                <xs:element name="conformity" type="dcc:conformityType"/>   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
-                <xs:element name="correlation" type="dcc:correlationType" /> 
-                <xs:element name="rowTag" type="dcc:rowTagType" /> 
-                <xs:element name="usedReferenceRef" type="dcc:usedReferenceRefType" />
-                <xs:element name="methodRef" type="dcc:methodRefType" />
-                <xs:element name="exceptionRef" type="dcc:exceptionRefType" /> 
-                <xs:element name="traceabilityRef" type="dcc:traceabilityRefType" /> 
-                <xs:element name="attentionRef" type="dcc:attentionRefType" /> 
-                <xs:element name="commentRef" type="dcc:commentRefType" /> 
-                <xs:element name="decisionRuleRef" type="dcc:decisionRuleRefType" /> 
-                <xs:element name="accreditationExceptionRef" type="dcc:accreditationExceptionRefType" /> 
-                <xs:element name="normRef" type="dcc:normRefType" /> 
-                <xs:element name="measurementSeriesRef" type="dcc:measurementSeriesRefType" /> 
-                <xs:element name="uncertaintyCoverageFactor_k" type="dcc:uncertaintyCoverageFactor_kType" />
-                <xs:element name="uncertaintyCoverageProbability" type="dcc:uncertaintyCoverageProbabilityType" />
-                <xs:element name="toleranceLimitLower" type="dcc:toleranceLimitLowerType" />
-                <xs:element name="toleranceLimitUpper" type="dcc:toleranceLimitUpperType" />
-                <xs:element name="acceptanceLimitLower" type="dcc:acceptanceLimitLowerType" />
-                <xs:element name="acceptanceLimitUpper" type="dcc:acceptanceLimitUpperType" />
-                <xs:element name="approachToTarget" type="dcc:approachToTargetType" />
-                <xs:element name="other" type="dcc:otherType" />  
+                <xs:element name="value" type="dcx:valueType" />  <!-- used for measured quantities -->
+                <xs:element name="conventionalValue" type="dcx:conventionalValueType" />  <!-- used for measured quantities -->
+                <xs:element name="targetValue" type="dcx:targetValueType"/> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
+                <xs:element name="expandedUncertainty"  type="dcx:expandedUncertaintyType"/> 
+                <xs:element name="repeatability" type="dcx:repeatabilityType" /> 
+                <xs:element name="correction" type="dcx:correctionType" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
+                <xs:element name="conformity" type="dcx:conformityType"/>   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
+                <xs:element name="correlation" type="dcx:correlationType" /> 
+                <xs:element name="rowTag" type="dcx:rowTagType" /> 
+                <xs:element name="usedReferenceRef" type="dcx:usedReferenceRefType" />
+                <xs:element name="methodRef" type="dcx:methodRefType" />
+                <xs:element name="exceptionRef" type="dcx:exceptionRefType" /> 
+                <xs:element name="traceabilityRef" type="dcx:traceabilityRefType" /> 
+                <xs:element name="attentionRef" type="dcx:attentionRefType" /> 
+                <xs:element name="commentRef" type="dcx:commentRefType" /> 
+                <xs:element name="decisionRuleRef" type="dcx:decisionRuleRefType" /> 
+                <xs:element name="accreditationExceptionRef" type="dcx:accreditationExceptionRefType" /> 
+                <xs:element name="normRef" type="dcx:normRefType" /> 
+                <xs:element name="measurementSeriesRef" type="dcx:measurementSeriesRefType" /> 
+                <xs:element name="uncertaintyCoverageFactor_k" type="dcx:uncertaintyCoverageFactor_kType" />
+                <xs:element name="uncertaintyCoverageProbability" type="dcx:uncertaintyCoverageProbabilityType" />
+                <xs:element name="toleranceLimitLower" type="dcx:toleranceLimitLowerType" />
+                <xs:element name="toleranceLimitUpper" type="dcx:toleranceLimitUpperType" />
+                <xs:element name="acceptanceLimitLower" type="dcx:acceptanceLimitLowerType" />
+                <xs:element name="acceptanceLimitUpper" type="dcx:acceptanceLimitUpperType" />
+                <xs:element name="approachToTarget" type="dcx:approachToTargetType" />
+                <xs:element name="other" type="dcx:otherType" />  
             </xs:choice>
         </xs:sequence>
-        <xs:attribute name="scope" type="dcc:scopeType" use="required"/>
-        <xs:attribute name="dataCategoryRef" type="dcc:dataCategoryType" use="required"/>
-        <xs:attribute name="quantity" type="dcc:quantityType" use="required"/>
-        <xs:attribute name="unit" type="dcc:unitType" use="required"/>
+        <xs:attribute name="scope" type="dcx:scopeType" use="required"/>
+        <xs:attribute name="dataCategoryRef" type="dcx:dataCategoryType" use="required"/>
+        <xs:attribute name="quantity" type="dcx:quantityType" use="required"/>
+        <xs:attribute name="unit" type="dcx:unitType" use="required"/>
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
 		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
@@ -941,7 +989,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="value"/>
             </xs:extension>
         </xs:complexContent>
@@ -954,7 +1002,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="conventionalValue"/>
             </xs:extension>
         </xs:complexContent>
@@ -967,7 +1015,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
             </xs:extension>
         </xs:complexContent>
@@ -981,7 +1029,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="expandedUncertainty"/>
             </xs:extension>
         </xs:complexContent>
@@ -995,7 +1043,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="correlation"/>
             </xs:extension>
         </xs:complexContent>
@@ -1008,7 +1056,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="targetValue"/>
             </xs:extension>
         </xs:complexContent>
@@ -1022,7 +1070,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="repeatability"/>
             </xs:extension>
         </xs:complexContent>
@@ -1039,7 +1087,7 @@
             <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
                 <xs:complexType>
                     <xs:simpleContent>
-                        <xs:extension base='dcc:conformityStatusType'>
+                        <xs:extension base='dcx:conformityStatusType'>
                             <xs:attribute name='idx' type='xs:int'/>
                         </xs:extension>
                     </xs:simpleContent>
@@ -1057,7 +1105,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:stringDataType'>
+            <xs:extension base='dcx:stringDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="rowTag"/>
             </xs:extension>
         </xs:complexContent>
@@ -1071,7 +1119,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="usedReferenceRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1084,7 +1132,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="methoedRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1097,7 +1145,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="exceptionRefType"/>
             </xs:extension>
         </xs:complexContent>
@@ -1111,7 +1159,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="traceabilityRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1124,7 +1172,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="attentionRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1137,7 +1185,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="commentRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1150,7 +1198,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="decisionRuleRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1163,7 +1211,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="accreditationExceptionRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1176,7 +1224,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="normRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1189,7 +1237,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:refDataType'>
+            <xs:extension base='dcx:refDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="measurementSeriesRef"/>
             </xs:extension>
         </xs:complexContent>
@@ -1202,7 +1250,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
             </xs:extension>
         </xs:complexContent>
@@ -1215,7 +1263,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="uncertaintyCoverageFactor_k"/>
             </xs:extension>
         </xs:complexContent>
@@ -1228,7 +1276,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimitLower"/>
             </xs:extension>
         </xs:complexContent>
@@ -1241,7 +1289,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="toleranceLimiUpper"/>
             </xs:extension>
         </xs:complexContent>
@@ -1254,7 +1302,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitLower"/>
             </xs:extension>
         </xs:complexContent>
@@ -1268,7 +1316,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:realDataType'>
+            <xs:extension base='dcx:realDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="acceptanceLimitUpper"/>
             </xs:extension>
         </xs:complexContent>
@@ -1285,7 +1333,7 @@
             <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
                 <xs:complexType>
                     <xs:simpleContent>
-                        <xs:extension base='dcc:approachToTargetRestrictType'>
+                        <xs:extension base='dcx:approachToTargetRestrictType'>
                             <xs:attribute name='idx' type='xs:int'/>
                         </xs:extension>
                     </xs:simpleContent>
@@ -1302,7 +1350,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base='dcc:stringDataType'>
+            <xs:extension base='dcx:stringDataType'>
                 <xs:attribute name="dataCategory" type="xs:string" fixed="other"/>
             </xs:extension>
         </xs:complexContent>
@@ -1316,7 +1364,7 @@
             <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
                 <xs:complexType>
                     <xs:simpleContent>
-                        <xs:extension base='dcc:decimalType'>
+                        <xs:extension base='dcx:decimalType'>
                             <xs:attribute name='idx' type='xs:int'/>
                         </xs:extension>
                     </xs:simpleContent>
@@ -1330,7 +1378,7 @@
             <xs:element name='row' minOccurs='0' maxOccurs='unbounded'>
                 <xs:complexType>
                     <xs:simpleContent>
-                        <xs:extension base='dcc:notEmptyStringType'>
+                        <xs:extension base='dcx:notEmptyStringType'>
                             <xs:attribute name='idx' type='xs:int'/>
                         </xs:extension>
                     </xs:simpleContent>
@@ -1888,7 +1936,7 @@
         </xs:annotation>
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="lang" type="dcc:stringISO639Type" use="required"/>
+                <xs:attribute name="lang" type="dcx:stringISO639Type" use="required"/>
                 <xs:attribute name="id" type="xs:ID" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
@@ -1901,8 +1949,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-			<xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="embeddedFile" type="dcc:embeddedFileType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="embeddedFile" type="dcx:embeddedFileType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
@@ -1915,9 +1963,9 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fileExtension" type="dcc:notEmptyStringType"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fileExtension" type="dcx:notEmptyStringType"/>
             <xs:element name="fileContent" type="xs:base64Binary"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>

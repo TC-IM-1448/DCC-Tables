@@ -647,4 +647,4 @@ if False:
 
 #%%
 if __name__ == "__main__":
-    validate( "SKH_10112_2.xml", "dcc.xsd")
+    validate( "SKH.xml", "dcc.xsd")
