@@ -174,37 +174,44 @@
         </dcc:statement>
     </dcc:statements>
     <dcc:equipment>
+        <dcc:equipmentColumnHeadings>
+                <dcc:heading lang="en" element="manufacturer">Manufacturer</dcc:heading>
+                <dcc:heading lang="da" element="manufacturer">Fabrikat</dcc:heading>
+            <dcc:productNameHeading>
+                <dcc:heading lang="en">Product name</dcc:heading>
+                <dcc:heading lang="da">Produktnavn</dcc:heading>
+            </dcc:productNameHeading>
+            <dcc:productTypeHeading>
+                <dcc:heading lang="en">Product type</dcc:heading>
+                <dcc:heading lang="da">Produkttype</dcc:heading>
+            </dcc:productTypeHeading>
+            <dcc:clientIdentificationHeading>
+                <dcc:heading lang="en">Customer ID</dcc:heading>
+                <dcc:heading lang="da">Kundens ID</dcc:heading>
+            </dcc:clientIdentificationHeading>
+            <dcc:manufacturerIdentificationHeading>
+                <dcc:heading lang="en">Serial number</dcc:heading>
+                <dcc:heading lang="da">Serienummer</dcc:heading>
+            </dcc:manufacturerIdentificationHeading>
+            <dcc:serviceProviderIdentificationHeading>
+                <dcc:heading lang="en">DFM number</dcc:heading>
+                <dcc:heading lang="da">DFMnummer</dcc:heading>
+            </dcc:serviceProviderIdentificationHeading>
+        </dcc:equipmentColumnHeadings>
         <dcc:equipmentItem category="item" id="item1">
             <dcc:heading lang="en">Pipette with 12 channels 50-1200 µm</dcc:heading>
             <dcc:heading lang="da">Pipette med 12 kanaler 50-1200 µm</dcc:heading>
             <dcc:manufacturer>Biohit</dcc:manufacturer>
             <dcc:productName>Picus</dcc:productName>
-            <dcc:identification issuer="client">
-                <dcc:heading lang="en">Customer iD</dcc:heading>
-                <dcc:heading lang="da">Kundens ID</dcc:heading>
-                <dcc:value>ID107</dcc:value>
-            </dcc:identification>
-            <dcc:identification issuer="manufacturer">
-                <dcc:heading lang="en">Serial number</dcc:heading>
-                <dcc:heading lang="da">Serienummer</dcc:heading>
-                <dcc:value>12008522</dcc:value>
-            </dcc:identification>
+            <dcc:clientIdentification> ID107 </dcc:clientIdentification>
+            <dcc:manufacturerIdentification> 12008522 </dcc:manufactuerIdentification>
         </dcc:equipmentItem>
         <dcc:equipmentItem category="item" id="item2">
             <dcc:heading lang="en">Pipette tip (1200 µl)</dcc:heading>
             <dcc:heading lang="da">Pipettespids</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
             <dcc:productName>Optifit</dcc:productName>
-            <dcc:identification issuer="client">
-                <dcc:heading lang="en">-</dcc:heading>
-                <dcc:heading lang="da">-</dcc:heading>
-                <dcc:value>-</dcc:value>
-            </dcc:identification>
-            <dcc:identification issuer="manufacturer">
-                <dcc:heading lang="en">Lot number</dcc:heading>
-                <dcc:heading lang="da">Lot-nummer</dcc:heading>
-                <dcc:value>ss23987</dcc:value>
-            </dcc:identification>
+            <dcc:manufacturerIdentification> ss23987 </dcc:manufacturerIdentification>
         </dcc:equipmentItem>
         <dcc:equipmentItem category="reference" id="ref1">
             <dcc:heading lang="en">Balance. 
@@ -214,16 +221,7 @@
                 Opløsning:  0,00001 g.  
                 Kalibreret: 2021-11-25</dcc:heading>
             <dcc:manufacturer>Satorius</dcc:manufacturer>
-            <dcc:identification issuer="serviceProvider">
-                <dcc:heading lang="en">Laboratory's ID for the used reference</dcc:heading>
-                <dcc:heading lang="da">Laboratoriets ID nummer</dcc:heading>
-                <dcc:value>ID148</dcc:value>
-            </dcc:identification>
-            <dcc:identification issuer="manufacturer">
-                <dcc:heading lang="en">-</dcc:heading>
-                <dcc:heading lang="da">-</dcc:heading>
-                <dcc:value>-</dcc:value>
-            </dcc:identification>
+            <dcc:serviceProviderIdentification> ID148 </dcc:serviceProviderIdentification>
         </dcc:equipmentItem>
     </dcc:equipment>
     <dcc:settings>

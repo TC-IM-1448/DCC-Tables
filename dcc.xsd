@@ -170,10 +170,14 @@
     <xs:complexType name="measuringSystemType">
         <xs:annotation>
             <xs:documentation>
-                set of one or more measuring instruments and often other components, assembled and
-adapted to give information used to generate measured values within specified intervals for
-quantities of specified kinds
-                In the scope of DCC it is a list of references to elements of measuringInstrumentType and instrumentSettingType. Each table in the measutrementResults section must refer to exactely one element of measuringSystemType.
+                set of one or more measuring instruments and often other
+                components, assembled and adapted to give information used to
+                generate measured values within specified intervals for
+                quantities of specified kinds In the scope of
+                DCC it is a list of references to elements of
+                measuringInstrumentType and instrumentSettingType. Each table in
+                the measutrementResults section must refer to exactely one
+                element of measuringSystemType.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -186,7 +190,7 @@ quantities of specified kinds
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
-			</xs:element>
+            </xs:element>
             <xs:element name="settingRefs" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:simpleContent>
@@ -194,8 +198,8 @@ quantities of specified kinds
                             <xs:attribute name="type" type="dcc:refTypeType" use="optional"/>
                         </xs:extension>
                     </xs:simpleContent>
-                </xs:complexType>            
-			</xs:element>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="operationalStatus" type="dcc:operationalStatusType" minOccurs="0" maxOccurs="1"/>
             <xs:element name="body" type="dcc:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
