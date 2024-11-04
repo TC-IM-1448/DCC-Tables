@@ -22,6 +22,11 @@
         </xs:documentation>
     </xs:annotation>
 
+
+<!--    =============================================================================
+                KEYs and KEYREFs for IDREF LOGICs 
+        ============================================================================= -->
+
     <xs:element name="digitalCalibrationCertificate" type="dcc:digitalCalibrationCertificateType">
     <xs:key name="heading">
         <xs:selector xpath='dcc:statements/dcc:heading'/>
@@ -74,6 +79,11 @@
     </xs:keyref>
     </xs:element>
 
+<!--    =============================================================================
+                            ROOT ELEMENT 
+        ============================================================================= -->
+
+
     <xs:complexType name="digitalCalibrationCertificateType">
         <xs:annotation>
             <xs:documentation>
@@ -107,6 +117,12 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
+
+
+<!--=============================================================================
+                ADMINISTRATIVE DATA
+    ============================================================================= -->
+
 
     <xs:complexType name="administrativeDataType">
         <xs:annotation>
@@ -748,9 +764,17 @@ quantities of specified kinds
     </xs:complexType>
 
 
+
+<!--    =============================================================================
+                DATA TABLE & DATA COLUMN DEFINITIONS 
+        ============================================================================= -->
+
 	<xs:simpleType name="tableCategoryType">
         <xs:annotation>
-            <xs:documentation>
+            <xs:documentation> 
+                This is only used for declaring the restrictions for a user-interface. 
+                This should allways match the elements in measurementResultsType. 
+                It is recommended that tableCategoryType is eliminated.   
             </xs:documentation>
         </xs:annotation>
 		<xs:restriction base="xs:string">
@@ -760,12 +784,6 @@ quantities of specified kinds
 			<xs:enumeration value="measurementSeries" /> 
 		</xs:restriction>
     </xs:simpleType>
-
-
-<!--    ============================================================
-                DATA TABLE & DATA COLUMN DEFINITIONS 
-        ============================================================ -->
-
 
     <xs:complexType name="tableType">
         <xs:annotation>
@@ -924,7 +942,7 @@ quantities of specified kinds
         <xs:attribute name="dataCategoryRef" type="dcc:dataCategoryType" use="required"/>
         <xs:attribute name="quantity" type="dcc:quantityType" use="required"/>
         <xs:attribute name="unit" type="dcc:unitType" use="required"/>
-		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
+		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="quantityUnitDefRef_notUsed"/>
 		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
     
@@ -1400,6 +1418,7 @@ quantities of specified kinds
             <xs:enumeration value="conditionalFail"/>
             <xs:enumeration value="noPass"/>
             <xs:enumeration value="noFail"/>
+            <xs:enumeration value="excludedByClientRequest"/>
         </xs:restriction>
     </xs:simpleType>
     

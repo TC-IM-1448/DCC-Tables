@@ -309,15 +309,6 @@
                     <dcc:row idx="3">1200</dcc:row>
                 </dcc:value>
             </dcc:column>
-            <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL" scope="indication">
-                <dcc:heading lang="en">Item indication</dcc:heading>
-                <dcc:heading lang="da">Emnets visning</dcc:heading>
-                <dcc:value>
-                    <dcc:row idx="1">120</dcc:row> 
-                    <dcc:row idx="2">600</dcc:row> 
-                    <dcc:row idx="3">1200</dcc:row>
-                </dcc:value>
-            </dcc:column>
             <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="-" unit="µL">
                 <dcc:heading lang="en">Approach to target (a: from above, b: from below)</dcc:heading>
                 <dcc:heading lang="da">Tilnærmelse til målværdi (oppefra [a], nedefra [b])</dcc:heading>
@@ -366,11 +357,11 @@
             <dcc:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="µL">
                 <dcc:heading lang="en">Repeatability</dcc:heading>
                 <dcc:heading lang="da">Repeterbarhed</dcc:heading>
-                    <dcc:repeatability>
-                        <dcc:row idx="1">0.13</dcc:row> 
-                        <dcc:row idx="2">0.24 </dcc:row>
-                        <dcc:row idx="3">0.48</dcc:row>
-                    </dcc:repeatability>
+                <dcc:repeatability>
+                    <dcc:row idx="1">0.13</dcc:row> 
+                    <dcc:row idx="2">0.24 </dcc:row>
+                    <dcc:row idx="3">0.48</dcc:row>
+                </dcc:repeatability>
             </dcc:column>
 
             <dcc:column  dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="%">
