@@ -118,6 +118,8 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="coreData" type="dcx:coreDataType"/>
+            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
+            <xs:element name="usedSoftware" type="dcx:softwareListType"/> <!--complex-->
             <xs:element name="serviceProvider" type="dcx:contactType"/>
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
             <xs:element name="respPersons" type="dcx:respPersonListType"/>
@@ -125,7 +127,6 @@
             <xs:element name="equipmentReturnInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="clientBillingInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="certificateReturnInfo" type="dcx:contactType" minOccurs="0"/>
-            <!-- <xs:element name="usedSoftware" type="dcx:softwareListType" minOccurs="0"/>-->
             <xs:element name="performanceSite" type="dcx:contactType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -134,26 +135,25 @@
         <xs:annotation>
             <xs:documentation>
                 Important metadata for the DCC containing the global unique identifier and other identifications.
+                Core data is a selection of simple fields. A heading in several languages may be connected to each field using the fieldHeadingType.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="transactionContent" type="dcx:transactionContentType" />
-            <xs:element name="uniqueIdentifier" type="xs:string"/>
-            <xs:element name="clientIdentifier" type="xs:string" minOccurs="0"/>
-            <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/>
-            <xs:element name="issueDate" type="xs:date"/>
-            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="endPerformanceDate" type="xs:date"/>
-            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/>
-            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/>
-            <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/>
-            <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/>
-            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/>
-            <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="dccSoftware" type="dcx:softwareListType"/>
+            <xs:element name="transactionContent" type="dcx:transactionContentType" /> <!--simple-->
+            <xs:element name="uniqueIdentifier" type="xs:string"/> <!--simple-->
+            <xs:element name="clientIdentifier" type="xs:string" minOccurs="0"/> <!--simple-->
+            <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/> <!--simple-->
+            <xs:element name="issueDate" type="xs:date"/> <!--simple-->
+            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/> <!--simple-->
+            <xs:element name="endPerformanceDate" type="xs:date"/> <!--simple-->
+            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> <!--simple-->
+            <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> <!--simple-->
+            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--simple or complex -->
+            <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/> <!--complex-->
+            <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/> <!--simple-->
+            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
+            <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
         </xs:sequence>
     </xs:complexType>
 
@@ -207,6 +207,7 @@
                 measuringInstrumentType and instrumentSettingType. Each table in
                 the measutrementResults section must refer to exactely one
                 element of measuringSystemType.
+                Measuring system is a colection of simple fields. A number of measuring systems can be organized in a table with column headings defined by the measuringSystemListType.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -318,15 +319,23 @@
     <xs:complexType name="conformityResultType">
         <xs:annotation>
             <xs:documentation>
-                This element is a list of measuring instruments.
+                This element is a list of conformity statements for calibrated measuring instruments.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="conformityStatus" type="dcx:conformityStatusType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="itemConformityStatus" type="dcx:itemConformityType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
     </xs:complexType>
+
+    <xs:complexType name="itemConformityType"> 
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" maxOccurs="unbounded"/>
+            <xs:element name="conformityStatus" type="dcx:conformityStatusType" />
+            <xs:element name="equipmentRef"  type="xs:IDREF" />
+        </xs:sequence>
+    </xs:complexType> 
 
     <xs:simpleType name="notEmptyStringType">
         <xs:restriction base="xs:string">
@@ -478,7 +487,7 @@
         </xs:restriction>
     </xs:simpleType>
     
-    <xs:complexType name="calibrationLaboratoryType">
+    <!--xs:complexType name="calibrationLaboratoryType">
         <xs:annotation>
             <xs:documentation>
                 Information about the calibration laboratory.
@@ -491,7 +500,7 @@
             <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
         </xs:sequence>
-    </xs:complexType>
+    </xs:complexType-->
 
     <xs:complexType name="respPersonListType">
         <xs:annotation>
@@ -532,12 +541,18 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <!--xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/-->
             <xs:element name="setting" type="dcx:settingType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="settingType">
+        <xs:annotation>
+            <xs:documentation>
+                A setting is a selection of simple fields and attributes.
+                A number of settings can be organized as rows in a table with columnHeadings defined by the settingListType.
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <!--<xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>-->
@@ -717,7 +732,7 @@
 
             </xs:documentation>
         </xs:annotation>
-		<xs:sequence>
+	<xs:sequence>
 	    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="accreditationCountry" minOccurs="1"/>
@@ -748,10 +763,10 @@
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="name" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
-            <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
-            <xs:element name="contactInfo" type="dcx:contactInfo" minOccurs="0"/>
             <xs:element name="url" type="xs:string" minOccurs="0"/>
             <xs:element name="VATIN" type="dcx:contactInfo" minOccurs="0"/> <!-- e.g. VAT number -->
+            <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcx:contactInfo" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
@@ -796,7 +811,8 @@
             <xs:element name="value" type="dcx:notEmptyStringType"/>
             <xs:element name="inValidityRange" type="xs:boolean" minOccurs="0"/>
             <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/>            
+            <!--xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/-->            
+            <xs:element name="linkedReport" type="dcx:refTypeType" minOccurs="0"/>            
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
