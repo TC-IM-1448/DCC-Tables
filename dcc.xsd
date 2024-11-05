@@ -118,7 +118,6 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="coreData" type="dcx:coreDataType"/>
-            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
             <xs:element name="usedSoftware" type="dcx:softwareListType"/> <!--complex-->
             <xs:element name="serviceProvider" type="dcx:contactType"/>
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
@@ -149,11 +148,12 @@
             <xs:element name="endPerformanceDate" type="xs:date"/> <!--simple-->
             <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> <!--simple-->
             <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--simple or complex -->
+            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--value with attribute -->
             <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/> <!--complex-->
             <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/> <!--simple-->
             <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
             <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
+            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
         </xs:sequence>
     </xs:complexType>
 
@@ -282,6 +282,8 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="software" type="dcx:softwareType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
