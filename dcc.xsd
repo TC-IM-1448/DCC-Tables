@@ -118,10 +118,10 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="coreData" type="dcx:coreDataType"/>
-            <xs:element name="usedSoftware" type="dcx:softwareListType"/> <!--complex-->
+            <xs:element name="dcxSoftware" type="dcx:softwareType"/> <!--complex-->
             <xs:element name="serviceProvider" type="dcx:contactType"/>
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
-            <xs:element name="respPersons" type="dcx:respPersonListType"/>
+            <!--xs:element name="respPersons" type="dcx:respPersonListType"/-->
             <xs:element name="client" type="dcx:contactType"/> 
             <xs:element name="equipmentReturnInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="clientBillingInfo" type="dcx:contactType" minOccurs="0"/>
@@ -275,7 +275,7 @@
         <xs:attribute name="refId" type="xs:IDREFS" use="required"/>
     </xs:complexType-->
 
-    <xs:complexType name="softwareListType">
+    <!--xs:complexType name="softwareListType">
         <xs:annotation>
             <xs:documentation>
                 A list of software elements.
@@ -286,7 +286,7 @@
             <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="software" type="dcx:softwareType" maxOccurs="unbounded"/>
         </xs:sequence>
-    </xs:complexType>
+    </xs:complexType-->
 
 
     <xs:complexType name="softwareType">
@@ -317,27 +317,18 @@
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
 
-    
     <xs:complexType name="conformityResultType">
         <xs:annotation>
             <xs:documentation>
-                This element is a list of conformity statements for calibrated measuring instruments.
+                The conformityResultType is for the overall conformity of all devices measured in the report. Areference to a conformity statement explaining the criteria of the assessment is required.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="itemConformityStatus" type="dcx:itemConformityType" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
+        <xs:simpleContent>
+            <xs:extension base="dcx:conformityStatusType">
+                <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
-
-    <xs:complexType name="itemConformityType"> 
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" maxOccurs="unbounded"/>
-            <xs:element name="conformityStatus" type="dcx:conformityStatusType" />
-            <xs:element name="equipmentRef"  type="xs:IDREF" />
-        </xs:sequence>
-    </xs:complexType> 
 
     <xs:simpleType name="notEmptyStringType">
         <xs:restriction base="xs:string">
@@ -504,35 +495,6 @@
         </xs:sequence>
     </xs:complexType-->
 
-    <xs:complexType name="respPersonListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of responsible persons for a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>			
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="respPerson" type="dcx:respPersonType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="respPersonType">
-        <xs:annotation>
-            <xs:documentation>
-                A person responsible for a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType"/>
-            <xs:element name="mainSigner" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
 
     <xs:complexType name="settingListType">
         <xs:annotation>
@@ -766,9 +728,11 @@
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="name" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
             <xs:element name="url" type="xs:string" minOccurs="0"/>
-            <xs:element name="VATIN" type="dcx:contactInfo" minOccurs="0"/> <!-- e.g. VAT number -->
+            <xs:element name="VATIN" type="dcx:contactInfoType" minOccurs="0"/> <!-- e.g. VAT number -->
             <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
-            <xs:element name="contactInfo" type="dcx:contactInfo" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
+            <xs:element name="authorizingPerson" type="dcx:respPersonType" minOccurs="0"/>
+            <xs:element name="coSigner" type="dcx:respPersonType" minOccurs="0" maxOccurs='unbounded'/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
@@ -791,7 +755,7 @@
         </xs:choice>
     </xs:complexType>
 
-    <xs:complexType name="contactInfo">
+    <xs:complexType name="contactInfoType">
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
@@ -802,6 +766,37 @@
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
+
+    <xs:complexType name="respPersonType">
+        <xs:annotation>
+            <xs:documentation>
+                A person responsible for a DCC.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType"/>
+            <xs:element name="mainSigner" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="respPersonListType">
+        <xs:annotation>
+            <xs:documentation>
+                List of responsible persons for a DCC.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>			
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="respPerson" type="dcx:respPersonType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
 
     <xs:complexType name="hashType">
         <xs:sequence>
