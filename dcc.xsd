@@ -122,6 +122,7 @@
             <xs:element name="serviceProvider" type="dcx:contactType"/>
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
             <!--xs:element name="respPersons" type="dcx:respPersonListType"/-->
+            <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/> <!--complex-->
             <xs:element name="client" type="dcx:contactType"/> 
             <xs:element name="equipmentReturnInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="clientBillingInfo" type="dcx:contactType" minOccurs="0"/>
@@ -149,7 +150,6 @@
             <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> <!--simple-->
             <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> <!--simple-->
             <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--value with attribute -->
-            <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/> <!--complex-->
             <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/> <!--simple-->
             <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
             <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
@@ -499,7 +499,7 @@
     <xs:complexType name="settingListType">
         <xs:annotation>
             <xs:documentation>
-                List of settings attached to a DCC.
+                This type is a tabular of elements of settingType. For each field in the settingType a common columnHeading can be given here.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -513,19 +513,20 @@
     <xs:complexType name="settingType">
         <xs:annotation>
             <xs:documentation>
-                A setting is a selection of simple fields and attributes.
-                A number of settings can be organized as rows in a table with columnHeadings defined by the settingListType.
+                A setting is a list of simple fields without field headings.
+                A number of settings can be organized as rows in a tabular with columnHeadings defined by the settingListType.
+                Each row may have a descriptive heading and body in multiple languages.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <!--<xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type" minOccurs="0"
                         maxOccurs="unbounded"/>-->
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
             <xs:element name="parameter" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="value" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="unit" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="softwareInstruction" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
             <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0"/>		
         </xs:sequence>
         <xs:attribute name="settingId" type="xs:ID" use="required"/>
@@ -631,7 +632,7 @@
     <xs:complexType name="statementListType">
         <xs:annotation>
             <xs:documentation>
-                List of statements attached to a DCC.
+                This type is a tabular of elements of statementType. For each field in the statementType a common columnHeading can be given here.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -642,10 +643,15 @@
     </xs:complexType>
 
     <xs:complexType name="statementType">
+            <xs:documentation>
+                A statement is a list of simple fields without field headings.
+                A number of statements can be organized as rows in a tabular with columnHeadings defined by the settingListType.
+                Each row may have a descriptive heading and body in multiple languages.
+            </xs:documentation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="externalReference" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="externalReference" type="dcx:notEmptyStringType" minOccurs="0" />
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="category" type="dcx:statementCategoryType" use="required"/>
@@ -688,6 +694,11 @@
     <xs:complexType name="accreditationType">
         <xs:annotation>
             <xs:documentation>
+                This type is a list of simple fields with field headings.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:annotation>
+            <xs:documentation>
                 Approved Calibration and Measurement Capability (CMC) applicable to results in this DCC.
                 Mandatotry fields: 
                 Name and country of the accreditation body
@@ -723,6 +734,11 @@
     </xs:simpleType>
 
     <xs:complexType name="contactType">
+        <xs:annotation>
+            <xs:documentation>
+                This type contain fields with field headings as well as sub-elements containing additional fieds..
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
@@ -739,6 +755,11 @@
     </xs:complexType>
 
     <xs:complexType name="locationType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+            </xs:documentation>
+        </xs:annotation>
         <xs:choice maxOccurs="unbounded">
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
@@ -756,6 +777,11 @@
     </xs:complexType>
 
     <xs:complexType name="contactInfoType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
@@ -770,13 +796,17 @@
     <xs:complexType name="respPersonType">
         <xs:annotation>
             <xs:documentation>
-                A person responsible for a DCC.
+                This type is a list of simple fields with field headings
+                A person responsible for a DCX.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="name" type="dcx:notEmptyStringType"/>
-            <xs:element name="mainSigner" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
             <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
@@ -784,21 +814,13 @@
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="respPersonListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of responsible persons for a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>			
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="respPerson" type="dcx:respPersonType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
 
     <xs:complexType name="hashType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+            </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
