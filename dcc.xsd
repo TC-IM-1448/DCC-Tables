@@ -108,6 +108,24 @@
         </xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="stringWithLangType">
+        <xs:annotation>
+            <xs:documentation>
+                A string element with an additional lang attribute for localization.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="lang" type="dcx:stringISO639Type" use="required"/>
+                <xs:attribute name="id" type="xs:ID" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+<!--    ============================================================
+                 ADMINISTRATIVE DATA
+        ============================================================ -->
+
     <xs:complexType name="administrativeDataType">
         <xs:annotation>
             <xs:documentation>
@@ -130,6 +148,8 @@
             <xs:element name="performanceSite" type="dcx:contactType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
+    <!--    ================= coreData ================================= -->
     
     <xs:complexType name="coreDataType">
         <xs:annotation>
@@ -157,18 +177,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="columnHeadingType">
-        <xs:annotation>
-            <xs:documentation>
-                A human readable heading of one of the columns in a sections.
-                The attribute 'column' must refer to an element type of the section.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:attribute name="column" type="xs:string" use="required"/>
-    </xs:complexType>
 
     <xs:complexType name="fieldHeadingType">
         <xs:annotation>
@@ -183,10 +191,443 @@
         <xs:attribute name="field" type="xs:string" use="required"/>
     </xs:complexType>
 
+    <xs:simpleType name="transactionContentType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="digitalCalibrationCertificate"/>
+            <xs:enumeration value="digitalTestReport"/>
+            <xs:enumeration value="digitalReportOfSampling"/>
+            <xs:enumeration value="digitalMeasurementReport"/>
+            <xs:enumeration value="digitalExaminationCertificate"/>
+            <xs:enumeration value="digitalConformityCertificate"/>
+            
+            <xs:enumeration value="request:DigitalCalibrationCertificate"/>
+            <xs:enumeration value="request:digitalTestReport"/>
+            <xs:enumeration value="request:digitalReportOfSampling"/>
+            <xs:enumeration value="request:digitalMeasurementReport"/>
+            <xs:enumeration value="request:digitalExaminationCertificate"/>
+            <xs:enumeration value="request:digitalConformityCertificate"/>
+
+            <xs:enumeration value="template:DigitalCalibrationCertificate"/>
+            <xs:enumeration value="template:digitalMeasurementReport"/>
+            <xs:enumeration value="template:digitalExaminationCertificate"/>
+            <xs:enumeration value="template:digitalConformityCertificate"/>
+            <xs:enumeration value="template:digitalTestReport"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="performanceLocationType">
+        <xs:annotation>
+            <xs:documentation>
+                This type contains information about the location where the the calibration is performed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="dcx:stringPerformanceLocationType">
+                <xs:attribute name="id" type="xs:ID" use="optional"/>
+                <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="stringPerformanceLocationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="atProvider"/>
+            <xs:enumeration value="inField"/>
+            <!-- <xs:enumeration value="remote"/> -->
+            <!-- <xs:enumeration value="client"/> -->
+            <!-- <xs:enumeration value="laboratoryBranch"/> -->
+            <!-- <xs:enumeration value="clientBranch"/> -->
+            <!-- <xs:enumeration value="other"/> -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="conformityResultType">
+        <xs:annotation>
+            <xs:documentation>
+                The conformityResultType is for the overall conformity of all devices measured in the report. Areference to a conformity statement explaining the criteria of the assessment is required.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="dcx:conformityStatusType">
+                <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <!-- definitions of the ISO country and language codes are given in the end of this document -->
+
+    <!--    ================= dcxSoftware ================================= -->
+
+    <xs:complexType name="softwareType">
+        <xs:annotation>
+            <xs:documentation>
+                Information about a software including its name, version and a description.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType"/>
+            <xs:element name="release" type="dcx:notEmptyStringType"/>
+            <xs:element name="type" minOccurs="0">
+               <xs:simpleType>
+                   <xs:restriction base="xs:string">
+                       <xs:enumeration value="application" />
+                       <xs:enumeration value="bios" />
+                       <xs:enumeration value="driver" />
+                       <xs:enumeration value="editor" />
+                       <xs:enumeration value="firmware" />
+                       <xs:enumeration value="library" />
+                       <xs:enumeration value="os" />
+                       <xs:enumeration value="other" />
+                   </xs:restriction>
+               </xs:simpleType>
+           </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <xs:simpleType name="notEmptyStringType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^\s]+(\s+[^\s]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--    ================= servicePorvider ================================= -->
+
+    <xs:complexType name="contactType">
+        <xs:annotation>
+            <xs:documentation>
+                This type contain fields with field headings as well as sub-elements containing additional fieds..
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
+            <xs:element name="url" type="xs:string" minOccurs="0"/>
+            <xs:element name="VATIN" type="dcx:contactInfoType" minOccurs="0"/> <!-- e.g. VAT number -->
+            <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
+            <xs:element name="authorizingPerson" type="dcx:respPersonType" minOccurs="0"/>
+            <xs:element name="coSigner" type="dcx:respPersonType" minOccurs="0" maxOccurs='unbounded'/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="locationType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="street" type="dcx:notEmptyStringType"/>
+            <xs:element name="streetNo" type="dcx:notEmptyStringType"/>
+            <xs:element name="postOfficeBox" type="dcx:notEmptyStringType"/>
+            <xs:element name="city" type="dcx:notEmptyStringType"/>
+            <xs:element name="district" type="dcx:notEmptyStringType"/>
+            <xs:element name="state" type="dcx:notEmptyStringType"/>
+            <xs:element name="postCode" type="dcx:notEmptyStringType"/>
+            <xs:element name="countryCode" type="dcx:stringISO3166Type"/>
+            <xs:element name="further" type="dcx:stringWithLangType"/>
+            <!-- <xs:element name="positionCoordinates" type="dcx:positionCoordinatesType"/> -->
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="contactInfoType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="attPerson" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="respPersonType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+                A person responsible for a DCX.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="name" type="dcx:notEmptyStringType"/>
+            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <!--    ================= accreditation ================================= -->
+
+    <xs:complexType name="accreditationType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:annotation>
+            <xs:documentation>
+                Approved Calibration and Measurement Capability (CMC) applicable to results in this DCC.
+                Mandatotry fields: 
+                Name and country of the accreditation body
+                Id of the calibration laboratory in the system of the accreitation body
+                Applicability of accreditation for results in this DCC: 'wholly' (applies to all results) or 'partial' (exceptions occur)
+
+            </xs:documentation>
+        </xs:annotation>
+	<xs:sequence>
+	    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="accreditationCountry" minOccurs="1"/>
+            <xs:element name="accreditationBody" minOccurs="1"/>
+            <xs:element name="accreditationLabId" minOccurs="1"/>
+            <xs:element name="accreditationNorm" minOccurs="0"/> <!--type with specific values i.e. 17025, 17035, ... -->
+            <xs:element name="accreditationApplicability" minOccurs="1" type="dcx:accreditationApplicabilityType"/>
+        </xs:sequence>
+        <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> -->
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+
+    <xs:simpleType name="accreditationApplicabilityType">
+        <xs:annotation>
+            <xs:documentation>
+             "partial: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException to indicate this
+              wholly: all results are under accreditation."
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="partial"/>
+            <xs:enumeration value="wholly"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--    ================= previousReport ================================= -->
+
+    <xs:complexType name="hashType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a list of simple fields with field headings
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="referral" type="dcx:notEmptyStringType"/>
+            <xs:element name="referralID" type="dcx:notEmptyStringType"/>
+            <xs:element name="procedure" type="dcx:notEmptyStringType"/>
+            <xs:element name="value" type="dcx:notEmptyStringType"/>
+            <xs:element name="inValidityRange" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
+            <!--xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/-->            
+            <xs:element name="linkedReport" type="dcx:refTypeType" minOccurs="0"/>            
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+<!--    ============================================================
+                 STATEMENTS
+        ============================================================ -->
+
+
+    <xs:complexType name="columnHeadingType">
+        <xs:annotation>
+            <xs:documentation>
+                A human readable heading of one of the columns in a tabular.
+                The sections statements, equipment, settings and measuringSystems are tabulars that make use of columnHeadings of this type.
+                The attribute 'column' must refer to an element type of the section.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="column" type="xs:string" use="required"/>
+    </xs:complexType>
+        
+    <xs:complexType name="statementListType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a tabular of elements of statementType. For each field in the statementType a common columnHeading can be given here.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="statement" type="dcx:statementType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="statementType">
+            <xs:documentation>
+                A statement is a list of simple fields without field headings.
+                A number of statements can be organized as rows in a tabular with columnHeadings defined by the settingListType.
+                Each row may have a descriptive heading and body in multiple languages.
+            </xs:documentation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="externalReference" type="dcx:notEmptyStringType" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="category" type="dcx:statementCategoryType" use="required"/>
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+
+    <xs:simpleType name="statementCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="method" /> 
+                <xs:enumeration value="general" /> 
+                <xs:enumeration value="exception" /> 
+                <xs:enumeration value="traceability" /> 
+                <xs:enumeration value="attention" /> 
+                <xs:enumeration value="comment" /> 
+                <xs:enumeration value="accreditation" /> 
+                <xs:enumeration value="accreditationException" /> 
+                <xs:enumeration value="decisionRule" /> 
+                <xs:enumeration value="norm" /> 
+                <xs:enumeration value="clientRequirement" /> 
+            </xs:restriction>
+    </xs:simpleType>
+
+<!--    ============================================================
+                 EQUIPMENT
+        ============================================================ -->
+
+    <xs:complexType name="equipmentListType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a tabular of elements of equipmentItemType. For each field in the equipmentItemType a common columnHeading can be given here.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="equipmentItem" type="dcx:equipmentItemType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="equipmentItemType">
+        <xs:annotation>
+            <xs:documentation>
+                The equipmentItemType is a list of simple fields without field headings.
+                A number of equiptmentItems can be organized as rows in a tabular with columnHeadings defined by the equipmentListType.
+                Each row may have a descriptive heading in multiple languages.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+        <xs:element name="productName" type="xs:string" minOccurs="0"/>
+        <xs:element name="productType" type="xs:string" minOccurs="0"/>
+        <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
+        <xs:element name="clientId" type="xs:string" minOccurs="0"/>
+        <xs:element name="manufacturerId" type="xs:string" minOccurs="0"/>
+        <xs:element name="serviceProviderId" type="xs:string" minOccurs="0"/>
+        <xs:element name="calDate" type="xs:date" minOccurs="0"/>
+        <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
+        <xs:element name="certId" type="xs:string" minOccurs="0"/> 
+        <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
+        </xs:sequence>
+        <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required">
+        </xs:attribute>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="equipmentCategoryType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="device"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="sensor"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="detector"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="transducer"/> <!-- -->
+			<xs:enumeration value="transferDevice"/>
+			<xs:enumeration value="reference"/> <!-- not used in VIM3-->
+			<xs:enumeration value="referenceStandard"/> <!-- is used in VIM3, or Etalon -->
+			<xs:enumeration value="referenceMaterial"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="model"/> <!-- is used in VIM3 2.48 -->
+			<xs:enumeration value="environment"/> 
+			<xs:enumeration value="other"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="operationalStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="as found"/>
+			<xs:enumeration value="after adjustment"/>
+			<xs:enumeration value="after maintenance"/>
+			<xs:enumeration value="after maintenance and adjustment"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+<!--    ============================================================
+                 SETTINGS
+        ============================================================ -->
+    
+    <xs:complexType name="settingListType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a tabular of elements of settingType. For each field in the settingType a common columnHeading can be given here.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <!--xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/-->
+            <xs:element name="setting" type="dcx:settingType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="settingType">
+        <xs:annotation>
+            <xs:documentation>
+                A setting is a list of simple fields without field headings.
+                A number of settings can be organized as rows in a tabular with columnHeadings defined by the settingListType.
+                Each row may have a descriptive heading and body in multiple languages.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!--<xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type" minOccurs="0"
+                        maxOccurs="unbounded"/>-->
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
+            <xs:element name="parameter" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="value" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="unit" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="softwareInstruction" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0"/>		
+        </xs:sequence>
+        <xs:attribute name="settingId" type="xs:ID" use="required"/>
+        <xs:attribute name="equipmentRef" type="xs:IDREFS" use="required"/>
+    </xs:complexType>
+
+<!-- ============================================================
+                      MEASURING SYSTEMS 
+    ============================================================ --> 
+
     <xs:complexType name="measuringSystemListType">
         <xs:annotation>
             <xs:documentation>
-                A list of measuringSystem elements.
+                This type is a tabular of elements of measuringSystemType. For each field in the measuringSystemType a common columnHeading can be given here.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -199,7 +640,7 @@
     <xs:complexType name="measuringSystemType">
         <xs:annotation>
             <xs:documentation>
-                set of one or more measuring instruments and often other
+                Set of one or more measuring instruments and often other
                 components, assembled and adapted to give information used to
                 generate measured values within specified intervals for
                 quantities of specified kinds In the scope of
@@ -207,7 +648,10 @@
                 measuringInstrumentType and instrumentSettingType. Each table in
                 the measutrementResults section must refer to exactely one
                 element of measuringSystemType.
-                Measuring system is a colection of simple fields. A number of measuring systems can be organized in a table with column headings defined by the measuringSystemListType.
+
+                The measuringSystmeType is a list of simple fields without field headings.
+                A number of measuringSystems can be organized as rows in a tabular with columnHeadings defined by the measuringSystmeListType.
+                Each row may have a descriptive heading and body in multiple languages.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -246,292 +690,19 @@
         <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="equipmentRefType">
-        <xs:sequence>
-          <xs:element name="settingRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:attribute name="equipmentItemRef" type="xs:IDREF" use="required"/>
-    </xs:complexType>
-	
-	<xs:simpleType name="refTypeType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="statement"/>
-			<xs:enumeration value="equipmentItem"/>
-			<xs:enumeration value="setting"/>
-			<xs:enumeration value="measuringSystem"/>
-			<xs:enumeration value="hlink"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-    <!--xs:complexType name="refIdType">
-        <xs:annotation>
-            <xs:documentation>
-                Reference to an element
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:attribute name="refId" type="xs:IDREFS" use="required"/>
-    </xs:complexType-->
-
-    <!--xs:complexType name="softwareListType">
-        <xs:annotation>
-            <xs:documentation>
-                A list of software elements.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="software" type="dcx:softwareType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType-->
-
-
-    <xs:complexType name="softwareType">
-        <xs:annotation>
-            <xs:documentation>
-                Information about a software including its name, version and a description.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType"/>
-            <xs:element name="release" type="dcx:notEmptyStringType"/>
-            <xs:element name="type" minOccurs="0">
-               <xs:simpleType>
-                   <xs:restriction base="xs:string">
-                       <xs:enumeration value="application" />
-                       <xs:enumeration value="bios" />
-                       <xs:enumeration value="driver" />
-                       <xs:enumeration value="editor" />
-                       <xs:enumeration value="firmware" />
-                       <xs:enumeration value="library" />
-                       <xs:enumeration value="os" />
-                       <xs:enumeration value="other" />
-                   </xs:restriction>
-               </xs:simpleType>
-           </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="conformityResultType">
-        <xs:annotation>
-            <xs:documentation>
-                The conformityResultType is for the overall conformity of all devices measured in the report. Areference to a conformity statement explaining the criteria of the assessment is required.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="dcx:conformityStatusType">
-                <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:simpleType name="notEmptyStringType">
+    <xs:simpleType name="refTypeType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[^\s]+(\s+[^\s]+)*"/>
+            <xs:enumeration value="statement"/>
+            <xs:enumeration value="equipmentItem"/>
+            <xs:enumeration value="setting"/>
+            <xs:enumeration value="measuringSystem"/>
+            <xs:enumeration value="hlink"/>
         </xs:restriction>
     </xs:simpleType>
 
 
-    <xs:complexType name="equipmentListType">
-        <xs:annotation>
-            <xs:documentation>
-                This element is a list of measuring instruments.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="equipmentItem" type="dcx:equipmentItemType" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="equipmentItemType">
-        <xs:annotation>
-            <xs:documentation>
-                Measuring instrument: I.e. equipment under test and reference equipment that has one or more identifiers (e.g. serial number).
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
-        <xs:element name="productName" type="xs:string" minOccurs="0"/>
-        <xs:element name="productType" type="xs:string" minOccurs="0"/>
-        <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
-        <xs:element name="clientId" type="xs:string" minOccurs="0"/>
-        <xs:element name="manufacturerId" type="xs:string" minOccurs="0"/>
-        <xs:element name="serviceProviderId" type="xs:string" minOccurs="0"/>
-        <xs:element name="calDate" type="xs:date" minOccurs="0"/>
-        <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
-        <xs:element name="certId" type="xs:string" minOccurs="0"/> 
-        <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
-        </xs:sequence>
-        <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required">
-               <!-- <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="item"/>
-                        <xs:enumeration value="reference"/>
-                    </xs:restriction>
-                </xs:simpleType>-->
-        </xs:attribute>
-        <xs:attribute name="id" type="xs:ID" use="required"/>
-    </xs:complexType>
-
-    <xs:simpleType name="equipmentCategoryType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="item"/> <!-- not used in VIM3 *TODO -->
-			<xs:enumeration value="device"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="sensor"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="detector"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="transducer"/> <!-- -->
-			<xs:enumeration value="transferDevice"/>
-			<xs:enumeration value="reference"/> <!-- not used in VIM3-->
-			<xs:enumeration value="referenceStandard"/> <!-- is used in VIM3, or Etalon -->
-			<xs:enumeration value="referenceMaterial"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="model"/> <!-- is used in VIM3 2.48 -->
-			<xs:enumeration value="environment"/> 
-			<xs:enumeration value="other"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-    <!--xs:complexType name="identificationType">
-        <xs:annotation>
-            <xs:documentation>
-                Identification: I.e. serial number or identification number.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="value" type="xs:string" minOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute name="issuer" type="dcx:issuerType">
-        </xs:attribute>
-    </xs:complexType-->
-
-    <xs:simpleType name="operationalStatusType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="as found"/>
-			<xs:enumeration value="after adjustment"/>
-			<xs:enumeration value="after maintenance"/>
-			<xs:enumeration value="after maintenance and adjustment"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-    <!--xs:simpleType name="issuerType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="client"/>
-			<xs:enumeration value="manufacturer"/>
-			<xs:enumeration value="serviceProvider"/>
-		</xs:restriction>
-	</xs:simpleType-->
-
-    <xs:complexType name="performanceLocationType">
-        <xs:annotation>
-            <xs:documentation>
-                This type contains information about the location where the the calibration is performed.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="dcx:stringPerformanceLocationType">
-                <xs:attribute name="id" type="xs:ID" use="optional"/>
-                <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:simpleType name="stringPerformanceLocationType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="atProvider"/>
-            <xs:enumeration value="inField"/>
-            <!-- <xs:enumeration value="remote"/> -->
-            <!-- <xs:enumeration value="client"/> -->
-            <!-- <xs:enumeration value="laboratoryBranch"/> -->
-            <!-- <xs:enumeration value="clientBranch"/> -->
-            <!-- <xs:enumeration value="other"/> -->
-        </xs:restriction>
-    </xs:simpleType>
-
-
-    <xs:simpleType name="transactionContentType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="digitalCalibrationCertificate"/>
-            <xs:enumeration value="digitalTestReport"/>
-            <xs:enumeration value="digitalReportOfSampling"/>
-            <xs:enumeration value="digitalMeasurementReport"/>
-            <xs:enumeration value="digitalExaminationCertificate"/>
-            <xs:enumeration value="digitalConformityCertificate"/>
-            
-            <xs:enumeration value="request:DigitalCalibrationCertificate"/>
-            <xs:enumeration value="request:digitalTestReport"/>
-            <xs:enumeration value="request:digitalReportOfSampling"/>
-            <xs:enumeration value="request:digitalMeasurementReport"/>
-            <xs:enumeration value="request:digitalExaminationCertificate"/>
-            <xs:enumeration value="request:digitalConformityCertificate"/>
-
-            <xs:enumeration value="template:DigitalCalibrationCertificate"/>
-            <xs:enumeration value="template:digitalMeasurementReport"/>
-            <xs:enumeration value="template:digitalExaminationCertificate"/>
-            <xs:enumeration value="template:digitalConformityCertificate"/>
-            <xs:enumeration value="template:digitalTestReport"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <!--xs:complexType name="calibrationLaboratoryType">
-        <xs:annotation>
-            <xs:documentation>
-                Information about the calibration laboratory.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="calibrationLaboratoryCode" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="contact" type="dcx:contactType"/>		
-            <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType-->
-
-
-    <xs:complexType name="settingListType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a tabular of elements of settingType. For each field in the settingType a common columnHeading can be given here.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <!--xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/-->
-            <xs:element name="setting" type="dcx:settingType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="settingType">
-        <xs:annotation>
-            <xs:documentation>
-                A setting is a list of simple fields without field headings.
-                A number of settings can be organized as rows in a tabular with columnHeadings defined by the settingListType.
-                Each row may have a descriptive heading and body in multiple languages.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <!--<xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type" minOccurs="0"
-                        maxOccurs="unbounded"/>-->
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
-            <xs:element name="parameter" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="value" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="unit" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="softwareInstruction" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0"/>		
-        </xs:sequence>
-        <xs:attribute name="settingId" type="xs:ID" use="required"/>
-        <xs:attribute name="equipmentRef" type="xs:IDREFS" use="required"/>
-    </xs:complexType>
+<!-- ============================================================
+    ============================================================ --> 
 
     <xs:complexType name="quantityUnitDefListType">
         <xs:annotation>
@@ -628,56 +799,6 @@
         </xs:restriction>
     </xs:simpleType>
     -->
-        
-    <xs:complexType name="statementListType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a tabular of elements of statementType. For each field in the statementType a common columnHeading can be given here.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="statement" type="dcx:statementType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="statementType">
-            <xs:documentation>
-                A statement is a list of simple fields without field headings.
-                A number of statements can be organized as rows in a tabular with columnHeadings defined by the settingListType.
-                Each row may have a descriptive heading and body in multiple languages.
-            </xs:documentation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="externalReference" type="dcx:notEmptyStringType" minOccurs="0" />
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="required"/>
-        <xs:attribute name="category" type="dcx:statementCategoryType" use="required"/>
-        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
-    </xs:complexType>
-
-    <xs:simpleType name="statementCategoryType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="method" /> 
-                <xs:enumeration value="general" /> 
-                <xs:enumeration value="exception" /> 
-                <xs:enumeration value="traceability" /> 
-                <xs:enumeration value="attention" /> 
-                <xs:enumeration value="comment" /> 
-                <xs:enumeration value="accreditation" /> 
-                <xs:enumeration value="accreditationException" /> 
-                <xs:enumeration value="decisionRule" /> 
-                <xs:enumeration value="norm" /> 
-                <xs:enumeration value="clientRequirement" /> 
-            </xs:restriction>
-    </xs:simpleType>
-
 
     <xs:complexType name="CMCListType">
         <xs:annotation>
@@ -690,152 +811,6 @@
             <xs:element name="CMC" type="dcx:accreditationType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    
-    <xs:complexType name="accreditationType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a list of simple fields with field headings.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:annotation>
-            <xs:documentation>
-                Approved Calibration and Measurement Capability (CMC) applicable to results in this DCC.
-                Mandatotry fields: 
-                Name and country of the accreditation body
-                Id of the calibration laboratory in the system of the accreitation body
-                Applicability of accreditation for results in this DCC: 'wholly' (applies to all results) or 'partial' (exceptions occur)
-
-            </xs:documentation>
-        </xs:annotation>
-	<xs:sequence>
-	    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accreditationCountry" minOccurs="1"/>
-            <xs:element name="accreditationBody" minOccurs="1"/>
-            <xs:element name="accreditationLabId" minOccurs="1"/>
-            <xs:element name="accreditationNorm" minOccurs="0"/> <!--type with specific values i.e. 17025, 17035, ... -->
-            <xs:element name="accreditationApplicability" minOccurs="1" type="dcx:accreditationApplicabilityType"/>
-        </xs:sequence>
-        <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> -->
-        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
-    </xs:complexType>
-
-    <xs:simpleType name="accreditationApplicabilityType">
-        <xs:annotation>
-            <xs:documentation>
-             "partial: results outside accreditation occurs and these are clearly marked. Use column with attribute metaDataCategory=accreditationException to indicate this
-              wholly: all results are under accreditation."
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="partial"/>
-            <xs:enumeration value="wholly"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:complexType name="contactType">
-        <xs:annotation>
-            <xs:documentation>
-                This type contain fields with field headings as well as sub-elements containing additional fieds..
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
-            <xs:element name="url" type="xs:string" minOccurs="0"/>
-            <xs:element name="VATIN" type="dcx:contactInfoType" minOccurs="0"/> <!-- e.g. VAT number -->
-            <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
-            <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
-            <xs:element name="authorizingPerson" type="dcx:respPersonType" minOccurs="0"/>
-            <xs:element name="coSigner" type="dcx:respPersonType" minOccurs="0" maxOccurs='unbounded'/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="locationType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a list of simple fields with field headings
-            </xs:documentation>
-        </xs:annotation>
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="street" type="dcx:notEmptyStringType"/>
-            <xs:element name="streetNo" type="dcx:notEmptyStringType"/>
-            <xs:element name="postOfficeBox" type="dcx:notEmptyStringType"/>
-            <xs:element name="city" type="dcx:notEmptyStringType"/>
-            <xs:element name="district" type="dcx:notEmptyStringType"/>
-            <xs:element name="state" type="dcx:notEmptyStringType"/>
-            <xs:element name="postCode" type="dcx:notEmptyStringType"/>
-            <xs:element name="countryCode" type="dcx:stringISO3166Type"/>
-            <xs:element name="further" type="dcx:stringWithLangType"/>
-            <!-- <xs:element name="positionCoordinates" type="dcx:positionCoordinatesType"/> -->
-        </xs:choice>
-    </xs:complexType>
-
-    <xs:complexType name="contactInfoType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a list of simple fields with field headings
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="attPerson" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="respPersonType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a list of simple fields with field headings
-                A person responsible for a DCX.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType"/>
-            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-
-    <xs:complexType name="hashType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a list of simple fields with field headings
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="referral" type="dcx:notEmptyStringType"/>
-            <xs:element name="referralID" type="dcx:notEmptyStringType"/>
-            <xs:element name="procedure" type="dcx:notEmptyStringType"/>
-            <xs:element name="value" type="dcx:notEmptyStringType"/>
-            <xs:element name="inValidityRange" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
-            <!--xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/-->            
-            <xs:element name="linkedReport" type="dcx:refTypeType" minOccurs="0"/>            
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
 
 	<xs:simpleType name="tableCategoryType">
         <xs:annotation>
@@ -963,7 +938,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
@@ -1016,8 +990,6 @@
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
 		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
-    
-
 
     <xs:complexType name="valueType">
         <xs:annotation>
@@ -1031,19 +1003,6 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-
-    <!--xs:complexType name="conventionalValueType">
-        <xs:annotation>
-            <xs:documentation>
-                List of statements attached to a DCC.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base='dcx:realDataType'>
-                <xs:attribute name="dataCategory" type="xs:string" fixed="conventionalValue"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType-->
 
     <xs:complexType name="targetValueType">
         <xs:annotation>
@@ -1506,6 +1465,104 @@
             <xs:enumeration value="b"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="embeddedFileListType">
+        <xs:annotation>
+            <xs:documentation>
+                List of embedded files
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="embeddedFile" type="dcx:embeddedFileType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="embeddedFileType">
+        <xs:annotation>
+            <xs:documentation>
+                The embeddedFileType defines a type which allows to add binary encoded files to the measurement result
+                section.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="fileExtension" type="dcx:notEmptyStringType"/>
+            <xs:element name="fileContent" type="xs:base64Binary"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+
+
+    <xs:simpleType name="scopeType">
+        <xs:annotation>
+            <xs:documentation>
+                The scopeType is restricting the scope attribute of the columnType.
+                For data columns the attribute is used to descibe the data.. 
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+				
+				* reference  : Data relating to the reference equipment. E.g. measured value or uncertainty of the reference.
+				* indication : Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument
+				* bias       : Data relating to the difference item_value - reference_value. 
+								E.g. the calibration result (bias of the item and its uncertainty.)
+				* environment: Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...
+				* Other      : the content may be specified in the column name in human readable form.
+				* '-'        : Used for meta data columns to refer to all scopes
+            </xs:documentation>
+        </xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="reference" /> 
+			<xs:enumeration value="indication" /> 
+			<xs:enumeration value="bias" /> 
+			<xs:enumeration value="environment" /> 
+			<xs:enumeration value="modelIn" /> 
+			<xs:enumeration value="modelOut" /> 
+			<xs:enumeration value="Other" />  
+			<xs:enumeration value="-" />  
+		</xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="dataCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+                The dataCategoryType is restricting the value of the dataCategory attribute of the columnType.
+                For data columns this attribute is used to describe the data.
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+            </xs:documentation>
+        </xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
+			<xs:enumeration value="value" />  <!-- used for measured quantities -->
+			<xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
+			<xs:enumeration value="expandedUncertainty" /> 
+			<xs:enumeration value="repeatability" /> 
+			<xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
+			<xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
+			<xs:enumeration value="correlation" /> 
+			<xs:enumeration value="rowTag" /> 
+			<xs:enumeration value="usedReferenceRef" />
+			<xs:enumeration value="methodRef" />
+			<xs:enumeration value="exceptionRef" /> 
+			<xs:enumeration value="traceabilityRef" /> 
+			<xs:enumeration value="attentionRef" /> 
+			<xs:enumeration value="commentRef" /> 
+			<xs:enumeration value="decisionRuleRef" /> 
+			<xs:enumeration value="accreditationExceptionRef" /> 
+			<xs:enumeration value="normRef" /> 
+			<xs:enumeration value="measurementSeriesRef" /> 
+			<xs:enumeration value="uncertaintyCoverageFactor_k" />
+			<xs:enumeration value="uncertaintyCoverageProbability" />
+			<xs:enumeration value="toleranceLimitLower" />
+			<xs:enumeration value="toleranceLimitUpper" />
+			<xs:enumeration value="acceptanceLimitLower" />
+			<xs:enumeration value="acceptanceLimitUpper" />
+			<xs:enumeration value="approachToTarget" />
+			<xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
+		</xs:restriction>
+    </xs:simpleType>
+
     
     <xs:simpleType name="stringISO3166Type">
         <xs:annotation>
@@ -1965,116 +2022,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="stringWithLangType">
-        <xs:annotation>
-            <xs:documentation>
-                A string element with an additional lang attribute for localization.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="xs:string">
-                <xs:attribute name="lang" type="dcx:stringISO639Type" use="required"/>
-                <xs:attribute name="id" type="xs:ID" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:complexType name="embeddedFileListType">
-        <xs:annotation>
-            <xs:documentation>
-                List of embedded files
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-			<xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="embeddedFile" type="dcx:embeddedFileType" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-    <xs:complexType name="embeddedFileType">
-        <xs:annotation>
-            <xs:documentation>
-                The embeddedFileType defines a type which allows to add binary encoded files to the measurement result
-                section.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fileExtension" type="dcx:notEmptyStringType"/>
-            <xs:element name="fileContent" type="xs:base64Binary"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
-
-
-    <xs:simpleType name="scopeType">
-        <xs:annotation>
-            <xs:documentation>
-                The scopeType is restricting the scope attribute of the columnType.
-                For data columns the attribute is used to descibe the data.. 
-                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
-				
-				* reference  : Data relating to the reference equipment. E.g. measured value or uncertainty of the reference.
-				* indication : Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument
-				* bias       : Data relating to the difference item_value - reference_value. 
-								E.g. the calibration result (bias of the item and its uncertainty.)
-				* environment: Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...
-				* Other      : the content may be specified in the column name in human readable form.
-				* '-'        : Used for meta data columns to refer to all scopes
-            </xs:documentation>
-        </xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="reference" /> 
-			<xs:enumeration value="indication" /> 
-			<xs:enumeration value="bias" /> 
-			<xs:enumeration value="environment" /> 
-			<xs:enumeration value="modelIn" /> 
-			<xs:enumeration value="modelOut" /> 
-			<xs:enumeration value="Other" />  
-			<xs:enumeration value="-" />  
-		</xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="dataCategoryType">
-        <xs:annotation>
-            <xs:documentation>
-                The dataCategoryType is restricting the value of the dataCategory attribute of the columnType.
-                For data columns this attribute is used to describe the data.
-                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
-            </xs:documentation>
-        </xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
-			<xs:enumeration value="value" />  <!-- used for measured quantities -->
-			<xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
-			<xs:enumeration value="expandedUncertainty" /> 
-			<xs:enumeration value="repeatability" /> 
-			<xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
-			<xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
-			<xs:enumeration value="correlation" /> 
-			<xs:enumeration value="rowTag" /> 
-			<xs:enumeration value="usedReferenceRef" />
-			<xs:enumeration value="methodRef" />
-			<xs:enumeration value="exceptionRef" /> 
-			<xs:enumeration value="traceabilityRef" /> 
-			<xs:enumeration value="attentionRef" /> 
-			<xs:enumeration value="commentRef" /> 
-			<xs:enumeration value="decisionRuleRef" /> 
-			<xs:enumeration value="accreditationExceptionRef" /> 
-			<xs:enumeration value="normRef" /> 
-			<xs:enumeration value="measurementSeriesRef" /> 
-			<xs:enumeration value="uncertaintyCoverageFactor_k" />
-			<xs:enumeration value="uncertaintyCoverageProbability" />
-			<xs:enumeration value="toleranceLimitLower" />
-			<xs:enumeration value="toleranceLimitUpper" />
-			<xs:enumeration value="acceptanceLimitLower" />
-			<xs:enumeration value="acceptanceLimitUpper" />
-			<xs:enumeration value="approachToTarget" />
-			<xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
-		</xs:restriction>
-    </xs:simpleType>
 
     <xs:simpleType name="serviceCategoryType">
         <xs:annotation>
