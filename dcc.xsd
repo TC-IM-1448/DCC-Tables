@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema version="3.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema version="0.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:dcx="https://dfm.dk"
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
            targetNamespace="https://dfm.dk"
@@ -22,7 +22,7 @@
         </xs:documentation>
     </xs:annotation>
 
-    <xs:element name="digitalCalibrationCertificate" type="dcx:digitalCalibrationCertificateType">
+    <xs:element name="digitalCalibrationExchange" type="dcx:digitalCalibrationExchangeType">
     <xs:key name="heading">
         <xs:selector xpath='dcx:statements/dcx:heading'/>
         <xs:field xpath="@lang"/>
@@ -74,7 +74,11 @@
     </xs:keyref>
     </xs:element>
 
-    <xs:complexType name="digitalCalibrationCertificateType">
+<!--    ============================================================
+                 ROOT ELEMENT - of the Digitial Certificate 
+        ============================================================ -->
+
+    <xs:complexType name="digitalCalibrationExchangeType">
         <xs:annotation>
             <xs:documentation>
             </xs:documentation>
@@ -102,7 +106,7 @@
         <xs:attribute name="schemaVersion" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="3\.0\.0"/>
+                    <xs:pattern value="0\.1\.0"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -169,7 +173,7 @@
             <xs:element name="endPerformanceDate" type="xs:date"/> <!--simple-->
             <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> <!--simple-->
             <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--value with attribute -->
+            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--simple-->
             <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/> <!--simple-->
             <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
             <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
@@ -181,8 +185,11 @@
     <xs:complexType name="fieldHeadingType">
         <xs:annotation>
             <xs:documentation>
-                A human readable heading of one of the fields in a sections.
-                The attribute 'field' must refer to an element type of the section.
+                A human readable heading of any of the fields in a sections.
+                The attribute 'field' must refer to an element type in the section.
+
+                e.g.: 
+
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -190,6 +197,7 @@
         </xs:sequence>
         <xs:attribute name="field" type="xs:string" use="required"/>
     </xs:complexType>
+
 
     <xs:simpleType name="transactionContentType">
         <xs:restriction base="xs:string">
@@ -215,29 +223,10 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="performanceLocationType">
-        <xs:annotation>
-            <xs:documentation>
-                This type contains information about the location where the the calibration is performed.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="dcx:stringPerformanceLocationType">
-                <xs:attribute name="id" type="xs:ID" use="optional"/>
-                <xs:attribute name="refId" type="xs:IDREFS" use="optional"/>
-            </xs:extension>
-        </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:simpleType name="stringPerformanceLocationType">
+    <xs:simpleType name="performanceLocationType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="atProvider"/>
             <xs:enumeration value="inField"/>
-            <!-- <xs:enumeration value="remote"/> -->
-            <!-- <xs:enumeration value="client"/> -->
-            <!-- <xs:enumeration value="laboratoryBranch"/> -->
-            <!-- <xs:enumeration value="clientBranch"/> -->
-            <!-- <xs:enumeration value="other"/> -->
         </xs:restriction>
     </xs:simpleType>
 
@@ -254,7 +243,6 @@
         </xs:simpleContent>
     </xs:complexType>
     
-    <!-- definitions of the ISO country and language codes are given in the end of this document -->
 
     <!--    ================= dcxSoftware ================================= -->
 
@@ -293,6 +281,7 @@
     </xs:simpleType>
 
     <!--    ================= servicePorvider ================================= -->
+    <!-- definitions of the ISO country and language codes are given in the end of this document -->
 
     <xs:complexType name="contactType">
         <xs:annotation>
@@ -381,10 +370,7 @@
         <xs:annotation>
             <xs:documentation>
                 This type is a list of simple fields with field headings.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:annotation>
-            <xs:documentation>
+
                 Approved Calibration and Measurement Capability (CMC) applicable to results in this DCC.
                 Mandatotry fields: 
                 Name and country of the accreditation body
@@ -396,10 +382,10 @@
 	<xs:sequence>
 	    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accreditationCountry" minOccurs="1"/>
+            <xs:element name="accreditationCountry" minOccurs="1" type="dcx:stringISO3166Type"/>
             <xs:element name="accreditationBody" minOccurs="1"/>
             <xs:element name="accreditationLabId" minOccurs="1"/>
-            <xs:element name="accreditationNorm" minOccurs="0"/> <!--type with specific values i.e. 17025, 17035, ... -->
+            <xs:element name="accreditationNorm" minOccurs="0" type="dcx:accreditationNormType"/> <!--type with specific values i.e. 17025, 17034, ... -->
             <xs:element name="accreditationApplicability" minOccurs="1" type="dcx:accreditationApplicabilityType"/>
         </xs:sequence>
         <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> -->
@@ -416,6 +402,18 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="partial"/>
             <xs:enumeration value="wholly"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="accreditationNormType">
+        <xs:annotation>
+            <xs:documentation>
+                List of recognized accreditation NORMs
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ISO 17025"/>
+            <xs:enumeration value="ISO 17034"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -445,7 +443,20 @@
 <!--    ============================================================
                  STATEMENTS
         ============================================================ -->
-
+        
+    <xs:complexType name="statementListType">
+        <xs:annotation>
+            <xs:documentation>
+                This type is a tabular of elements of statementType. For each field in the statementType a common columnHeading can be given here.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="statement" type="dcx:statementType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+        
 
     <xs:complexType name="columnHeadingType">
         <xs:annotation>
@@ -460,26 +471,15 @@
         </xs:sequence>
         <xs:attribute name="column" type="xs:string" use="required"/>
     </xs:complexType>
-        
-    <xs:complexType name="statementListType">
-        <xs:annotation>
-            <xs:documentation>
-                This type is a tabular of elements of statementType. For each field in the statementType a common columnHeading can be given here.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="statement" type="dcx:statementType" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
 
     <xs:complexType name="statementType">
+        <xs:annotation>
             <xs:documentation>
                 A statement is a list of simple fields without field headings.
                 A number of statements can be organized as rows in a tabular with columnHeadings defined by the settingListType.
                 Each row may have a descriptive heading and body in multiple languages.
             </xs:documentation>
+        </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
@@ -702,6 +702,7 @@
 
 
 <!-- ============================================================
+            OPTIONAL QUANTITY & UNIT DEFINITIONs
     ============================================================ --> 
 
     <xs:complexType name="quantityUnitDefListType">
@@ -768,39 +769,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!-- 
-    <xs:complexType name="calculeToSIunitStepListType">
-        <xs:sequence>
-            <xs:element name='calcStep' minOccurs='1' maxOccurs='unbounded'>
-                <xs:complexType>
-                    <xs:attribute name='mathOp' type="dcx:mathOperatorType" use="required"/>
-                    <xs:attribute name="param" type="dcx:decimalType" />
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="unitSI" type="dcx:unitType" use="required"/>
-    </xs:complexType>
-
-    <xs:simpleType name="mathOperatorType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="+" /> 
-            <xs:enumeration value="-" /> 
-            <xs:enumeration value="*" /> 
-            <xs:enumeration value="/" /> 
-            <xs:enumeration value="ln" /> 
-            <xs:enumeration value="e^" /> 
-            <xs:enumeration value="log10" /> 
-            <xs:enumeration value="10^" /> 
-            <xs:enumeration value="end" /> 
-        </xs:restriction>
-    </xs:simpleType>
-    -->
-
-    <xs:complexType name="CMCListType">
+    <!-- <xs:complexType name="CMCListType">
         <xs:annotation>
             <xs:documentation>
                 List of approved Calibration and Measurement Capabilities (CMC) applicable to results in this DCC.
@@ -810,27 +779,13 @@
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="CMC" type="dcx:accreditationType" maxOccurs="unbounded"/>
         </xs:sequence>
-    </xs:complexType>
-
-	<xs:simpleType name="tableCategoryType">
-        <xs:annotation>
-            <xs:documentation>
-            </xs:documentation>
-        </xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="calibrationResult" /> 
-			<xs:enumeration value="calibrationCurve" /> 
-			<xs:enumeration value="dataFittingResult" /> 
-			<xs:enumeration value="measurementSeries" /> 
-		</xs:restriction>
-    </xs:simpleType>
-
-
-<!--    ============================================================
-                DATA TABLE & DATA COLUMN DEFINITIONS 
+        </xs:complexType> -->
+        
+        
+    <!--============================================================
+                DATA TABLE DEFINITIONS 
         ============================================================ -->
-
-
+        
     <xs:complexType name="tableType">
         <xs:annotation>
             <xs:documentation>
@@ -851,9 +806,25 @@
 		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="customServiceCategory" type="xs:string" use="optional" default="BIPM"/>
 		<xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>		
-                <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
+        <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
     </xs:complexType>
 
+    <xs:simpleType name="tableCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+                Restriction used for interfaces to know which tables types are possible provided by the measurementResultsType. 
+                NB: This restriction should match with the possible elements in dcx:measurementResultsType.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="calibrationResult" /> 
+            <xs:enumeration value="calibrationCurve" /> 
+            <xs:enumeration value="dataFittingResult" /> 
+            <xs:enumeration value="measurementSeries" /> 
+        </xs:restriction>
+    </xs:simpleType>
+
+    
     <xs:complexType name="measurementResultsType">
         <xs:annotation>
         <xs:documentation>
@@ -938,6 +909,10 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!--============================================================
+                DATA COLUMN DEFINITIONS 
+        ============================================================ -->
+
     <xs:complexType name="columnType">
         <xs:annotation>
             <xs:documentation>
@@ -990,6 +965,96 @@
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
 		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
+
+    
+    <xs:simpleType name="scopeType">
+        <xs:annotation>
+            <xs:documentation>
+                The scopeType is restricting the scope attribute of the columnType.
+                For data columns the attribute is used to descibe the data.. 
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+				
+				* reference  : Data relating to the reference equipment. E.g. measured value or uncertainty of the reference.
+				* indication : Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument
+				* bias       : Data relating to the difference item_value - reference_value. 
+								E.g. the calibration result (bias of the item and its uncertainty.)
+				* environment: Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...
+				* Other      : the content may be specified in the column name in human readable form.
+				* '-'        : Used for meta data columns to refer to all scopes
+            </xs:documentation>
+        </xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="reference" /> 
+			<xs:enumeration value="indication" /> 
+			<xs:enumeration value="bias" /> 
+			<xs:enumeration value="environment" /> 
+			<xs:enumeration value="modelIn" /> 
+			<xs:enumeration value="modelOut" /> 
+			<xs:enumeration value="Other" />  
+			<xs:enumeration value="-" />  
+		</xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="dataCategoryType">
+        <xs:annotation>
+            <xs:documentation>
+                The dataCategoryType is restricting the value of the dataCategory attribute of the columnType.
+                For data columns this attribute is used to describe the data.
+                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
+            </xs:documentation>
+        </xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
+			<xs:enumeration value="value" />  <!-- used for measured quantities -->
+			<xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
+			<xs:enumeration value="expandedUncertainty" /> 
+			<xs:enumeration value="repeatability" /> 
+			<xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
+			<xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
+			<xs:enumeration value="correlation" /> 
+			<xs:enumeration value="rowTag" /> 
+			<xs:enumeration value="usedReferenceRef" />
+			<xs:enumeration value="methodRef" />
+			<xs:enumeration value="exceptionRef" /> 
+			<xs:enumeration value="traceabilityRef" /> 
+			<xs:enumeration value="attentionRef" /> 
+			<xs:enumeration value="commentRef" /> 
+			<xs:enumeration value="decisionRuleRef" /> 
+			<xs:enumeration value="accreditationExceptionRef" /> 
+			<xs:enumeration value="normRef" /> 
+			<xs:enumeration value="measurementSeriesRef" /> 
+			<xs:enumeration value="uncertaintyCoverageFactor_k" />
+			<xs:enumeration value="uncertaintyCoverageProbability" />
+			<xs:enumeration value="toleranceLimitLower" />
+			<xs:enumeration value="toleranceLimitUpper" />
+			<xs:enumeration value="acceptanceLimitLower" />
+			<xs:enumeration value="acceptanceLimitUpper" />
+			<xs:enumeration value="approachToTarget" />
+			<xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
+		</xs:restriction>
+    </xs:simpleType>
+
+    <!-- dcx:quantityType is located at the end of the schema-file due to length.  -->
+    
+    <xs:simpleType name="unitType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+				Based on xs:string.
+                
+				Only unit expressions which can be parsed with the BIPM SI-Digital-Framework tool (https://si-digital-framework.org/SI/unitExpr) are permitted.
+				
+				The unit expressions are hence in accordance to the BIPM SI brochure unit, using '.' as unit multiplication sign.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="quantityUnitDefRef|-|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)((\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*)?"/>
+            <!-- <xs:pattern value="quantityUnitRef|1|%|ppm|(((Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)([-]?[1-9]\d*)?)(\.(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)*)?)"/> -->
+            <!-- "quantityUnitRef|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)(?:\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*" -->
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <!-- =============== ELEMETN TYPES for the xs:choice options within columnType  ==================== -->
 
     <xs:complexType name="valueType">
         <xs:annotation>
@@ -1352,8 +1417,9 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <!-- =========== END of dataColumn element types   ==================== -->
 
-    <!-- BASIC DATA-TYPES for dataColumn row-elements.  -->
+    <!-- =========== BASIC DATA-TYPES for dataColumn row-elements. ============-->
 
     <xs:complexType name='realDataType'>
         <xs:sequence>
@@ -1404,23 +1470,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="unitType">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-				Based on xs:string.
-                
-				Only unit expressions which can be parsed with the BIPM SI-Digital-Framework tool (https://si-digital-framework.org/SI/unitExpr) are permitted.
-				
-				The unit expressions are hence in accordance to the BIPM SI brochure unit, using '.' as unit multiplication sign.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:pattern value="quantityUnitDefRef|-|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)((\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*)?"/>
-            <!-- <xs:pattern value="quantityUnitRef|1|%|ppm|(((Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)([-]?[1-9]\d*)?)(\.(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)*)?)"/> -->
-            <!-- "quantityUnitRef|1|%|ppm|(((h|d|min|°|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L))([-]?[1-9]\d*)?)(?:\.(((min|t)|(Y|Z|E|P|T|G|M|k|h|da|d|c|m|µ|n|p|f|a|z|y)?(A|Bq|cd|C|℃|F|Gy|H|Hz|J|kat|K|g|lm|lx|m|mol|N|Ω|Pa|rad|s|S|Sv|sr|T|V|W|Wb|au|B|Da|eV|ha|L)|(d|h|min|°|t))([-]?[1-9]\d*)?))*" -->
-        </xs:restriction>
-    </xs:simpleType>
-
     <xs:simpleType name="decimalType">
         <xs:annotation>
             <xs:documentation xml:lang="en">
@@ -1466,6 +1515,12 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- =========== END of BASIC DATA-TYPES for dataColumn row-elements. ============-->
+    
+    <!--=============================================================
+                Embedded Files Types
+        =============================================================-->
+
     <xs:complexType name="embeddedFileListType">
         <xs:annotation>
             <xs:documentation>
@@ -1496,73 +1551,15 @@
     </xs:complexType>
 
 
-    <xs:simpleType name="scopeType">
-        <xs:annotation>
-            <xs:documentation>
-                The scopeType is restricting the scope attribute of the columnType.
-                For data columns the attribute is used to descibe the data.. 
-                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
-				
-				* reference  : Data relating to the reference equipment. E.g. measured value or uncertainty of the reference.
-				* indication : Data relating to the device under test. E.g. nominal value of an artefact or display value of an active instrument
-				* bias       : Data relating to the difference item_value - reference_value. 
-								E.g. the calibration result (bias of the item and its uncertainty.)
-				* environment: Influece conditions measured in the environment . E.g. laboratory temperature, pressure etc...
-				* Other      : the content may be specified in the column name in human readable form.
-				* '-'        : Used for meta data columns to refer to all scopes
-            </xs:documentation>
-        </xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="reference" /> 
-			<xs:enumeration value="indication" /> 
-			<xs:enumeration value="bias" /> 
-			<xs:enumeration value="environment" /> 
-			<xs:enumeration value="modelIn" /> 
-			<xs:enumeration value="modelOut" /> 
-			<xs:enumeration value="Other" />  
-			<xs:enumeration value="-" />  
-		</xs:restriction>
-    </xs:simpleType>
 
-    <xs:simpleType name="dataCategoryType">
-        <xs:annotation>
-            <xs:documentation>
-                The dataCategoryType is restricting the value of the dataCategory attribute of the columnType.
-                For data columns this attribute is used to describe the data.
-                For meta data columns the attribute is used to match the data column(s) that is enriched with the meta data. 
-            </xs:documentation>
-        </xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="-" /> <!-- used for meta data columns to match data columns with any dataCategory -->
-			<xs:enumeration value="value" />  <!-- used for measured quantities -->
-			<xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
-			<xs:enumeration value="expandedUncertainty" /> 
-			<xs:enumeration value="repeatability" /> 
-			<xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
-			<xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
-			<xs:enumeration value="correlation" /> 
-			<xs:enumeration value="rowTag" /> 
-			<xs:enumeration value="usedReferenceRef" />
-			<xs:enumeration value="methodRef" />
-			<xs:enumeration value="exceptionRef" /> 
-			<xs:enumeration value="traceabilityRef" /> 
-			<xs:enumeration value="attentionRef" /> 
-			<xs:enumeration value="commentRef" /> 
-			<xs:enumeration value="decisionRuleRef" /> 
-			<xs:enumeration value="accreditationExceptionRef" /> 
-			<xs:enumeration value="normRef" /> 
-			<xs:enumeration value="measurementSeriesRef" /> 
-			<xs:enumeration value="uncertaintyCoverageFactor_k" />
-			<xs:enumeration value="uncertaintyCoverageProbability" />
-			<xs:enumeration value="toleranceLimitLower" />
-			<xs:enumeration value="toleranceLimitUpper" />
-			<xs:enumeration value="acceptanceLimitLower" />
-			<xs:enumeration value="acceptanceLimitUpper" />
-			<xs:enumeration value="approachToTarget" />
-			<xs:enumeration value="other" />  <!--the content may be specified in the column name in human readable form -->
-		</xs:restriction>
-    </xs:simpleType>
-
+    <!--=============================================================
+            Other basic Types listed here due to length. 
+        =============================================================
+            - country coes ISO 3166
+            - language codes ISO 639
+            - Service Categories
+            - quantity codes ISO 80000 
+        =============================================================-->
     
     <xs:simpleType name="stringISO3166Type">
         <xs:annotation>
