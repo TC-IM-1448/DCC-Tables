@@ -140,7 +140,7 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="coreData" type="dcx:coreDataType"/>
-            <xs:element name="dcxSoftware" type="dcx:softwareType"/> <!--complex-->
+            <!--xs:element name="dcxSoftware" type="dcx:softwareType"/--> <!--complex-->
             <xs:element name="serviceProvider" type="dcx:contactType"/>
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
             <!--xs:element name="respPersons" type="dcx:respPersonListType"/-->
@@ -178,6 +178,7 @@
             <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
             <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
             <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
+            <xs:element name="dcxSoftware" type="dcx:softwareType"/--> <!--value with attribute-->
         </xs:sequence>
     </xs:complexType>
 
@@ -249,29 +250,14 @@
     <xs:complexType name="softwareType">
         <xs:annotation>
             <xs:documentation>
-                Information about a software including its name, version and a description.
+                Software name, version and a description.
             </xs:documentation>
         </xs:annotation>
-        <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType"/>
-            <xs:element name="release" type="dcx:notEmptyStringType"/>
-            <xs:element name="type" minOccurs="0">
-               <xs:simpleType>
-                   <xs:restriction base="xs:string">
-                       <xs:enumeration value="application" />
-                       <xs:enumeration value="bios" />
-                       <xs:enumeration value="driver" />
-                       <xs:enumeration value="editor" />
-                       <xs:enumeration value="firmware" />
-                       <xs:enumeration value="library" />
-                       <xs:enumeration value="os" />
-                       <xs:enumeration value="other" />
-                   </xs:restriction>
-               </xs:simpleType>
-           </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:simpleContent>
+            <xs:extension base="dcx:notEmptyStringType">
+                <xs:attribute name="version" type="dcx:notEmptyStringType" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 
     <xs:simpleType name="notEmptyStringType">
