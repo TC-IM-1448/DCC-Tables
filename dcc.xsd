@@ -106,7 +106,7 @@
         <xs:attribute name="schemaVersion" use="required">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="0\.1\.0"/>
+                    <xs:pattern value="1\.0\.0"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -178,7 +178,7 @@
             <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
             <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
             <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
-            <xs:element name="dcxSoftware" type="dcx:softwareType"/--> <!--value with attribute-->
+            <xs:element name="dcxSoftware" type="dcx:softwareType"/> <!--value with attribute-->
         </xs:sequence>
     </xs:complexType>
 
@@ -438,13 +438,19 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/> -->
             <xs:element name="statement" type="dcx:statementType" maxOccurs="unbounded"/>
+            <xs:element name="columnHeadings" type="dcx:statementColumnHeadingsType" minOccurs="0">
+                <xs:unique name="uniqueStatementColumnHeadings">
+                    <xs:selector xpath="dcx:column"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
         
 
-    <xs:complexType name="columnHeadingType">
+    <!-- <xs:complexType name="columnHeadingType">
         <xs:annotation>
             <xs:documentation>
                 A human readable heading of one of the columns in a tabular.
@@ -456,7 +462,7 @@
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="column" type="xs:string" use="required"/>
-    </xs:complexType>
+    </xs:complexType> -->
 
     <xs:complexType name="statementType">
         <xs:annotation>
@@ -496,6 +502,38 @@
             </xs:restriction>
     </xs:simpleType>
 
+    <xs:complexType name="statementColumnHeadingsType">
+        <xs:sequence>
+            <xs:element name="column" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="dcx:statementColumnHeadingNamesType" use="required"/>
+                </xs:complexType>
+                <xs:unique name="uniqueLanguageSettings">
+                    <xs:selector xpath="dcx:heading"/>
+                    <xs:field xpath="@lang"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="statementColumnHeadingNamesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="@id" /> 
+                <xs:enumeration value="@category" /> 
+                <xs:enumeration value="@imageRefs" /> 
+                <xs:enumeration value="heading" /> 
+                <xs:enumeration value="body" /> 
+                <xs:enumeration value="externalReference" /> 
+            </xs:restriction>
+    </xs:simpleType>
+
 <!--    ============================================================
                  EQUIPMENT
         ============================================================ -->
@@ -508,8 +546,14 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="equipmentItem" type="dcx:equipmentItemType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="columnHeadings" type="dcx:equipmentColumnHeadingsType" minOccurs="0">
+                        <xs:unique name="uniqueElementHeading">
+                            <xs:selector xpath="dcx:column"/>
+                            <xs:field xpath="@name"/>
+                        </xs:unique>
+                    </xs:element>
+            <!-- <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/> -->
         </xs:sequence>
     </xs:complexType>
 
@@ -522,48 +566,81 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
-        <xs:element name="productName" type="xs:string" minOccurs="0"/>
-        <xs:element name="productType" type="xs:string" minOccurs="0"/>
-        <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
-        <xs:element name="clientId" type="xs:string" minOccurs="0"/>
-        <xs:element name="manufacturerId" type="xs:string" minOccurs="0"/>
-        <xs:element name="serviceProviderId" type="xs:string" minOccurs="0"/>
-        <xs:element name="calDate" type="xs:date" minOccurs="0"/>
-        <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
-        <xs:element name="certId" type="xs:string" minOccurs="0"/> 
-        <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+            <xs:element name="productName" type="xs:string" minOccurs="0"/>
+            <xs:element name="productType" type="xs:string" minOccurs="0"/>
+            <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="clientId" type="xs:string" minOccurs="0"/>
+            <xs:element name="manufacturerId" type="xs:string" minOccurs="0"/>
+            <xs:element name="serviceProviderId" type="xs:string" minOccurs="0"/>
+            <xs:element name="calDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="certId" type="xs:string" minOccurs="0"/> 
+            <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
         </xs:sequence>
-        <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required">
-        </xs:attribute>
+        <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required"/>
         <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="equipmentCategoryType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="device"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="sensor"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="detector"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="transducer"/> <!-- -->
-			<xs:enumeration value="transferDevice"/>
-			<xs:enumeration value="reference"/> <!-- not used in VIM3-->
+			<xs:enumeration value="deviceForMeasurement"/> <!-- is used in VIM3 -->
 			<xs:enumeration value="referenceStandard"/> <!-- is used in VIM3, or Etalon -->
 			<xs:enumeration value="referenceMaterial"/> <!-- is used in VIM3 -->
-			<xs:enumeration value="model"/> <!-- is used in VIM3 2.48 -->
-			<xs:enumeration value="environment"/> 
-			<xs:enumeration value="other"/>
+			
+			<!-- <xs:enumeration value="device"/> is used in VIM3 -->
+			<!--<xs:enumeration value="sensor"/> is used in VIM3 -->
+			<!-- <xs:enumeration value="detector"/> is used in VIM3 -->
+			<!-- <xs:enumeration value="transducer"/>  -->
+			<!-- <xs:enumeration value="transferDevice"/> -->
+			<!-- <xs:enumeration value="reference"/> not used in VIM3 -->
+            <!-- <xs:enumeration value="model"/> is used in VIM3 2.48 -->
+			<!-- <xs:enumeration value="environment"/>  -->
+			<!-- <xs:enumeration value="other"/> -->
 		</xs:restriction>
 	</xs:simpleType>
+    
+    <xs:complexType name="equipmentColumnHeadingsType">
+        <xs:sequence>
+            <xs:element name="column" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="dcx:equipmentItemColumnHeadingNamesType" use="required"/>
+                </xs:complexType>
+                <xs:unique name="uniqueLanguageEquipmentLang">
+                    <xs:selector xpath="dcx:heading"/>
+                    <xs:field xpath="@lang"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:simpleType name="equipmentItemColumnHeadingNamesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="@id" /> 
+                <xs:enumeration value="@category" /> 
+                <xs:enumeration value="heading" /> 
+                <xs:enumeration value="manufacturer" /> 
+                <xs:enumeration value="productName" /> 
+                <xs:enumeration value="productType" /> 
+                <xs:enumeration value="productNumber" /> 
+                <xs:enumeration value="clientId" /> 
+                <xs:enumeration value="manufacturerId" /> 
+                <xs:enumeration value="serviceProviderId" /> 
+                <xs:enumeration value="calDate" /> 
+                <xs:enumeration value="calDueDate" /> 
+                <xs:enumeration value="certId" /> 
+                <xs:enumeration value="certProvider" /> 
+            </xs:restriction>
+    </xs:simpleType>
 
-    <xs:simpleType name="operationalStatusType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="as found"/>
-			<xs:enumeration value="after adjustment"/>
-			<xs:enumeration value="after maintenance"/>
-			<xs:enumeration value="after maintenance and adjustment"/>
-		</xs:restriction>
-	</xs:simpleType>
 
 <!--    ============================================================
                  SETTINGS
@@ -577,9 +654,15 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <!--xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/-->
             <xs:element name="setting" type="dcx:settingType" maxOccurs="unbounded"/>
+            <!-- <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/> -->
+            <!--xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/-->
+            <xs:element name="columnHeadings" type="dcx:settingColumnHeadingsType" minOccurs="0">
+                <xs:unique name="uniqueSettingColumnHeadings">
+                    <xs:selector xpath="dcx:column"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
@@ -605,6 +688,41 @@
         <xs:attribute name="settingId" type="xs:ID" use="required"/>
         <xs:attribute name="equipmentRef" type="xs:IDREFS" use="required"/>
     </xs:complexType>
+    
+    <xs:complexType name="settingColumnHeadingsType">
+        <xs:sequence>
+            <xs:element name="column" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="dcx:settingColumnHeadingNamesType" use="required"/>
+                </xs:complexType>
+                <xs:unique name="uniqueLanguageSettings">
+                    <xs:selector xpath="dcx:heading"/>
+                    <xs:field xpath="@lang"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="settingColumnHeadingNamesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="@settingId" /> 
+                <xs:enumeration value="@equipmentRef" /> 
+                <xs:enumeration value="heading" /> 
+                <xs:enumeration value="body" /> 
+                <xs:enumeration value="parameter" /> 
+                <xs:enumeration value="value" /> 
+                <xs:enumeration value="unit" /> 
+                <xs:enumeration value="softwareInstruction" /> 
+                <xs:enumeration value="statementRefs" />
+            </xs:restriction>
+    </xs:simpleType>
 
 <!-- ============================================================
                       MEASURING SYSTEMS 
@@ -618,8 +736,14 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="measuringSystem" type="dcx:measuringSystemType" maxOccurs="unbounded"/>
+            <xs:element name="columnHeadings" type="dcx:measuringSystemColumnHeadingsType" minOccurs="0">
+                <xs:unique name="uniqueMeasuringSystemsColumnHeadings">
+                    <xs:selector xpath="dcx:column"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
+            <!-- <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/> -->
         </xs:sequence>
     </xs:complexType>
 
@@ -686,6 +810,48 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="operationalStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="as found"/>
+			<xs:enumeration value="after adjustment"/>
+			<xs:enumeration value="after maintenance"/>
+			<xs:enumeration value="after maintenance and adjustment"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+    <xs:complexType name="measuringSystemColumnHeadingsType">
+        <xs:sequence>
+            <xs:element name="column" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="dcx:measuringSystemColumnHeadingNamesType" use="required"/>
+                </xs:complexType>
+                <xs:unique name="uniqueLanguageMeasuringSystem">
+                    <xs:selector xpath="dcx:heading"/>
+                    <xs:field xpath="@lang"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="measuringSystemColumnHeadingNamesType">
+        <xs:annotation>
+            <xs:documentation>
+            </xs:documentation>
+        </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="@id" /> 
+                <xs:enumeration value="heading" /> 
+                <xs:enumeration value="body" /> 
+                <xs:enumeration value="equipmentRefs" /> 
+                <xs:enumeration value="settingRefs" /> 
+                <xs:enumeration value="referenceRefs" /> 
+                <xs:enumeration value="statementRefs" />
+                <xs:enumeration value="operationalStatus" /> 
+            </xs:restriction>
+    </xs:simpleType>
 
 <!-- ============================================================
             OPTIONAL QUANTITY & UNIT DEFINITIONs
@@ -702,7 +868,13 @@
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="quantityUnitDef" type="dcx:quantityUnitDefType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- <xs:element name="columnHeading" type="dcx:columnHeadingType" minOccurs="0" maxOccurs="unbounded"/> -->
+            <xs:element name="columnHeadings" type="dcx:quantityUnitDefColumnHeadingsType" minOccurs="0">
+                <xs:unique name="uniqueQuantityUnitsDefsColumnHeadings">
+                    <xs:selector xpath="dcx:column"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 
@@ -766,6 +938,43 @@
             <xs:element name="CMC" type="dcx:accreditationType" maxOccurs="unbounded"/>
         </xs:sequence>
         </xs:complexType> -->
+
+
+        <xs:complexType name="quantityUnitDefColumnHeadingsType">
+            <xs:sequence>
+                <xs:element name="column" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="dcx:quantityUnitDefsColumnHeadingNamesType" use="required"/>
+                    </xs:complexType>
+                    <xs:unique name="uniqueLanguageQUDefs">
+                        <xs:selector xpath="dcx:heading"/>
+                        <xs:field xpath="@lang"/>
+                    </xs:unique>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    
+        <xs:simpleType name="quantityUnitDefsColumnHeadingNamesType">
+            <xs:annotation>
+                <xs:documentation>
+                </xs:documentation>
+            </xs:annotation>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="@id" /> 
+                    <xs:enumeration value="@idRef" /> 
+                    <xs:enumeration value="@quantityCodeSystem" /> 
+                    <xs:enumeration value="@statementRefs" /> 
+                    <xs:enumeration value="heading" /> 
+                    <xs:enumeration value="quantityCode" /> 
+                    <xs:enumeration value="unitUsed" /> 
+                    <xs:enumeration value="functionToSIunit" /> 
+                    <xs:enumeration value="unitSI" /> 
+                    <xs:enumeration value="externalRefs" />
+                </xs:restriction>
+        </xs:simpleType>
         
         
     <!--============================================================
