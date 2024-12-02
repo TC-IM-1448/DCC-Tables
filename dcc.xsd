@@ -182,21 +182,58 @@
         </xs:sequence>
     </xs:complexType>
 
+    <!--    ================= new suggestion for coreData ================================= -->
 
-    <xs:complexType name="fieldHeadingType">
+    <xs:complexType name="smoreDataType">
         <xs:annotation>
             <xs:documentation>
-                A human readable heading of any of the fields in a sections.
-                The attribute 'field' must refer to an element type in the section.
-
-                e.g.: 
-
+                Important metadata for the DCC containing the global unique identifier and other identifications.
+                Core data is a selection of simple fields. A heading in several languages may be connected to each field using the fieldHeadingType.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="transactionContent"  minOccurs="0">
+                <xs:simpleContent>
+                    <xs:extension base="dcx:fieldType">
+                        <xs:attribute name="value" type="dcc:transactionContentType" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:element>
+            <xs:element name="uniqueIdentifier"  minOccurs="0">
+                <xs:simpleContent>
+                    <xs:extension base="dcx:fieldType">
+                        <xs:attribute name="value" type="dcc:string" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:element>
+            <xs:element name="clientIdentifier"  minOccurs="0">
+                <xs:simpleContent>
+                    <xs:extension base="dcx:fieldType">
+                        <xs:attribute name="value" type="dcc:string" use="required"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:element>
         </xs:sequence>
-        <xs:attribute name="field" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="fieldHeadingType">
+    </xs:complexType>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="fieldType">
+        <xs:annotation>
+            <xs:documentation>
+                The fieldType contatins headings in any lanuage(s). The fieldType should be extended with an attribute with  
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
 
