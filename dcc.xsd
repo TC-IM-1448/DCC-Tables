@@ -154,7 +154,7 @@
     </xs:complexType>
 
     <!--    ================= coreData ================================= -->
-    
+    <!--    
     <xs:complexType name="coreDataType">
         <xs:annotation>
             <xs:documentation>
@@ -164,27 +164,28 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="transactionContent" type="dcx:transactionContentType" /> <!--simple-->
-            <xs:element name="uniqueIdentifier" type="xs:string"/> <!--simple-->
-            <xs:element name="clientIdentifier" type="xs:string" minOccurs="0"/> <!--simple-->
-            <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/> <!--simple-->
-            <xs:element name="issueDate" type="xs:date"/> <!--simple-->
-            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="endPerformanceDate" type="xs:date"/> <!--simple-->
-            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--simple-->
-            <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/> <!--simple-->
-            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
-            <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
-            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
-            <xs:element name="dcxSoftware" type="dcx:softwareType"/> <!--value with attribute-->
+            <xs:element name="transactionContent" type="dcx:transactionContentType" />
+            <xs:element name="uniqueIdentifier" type="xs:string"/> 
+            <xs:element name="clientIdentifier" type="xs:string" minOccurs="0"/> 
+            <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/> 
+            <xs:element name="issueDate" type="xs:date"/> 
+            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/> 
+            <xs:element name="endPerformanceDate" type="xs:date"/> 
+            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> 
+            <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> 
+            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> 
+            <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/>
+            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> 
+            <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> 
+            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> 
+            <xs:element name="dcxSoftware" type="dcx:softwareType"/> 
         </xs:sequence>
     </xs:complexType>
+    -->
 
     <!--    ================= new suggestion for coreData ================================= -->
 
-    <xs:complexType name="smoreDataType">
+    <xs:complexType name="coreDataType">
         <xs:annotation>
             <xs:documentation>
                 Important metadata for the DCC containing the global unique identifier and other identifications.
@@ -192,43 +193,161 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="transactionContent"  minOccurs="0">
-                <xs:simpleContent>
-                    <xs:extension base="dcx:fieldType">
-                        <xs:attribute name="value" type="dcc:transactionContentType" use="required"/>
-                    </xs:extension>
-                </xs:simpleContent>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:transactionContentType" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
             </xs:element>
-            <xs:element name="uniqueIdentifier"  minOccurs="0">
-                <xs:simpleContent>
-                    <xs:extension base="dcx:fieldType">
-                        <xs:attribute name="value" type="dcc:string" use="required"/>
-                    </xs:extension>
-                </xs:simpleContent>
+            <xs:element name="uniqueIdentifier" >
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:string" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
             </xs:element>
             <xs:element name="clientIdentifier"  minOccurs="0">
-                <xs:simpleContent>
-                    <xs:extension base="dcx:fieldType">
-                        <xs:attribute name="value" type="dcc:string" use="required"/>
-                    </xs:extension>
-                </xs:simpleContent>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:string" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="devicesForMeasurement"  minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:IDREFS" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="issueDate">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:date" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="beginPerformanceDate" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:date" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="endPerformanceDate">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:date" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="equipmentReceiptDate" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:date" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="equipmentReturnDate" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="xs:date" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="performanceLocation" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:performanceLocationType" use="required"/>
+                            <xs:attribute name="locationRef" type="xs:IDREF" use="optional"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="countryCodeISO3166_1">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:stringISO3166Type" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="mandatoryLangCodeISO639_1">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:stringISO639Type" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="usedLangCodeISO639_1">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:stringISO639Type" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="conformityResult" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:conformityStatusType" use="required"/>
+                            <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="dcxSoftware" minOccurs="0">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="dcx:fieldType">
+                            <xs:attribute name="value" type="dcx:notEmptyStringType" use="required"/>
+                            <xs:attribute name="version" type="dcx:notEmptyStringType" use="optional"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="fieldHeadingType">
-    </xs:complexType>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
+        <xs:attribute name="field" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="fieldType">
         <xs:annotation>
             <xs:documentation>
-                The fieldType contatins headings in any lanuage(s). The fieldType should be extended with an attribute with  
+                The fieldType contatins headings in any lanuage(s). The fieldType should be extended with a "value" attribute with an appropriate type corresponding to the content of the field. 
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
@@ -548,7 +667,7 @@
                     </xs:sequence>
                     <xs:attribute name="name" type="dcx:statementColumnHeadingNamesType" use="required"/>
                 </xs:complexType>
-                <xs:unique name="uniqueLanguageSettings">
+                <xs:unique name="uniqueLanguageStatements">
                     <xs:selector xpath="dcx:heading"/>
                     <xs:field xpath="@lang"/>
                 </xs:unique>

@@ -6,31 +6,40 @@
         <dcx:heading lang="en">Administrative data</dcx:heading>
         <dcx:heading lang="da">Administrative data</dcx:heading>
         <dcx:coreData>
-            <dcx:fieldHeading field='uniqueIdentifier'>
+            <dcx:heading lang="en">Core data</dcx:heading>
+            <dcx:heading lang="da">Dokumentdata</dcx:heading>
+            <dcx:transactionContent value="digitalCalibrationCertificate"> 
                 <dcx:heading lang="en">Certificate number</dcx:heading>
                 <dcx:heading lang="da">Certifikatnummer</dcx:heading>
-            </dcx:fieldHeading>
-            <dcx:fieldHeading field='clientIdentifier'>
+            </dcx:transactionContent>
+            <dcx:uniqueIdentifier value="SKH_10112_2"> 
+            </dcx:uniqueIdentifier>
+            <dcx:clientIdentifier value="xx28 "> 
                 <dcx:heading lang="en">Order number</dcx:heading>
                 <dcx:heading lang="da">Ordrenummer</dcx:heading>
-            </dcx:fieldHeading>
-            <dcx:fieldHeading field='issueDate'>
+            </dcx:clientIdentifier>
+            <dcx:issueDate value="2022-02-11"> 
                 <dcx:heading lang="en">Issue date</dcx:heading>
                 <dcx:heading lang="da">Udstedelsesdato</dcx:heading>
-            </dcx:fieldHeading>
-            <dcx:transactionContent>digitalCalibrationCertificate</dcx:transactionContent>
-            <dcx:uniqueIdentifier>SKH_10112_2</dcx:uniqueIdentifier>
-            <dcx:clientIdentifier>xx28 </dcx:clientIdentifier>
-            <dcx:issueDate>2022-02-11</dcx:issueDate>
-            <dcx:beginPerformanceDate>2022-02-10</dcx:beginPerformanceDate>
-            <dcx:endPerformanceDate>2022-02-10</dcx:endPerformanceDate>
-            <dcx:equipmentReceiptDate>2022-02-09</dcx:equipmentReceiptDate>
-            <dcx:performanceLocation>atProvider</dcx:performanceLocation>
-            <dcx:countryCodeISO3166_1>DK</dcx:countryCodeISO3166_1>
-            <dcx:mandatoryLangCodeISO639_1>en</dcx:mandatoryLangCodeISO639_1>
-            <dcx:usedLangCodeISO639_1>da</dcx:usedLangCodeISO639_1>
-            <dcx:conformityResult conformityStatusRef="meth2" >pass</dcx:conformityResult>
-            <dcx:dcxSoftware version="0.0.0">File written manually</dcx:dcxSoftware>
+            </dcx:issueDate>
+            <dcx:beginPerformanceDate value="2022-02-10"> 
+            </dcx:beginPerformanceDate>
+            <dcx:endPerformanceDate value="2022-02-10"> 
+            </dcx:endPerformanceDate>
+            <dcx:equipmentReceiptDate value="2022-02-09"> 
+            </dcx:equipmentReceiptDate>
+            <dcx:performanceLocation value="atProvider"> 
+            </dcx:performanceLocation>
+            <dcx:countryCodeISO3166_1 value="DK"> 
+            </dcx:countryCodeISO3166_1>
+            <dcx:mandatoryLangCodeISO639_1 value="en"> 
+            </dcx:mandatoryLangCodeISO639_1>
+            <dcx:usedLangCodeISO639_1 value="da"> 
+            </dcx:usedLangCodeISO639_1>
+            <dcx:conformityResult conformityStatusRef="meth2"  value="pass"> 
+            </dcx:conformityResult>
+            <dcx:dcxSoftware version="0.0.0" value="File written manually"> 
+            </dcx:dcxSoftware>
         </dcx:coreData>
         <dcx:serviceProvider>
             <dcx:heading lang="en">Calibration laboratory</dcx:heading>
