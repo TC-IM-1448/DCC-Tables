@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema version="0.0.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:dcx="https://dfm.dk"
+<xs:schema version="0.0.0" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           xmlns:dcx="https://dfm.dk"
            targetNamespace="https://dfm.dk"
            elementFormDefault="qualified">
 
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
 
     <xs:annotation>
         <xs:documentation>
@@ -140,16 +143,17 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="coreData" type="dcx:coreDataType"/>
-            <!--xs:element name="dcxSoftware" type="dcx:softwareType"/--> <!--complex-->
-            <xs:element name="serviceProvider" type="dcx:contactType"/>
+            <xs:element name="dcxSoftware" type="dcx:dcxSoftwareType"/> <!--value with attribute-->
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
-            <!--xs:element name="respPersons" type="dcx:respPersonListType"/-->
-            <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/> <!--complex-->
+            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
+            <xs:element name="documentAuthorization" type="dcx:documentAuthorizationType" minOccurs="0"/>
+            <xs:element name="serviceProvider" type="dcx:contactType"/>
             <xs:element name="client" type="dcx:contactType"/> 
-            <xs:element name="equipmentReturnInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="clientBillingInfo" type="dcx:contactType" minOccurs="0"/>
+            <xs:element name="equipmentReturnInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="certificateReturnInfo" type="dcx:contactType" minOccurs="0"/>
             <xs:element name="performanceSite" type="dcx:contactType" minOccurs="0" maxOccurs="unbounded"/>
+            <!-- <xs:element name="previousReport" type="dcx:hashType" minOccurs="0"/>  -->
         </xs:sequence>
     </xs:complexType>
 
@@ -159,46 +163,211 @@
         <xs:annotation>
             <xs:documentation>
                 Important metadata for the DCC containing the global unique identifier and other identifications.
-                Core data is a selection of simple fields. A heading in several languages may be connected to each field using the fieldHeadingType.
+                Core data is a selection of simple fields.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="transactionContent" type="dcx:transactionContentType" /> <!--simple-->
-            <xs:element name="uniqueIdentifier" type="xs:string"/> <!--simple-->
-            <xs:element name="clientIdentifier" type="xs:string" minOccurs="0"/> <!--simple-->
-            <xs:element name="devicesForMeasurement" type="xs:IDREFS" minOccurs="0"/> <!--simple-->
-            <xs:element name="issueDate" type="xs:date"/> <!--simple-->
-            <xs:element name="beginPerformanceDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="endPerformanceDate" type="xs:date"/> <!--simple-->
-            <xs:element name="equipmentReceiptDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="equipmentReturnDate" type="xs:date" minOccurs="0"/> <!--simple-->
-            <xs:element name="performanceLocation" type="dcx:performanceLocationType"/> <!--simple-->
-            <xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type"/> <!--simple-->
-            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639Type"/> <!--simple-->
-            <xs:element name="usedLangCodeISO639_1" type="dcx:stringISO639Type" minOccurs="0" maxOccurs="unbounded"/> <!--simple-->
-            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> <!--value with attribute-->
-            <xs:element name="dcxSoftware" type="dcx:softwareType"/> <!--value with attribute-->
+            <xs:element name="transactionContent" type="dcx:transactionContentFieldType" /> <!--simple-->
+            <xs:element name="uniqueIdentifier" type="dcx:stringFieldType"/> <!--simple-->
+            <xs:element name="clientIdentifier" type="dcx:stringFieldType" minOccurs="0"/> <!--simple-->
+            <xs:element name="devicesForMeasurement" type="dcx:idrefsFieldType" minOccurs="0"/> <!--simple-->
+            <xs:element name="issueDate" type="dcx:dateFieldType"/> <!--simple-->
+            <xs:element name="beginPerformanceDate" type="dcx:dateFieldType" minOccurs="0"/> <!--simple-->
+            <xs:element name="endPerformanceDate" type="dcx:dateFieldType"/> <!--simple-->
+            <xs:element name="equipmentReceiptDate" type="dcx:dateFieldType" minOccurs="0"/> <!--simple-->
+            <xs:element name="equipmentReturnDate" type="dcx:dateFieldType" minOccurs="0"/> <!--simple-->
+            <xs:element name="performanceLocation" type="dcx:performanceLocationFieldType"/> <!--simple-->
+            <xs:element name="mandatoryLangCodeISO639_1" type="dcx:stringISO639FieldType" maxOccurs="unbounded"/> <!--simple-->
         </xs:sequence>
     </xs:complexType>
 
-
-    <xs:complexType name="fieldHeadingType">
+    <xs:complexType name="fieldType">
         <xs:annotation>
             <xs:documentation>
-                A human readable heading of any of the fields in a sections.
-                The attribute 'field' must refer to an element type in the section.
-
-                e.g.: 
-
+                In stead of a simple element this element can be used to provide the simple value as an attribute where the descriptions of the content is available in human readable form as subelements of the element types dcx:headingType.
+                usage example: 
+                    <dcx:issueDate value="2024-11-29">
+                        <dcx:heading lang="en">Issue date</dcx:heading>
+                        <dcx:heading lang="da">Udstedelsesdato</dcx:heading>
+                    </dcx:issueDate>
+                
+                schema usage example: 
+                    <xs:element name="issueDate" type="dcx:elementWithHeadingType"/>
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="field" type="xs:string" use="required"/>
     </xs:complexType>
 
+    <xs:complexType name="stringFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="notEmptyStringFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:notEmptyStringType"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:simpleType name="notEmptyStringType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^\s]+(\s+[^\s]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="emailFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:emailType"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:simpleType name="emailType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="dateFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="xs:date"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="intFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name='value' type='xs:int'/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="decimalFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name='value' type='xs:decimal'/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="performanceLocationFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:performanceLocationType"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    
+    <xs:complexType name="stringISO639FieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:stringISO639Type"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="stringISO3166FieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:stringISO3166Type"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="idrefFieldType">
+        <xs:annotation>
+            <xs:documentation>
+                Field for refering to an id defined within the xml. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="xs:IDREF" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="idrefsFieldType">
+        <xs:annotation>
+            <xs:documentation>
+                Field for refering to multiple id's defined within the xml. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="xs:IDREFS" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="conformityResultFieldType">
+        <xs:annotation>
+            <xs:documentation>
+                The conformityResultType is for the overall conformity of all devices measured in the report. Areference to a conformity statement explaining the criteria of the assessment is required.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:conformityStatusType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="conformityResultType">
+        <xs:annotation>
+            <xs:documentation>
+                This type contain fields with field headings as well as sub-elements containing additional fieds..
+                The conformityResultType is for the overall conformity of all devices measured in the report. 
+                A reference to a conformity statement explaining the criteria of the assessment is required.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="conformityResult" type="dcx:conformityResultFieldType"/> <!-- name of company or privatePerson-->
+            <xs:element name="decisionRuleRef" type="dcx:idrefFieldType"/> <!-- name of company or privatePerson-->
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!--    ================= dcxSoftware ================================= -->
+    <xs:complexType name="dcxSoftwareType">
+        <xs:annotation>
+            <xs:documentation>
+                This type contain fields with field headings as well as sub-elements containing additional fieds..
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="manufacturer" type="dcx:stringFieldType"/> <!-- name of company or privatePerson-->
+            <xs:element name="productName" type="dcx:stringFieldType"/> <!-- name of company or privatePerson-->
+            <xs:element name="serialNumber" type="dcx:stringFieldType"/> <!-- name of company or privatePerson-->
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!--    ================= transactionContent ================================= -->
+    <xs:complexType name="transactionContentFieldType">
+        <xs:annotation>
+            <xs:documentation>
+                The transactionContentField provides a specification of the file content as selectable in the dcx:transactionContentType. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:transactionContentType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 
     <xs:simpleType name="transactionContentType">
         <xs:restriction base="xs:string">
@@ -207,66 +376,65 @@
             <xs:enumeration value="digitalReportOfSampling"/>
             <xs:enumeration value="digitalMeasurementReport"/>
             <xs:enumeration value="digitalExaminationCertificate"/>
-            <xs:enumeration value="digitalConformityCertificate"/>
+            <xs:enumeration value="digitalCertificateOfConformity"/>
             
             <xs:enumeration value="request:digitalCalibrationCertificate"/>
             <xs:enumeration value="request:digitalTestReport"/>
             <xs:enumeration value="request:digitalReportOfSampling"/>
             <xs:enumeration value="request:digitalMeasurementReport"/>
             <xs:enumeration value="request:digitalExaminationCertificate"/>
-            <xs:enumeration value="request:digitalConformityCertificate"/>
-
+            <xs:enumeration value="request:digitalCertificateOfConformity"/>
+            
             <xs:enumeration value="template:digitalCalibrationCertificate"/>
+            <xs:enumeration value="template:digitalTestReport"/>
+            <xs:enumeration value="template:digitalReportOfSampling"/>
             <xs:enumeration value="template:digitalMeasurementReport"/>
             <xs:enumeration value="template:digitalExaminationCertificate"/>
-            <xs:enumeration value="template:digitalConformityCertificate"/>
-            <xs:enumeration value="template:digitalTestReport"/>
+            <xs:enumeration value="template:digitalCertificateOfConformity"/>
         </xs:restriction>
     </xs:simpleType>
 
+    <!--    ================= performanceLocationType ================================= -->
     <xs:simpleType name="performanceLocationType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="atProvider"/>
             <xs:enumeration value="inField"/>
         </xs:restriction>
     </xs:simpleType>
-
-    <xs:complexType name="conformityResultType">
+    <!--    ================= documentAuthorization ================================= -->
+    <xs:complexType name="documentAuthorizationType">
         <xs:annotation>
             <xs:documentation>
-                The conformityResultType is for the overall conformity of all devices measured in the report. Areference to a conformity statement explaining the criteria of the assessment is required.
+                The transactionContentField provides a specification of the file content as selectable in the dcx:transactionContentType. 
             </xs:documentation>
         </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="dcx:conformityStatusType">
-                <xs:attribute name="conformityStatusRef" type="xs:IDREF" use="required"/>
-            </xs:extension>
-        </xs:simpleContent>
+        <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType"/>
+            <xs:element name="authorizingPerson" type="dcx:respPersonType" minOccurs="0"/>
+            <xs:element name="coSigner" type="dcx:respPersonType" minOccurs="0" maxOccurs='4'/>
+        </xs:sequence>    
     </xs:complexType>
     
-
-    <!--    ================= dcxSoftware ================================= -->
-
-    <xs:complexType name="softwareType">
+    <xs:complexType name="respPersonType">
         <xs:annotation>
             <xs:documentation>
-                Software name, version and a description.
+                Intended for extending the contactInfoType with cryptographic information. 
             </xs:documentation>
         </xs:annotation>
-        <xs:simpleContent>
-            <xs:extension base="dcx:notEmptyStringType">
-                <xs:attribute name="version" type="dcx:notEmptyStringType" use="optional"/>
+        <xs:complexContent>
+            <xs:extension base="dcx:contactInfoType">
+                <xs:sequence>
+                    <xs:element ref="ds:Signature" minOccurs="0"/>
+                </xs:sequence>
+                <!-- <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/> -->
             </xs:extension>
-        </xs:simpleContent>
+        </xs:complexContent>
     </xs:complexType>
 
-    <xs:simpleType name="notEmptyStringType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[^\s]+(\s+[^\s]+)*"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <!--    ================= servicePorvider ================================= -->
+    
+    <!--    ================= contactType and locationType e.g.: servicePorvider ================================= -->
     <!-- definitions of the ISO country and language codes are given in the end of this document -->
 
     <xs:complexType name="contactType">
@@ -277,20 +445,21 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType" minOccurs="0" maxOccurs="unbounded"/> <!-- name of company or privatePerson-->
-            <xs:element name="url" type="xs:string" minOccurs="0"/>
-            <xs:element name="VATIN" type="dcx:contactInfoType" minOccurs="0"/> <!-- e.g. VAT number -->
-            <xs:element name="location" type="dcx:locationType" minOccurs="0"/>
+            <xs:element name="name" type="dcx:stringFieldType"/> <!-- name of company or privatePerson-->
+            <xs:element name="name2" type="dcx:stringFieldType" minOccurs="0"/> <!-- name of company or privatePerson-->
+            <xs:element name="name3" type="dcx:stringFieldType" minOccurs="0"/> <!-- name of company or privatePerson-->
+            <xs:element name="url" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="VATIN" type="dcx:stringFieldType" minOccurs="0"/> <!-- e.g. VAT number -->
+            <xs:element name="address" type="dcx:addressType" minOccurs="0"/>
+            <xs:element name="position" type="dcx:positionType" minOccurs="0"/>
             <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
-            <xs:element name="authorizingPerson" type="dcx:respPersonType" minOccurs="0"/>
-            <xs:element name="coSigner" type="dcx:respPersonType" minOccurs="0" maxOccurs='unbounded'/>
+            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="locationType">
+    <xs:complexType name="addressType">
         <xs:annotation>
             <xs:documentation>
                 This type is a list of simple fields with field headings
@@ -298,17 +467,14 @@
         </xs:annotation>
         <xs:choice maxOccurs="unbounded">
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="street" type="dcx:notEmptyStringType"/>
-            <xs:element name="streetNo" type="dcx:notEmptyStringType"/>
-            <xs:element name="postOfficeBox" type="dcx:notEmptyStringType"/>
-            <xs:element name="city" type="dcx:notEmptyStringType"/>
-            <xs:element name="district" type="dcx:notEmptyStringType"/>
-            <xs:element name="state" type="dcx:notEmptyStringType"/>
-            <xs:element name="postCode" type="dcx:notEmptyStringType"/>
-            <xs:element name="countryCode" type="dcx:stringISO3166Type"/>
-            <xs:element name="further" type="dcx:stringWithLangType"/>
-            <!-- <xs:element name="positionCoordinates" type="dcx:positionCoordinatesType"/> -->
+            <xs:element name="street" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="streetNo" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="postOfficeBox" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="city" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="district" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="state" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="postalCode" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="country" type="dcx:stringISO3166FieldType" minOccurs="0"/>
         </xs:choice>
     </xs:complexType>
 
@@ -320,34 +486,28 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="attPerson" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="attPerson" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="eMail" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="mobile" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="phone" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="fax" type="dcx:stringFieldType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="idRef" type="xs:IDREF" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="respPersonType">
+    <xs:complexType name="positionType">
         <xs:annotation>
             <xs:documentation>
-                This type is a list of simple fields with field headings
-                A person responsible for a DCX.
+                Position provided as longitude, latitude and altitude (optional) with WGS84 datum. 
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="name" type="dcx:notEmptyStringType"/>
-            <xs:element name="eMail" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="phone" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="fax" type="dcx:notEmptyStringType" minOccurs="0"/>
-            <xs:element name="cryptElectronicSeal" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicSignature" type="xs:boolean" minOccurs="0"/>
-            <xs:element name="cryptElectronicTimeStamp" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="longitude" type="dcx:decimalFieldType"/>
+            <xs:element name="latitude" type="dcx:decimalFieldType" />
+            <xs:element name="altitutde" type="dcx:decimalFieldType" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
 
     <!--    ================= accreditation ================================= -->
@@ -367,12 +527,11 @@
         </xs:annotation>
 	<xs:sequence>
 	    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="accreditationCountry" minOccurs="1" type="dcx:stringISO3166Type"/>
-            <xs:element name="accreditationBody" minOccurs="1"/>
-            <xs:element name="accreditationLabId" minOccurs="1"/>
-            <xs:element name="accreditationNorm" minOccurs="0" type="dcx:accreditationNormType"/> <!--type with specific values i.e. 17025, 17034, ... -->
-            <xs:element name="accreditationApplicability" minOccurs="1" type="dcx:accreditationApplicabilityType"/>
+            <xs:element name="accreditationCountry" type="dcx:stringISO3166FieldType" minOccurs="0" />
+            <xs:element name="accreditationBody" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="accreditationLabId" type="dcx:stringFieldType" minOccurs="0"/>
+            <xs:element name="accreditationNorm" type="dcx:accreditationNormFieldType" minOccurs="0" /> <!--type with specific values i.e. 17025, 17034, ... -->
+            <xs:element name="accreditationApplicability" type="dcx:accreditationApplicabilityFieldType" minOccurs="1"/>
         </xs:sequence>
         <!-- <xs:attribute name="accrId" type="xs:ID" use="required"/> -->
         <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/>
@@ -390,6 +549,14 @@
             <xs:enumeration value="wholly"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="accreditationApplicabilityFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:accreditationApplicabilityType"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
     
     <xs:simpleType name="accreditationNormType">
         <xs:annotation>
@@ -402,9 +569,19 @@
             <xs:enumeration value="ISO 17034"/>
         </xs:restriction>
     </xs:simpleType>
+  
+    <xs:complexType name="accreditationNormFieldType">
+        <xs:complexContent>
+            <xs:extension base="dcx:fieldType">
+                <xs:attribute name="value" type="dcx:accreditationNormType"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>  
+
+
 
     <!--    ================= previousReport ================================= -->
-
+<!-- 
     <xs:complexType name="hashType">
         <xs:annotation>
             <xs:documentation>
@@ -413,18 +590,18 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="fieldHeading" type="dcx:fieldHeadingType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="referral" type="dcx:notEmptyStringType"/>
             <xs:element name="referralID" type="dcx:notEmptyStringType"/>
             <xs:element name="procedure" type="dcx:notEmptyStringType"/>
             <xs:element name="value" type="dcx:notEmptyStringType"/>
             <xs:element name="inValidityRange" type="xs:boolean" minOccurs="0"/>
             <xs:element name="traceable" type="xs:boolean" minOccurs="0"/>
-            <!--xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/-->            
-            <xs:element name="linkedReport" type="dcx:refTypeType" minOccurs="0"/>            
+-->
+            <!-- xs:element name="linkedReport" type="dcx:hashType" minOccurs="0"/-->            
+<!--           <xs:element name="linkedReport" type="dcx:refTypeType" minOccurs="0"/>            
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
-    </xs:complexType>
+    </xs:complexType> -->
 
 <!--    ============================================================
                  STATEMENTS
@@ -511,7 +688,7 @@
                     </xs:sequence>
                     <xs:attribute name="name" type="dcx:statementColumnHeadingNamesType" use="required"/>
                 </xs:complexType>
-                <xs:unique name="uniqueLanguageSettings">
+                <xs:unique name="uniqueLanguagesStatementsColumnsHeadings">
                     <xs:selector xpath="dcx:heading"/>
                     <xs:field xpath="@lang"/>
                 </xs:unique>
@@ -563,20 +740,24 @@
                 The equipmentItemType is a list of simple fields without field headings.
                 A number of equiptmentItems can be organized as rows in a tabular with columnHeadings defined by the equipmentListType.
                 Each row may have a descriptive heading in multiple languages.
+
+                    Batch/Lot Numbers: Identify a group of products produced together.
+                    Serial Numbers: Identify individual units within those groups.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="manufacturer" type="xs:string" minOccurs="0"/>
+            <xs:element name="manufacturerName" type="xs:string" minOccurs="0"/>
             <xs:element name="productName" type="xs:string" minOccurs="0"/>
-            <xs:element name="productType" type="xs:string" minOccurs="0"/>
             <xs:element name="productNumber" type="xs:string" minOccurs="0"/>
+            <xs:element name="serialNumber" type="xs:string" minOccurs="0"/> <!-- serial number or batch number -->
+            <xs:element name="batchNumber" type="xs:string" minOccurs="0"/> <!-- serial number or batch number -->
+            <xs:element name="productClass" type="xs:string" minOccurs="0"/>
             <xs:element name="clientId" type="xs:string" minOccurs="0"/>
-            <xs:element name="manufacturerId" type="xs:string" minOccurs="0"/>
             <xs:element name="serviceProviderId" type="xs:string" minOccurs="0"/>
-            <xs:element name="calDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="calDueDate" type="xs:date" minOccurs="0"/>
-            <xs:element name="certId" type="xs:string" minOccurs="0"/> 
+            <xs:element name="prevCalibDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="calibDueDate" type="xs:date" minOccurs="0"/>
+            <xs:element name="prevCertId" type="xs:string" minOccurs="0"/> 
             <xs:element name="certProvider" type="xs:string" minOccurs="0"/> 
         </xs:sequence>
         <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required"/>
@@ -586,6 +767,7 @@
     <xs:simpleType name="equipmentCategoryType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="deviceForMeasurement"/> <!-- is used in VIM3 -->
+			<xs:enumeration value="transferDevice"/> <!-- is used in VIM3 -->
 			<xs:enumeration value="referenceStandard"/> <!-- is used in VIM3, or Etalon -->
 			<xs:enumeration value="referenceMaterial"/> <!-- is used in VIM3 -->
 			
@@ -675,8 +857,6 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <!--<xs:element name="countryCodeISO3166_1" type="dcx:stringISO3166Type" minOccurs="0"
-                        maxOccurs="unbounded"/>-->
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
             <xs:element name="parameter" type="dcx:notEmptyStringType" minOccurs="0"/>
@@ -990,8 +1170,8 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="conformityStatus" type="dcx:conformityStatusType" minOccurs="0"/>
-            <xs:element name="conformityStatusRef" type="xs:IDREF" minOccurs="0"/>
+            <xs:element name="conformityStatus" type="dcx:conformityResultFieldType" minOccurs="0"/>
+            <xs:element name="conformityStatusRef" type="dcx:idrefFieldType" minOccurs="0"/>
             <xs:element name="column" type="dcx:columnType" minOccurs="0" maxOccurs="unbounded"/>
             <!-- <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/> -->
         </xs:sequence>
@@ -2222,557 +2402,6 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-            <!--   <xs:enumeration value="AUV/A-1.1.1" />
-               <xs:enumeration value="AUV/A-1.1.2" />
-               <xs:enumeration value="AUV/A-1.2.1" />
-               <xs:enumeration value="AUV/A-1.2.2" />
-               <xs:enumeration value="AUV/A-1.2.3" />
-               <xs:enumeration value="AUV/A-1.3.1" />
-               <xs:enumeration value="AUV/A-1.3.2" />
-               <xs:enumeration value="AUV/A-2.1.1" />
-               <xs:enumeration value="AUV/A-2.2.1" />
-               <xs:enumeration value="AUV/A-3.1.1" />
-               <xs:enumeration value="AUV/A-3.1.2" />
-               <xs:enumeration value="AUV/A-3.1.3" />
-               <xs:enumeration value="AUV/A-3.1.4" />
-               <xs:enumeration value="AUV/A-4.1.1" />
-               <xs:enumeration value="AUV/A-4.1.2" />
-               <xs:enumeration value="AUV/A-4.2.1" />
-               <xs:enumeration value="AUV/A-4.2.2" />
-               <xs:enumeration value="AUV/A-4.3.1" />
-               <xs:enumeration value="AUV/A-4.3.2" />
-               <xs:enumeration value="AUV/A-4.4.1" />
-               <xs:enumeration value="AUV/A-4.4.2" />
-               <xs:enumeration value="AUV/A-5.1.1" />
-               <xs:enumeration value="AUV/A-5.1.2" />
-               <xs:enumeration value="AUV/A-6.1.1" />
-               <xs:enumeration value="AUV/A-6.1.2" />
-               <xs:enumeration value="AUV/W-11.1.1" />
-               <xs:enumeration value="AUV/W-11.1.2" />
-               <xs:enumeration value="AUV/W-11.2.1" />
-               <xs:enumeration value="AUV/W-11.2.2" />
-               <xs:enumeration value="AUV/W-12.1.1" />
-               <xs:enumeration value="AUV/W-12.1.2" />
-               <xs:enumeration value="AUV/W-12.2.1" />
-               <xs:enumeration value="AUV/W-12.2.2" />
-               <xs:enumeration value="AUV/W-13.1.1" />
-               <xs:enumeration value="AUV/W-13.1.2" />
-               <xs:enumeration value="AUV/W-13.1.3" />
-               <xs:enumeration value="AUV/W-14.1.1" />
-               <xs:enumeration value="AUV/W-14.1.2" />
-               <xs:enumeration value="AUV/W-14.1.3" />
-               <xs:enumeration value="AUV/V-21.1.1" />
-               <xs:enumeration value="AUV/V-21.1.2" />
-               <xs:enumeration value="AUV/V-21.2.1" />
-               <xs:enumeration value="AUV/V-21.2.2" />
-               <xs:enumeration value="AUV/V-21.3.1" />
-               <xs:enumeration value="AUV/V-21.3.2" />
-               <xs:enumeration value="AUV/V-21.3.3" />
-               <xs:enumeration value="AUV/V-21.3.4" />
-               <xs:enumeration value="AUV/V-21.3.5" />
-               <xs:enumeration value="AUV/V-21.4.1" />
-               <xs:enumeration value="AUV/V-21.4.2" />
-               <xs:enumeration value="AUV/V-22.1.1" />
-               <xs:enumeration value="AUV/V-22.1.2" />
-               <xs:enumeration value="AUV/V-22.2.1" />
-               <xs:enumeration value="AUV/V-22.3.1" />
-               <xs:enumeration value="AUV/V-22.3.3" />
-               <xs:enumeration value="AUV/V-22.3.5" />
-               <xs:enumeration value="AUV/V-22.4.1" />
-               <xs:enumeration value="AUV/V-23.1.1" />
-               <xs:enumeration value="AUV/V-23.1.2" />
-               <xs:enumeration value="AUV/V-23.2.1" />
-               <xs:enumeration value="AUV/V-23.2.2" />
-               <xs:enumeration value="AUV/V-23.2.3" />
-               <xs:enumeration value="AUV/V-23.2.4" />
-               <xs:enumeration value="AUV/V-30.1.1" />
-               <xs:enumeration value="AUV/V-30.1.2" />
-               <xs:enumeration value="AUV/V-30.1.3" />
-               <xs:enumeration value="EM/DC-1.1.1" />
-               <xs:enumeration value="EM/DC-1.1.2" />
-               <xs:enumeration value="EM/DC-1.1.3" />
-               <xs:enumeration value="EM/DC-1.1.4" />
-               <xs:enumeration value="EM/DC-1.2.1" />
-               <xs:enumeration value="EM/DC-1.2.2" />
-               <xs:enumeration value="EM/DC-1.3.1" />
-               <xs:enumeration value="EM/DC-1.3.2" />
-               <xs:enumeration value="EM/DC-2.1.1" />
-               <xs:enumeration value="EM/DC-2.1.2" />
-               <xs:enumeration value="EM/DC-2.1.3" />
-               <xs:enumeration value="EM/DC-2.1.4" />
-               <xs:enumeration value="EM/DC-2.1.5" />
-               <xs:enumeration value="EM/DC-2.1.6" />
-               <xs:enumeration value="EM/DC-2.2.1" />
-               <xs:enumeration value="EM/DC-2.2.2" />
-               <xs:enumeration value="EM/DC-2.2.3" />
-               <xs:enumeration value="EM/DC-2.3.1" />
-               <xs:enumeration value="EM/DC-3.1.1" />
-               <xs:enumeration value="EM/DC-3.1.2" />
-               <xs:enumeration value="EM/DC-3.1.3" />
-               <xs:enumeration value="EM/DC-3.1.4" />
-               <xs:enumeration value="EM/DC-3.1.5" />
-               <xs:enumeration value="EM/DC-3.2.1" />
-               <xs:enumeration value="EM/DC-3.2.2" />
-               <xs:enumeration value="EM/DC-3.2.3" />
-               <xs:enumeration value="EM/DC-3.3.1" />
-               <xs:enumeration value="EM/Imped-4.1.1" />
-               <xs:enumeration value="EM/Imped-4.1.2" />
-               <xs:enumeration value="EM/Imped-4.1.3" />
-               <xs:enumeration value="EM/Imped-4.1.4" />
-               <xs:enumeration value="EM/Imped-4.1.5" />
-               <xs:enumeration value="EM/Imped-4.2.1" />
-               <xs:enumeration value="EM/Imped-4.2.2" />
-               <xs:enumeration value="EM/Imped-4.2.3" />
-               <xs:enumeration value="EM/Imped-4.2.4" />
-               <xs:enumeration value="EM/Imped-4.3.1" />
-               <xs:enumeration value="EM/Imped-4.3.2" />
-               <xs:enumeration value="EM/Imped-4.3.3" />
-               <xs:enumeration value="EM/Imped-4.3.4" />
-               <xs:enumeration value="EM/Imped-4.3.5" />
-               <xs:enumeration value="EM/Imped-4.3.6" />
-               <xs:enumeration value="EM/AC-5.1.1" />
-               <xs:enumeration value="EM/AC-5.1.2" />
-               <xs:enumeration value="EM/AC-5.1.3" />
-               <xs:enumeration value="EM/AC-5.2.1" />
-               <xs:enumeration value="EM/AC-5.2.2" />
-               <xs:enumeration value="EM/AC-5.3.1" />
-               <xs:enumeration value="EM/AC-5.3.2" />
-               <xs:enumeration value="EM/AC-6.1.1" />
-               <xs:enumeration value="EM/AC-6.2.1" />
-               <xs:enumeration value="EM/AC-6.2.2" />
-               <xs:enumeration value="EM/AC-6.3.1" />
-               <xs:enumeration value="EM/AC-7.1.1" />
-               <xs:enumeration value="EM/AC-7.1.2" />
-               <xs:enumeration value="EM/AC-7.1.3" />
-               <xs:enumeration value="EM/HV-8.1.1" />
-               <xs:enumeration value="EM/HV-8.1.2" />
-               <xs:enumeration value="EM/HV-8.1.3" />
-               <xs:enumeration value="EM/HV-8.1.4" />
-               <xs:enumeration value="EM/HV-8.1.5" />
-               <xs:enumeration value="EM/HV-8.2.1" />
-               <xs:enumeration value="EM/HV-8.2.2" />
-               <xs:enumeration value="EM/HV-8.2.3" />
-               <xs:enumeration value="EM/HV-8.2.4" />
-               <xs:enumeration value="EM/HV-8.3.1" />
-               <xs:enumeration value="EM/HV-8.3.2" />
-               <xs:enumeration value="EM/HV-8.3.3" />
-               <xs:enumeration value="EM/HV-8.3.4" />
-               <xs:enumeration value="EM/HV-8.3.5" />
-               <xs:enumeration value="EM/HV-8.3.6" />
-               <xs:enumeration value="EM/HV-8.4.1" />
-               <xs:enumeration value="EM/HV-8.4.3" />
-               <xs:enumeration value="EM/HV-8.4.5" />
-               <xs:enumeration value="EM/HV-8.4.9" />
-               <xs:enumeration value="EM/HV-8.5.1" />
-               <xs:enumeration value="EM/HV-8.5.2" />
-               <xs:enumeration value="EM/HV-8.5.3" />
-               <xs:enumeration value="EM/HV-8.6.3" />
-               <xs:enumeration value="EM/HV-8.6.5" />
-               <xs:enumeration value="EM/HV-8.6.6" />
-               <xs:enumeration value="EM/HV-8.7.3" />
-               <xs:enumeration value="EM/HV-8.7.4" />
-               <xs:enumeration value="EM/OtherDC-9.1.1" />
-               <xs:enumeration value="EM/OtherDC-9.1.2" />
-               <xs:enumeration value="EM/OtherDC-9.2.1" />
-               <xs:enumeration value="EM/OtherDC-9.2.2" />
-               <xs:enumeration value="EM/OtherDC-9.2.3" />
-               <xs:enumeration value="EM/OtherDC-9.3.1" />
-               <xs:enumeration value="EM/OtherDC-9.3.2" />
-               <xs:enumeration value="EM/OtherDC-9.3.4" />
-               <xs:enumeration value="EM/OtherDC-9.3.5" />
-               <xs:enumeration value="EM/OtherDC-9.3.7" />
-               <xs:enumeration value="EM/Field-10.1.1" />
-               <xs:enumeration value="EM/Field-10.1.2" />
-               <xs:enumeration value="EM/Field-10.2.1" />
-               <xs:enumeration value="EM/Field-10.2.2" />
-               <xs:enumeration value="EM/Field-10.2.3" />
-               <xs:enumeration value="EM/Field-10.2.4" />
-               <xs:enumeration value="EM/Field-10.2.5" />
-               <xs:enumeration value="EM/Field-10.2.6" />
-               <xs:enumeration value="EM/Field-10.2.7" />
-               <xs:enumeration value="EM/Field-10.2.8" />
-               <xs:enumeration value="EM/Field-10.3.1" />
-               <xs:enumeration value="EM/Field-10.3.2" />
-               <xs:enumeration value="EM/Field-10.3.3" />
-               <xs:enumeration value="EM/Field-10.3.4" />
-               <xs:enumeration value="EM/Field-10.3.5" />
-               <xs:enumeration value="EM/Field-10.3.6" />
-               <xs:enumeration value="EM/RF-11.1.1" />
-               <xs:enumeration value="EM/RF-11.1.2" />
-               <xs:enumeration value="EM/RF-11.1.3" />
-               <xs:enumeration value="EM/RF-11.1.4" />
-               <xs:enumeration value="EM/RF-11.1.5" />
-               <xs:enumeration value="EM/RF-11.1.6" />
-               <xs:enumeration value="EM/RF-11.2.1" />
-               <xs:enumeration value="EM/RF-11.2.2" />
-               <xs:enumeration value="EM/RF-11.2.3" />
-               <xs:enumeration value="EM/RF-11.2.4" />
-               <xs:enumeration value="EM/RF-11.2.5" />
-               <xs:enumeration value="EM/RF-11.2.6" />
-               <xs:enumeration value="EM/RF-11.3.1" />
-               <xs:enumeration value="EM/RF-11.3.2" />
-               <xs:enumeration value="EM/RF-11.3.3" />
-               <xs:enumeration value="EM/RF-11.3.4" />
-               <xs:enumeration value="EM/RF-11.3.5" />
-               <xs:enumeration value="EM/RF-11.3.6" />
-               <xs:enumeration value="EM/RF-11.3.7" />
-               <xs:enumeration value="EM/RF-11.3.8" />
-               <xs:enumeration value="EM/RF-11.3.9" />
-               <xs:enumeration value="EM/RF-11.4.1" />
-               <xs:enumeration value="EM/RF-11.4.2" />
-               <xs:enumeration value="EM/RF-11.4.3" />
-               <xs:enumeration value="EM/RF-11.4.4" />
-               <xs:enumeration value="EM/RF-11.4.5" />
-               <xs:enumeration value="EM/RF-11.5.1" />
-               <xs:enumeration value="EM/RF-11.5.2" />
-               <xs:enumeration value="EM/RF-11.5.3" />
-               <xs:enumeration value="EM/RF-11.6.1" />
-               <xs:enumeration value="EM/RF-11.6.2" />
-               <xs:enumeration value="EM/RF-11.6.3" />
-               <xs:enumeration value="EM/RF-11.6.4" />
-               <xs:enumeration value="EM/RF-11.7.1" />
-               <xs:enumeration value="EM/RF-11.7.2" />
-               <xs:enumeration value="EM/RF-11.7.3" />
-               <xs:enumeration value="EM/RF-11.7.4" />
-               <xs:enumeration value="EM/RF-11.7.5" />
-               <xs:enumeration value="EM/RF-11.7.6" />
-               <xs:enumeration value="EM/RF-11.7.7" />
-               <xs:enumeration value="EM/RF-11.7.8" />
-               <xs:enumeration value="EM/RF-11.7.9" />
-               <xs:enumeration value="EM/RF-11.8.1" />
-               <xs:enumeration value="EM/RF-11.8.2" />
-               <xs:enumeration value="EM/RF-11.8.3" />
-               <xs:enumeration value="EM/RF-11.8.4" />
-               <xs:enumeration value="EM/RF-11.9.1" />
-               <xs:enumeration value="EM/RF-11.9.2" />
-               <xs:enumeration value="EM/Mater-12.1.1" />
-               <xs:enumeration value="EM/Mater-12.1.2" />
-               <xs:enumeration value="EM/Mater-12.1.3" />
-               <xs:enumeration value="EM/Mater-12.2.1" />
-               <xs:enumeration value="EM/Mater-12.2.2" />
-               <xs:enumeration value="EM/Mater-12.3.1" />
-               <xs:enumeration value="EM/Mater-12.3.2" />
-               <xs:enumeration value="EM/Mater-12.3.3" />
-               <xs:enumeration value="EM/Mater-12.3.4" />
-               <xs:enumeration value="EM/Mater-12.3.5" />
-               <xs:enumeration value="EM/Mater-12.3.6" />
-               <xs:enumeration value="EM/Mater-12.3.7" />
-               <xs:enumeration value="EM/Mater-12.3.8" />
-               <xs:enumeration value="EM/Mater-12.3.9" />
-               <xs:enumeration value="EM/Mater-12.3.10" />
-               <xs:enumeration value="EM/Mater-12.4.1" />
-               <xs:enumeration value="EM/Mater-12.4.2" />
-               <xs:enumeration value="EM/Mater-12.4.3" />
-               <xs:enumeration value="EM/Mater-12.4.4" />
-               <xs:enumeration value="EM/Mater-12.4.5" />
-               <xs:enumeration value="EM/Mater-12.4.6" />
-               <xs:enumeration value="EM/Mater-12.5.1" />
-               <xs:enumeration value="EM/Mater-12.6.1" />
-               <xs:enumeration value="EM/Mater-12.6.2" />
-               <xs:enumeration value="EM/Mater-12.6.3" />
-               <xs:enumeration value="EM/Mater-12.6.4" />
-               <xs:enumeration value="EM/Mater-12.6.5" />
-               <xs:enumeration value="EM/Mater-12.6.6" />
-               <xs:enumeration value="EM/Mater-12.6.7" />
-               <xs:enumeration value="EM/Mater-12.7.1" />
-               <xs:enumeration value="EM/Mater-12.7.2" />
-               <xs:enumeration value="EM/Mater-12.7.3" />
-               <xs:enumeration value="EM/Mater-12.7.4" />
-               <xs:enumeration value="EM/Mater-12.7.5" />
-               <xs:enumeration value="EM/Mater-12.7.6" />
-               <xs:enumeration value="EM/Mater-12.7.7" />
-               <xs:enumeration value="EM/Mater-12.7.8" />
-               <xs:enumeration value="L/Laser-1.1.1" />
-               <xs:enumeration value="L/Laser-1.2.1" />
-               <xs:enumeration value="L/DimMet-2.1.1" />
-               <xs:enumeration value="L/DimMet-2.1.2" />
-               <xs:enumeration value="L/DimMet-2.1.3" />
-               <xs:enumeration value="L/DimMet-2.1.4" />
-               <xs:enumeration value="L/DimMet-2.1.5" />
-               <xs:enumeration value="L/DimMet-2.1.6" />
-               <xs:enumeration value="L/DimMet-2.1.7" />
-               <xs:enumeration value="L/DimMet-2.2.1" />
-               <xs:enumeration value="L/DimMet-2.2.2" />
-               <xs:enumeration value="L/DimMet-2.2.3" />
-               <xs:enumeration value="L/DimMet-2.2.4" />
-               <xs:enumeration value="L/DimMet-2.2.5" />
-               <xs:enumeration value="L/DimMet-2.2.6" />
-               <xs:enumeration value="L/DimMet-2.3.1" />
-               <xs:enumeration value="L/DimMet-2.3.2" />
-               <xs:enumeration value="L/DimMet-2.3.3" />
-               <xs:enumeration value="L/DimMet-2.3.4" />
-               <xs:enumeration value="L/DimMet-2.3.5" />
-               <xs:enumeration value="L/DimMet-2.3.6" />
-               <xs:enumeration value="L/DimMet-2.3.7" />
-               <xs:enumeration value="L/DimMet-2.3.8" />
-               <xs:enumeration value="L/DimMet-2.3.9" />
-               <xs:enumeration value="L/DimMet-2.4.1" />
-               <xs:enumeration value="L/DimMet-2.4.2" />
-               <xs:enumeration value="L/DimMet-2.4.3" />
-               <xs:enumeration value="L/DimMet-2.5.1" />
-               <xs:enumeration value="L/DimMet-3.1.1" />
-               <xs:enumeration value="L/DimMet-3.1.2" />
-               <xs:enumeration value="L/DimMet-3.1.3" />
-               <xs:enumeration value="L/DimMet-3.2.1" />
-               <xs:enumeration value="L/DimMet-3.3.1" />
-               <xs:enumeration value="L/DimMet-3.3.2" />
-               <xs:enumeration value="L/DimMet-3.3.3" />
-               <xs:enumeration value="L/DimMet-3.3.4" />
-               <xs:enumeration value="L/DimMet-3.3.5" />
-               <xs:enumeration value="L/DimMet-3.3.6" />
-               <xs:enumeration value="L/DimMet-3.3.7" />
-               <xs:enumeration value="L/DimMet-3.4.1" />
-               <xs:enumeration value="L/DimMet-3.4.2" />
-               <xs:enumeration value="L/DimMet-3.4.3" />
-               <xs:enumeration value="L/DimMet-3.4.4" />
-               <xs:enumeration value="L/DimMet-3.5.1" />
-               <xs:enumeration value="L/DimMet-3.5.2" />
-               <xs:enumeration value="L/DimMet-4.1.1" />
-               <xs:enumeration value="L/DimMet-4.1.2" />
-               <xs:enumeration value="L/DimMet-4.1.3" />
-               <xs:enumeration value="L/DimMet-4.2.1" />
-               <xs:enumeration value="L/DimMet-4.2.2" />
-               <xs:enumeration value="L/DimMet-4.2.3" />
-               <xs:enumeration value="L/DimMet-4.2.4" />
-               <xs:enumeration value="L/DimMet-4.3.1" />
-               <xs:enumeration value="L/DimMet-4.3.2" />
-               <xs:enumeration value="L/DimMet-4.3.3" />
-               <xs:enumeration value="L/DimMet-4.4.1" />
-               <xs:enumeration value="L/DimMet-4.4.2" />
-               <xs:enumeration value="L/DimMet-4.5.1" />
-               <xs:enumeration value="L/DimMet-5.1.1" />
-               <xs:enumeration value="L/DimMet-5.1.2" />
-               <xs:enumeration value="L/DimMet-5.1.3" />
-               <xs:enumeration value="L/DimMet-5.1.4" />
-               <xs:enumeration value="L/DimMet-5.1.5" />
-               <xs:enumeration value="L/DimMet-5.1.6" />
-               <xs:enumeration value="L/DimMet-5.2.1" />
-               <xs:enumeration value="L/DimMet-5.2.2" />
-               <xs:enumeration value="L/DimMet-5.2.3" />
-               <xs:enumeration value="L/DimMet-5.2.4" />
-               <xs:enumeration value="L/DimMet-5.2.5" />
-               <xs:enumeration value="L/DimMet-5.2.6" />
-               <xs:enumeration value="L/DimMet-5.3.1" />
-               <xs:enumeration value="L/DimMet-5.3.2" />
-               <xs:enumeration value="L/DimMet-5.3.3" />
-               <xs:enumeration value="L/DimMet-5.3.4" />
-               <xs:enumeration value="L/DimMet-5.3.5" />
-               <xs:enumeration value="L/DimMet-5.4.1" />
-               <xs:enumeration value="L/DimMet-5.4.2" />
-               <xs:enumeration value="L/DimMet-5.4.3" />
-               <xs:enumeration value="L/DimMet-5.4.4" />
-               <xs:enumeration value="L/DimMet-5.4.5" />
-               <xs:enumeration value="L/DimMet-5.5.1" />
-               <xs:enumeration value="L/DimMet-5.5.2" />
-               <xs:enumeration value="L/DimMet-5.5.3" />
-               <xs:enumeration value="L/DimMet-5.5.4" />
-               <xs:enumeration value="L/DimMet-5.5.5" />
-               <xs:enumeration value="L/DimMet-5.5.6" />
-               <xs:enumeration value="L/DimMet-5.5.7" />
-               <xs:enumeration value="L/DimMet-5.5.8" />
-               <xs:enumeration value="L/DimMet-5.6.1" />
-               <xs:enumeration value="L/DimMet-6.1.1" />
-               <xs:enumeration value="L/DimMet-6.1.2" />
-               <xs:enumeration value="L/DimMet-6.1.3" />
-               <xs:enumeration value="L/DimMet-6.1.4" />
-               <xs:enumeration value="L/DimMet-6.1.5" />
-               <xs:enumeration value="L/DimMet-6.1.6" />
-               <xs:enumeration value="L/DimMet-6.1.7" />
-               <xs:enumeration value="L/DimMet-6.1.8" />
-               <xs:enumeration value="L/DimMet-6.1.9" />
-               <xs:enumeration value="L/DimMet-6.2.1" />
-               <xs:enumeration value="L/DimMet-6.3.1" />
-               <xs:enumeration value="L/DimMet-6.4.1" />
-               <xs:enumeration value="L/DimMet-6.5.1" />
-               <xs:enumeration value="L/DimMet-6.5.2" />
-               <xs:enumeration value="L/DimMet-6.6.1" />
-               <xs:enumeration value="L/DimMet-6.7.1" />
-               <xs:enumeration value="L/DimMet-6.7.2" />
-               <xs:enumeration value="M/Mass-1.1.1" />
-               <xs:enumeration value="M/Dens-2.1.1" />
-               <xs:enumeration value="M/Dens-2.1.2" />
-               <xs:enumeration value="M/Dens-2.2.1" />
-               <xs:enumeration value="M/Dens-2.2.2" />
-               <xs:enumeration value="M/Dens-2.3.3" />
-               <xs:enumeration value="M/Pres-3.1.1" />
-               <xs:enumeration value="M/Pres-3.1.2" />
-               <xs:enumeration value="M/Pres-3.2.1" />
-               <xs:enumeration value="M/Pres-3.2.2" />
-               <xs:enumeration value="M/Pres-3.3.1" />
-               <xs:enumeration value="M/Pres-3.3.2" />
-               <xs:enumeration value="M/Pres-3.4.1" />
-               <xs:enumeration value="M/Pres-3.4.2" />
-               <xs:enumeration value="M/Force-4.1.1" />
-               <xs:enumeration value="M/Force-4.2.1" />
-               <xs:enumeration value="M/Force-4.3.1" />
-               <xs:enumeration value="M/Tor-5.1.1" />
-               <xs:enumeration value="M/Vis-6.1.1" />
-               <xs:enumeration value="M/Vis-6.2.1" />
-               <xs:enumeration value="M/Vis-6.3.1" />
-               <xs:enumeration value="M/Har-7.1.1" />
-               <xs:enumeration value="M/Gra-8.1.1" />
-               <xs:enumeration value="M/FF-9.10.1" />
-               <xs:enumeration value="M/FF-9.10.2" />
-               <xs:enumeration value="M/FF-9.10.3" />
-               <xs:enumeration value="M/FF-9.10.4" />
-               <xs:enumeration value="M/FF-9.10.5" />
-               <xs:enumeration value="M/FF-9.10.6" />
-               <xs:enumeration value="PR/Detector-1.1.1" />
-               <xs:enumeration value="PR/Detector-1.2.1" />
-               <xs:enumeration value="PR/Detector-1.3.1" />
-               <xs:enumeration value="PR/Detector-1.3.2" />
-               <xs:enumeration value="PR/Detector-1.4.1" />
-               <xs:enumeration value="PR/Detector-1.5.1" />
-               <xs:enumeration value="PR/Detector-1.6.0" />
-               <xs:enumeration value="PR/Detector-1.7.1" />
-               <xs:enumeration value="PR/Detector-1.8.0" />
-               <xs:enumeration value="PR/Detector-1.8.1" />
-               <xs:enumeration value="PR/Detector-2.1.1" />
-               <xs:enumeration value="PR/Detector-2.2.2" />
-               <xs:enumeration value="PR/Detector-2.2.3" />
-               <xs:enumeration value="PR/Detector-2.3.0" />
-               <xs:enumeration value="PR/Detector-2.4.0" />
-               <xs:enumeration value="PR/Detector-2.5.0" />
-               <xs:enumeration value="PR/Detector-2.6.0" />
-               <xs:enumeration value="PR/Detector-2.7.0" />
-               <xs:enumeration value="PR/Detector-2.7.1" />
-               <xs:enumeration value="PR/Detector-2.8.0" />
-               <xs:enumeration value="PR/Detector-2.9.0" />
-               <xs:enumeration value="PR/Detector-2.10.0" />
-               <xs:enumeration value="PR/Detector-2.11.0" />
-               <xs:enumeration value="PR/Detector-3.1.1" />
-               <xs:enumeration value="PR/Detector-3.1.2" />
-               <xs:enumeration value="PR/Detector-3.2.1" />
-               <xs:enumeration value="PR/Detector-3.2.2" />
-               <xs:enumeration value="PR/Detector-3.2.3" />
-               <xs:enumeration value="PR/Detector-3.3.1" />
-               <xs:enumeration value="PR/Detector-3.4.1" />
-               <xs:enumeration value="PR/Detector-3.4.2" />
-               <xs:enumeration value="PR/Detector-3.5.0" />
-               <xs:enumeration value="PR/Detector-3.5.1" />
-               <xs:enumeration value="PR/Detector-5.1.0" />
-               <xs:enumeration value="PR/Detector-5.2.1" />
-               <xs:enumeration value="PR/Detector-5.3.0" />
-               <xs:enumeration value="PR/Detector-5.4.0" />
-               <xs:enumeration value="PR/Detector-5.4.1" />
-               <xs:enumeration value="PR/Detector-5.4.2" />
-               <xs:enumeration value="PR/Detector-5.4.3" />
-               <xs:enumeration value="PR/Detector-5.5.0" />
-               <xs:enumeration value="PR/Detector-5.6.0" />
-               <xs:enumeration value="PR/Detector-5.7.0" />
-               <xs:enumeration value="PR/Detector-5.8.0" />
-               <xs:enumeration value="PR/Detector-5.8.1" />
-               <xs:enumeration value="PR/Mater-4.1.1" />
-               <xs:enumeration value="PR/Mater-4.2.1" />
-               <xs:enumeration value="PR/Mater-4.3.1" />
-               <xs:enumeration value="PR/Mater-4.4.1" />
-               <xs:enumeration value="PR/Mater-4.5.1" />
-               <xs:enumeration value="PR/Mater-4.6.1" />
-               <xs:enumeration value="PR/Mater-4.7.1" />
-               <xs:enumeration value="PR/Mater-4.9.0" />
-               <xs:enumeration value="PR/Mater-4.10.0" />
-               <xs:enumeration value="PR/Mater-4.11.0" />
-               <xs:enumeration value="PR/Mater-4.12.0" />
-               <xs:enumeration value="PR/Mater-4.13.0" />
-               <xs:enumeration value="PR/Mater-4.13.1" />
-               <xs:enumeration value="PR/Mater-4.14.0" />
-               <xs:enumeration value="PR/Mater-4.15.0" />
-               <xs:enumeration value="PR/Mater-4.15.1" />
-               <xs:enumeration value="PR/Mater-4.16.0" />
-               <xs:enumeration value="PR/Mater-4.17.0" />
-               <xs:enumeration value="PR/Mater-4.17.1" />
-               <xs:enumeration value="PR/Mater-4.18.0" />
-               <xs:enumeration value="PR/Mater-6.1.0" />
-               <xs:enumeration value="PR/Mater-6.1.1" />
-               <xs:enumeration value="PR/Mater-6.1.2" />
-               <xs:enumeration value="PR/Mater-6.2.0" />
-               <xs:enumeration value="PR/Mater-6.2.1" />
-               <xs:enumeration value="PR/Mater-6.2.2" />
-               <xs:enumeration value="PR/Mater-6.3.0" />
-               <xs:enumeration value="PR/Mater-6.4.0" />
-               <xs:enumeration value="PR/Mater-6.5.0" />
-               <xs:enumeration value="PR/Mater-6.6.0" />
-               <xs:enumeration value="PR/Mater-6.7.0" />
-               <xs:enumeration value="PR/Mater-6.9.0" />
-               <xs:enumeration value="PR/Mater-6.10.0" />
-               <xs:enumeration value="PR/Mater-6.12.0" />
-               <xs:enumeration value="PR/Fibre-7.1.0" />
-               <xs:enumeration value="PR/Fibre-7.2.0" />
-               <xs:enumeration value="PR/Fibre-7.2.1" />
-               <xs:enumeration value="PR/Fibre-7.2.2" />
-               <xs:enumeration value="PR/Fibre-7.5.0" />
-               <xs:enumeration value="PR/Fibre-7.5.1" />
-               <xs:enumeration value="PR/Fibre-7.7.0" />
-               <xs:enumeration value="PR/Fibre-7.7.1" />
-               <xs:enumeration value="PR/Fibre-7.7.2" />
-               <xs:enumeration value="PR/Fibre-7.10.0" />
-               <xs:enumeration value="PR/Fibre-7.10.1" />
-               <xs:enumeration value="PR/Fibre-7.11.0" />
-               <xs:enumeration value="PR/Fibre-7.11.1" />
-               <xs:enumeration value="T/T-1.1.1" />
-               <xs:enumeration value="T/T-1.1.2" />
-               <xs:enumeration value="T/T-1.2.1" />
-               <xs:enumeration value="T/T-1.2.2" />
-               <xs:enumeration value="T/T-1.3.1" />
-               <xs:enumeration value="T/T-1.3.2" />
-               <xs:enumeration value="T/T-1.4.1" />
-               <xs:enumeration value="T/T-2.1.1" />
-               <xs:enumeration value="T/T-2.2.1" />
-               <xs:enumeration value="T/T-2.2.2" />
-               <xs:enumeration value="T/T-2.2.3" />
-               <xs:enumeration value="T/T-2.3.1" />
-               <xs:enumeration value="T/T-2.3.2" />
-               <xs:enumeration value="T/T-2.3.3" />
-               <xs:enumeration value="T/T-2.4.1" />
-               <xs:enumeration value="T/T-2.5.1" />
-               <xs:enumeration value="T/T-2.5.2" />
-               <xs:enumeration value="T/T-2.5.3" />
-               <xs:enumeration value="T/T-2.5.4" />
-               <xs:enumeration value="T/T-2.6.1" />
-               <xs:enumeration value="T/T-2.6.2" />
-               <xs:enumeration value="T/T-2.7.1" />
-               <xs:enumeration value="T/T-2.8.1" />
-               <xs:enumeration value="T/T-2.8.2" />
-               <xs:enumeration value="T/T-2.8.3" />
-               <xs:enumeration value="T/T-2.8.4" />
-               <xs:enumeration value="T/T-2.8.5" />
-               <xs:enumeration value="T/T-2.8.6" />
-               <xs:enumeration value="T/H-3.1.1" />
-               <xs:enumeration value="T/H-3.2.1" />
-               <xs:enumeration value="T/H-3.3.1" />
-               <xs:enumeration value="T/H-3.4.1" />
-               <xs:enumeration value="T/H-4.1.1" />
-               <xs:enumeration value="T/H-4.2.1" />
-               <xs:enumeration value="T/H-4.3.1" />
-               <xs:enumeration value="T/H-4.4.1" />
-               <xs:enumeration value="T/H-5.1.1" />
-               <xs:enumeration value="T/H-5.2.1" />
-               <xs:enumeration value="T/TQ-6.1.1" />
-               <xs:enumeration value="T/TQ-6.1.2" />
-               <xs:enumeration value="T/TQ-6.2.1" />
-               <xs:enumeration value="T/TQ-6.2.2" />
-               <xs:enumeration value="T/TQ-6.2.3" />
-               <xs:enumeration value="T/TQ-6.3.1" />
-               <xs:enumeration value="T/TQ-6.3.2" />
-               <xs:enumeration value="T/TQ-6.4.1" />
-               <xs:enumeration value="TF/TSD-1.1.1" />
-               <xs:enumeration value="TF/TSD-1.1.2" />
-               <xs:enumeration value="TF/TSD-1.2.1" />
-               <xs:enumeration value="TF/TSD-1.2.2" />
-               <xs:enumeration value="TF/F-2.1.1" />
-               <xs:enumeration value="TF/F-2.1.2" />
-               <xs:enumeration value="TF/F-2.2.1" />
-               <xs:enumeration value="TF/F-2.3.1" />
-               <xs:enumeration value="TF/TI-3.1.1" />
-               <xs:enumeration value="TF/TI-3.2.1" />
-               <xs:enumeration value="TF/TI-3.2.2" />
-               <xs:enumeration value="TF/TI-3.2.3" />
-               <xs:enumeration value="TF/TI-3.2.4" />
-               <xs:enumeration value="TF/TI-3.3.1" />
-               <xs:enumeration value="TF/TI-3.4.1" />
-               <xs:enumeration value="TF/TI-3.4.2" />
-               <xs:enumeration value="TF/TI-3.4.3" />
-               <xs:enumeration value="TF/TI-3.4.4" /> -->
 			   <xs:enumeration value="AUV/A Sound in air"/>
 				<xs:enumeration value="AUV/A-1 Measurement microphones"/>
 				<xs:enumeration value="AUV/A-1.1 Pressure sensitivity level (air)"/>
