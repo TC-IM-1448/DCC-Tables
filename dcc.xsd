@@ -271,7 +271,7 @@
     <xs:complexType name="stringFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="xs:string"/>
+                <xs:attribute name="value" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -279,7 +279,7 @@
     <xs:complexType name="notEmptyStringFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="dcx:notEmptyStringType"/>
+                <xs:attribute name="value" type="dcx:notEmptyStringType" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -293,7 +293,7 @@
     <xs:complexType name="emailFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="dcx:emailType"/>
+                <xs:attribute name="value" type="dcx:emailType" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -307,7 +307,7 @@
     <xs:complexType name="dateFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="xs:date"/>
+                <xs:attribute name="value" type="xs:date" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -315,7 +315,7 @@
     <xs:complexType name="booleanFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name='value' type='xs:boolean'/>
+                <xs:attribute name='value' type='xs:boolean' use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -323,7 +323,7 @@
     <xs:complexType name="intFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name='value' type='xs:int'/>
+                <xs:attribute name='value' type='xs:int' use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -331,7 +331,7 @@
     <xs:complexType name="decimalFieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name='value' type='xs:decimal'/>
+                <xs:attribute name='value' type='xs:decimal' use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -339,7 +339,7 @@
     <xs:complexType name="stringISO639FieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="dcx:stringISO639Type"/>
+                <xs:attribute name="value" type="dcx:stringISO639Type" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -347,7 +347,7 @@
     <xs:complexType name="stringISO3166FieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="dcx:stringISO3166Type"/>
+                <xs:attribute name="value" type="dcx:stringISO3166Type" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -400,7 +400,7 @@
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='dcx:decimalType'>
-                            <xs:attribute name='idx' type='xs:int'/>
+                            <xs:attribute name='idx' type='xs:int' use="required"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -414,7 +414,7 @@
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='dcx:notEmptyStringType'>
-                            <xs:attribute name='idx' type='xs:int'/>
+                            <xs:attribute name='idx' type='xs:int' use="required"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -428,7 +428,7 @@
                 <xs:complexType>
                     <xs:simpleContent>
                         <xs:extension base='xs:IDREF'>
-                            <xs:attribute name='idx' type='xs:int'/>
+                            <xs:attribute name='idx' type='xs:int' use="required"/>
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
@@ -675,9 +675,10 @@
                 <xs:enumeration value="contact/phone" /> 
                 <xs:enumeration value="contact/fax" /> 
                 <xs:enumeration value="position/." /> 
-                <xs:enumeration value="position/logitudeWGS84" /> 
-                <xs:enumeration value="position/latitudeWGS84" /> 
-                <xs:enumeration value="position/altitudeWGS84" /> 
+                <xs:enumeration value="position/@positionSystem" /> 
+                <xs:enumeration value="position/logitude" /> 
+                <xs:enumeration value="position/latitude" /> 
+                <xs:enumeration value="position/altitude" /> 
                 <xs:enumeration value="body" /> 
             </xs:restriction>
     </xs:simpleType>
@@ -686,8 +687,17 @@
         <xs:complexContent>
             <xs:restriction base="dcx:contactAndLocationType">
                 <xs:sequence>
+                    <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="name" type="xs:string"/> 
+                    <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
                     <xs:element name="address" type="dcx:addressType" minOccurs="1"/>
+                    <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
+                    <xs:element name="position" type="dcx:positionType" minOccurs="0"/>
+                    <xs:element name="url" type="xs:string" minOccurs="0"/>
+                    <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
+                <!-- <xs:attribute name="id" type="xs:ID" use="optional"/>
+                <xs:attribute name="imageRefs" type="xs:IDREFS" use="optional"/> -->
             </xs:restriction>
         </xs:complexContent>
     </xs:complexType>
@@ -727,7 +737,7 @@
             <xs:element name="district" type="xs:string" minOccurs="0"/>
             <xs:element name="state" type="xs:string" minOccurs="0"/>
             <xs:element name="postalCode" type="xs:string" />
-            <xs:element name="country" type="dcx:stringISO3166FieldType" />
+            <xs:element name="country" type="dcx:stringISO3166Type" />
         </xs:choice>
     </xs:complexType>
 
@@ -761,8 +771,14 @@
             <xs:element name="latitude" type="dcx:decimalFieldType" />
             <xs:element name="altitutde" type="dcx:decimalFieldType" minOccurs="0"/>
         </xs:sequence>
+        <xs:attribute name="positionSystem" type="dcx:positionSystemType" use="required"/>
     </xs:complexType>
 
+    <xs:simpleType name="positionSystemType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="WGS84"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 <!--    ============================================================
                  STATEMENTS
@@ -1316,7 +1332,7 @@
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base='dcx:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
+                            <!-- <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/> -->
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -1334,7 +1350,7 @@
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base='dcx:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
+                            <!-- <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/> -->
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -1352,7 +1368,7 @@
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base='dcx:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
+                            <!-- <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/> -->
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -1370,7 +1386,7 @@
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base='dcx:tableType'>
-                            <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/>
+                            <!-- <xs:attribute name="serviceCategory" type="dcx:serviceCategoryType" use="optional"/> -->
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
