@@ -329,12 +329,13 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcc:calibratio
 #%%
 def get_languages(root) -> list:
     ns = root.nsmap
-    mandatory_lang = root.findall(".//dcc:mandatoryLangCodeISO639_1",ns)
-    used_lang = root.findall(".//dcc:usedLangCodeISO639_1",ns)
-    langs = mandatory_lang + used_lang
-    langs = [x.text for x in langs]
-    unique_langs = []
-    [unique_langs.append(x) for x in langs if x not in unique_langs]
+    # mandatory_lang = root.findall(".//dcc:mandatoryLangCodeISO639_1",ns)
+    # used_lang = root.findall(".//dcc:usedLangCodeISO639_1",ns)
+    # langs = mandatory_lang + used_lang
+    # langs = [x.text for x in langs]
+    # unique_langs = []
+    # [unique_langs.append(x) for x in langs if x not in unique_langs]
+    unique_langs = list(set(root.xpath("//@lang", namespaces=root.nsmap)))
     return unique_langs
 
 #%%
