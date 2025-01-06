@@ -70,10 +70,12 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                 'heading[1]',
                                 '@statementRefs'],
 
-    administrativeDataHeadings = [ "heading[1]",  
-                                    "Description", 
-                                    "Value", 
-                                    "XPath"], 
+    administrativeDataHeadings = [  "level", 
+                                    "description",
+                                    "@value", 
+                                    "heading[1]",  
+                                    "xsdType",
+                                    "xPath"], 
 
     measurementResultHeadings = [   'tableCategory', 
                                     '@tableId', 
@@ -102,8 +104,19 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
 
 class DccGuiTool(): 
     xsdDefInitCol = 3  
-
-    colors = dict(  yellow = "#ffd966",
+    xsdRestrictions = {}
+    xsdRoot = None
+    xsdTree = None
+    dccRoot = None  
+    dccTree = None  
+    wb = None   
+    sheetDef = None 
+    embeddedFilesPath = None
+    langs = []
+    
+    colors = dict(  white = "#ffffff",
+                    black = "#000000",
+                    yellow = "#ffd966",
                     light_yellow = '#fff2cc',
                     green = '#c6e0b4',
                     light_green = '#e2efda',
@@ -131,12 +144,12 @@ class DccGuiTool():
             os.mkdir(wbpath+'embeddedFiles')
         self.embeddedFilesPath = wbpath+'embeddedFiles'+os.sep
 
-    def loadSchemaFile(self, xsdFileName="dcc.xsd"):
+    def loadSchemaFile(self, xsdFileName="dcx.xsd"):
         self.xsdTree, self.xsdRoot  = dcchf.load_xml(xsdFileName)
         
-    def loadDCCFile(self, xmlFileName="SKH_10112_2.xml"):
+    def loadDCCFile(self, xmlFileName="dcc-example.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
-        errors = dcchf.validate(xmlFileName, 'dcc.xsd')    
+        errors = dcchf.validate(xmlFileName, 'dcx.xsd')    
         
         for sht in self.wb.sheets: 
             if not sht.name == "Definitions": sht.delete()
@@ -191,44 +204,46 @@ class DccGuiTool():
             sht.tables[tableName].resize(rng)
 
     def getHeadingOrBodyFromXlHeadingTag(self, node: et._Element, headingTag:str) -> str: 
+        """Get the heading or body text from the node based on the headingTag"""
         h = headingTag
 
         lang = h[h.index('[')+1:h.index(']')]
         headOrBody = h.split('[')[0]
-        searchStr = f'./dcc:{headOrBody}[@lang="{lang}"]'
+        searchStr = f'./dcx:{headOrBody}[@lang="{lang}"]'
         nodes = node.findall(searchStr, node.nsmap)
         if len(nodes) > 0: return nodes[0].text
         else: return None
 
     def loadDccSequence(self):
         self.loadDCCAdministrativeInformation(after='Definitions',
-                                              heading=self.headings['administrativeDataHeadings'])
+                                              heading=self.headings['administrativeDataHeadings']
+                                              )
         
         self.loadDccInfoTable(heading = self.headings['statementHeadings'], 
-                                nodeTag="dcc:statements",
-                                subNodeTag="dcc:statement",
+                                nodeTag="dcx:statementList",
+                                subNodeTag="dcx:statement",
                                 place_sheet_after='AdministrativeData')
         
         self.loadDccInfoTable(heading = self.headings['equipmentHeadings'], 
-                                nodeTag="dcc:equipment", 
-                                subNodeTag="dcc:equipmentItem",
+                                nodeTag="dcx:equipmentList", 
+                                subNodeTag="dcx:equipment",
                                 place_sheet_after='statements')
         
         self.loadDccInfoTable( heading = self.headings['settingsHeadings'], 
-                                nodeTag="dcc:settings", 
-                                subNodeTag="dcc:setting",
+                                nodeTag="dcx:settingList", 
+                                subNodeTag="dcx:setting",
                                 place_sheet_after='equipment')
         self.loadDccInfoTable( heading = self.headings['measuringSystemsHeadings'], 
-                                nodeTag="dcc:measuringSystems", 
-                                subNodeTag="dcc:measuringSystem",
+                                nodeTag="dcx:measuringSystems", 
+                                subNodeTag="dcx:measuringSystem",
                                 place_sheet_after='settings')
         self.loadDccInfoTable( heading = self.headings['embeddedFilesHeadings'], 
-                                nodeTag="dcc:embeddedFiles", 
-                                subNodeTag="dcc:embeddedFile",
+                                nodeTag="dcx:embeddedFiles", 
+                                subNodeTag="dcx:embeddedFile",
                                 place_sheet_after='measuringSystems')
         self.loadDccInfoTable(heading=self.headings['quantityUnitDefsHeadings'],
-                              nodeTag="dcc:quantityUnitDefs", 
-                              subNodeTag="dcc:quantityUnitDef",
+                              nodeTag="dcx:quantityUnitDefs", 
+                              subNodeTag="dcx:quantityUnitDef",
                               place_sheet_after="embeddedFiles")
         self.loadDCCMeasurementResults(heading=self.headings['measurementResultHeadings'])
 
@@ -237,8 +252,8 @@ class DccGuiTool():
                          heading=['in DCC', '@category', '@statementId', 
                                   'heading[1]', 'body[1]', 
                                   'heading[2]', 'body[2]'], 
-                         nodeTag="dcc:statements", 
-                         subNodeTag="dcc:statement",
+                         nodeTag="dcx:statements", 
+                         subNodeTag="dcx:statement",
                          place_sheet_after='AdministrativeData' ): 
         root = self.dccRoot
         ns = root.nsmap
@@ -249,7 +264,7 @@ class DccGuiTool():
         lang2 = 'en'
 
 
-        shtName = nodeTag.replace('dcc:','')    # stratements
+        shtName = nodeTag.replace('dcx:','')    # stratements
         subNodeAttrId = shtName[:-1]+'Id'        # statementId
         if not shtName in wb.sheet_names:
             wb.sheets.add(shtName, after=place_sheet_after)
@@ -258,7 +273,7 @@ class DccGuiTool():
 
         # Write the Sheet headings
         sht.range((1,1)).value = [[f'heading[{lang}]'] for lang in self.langs]
-        nodeHeadings = node.findall("dcc:heading",ns)
+        nodeHeadings = node.findall("dcx:heading",ns)
         for h in nodeHeadings:
             lang = h.attrib['lang']
             if lang in self.langs: 
@@ -296,31 +311,31 @@ class DccGuiTool():
                     rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subNode, h))
                 elif h.startswith('body['):
                     rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subNode, h))
-                elif nodeTag == "dcc:equipment" and any([x in issuerIdMap.keys() for x in h.split()]):  # For parsing equipment identifications
+                elif nodeTag == "dcx:equipment" and any([x in issuerIdMap.keys() for x in h.split()]):  # For parsing equipment identifications
                     who, what = h.split(' ')
                     issuer = issuerIdMap[who]
-                    subSubNode = subNode.find(f'dcc:identification[@issuer="{issuer}"]', ns)
+                    subSubNode = subNode.find(f'dcx:identification[@issuer="{issuer}"]', ns)
                     if subSubNode is None: 
                         rowData.append(None)
                     elif what == 'value': 
                         # print('subnode: ',subSubNode.attrib['issuer'])
-                        rowData.append(subSubNode.find('./dcc:value', ns).text)
+                        rowData.append(subSubNode.find('./dcx:value', ns).text)
                     elif what.startswith('heading') or what.startswith('body'): 
                         rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subSubNode, what))
                     else:
                         rowData.append(None)
-                elif nodeTag == "dcc:quantityUnitDefs" and h.find("unit") >= 0: 
-                    nodes =  subNode.findall(f'./dcc:{h}', ns)
+                elif nodeTag == "dcx:quantityUnitDefs" and h.find("unit") >= 0: 
+                    nodes =  subNode.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: rowData.append("'"+nodes[0].text)
                     else: rowData.append(None)
                 else: 
-                    nodes =  subNode.findall(f'./dcc:{h}', ns)
+                    nodes =  subNode.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text)
                     else: rowData.append(None)
-                if nodeTag == "dcc:embeddedFiles" and h=="@id": 
+                if nodeTag == "dcx:embeddedFiles" and h=="@id": 
                     fileId = subNode.attrib[h.strip('@')]
                     filePath = self.embeddedFilesPath+fileId
-                    fileData = subNode.find("dcc:fileContent", ns).text
+                    fileData = subNode.find("dcx:fileContent", ns).text
                     fileIsSaved = self.saveEmbeddedFileToFolder(filePath, fileData)
                     cidx = len(heading)+1
                     if fileId.split('.')[-1].lower() in ['png', 'emf', 'jpg'] and fileIsSaved:
@@ -332,7 +347,7 @@ class DccGuiTool():
             # rng = sht.range((tblRowIdx+1+idx,1))
             # rng.value = rowData
 
-            if nodeTag == "dcc:measuringSystems": 
+            if nodeTag == "dcx:measuringSystems": 
                 sht.range((1,3)).column_width = 30
 
 
@@ -385,7 +400,7 @@ class DccGuiTool():
             rng = wb.sheets['statements'].range("Table_statements['@imageRefs]")
             self.applyValidationToRange(rng, 'embeddedFilesIdRange')
         # Apply Validation
-        # validatorMap= {'dcc:statements': }
+        # validatorMap= {'dcx:statements': }
 
     def applyValidationToRange(self, rng, restrictionName:str):
             # insert validation on table headings
@@ -422,12 +437,12 @@ class DccGuiTool():
         lang1 = 'en'
         lang2 = 'da'
 
-        measurementResults = root.find(".//dcc:measurementResults",ns) 
+        measurementResults = root.find(".//dcx:measurementResults",ns) 
         print(measurementResults)
         tableIds = [c.attrib["tableId"] for c in measurementResults.getchildren()]
-        calibrationResults = measurementResults.findall("dcc:calibrationResult",ns)
+        calibrationResults = measurementResults.findall("dcx:calibrationResult",ns)
         calibResIds = [tbl.attrib['tableId'] for tbl in calibrationResults]
-        measurementSeries = measurementResults.findall("dcc:measurementSeries",ns)
+        measurementSeries = measurementResults.findall("dcx:measurementSeries",ns)
         measSerIds = [tbl.attrib['tableId'] for tbl in measurementSeries]
 
         for tableId in tableIds: 
@@ -474,7 +489,7 @@ class DccGuiTool():
                         rng.value = tbl.attrib[h.strip('@')]
                 else:
                     rng = sht.range((idx,2)) 
-                    nodes =  tbl.findall(f'./dcc:{h}', ns)
+                    nodes =  tbl.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: 
                         rng.value = nodes[0].text
                     else:
@@ -493,7 +508,7 @@ class DccGuiTool():
             numCols = int(tbl.attrib['numCols'])
 
             # Now load the columns
-            columns = tbl.findall("dcc:column", ns)
+            columns = tbl.findall("dcx:column", ns)
             columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
             columnHeading = self.headings['columnHeading']
             headingColorDefs = {'scope': 'yellow',
@@ -526,20 +541,20 @@ class DccGuiTool():
                     sht.range((rowIdx,cIdx)).value = "'"+a 
 
                 # insert the dataCategory. 
-                # dataList = col.find('dcc:dataList',ns)
+                # dataList = col.find('dcx:dataList',ns)
                 rowIdx = colInitRowIdx + columnHeading.index('dataCategory')
                 dataCategory = dcchf.rev_ns_tag(col.getchildren()[-1])
-                dataCategory = dataCategory.replace("dcc:", "", 1)
+                dataCategory = dataCategory.replace("dcx:", "", 1)
                 sht.range((rowIdx,cIdx)).value = dataCategory 
 
                 # instert the unit
-                # unit = col.find("dcc:unit",ns).text
+                # unit = col.find("dcx:unit",ns).text
                 # rowIdx = colInitRowIdx + columnHeading.index('unit')
                 # sht.range(((rowIdx,cIdx))).value = unit                
 
                 # Insert human readable heading in two languages. 
                 for idx, lang in enumerate(self.langs):
-                    xpath =  './/dcc:heading[@lang="{lang}"]'.format(lang=lang)
+                    xpath =  './/dcx:heading[@lang="{lang}"]'.format(lang=lang)
                     elm = col.find(xpath,ns)
                     if elm is None: 
                         val = None
@@ -554,7 +569,7 @@ class DccGuiTool():
                 dataList = col.getchildren()[-1]
                 dataPoints = {int(pt.attrib['idx']): pt.text for pt in dataList}
                 if len(dataPoints) > 0:  
-                    # dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcc:")
+                    # dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcx:")
                     # sht.range((rowIdx,cIdx)).value = dataType
                     for k,v in dataPoints.items(): 
                         sht.range((rowIdx+k,cIdx)).value = v 
@@ -603,16 +618,16 @@ class DccGuiTool():
         for element in section.iter():
             head=[]
             # for child in element.getchildren():
-            #     if dcchf.rev_ns_tag(child) == "dcc:heading":
+            #     if dcchf.rev_ns_tag(child) == "dcx:heading":
             #         head.append(child.text)
 
-            head = [child.text for child in element.getchildren() if dcchf.rev_ns_tag(child) == "dcc:heading"]
-            elmHeadings = {h.attrib['lang']: h.text for h in element.findall("dcc:heading",root.nsmap)}
+            head = [child.text for child in element.getchildren() if dcchf.rev_ns_tag(child) == "dcx:heading"]
+            elmHeadings = {h.attrib['lang']: h.text for h in element.findall("dcx:heading",root.nsmap)}
             head = [elmHeadings[lang] if lang in elmHeadings.keys() else '' for lang in self.langs ]
             if any(head):
                 sht.range((line,1)).value = head + ['', '', self.dccTree.getpath(element)]
                 sht.range((line,1),(line,N)).color = self.colors["light_yellow"]
-                sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace('dcc:','')
+                sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace('dcx:','')
                 sht.range((line,N+1)).font.bold = True
                 line+=1
                 for k,v in element.attrib.items(): 
@@ -623,10 +638,10 @@ class DccGuiTool():
                     sht.range((line,N+3)).value = self.dccTree.getpath(element)
                     line+=1
             if type(element.text)!=type(None): 
-                if dcchf.rev_ns_tag(element)!="dcc:heading": 
+                if dcchf.rev_ns_tag(element)!="dcx:heading": 
                     if not(element.text.startswith('\n')):
                         # print(element)
-                        sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace("dcc:",'')
+                        sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace("dcx:",'')
                         sht.range((line,N+3)).value = self.dccTree.getpath(element)
                         rng = sht.range((line,N+2))
                         rng.value = str(element.text)
@@ -634,76 +649,106 @@ class DccGuiTool():
                         line+=1
         return line
 
-                
+             
     def loadDCCAdministrativeInformation(self, after='Definitions', 
-                                         heading=["heading[1]", 
+                                         heading=[
+                                                  "level",
+                                                  "description", 
+                                                  "@value", 
+                                                  "heading[1]", 
                                                   "heading[2]", 
-                                                  "Description", 
-                                                  "Value", 
-                                                  "XPath"]):
+                                                  "xPath"]):
         root = self.dccRoot
+        xsd_root = self.xsdRoot
         ns = root.nsmap
         wb = self.wb
-        N = numLang = len(self.langs)
+        colors = self.colors
+        langs = self.langs
+        N = numLang = len(langs)
+        hlangIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
+        dlangIdx = {extractHeadingLang(elm):i for i, elm in enumerate(heading) if elm.startswith('heading[')}
 
+        #%%
+        # Prepare the administrativeData sheet 
         if not 'administrativeData' in wb.sheet_names:
             wb.sheets.add('administrativeData', after=after)
-        
         sht = wb.sheets['administrativeData']
         sht.clear()
+        # Write the heading
         toprow = heading
         sht.range((1,1)).value = toprow
         sht.range((1,1)).expand('right').font.bold = True
-        hIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
-        titles = [self.getHeadingOrBodyFromXlHeadingTag(root, heading[i]) for i in hIdx]
+        sht.range((1,1)).expand('right').color = colors["light_gray"]
+        rowIdx = 2
+
+        # collect indexes of the "heading" elements toprow
+
+        # Get structure of the administrativeData from schema.  
+
+        #%%
+        xsdAdmStruct, xsdConLocStruct = dcchf.schemaGetAdministrativeDataStructure(xsd_root)
+        # rowData: (level, description, value, headings, xPath)
+        for rIdx, rowData in enumerate(xsdAdmStruct):
+            xsdType = rowData[-2]
+            nodes = dcchf.xpath_query(root, rowData[-1])
+            # print(rowData[1], end=': ')
+            if len(nodes) == 0: continue
+            if "FieldType" in xsdType:
+                value = nodes[0].attrib['value']
+                rowData[2] = value
+            if "@" in xsdType:
+                value = nodes[0].attrib[xsdType.strip('@')]
+                rowData[2] = value
+            xmlheadings = nodes[0].findall("dcx:heading", ns)
+            print(xmlheadings)
+            # add the headings from xml to rowData 
+            for elm in xmlheadings:
+                lang = elm.attrib['lang']
+                if lang in langs:
+                    rowData[dlangIdx[lang]] = elm.text
+                    
+        # write the rowData to the sheet    
+        sht.range((rowIdx,1)).value = xsdAdmStruct
+
+        # set the colors of the rows
+        sectColors = [None, colors["gray"], None] + [colors['blue']]*N
+        dataColors = [None, colors["light_gray"], colors['light_yellow']] + [colors['light_blue']]*N
+        for i, rowData in enumerate(xsdAdmStruct):
+            sht.range((rowIdx+i,2)).api.IndentLevel = rowData[0]
+            if rowData[0] <= 1 or rowData[-2] == 'dcx:responsiblePersonType':
+                # case of a section heading
+                for j,c in enumerate(sectColors):
+                    sht.range((rowIdx+i,j+1)).color = c
+                    sht.range((rowIdx+i,j+1)).font.bold = True
+            else: 
+                # case of a data row
+                for j,c in enumerate(dataColors):
+                    sht.range((rowIdx+i,j+1)).color = c
         
-        # head = [h.text for h in root.findall('./dcc:heading', ns)]
-        sht.range((2,1)).value = titles
-        sht.range((2,1),(2,N)).color = self.colors["light_yellow"]
-        sht.range((2,N+1)).value = ['Certificate-Title', None, '/dcc:digitalCalibrationCertificate']
-        sht.range((2,N+1)).font.bold = True
-        lineIdx = 3
-        adm=root.find("dcc:administrativeData", ns)
-        elements = [
-                    "dcc:coreData",
-                    "dcc:serviceProvider",
-                    "dcc:accreditation",
-                    "dcc:respPersons",
-                    "dcc:client",
-                    "dcc:equipmentReturnInfo",
-                    "dcc:clientBillingInfo",
-                    "dcc:certificateReturnInfo",
-                    "dcc:performanceSite",
-                   ]
-                
-        for elm in elements: 
-            sections = adm.findall(elm,ns)
-            for sec in sections: 
-                # print(f"write_to_admin(sec= {sec})")
-                lineIdx = self.write_to_admin(sht, root, lineIdx, sec)
-        # soft=adm.find("dcc:dccSoftware", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx, soft)
-        # core=adm.find("dcc:coreData", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx, core)
-        # callab=adm.find("dcc:calibrationLaboratory", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,callab)
-        # accr=adm.find("dcc:accreditation", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx, accr)
-        # respPers=adm.find("dcc:respPersons", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,respPers)
-        # cust=adm.find("dcc:customer", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:equipmentReturnInfo", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:customerBillingInfo", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:certificateReturnInfo", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:performanceLocation", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # rng = sht.range((1,1)).expand()
+        rng = sht.range((2,3))
+        rng.color = colors["light_yellow"]      
+        #%% set validator dropdowns
+        for rIdx, rowData in enumerate(xsdAdmStruct):
+            xsdType = rowData[-2]
+            rng = sht.range((rIdx,3))
+            if xsdType == 'dcx:transactionContentType':
+                self.applyValidationToRange(rng, 'transactionContentType')
+            elif xsdType == 'dcx:dcx:performanceLocationFieldType':
+                self.applyValidationToRange(rng, 'performanceLocationType')
+            elif xsdType == 'dcx:accreditationNormFieldType':
+                self.applyValidationToRange(rng, 'accreditationNormType')
+            elif xsdType == 'dcx:stringISO3166FieldType':
+                self.applyValidationToRange(rng, 'stringISO3166Type')
+            elif xsdType == 'dcx:stringISO639FieldType':
+                self.applyValidationToRange(rng, 'stringISO639Type')
+            elif xsdType == 'dcx:accreditationApplicabilityFieldType':
+                self.applyValidationToRange(rng, 'accreditationApplicabilityType')
+
+        # Set column widths
         sht.autofit(axis="columns")
 
+        # Insert contacts and Locations
+        
 
 def extractHeadingLang(s):
     r = re.findall(r'\[(.*?)\]', s)
@@ -754,7 +799,7 @@ def exportToXmlFile(wb, fileName='output.xml'):
             xpathTags = xpath.split('/')[1:]
             current_node = parent
             for i, nodeTag in enumerate(xpathTags):
-                tag = nodeTag.replace('dcc:','')
+                tag = nodeTag.replace('dcx:','')
                 tag = tag.split("[",1)[0]
                 sub_nodes = current_node.findall(nodeTag, ns)
                 sub_node = sub_nodes[-1] if len(sub_nodes) > 0 else None
@@ -781,11 +826,11 @@ def exportToXmlFile(wb, fileName='output.xml'):
             if adminSht.range((rowIdx,colIdxXpath-2)).font.bold :
                 exportHeading(current_node, elmMaker, adminSht, adminHeading, rowIdx) 
                 
-    s = '/dcc:digitalCalibrationCertificate'
+    s = '/dcx:digitalCalibrationCertificate'
     xpath_list = [xpth.value.replace(s,'.') for xpth in rngXpath]
     add_subtree(exportRoot, xpath_list)
     # dcchf.print_node(exportRoot)
-    mainSignerNodes = exportRoot.findall('./dcc:administrativeData/dcc:respPersons/*/dcc:mainSigner', ns)
+    mainSignerNodes = exportRoot.findall('./dcx:administrativeData/dcx:respPersons/*/dcx:mainSigner', ns)
     for mainSignerNode in mainSignerNodes: 
         mainSignerNode.text = mainSignerNode.text.lower()
 
@@ -793,7 +838,7 @@ def exportToXmlFile(wb, fileName='output.xml'):
 
     # set TRUE/FALSE to true/false
 
-    adminNode = exportRoot.find('./dcc:administrativeData', ns)
+    adminNode = exportRoot.find('./dcx:administrativeData', ns)
     print(adminNode)
     dcchf.print_node(exportRoot)
 
@@ -857,7 +902,7 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
 
     global NUM_LANGS
 
-    for i, efn in enumerate(embeddedFilesNode.findall("./dcc:embeddedFile",ns)): 
+    for i, efn in enumerate(embeddedFilesNode.findall("./dcx:embeddedFile",ns)): 
         filepath = sht.range((NUM_LANGS+2+i,ncols+1)).value
         print(f"loading file: {filepath}")
         base64str = encode_file_to_base64(filepath)
@@ -909,7 +954,7 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
                             elm = elmMaker('heading',row[i], lang=lang)
                         else: 
                             elm = elmMaker('value',str(row[i]))
-                        idNode = node.find(f'./dcc:identification[@issuer="{issuer}"]', node.nsmap)
+                        idNode = node.find(f'./dcx:identification[@issuer="{issuer}"]', node.nsmap)
                         if idNode is None:
                             idNode = elmMaker('identification',issuer=issuer)
                             node.append(idNode)

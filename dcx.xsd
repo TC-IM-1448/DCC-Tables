@@ -200,6 +200,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="uniqueDocumentIdentifier" type="dcx:stringFieldType"/> <!--simple-->
             <xs:element name="clientTaskIdentifier" type="dcx:stringFieldType" minOccurs="0"/> <!--simple-->
             <xs:element name="uniqueTemplateIdentifier" type="dcx:stringFieldType" minOccurs="0"/> <!--simple-->
@@ -210,7 +211,7 @@
             <xs:element name="equipmentReceiptDate" type="dcx:dateFieldType" minOccurs="0"/> <!--simple-->
             <xs:element name="equipmentReturnDate" type="dcx:dateFieldType" minOccurs="0"/> <!--simple-->
             <xs:element name="performanceLocation" type="dcx:performanceLocationFieldType"/> <!--simple-->
-            <xs:element name="requestedLanguages" type="dcx:stringISO639FieldType" maxOccurs="unbounded"/> <!--simple-->
+            <xs:element name="requestedLanguages" type="dcx:stringISO639FieldType" minOccurs="0"/> <!--simple-->
         </xs:sequence>
     </xs:complexType>
 
@@ -339,10 +340,18 @@
     <xs:complexType name="stringISO639FieldType">
         <xs:complexContent>
             <xs:extension base="dcx:fieldType">
-                <xs:attribute name="value" type="dcx:stringISO639Type" use="required"/>
+                <xs:attribute name="value" type="dcx:stringISO639ListType" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    
+    <xs:simpleType name="stringISO639ListType">
+        <xs:annotation>
+            <xs:documentation>String List of stringISO639 languages that are space separated.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:list itemType="dcx:stringISO639Type"/>
+    </xs:simpleType>
     
     <xs:complexType name="stringISO3166FieldType">
         <xs:complexContent>
@@ -602,9 +611,11 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0"/>
             <xs:element name="authorizingPerson" type="dcx:responsiblePersonType" minOccurs="1"/>
-            <xs:element name="coSigner" type="dcx:responsiblePersonType" minOccurs="0" maxOccurs='3'/>
+            <xs:element name="coSigner" type="dcx:responsiblePersonType" minOccurs="0"/>
+            <xs:element name="coSigner2" type="dcx:responsiblePersonType" minOccurs="0"/>
+            <xs:element name="coSigner3" type="dcx:responsiblePersonType" minOccurs="0"/>
         </xs:sequence>    
     </xs:complexType>
     
@@ -690,10 +701,10 @@
                     <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="name" type="xs:string"/> 
                     <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
+                    <xs:element name="url" type="xs:string" minOccurs="0"/>
                     <xs:element name="address" type="dcx:addressType" minOccurs="1"/>
                     <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
                     <xs:element name="position" type="dcx:positionType" minOccurs="0"/>
-                    <xs:element name="url" type="xs:string" minOccurs="0"/>
                     <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
                 <!-- <xs:attribute name="id" type="xs:ID" use="optional"/>

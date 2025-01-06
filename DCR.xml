@@ -1,0 +1,306 @@
+<?xml version="1.0" ?>
+<dcx:digitalCalibrationCertificate schemaVersion="3.0.0" xmlns:dcx="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://dfm.dk dcx.xsd">
+    <dcx:heading lang="en">Calibration request</dcx:heading>
+    <dcx:heading lang="da">Kalibreringsforespørgsel</dcx:heading>
+    <dcx:administrativeData>
+        <dcx:heading lang="en">Administrative data</dcx:heading>
+        <dcx:heading lang="da">Administrative data</dcx:heading>
+        <dcx:coreData>
+            <dcx:transactionContent value="request:digitalCalibrationCertificate"/>
+            <dcx:uniqueIdentifier></dcx:uniqueIdentifier>
+            <dcx:clientIdentifier value="140000742779"/>
+            <dcx:issueDate></dcx:issueDate>
+            <dcx:beginPerformanceDate></dcx:beginPerformanceDate>
+            <dcx:endPerformanceDate></dcx:endPerformanceDate>
+            <dcx:equipmentReceiptDate></dcx:equipmentReceiptDate>
+            <dcx:performanceLocation></dcx:performanceLocation>
+            <dcx:countryCodeISO3166_1 value="DK"/>
+            <dcx:mandatoryLangCodeISO639_1 value="en"/>
+            <dcx:usedLangCodeISO639_1 value="da"/>
+            <dcx:conformityResult></dcx:conformityResult>
+        </dcx:coreData>
+        <dcx:serviceProvider>
+        </dcx:serviceProvider>
+        <dcx:accreditation>
+            <dcx:heading lang="en">Accreditation</dcx:heading>
+            <dcx:heading lang="da">Akkreditering</dcx:heading>
+            <dcx:accreditationCountry value="DK">
+                <dcx:heading lang="en">Country</dcx:heading>
+                <dcx:heading lang="da">Land</dcx:heading>
+            </dcx:accreditationCountry>
+            <dcx:accreditationBody value="DANAK">
+                <dcx:heading lang="en">Accreditation body</dcx:heading>
+                <dcx:heading lang="da">Akrediteringsorgan</dcx:heading>
+            </dcx:accreditationBody>
+            <dcx:accreditationLabId value="255">
+                <dcx:heading lang="en">Laboratory ID</dcx:heading>
+                <dcx:heading lang="da">Laboratoriets ID</dcx:heading>
+            </dcx:accreditationLabId>
+            <dcx:accreditationNorm value="17025">
+                <dcx:heading lang="en">Norm</dcx:heading>
+                <dcx:heading lang="da">Standard</dcx:heading>
+            </dcx:accreditationNorm>
+            <dcx:accreditationApplicability value="wholly">
+                <dcx:heading lang="en">Applicability</dcx:heading>
+                <dcx:heading lang="da">Gyldighed</dcx:heading>
+            </dcx:accreditationApplicability>
+        </dcx:accreditation>
+        <dcx:client>
+            <dcx:heading lang="en">Customer</dcx:heading>
+            <dcx:heading lang="da">Kunde</dcx:heading>
+            <dcx:name value="Novo Nordisk A/S"></dcx:name>
+            <dcx:location>
+                <dcx:heading lang="en">Address</dcx:heading>
+                <dcx:heading lang="da">Addresse</dcx:heading>
+                <dcx:street value="Brennum Park"> </dcx:street>
+                <dcx:postCode value="3480"> </dcx:postCode>
+                <dcx:city value="Hillerød"> </dcx:city>
+                <dcx:countryCode value="DK"> </dcx:countryCode>
+            </dcx:location>
+            <dcx:contactInfo>
+                <dcx:heading lang="en">Contact info</dcx:heading>
+                <dcx:heading lang="da">Kontaktoplysninger</dcx:heading>
+                <dcx:eMail value="DMS-kalibrering@novonordisk.com"> </dcx:eMail>
+            </dcx:contactInfo>
+        </dcx:client>
+        <dcx:certificateReturnInfo>
+            <dcx:heading lang="en">Certificate return info</dcx:heading>
+            <dcx:heading lang="da">Certifikat stiles til</dcx:heading>
+            <dcx:name value="Novo Nordisk A/S"></dcx:name>
+            <dcx:contactInfo>
+                <dcx:eMail value="BOT-PS52@novonordisk.com"> </dcx:eMail>
+                <dcx:attPerson value="NKSK"> </dcx:attPerson>
+            </dcx:contactInfo>
+        </dcx:certificateReturnInfo>
+        <dcx:clientBillingInfo>
+            <dcx:heading lang="en">Billing address</dcx:heading>
+            <dcx:heading lang="da">Regning stiles til</dcx:heading>
+            <dcx:name value="Novo Nordisk A/S"></dcx:name>
+            <dcx:location>
+                <dcx:heading lang="en">Address</dcx:heading>
+                <dcx:heading lang="da">Addresse</dcx:heading>
+                <dcx:postOfficeBox value="1000"> </dcx:postOfficeBox>
+                <dcx:postCode value="2880"> </dcx:postCode>
+                <dcx:city value="Bagsværd"> </dcx:city>
+                <dcx:countryCode value="DK"> </dcx:countryCode>
+            </dcx:location>
+        </dcx:clientBillingInfo>
+        <dcx:equipmentReturnInfo>
+            <dcx:heading lang="en">Equipment return info</dcx:heading>
+            <dcx:heading lang="da">Udstyr sendes retu til</dcx:heading>
+            <dcx:name value="Novo Nordisk A/S"></dcx:name>
+            <dcx:location>
+                <dcx:heading lang="en">Address</dcx:heading>
+                <dcx:heading lang="da">Addresse</dcx:heading>
+                <dcx:street value="Via Smørmosevej"> </dcx:street>
+                <dcx:streetNo value="9, Gatehouse 6U"> </dcx:streetNo>
+                <dcx:postCode value="2880"> </dcx:postCode>
+                <dcx:city value="Bagsværd"> </dcx:city>
+                <dcx:countryCode value="DK"> </dcx:countryCode>
+            </dcx:location>
+            <dcx:contactInfo>
+                <dcx:attPerson value="NKSK-24AS-02.05-Hillerød"> </dcx:eMail>
+            </dcx:equipmentReturnInfo>
+        </dcx:client>
+    </dcx:administrativeData>
+
+    <dcx:statements>
+        <dcx:heading lang="en">Statements</dcx:heading>
+        <dcx:heading lang="da">Bemærkninger</dcx:heading>
+
+        <dcx:statement id="accept1" category="customerRequirement">
+            <dcx:heading lang="en">Accept limits</dcx:heading>
+            <dcx:body lang="en">Acceptance limits (AL_lower and AL_upper) for the DUT inidication error should be calculated from tolerance limits (TL_lower=-0.375°C and TL_uppper=0.375°C) in accordance with ILAC G8:09/2019 as: AL_lower=TL_lower+U and AL_upper=TL_upper-U, where U is the expanded calibration uncertainty.</dcx:body>
+            <dcx:externalReference>ILAC G8:09/2019</dcx:externalReference>
+        </dcx:statement>
+        <dcx:statement id="adjust1" category="customerRequirement">
+            <dcx:heading lang="en">Adjustment criteria</dcx:heading>
+            <dcx:body lang="en">In case the indication error of the DUT falls outside the acceptance limits, please adjust the instrument and calibrate again according to DCR_after_adjustment.xml</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="conf1" category="customerRequirement">
+            <dcx:heading lang="en">No conformity statements</dcx:heading>
+            <dcx:body lang="en">Please do not include any pass/fail assessments or other conformity statements in the certificate.  </dcx:body>
+        </dcx:statement>
+        </dcx:statement>
+    </dcx:statements>
+    <dcx:equipment>
+        <dcx:heading lang="en">Used equipment</dcx:heading>
+        <dcx:heading lang="da">Anvendt udstyr</dcx:heading>
+            <dcx:columnHeading column='heading'>
+                <dcx:heading lang="en">Used equipment</dcx:heading>
+                <dcx:heading lang="da">Anvendt udstyr</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='manufacturer'>
+                <dcx:heading lang="en">Manufacturer</dcx:heading>
+                <dcx:heading lang="da">Fabrikat</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='productName'>
+                <dcx:heading lang="en">Product name</dcx:heading>
+                <dcx:heading lang="da">Produktnavn</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='productType'>
+                <dcx:heading lang="en">Product type</dcx:heading>
+                <dcx:heading lang="da">Produkttype</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='clientId'>
+                <dcx:heading lang="en">Customer ID</dcx:heading>
+                <dcx:heading lang="da">Kundens ID</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='manufacturerId'>
+                <dcx:heading lang="en">Serial number</dcx:heading>
+                <dcx:heading lang="da">Serienummer</dcx:heading>
+            </dcx:columnHeading>
+        <dcx:equipmentItem category="item" id="item1">
+            <dcx:heading lang="en">Temperature sensor</dcx:heading>
+            <dcx:heading lang="da">Temperaturføler</dcx:heading>
+            <dcx:manufacturer></dcx:manufacturer>
+            <dcx:productName></dcx:productName>
+            <dcx:clientId value="1724430"> </dcx:clientId>
+            <dcx:manufacturerId></dcx:manufacturerId>
+        </dcx:equipmentItem>
+    </dcx:equipment>
+
+    <dcx:settings>
+        <dcx:heading lang="en">Settings</dcx:heading>
+        <dcx:heading lang="da">Indstillinger</dcx:heading>
+            <dcx:columnHeading column='heading'>
+                <dcx:heading lang="en">-</dcx:heading>
+                <dcx:heading lang="da">-</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='body'>
+                <dcx:heading lang="en">description</dcx:heading>
+                <dcx:heading lang="da">beskrivelse</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='parameter'>
+                <dcx:heading lang="en">parameter</dcx:heading>
+                <dcx:heading lang="da">parameter</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='value'>
+                <dcx:heading lang="en">value</dcx:heading>
+                <dcx:heading lang="da">værdi</dcx:heading>
+            </dcx:columnHeading>
+            <dcx:columnHeading column='unit'>
+                <dcx:heading lang="en">unit</dcx:heading>
+                <dcx:heading lang="da">enhed</dcx:heading>
+            </dcx:columnHeading>
+
+        <dcx:setting settingId="" equipmentRef="item1">
+        </dcx:setting>
+    </dcx:settings>
+
+    <dcx:measuringSystems>
+        <dcx:heading lang="en">Measuring Systems Under Calibration</dcx:heading>
+        <dcx:heading lang="da">Målesystemer</dcx:heading>
+        <dcx:columnHeading column='heading'>
+            <dcx:heading lang="da">Målesystem</dcx:heading>
+            <dcx:heading lang="da">Measuring system</dcx:heading>
+        </dcx:columnHeading>
+        <dcx:columnHeading column='equipmentRefs'>
+            <dcx:heading lang="en">Equipment ref.</dcx:heading>
+            <dcx:heading lang="da">Udstyrsref.</dcx:heading>
+        </dcx:columnHeading>
+        <dcx:columnHeading column='settingRefs'>
+            <dcx:heading lang="en">Setting ref.</dcx:heading>
+            <dcx:heading lang="da">Indstillingsref.</dcx:heading>
+        </dcx:columnHeading>
+        <dcx:columnHeading column='statementRefs'>
+            <dcx:heading lang="en">Method ref.</dcx:heading>
+            <dcx:heading lang="da">Metoderef.</dcx:heading>
+        </dcx:columnHeading>
+        <dcx:columnHeading column='operationalStatus'>
+            <dcx:heading lang="en">Operational status.</dcx:heading>
+            <dcx:heading lang="da">Kalibrerings tidspunkt i forhold til vedlighold: Før (as found). Efter (as left).</dcx:heading>
+        </dcx:columnHeading>
+        <dcx:measuringSystem id="ms1">
+            <dcx:heading lang="en">Temperature sensor</dcx:heading>
+            <dcx:heading lang="da"></dcx:heading>
+            <dcx:equipmentRefs value="item1" ></dcx:equipmentRefs>
+            <dcx:settingRefs></dcx:settingRefs>
+            <dcx:referenceRefs></dcx:referenceRefs>
+            <dcx:statementRefs></dcx:statementRefs>
+            <dcx:operationalStatus value="as found"> </dcx:operationalStatus>
+        </dcx:measuringSystem>
+    </dcx:measuringSystems>
+    <dcx:measurementResults>
+        <dcx:calibrationResult tableId="calRes0" measuringSystemRef="ms1"  numRows='3' numCols='2'>
+            <dcx:heading lang="en">Caliration of temperature sensor</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="1">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                <dcx:rowTag>
+                    <dcx:row idx="1">MIC01</dcx:row>
+                    <dcx:row idx="2">MIC02</dcx:row> 
+                    <dcx:row idx="3">MIC03</dcx:row>
+                </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-"    quantity="3-4|temperature|k" unit="℃" scope="reference">
+                <dcx:heading lang="en">Target value</dcx:heading>
+                <dcx:targeValue>
+                    <dcx:row idx="1">0</dcx:row> 
+                    <dcx:row idx="2">5</dcx:row> 
+                    <dcx:row idx="3">15</dcx:row>
+                </dcx:targeValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-"     quantity="3-4|temperature|k" unit="℃" scope="indication">
+                <dcx:heading lang="en">Value of the dut</dcx:heading>
+                <dcx:value>
+                </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-"     quantity="3-4|temperature|k" unit="℃" scope="reference">
+                <dcx:heading lang="en">Value of the reference in unit of the dut</dcx:heading>
+                <dcx:value>
+                </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|temperature|k" unit="℃" scope="bias">
+                <dcx:heading lang="en">uncertainty of calibration</dcx:heading>
+                <dcx:expandedUncertainty>
+                </dcx:expandedUncertainty>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|temperature|k" unit="℃" scope="bias">
+                <dcx:heading lang="en">Lower tolerance limit of the bias</dcx:heading>
+                <dcx:toleranceLimitLower>
+                    <dcx:row idx="1">-0.375</dcx:row> 
+                    <dcx:row idx="2">-0.375</dcx:row> 
+                    <dcx:row idx="3">-0.375</dcx:row>
+                </dcx:toleranceLimitLower>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|temperature|k" unit="℃" scope="bias">
+                <dcx:heading lang="en">Upper tolerance limit of the bias</dcx:heading>
+                <dcx:toleranceLimitUpper>
+                    <dcx:row idx="1">0.375</dcx:row> 
+                    <dcx:row idx="2">0.375</dcx:row> 
+                    <dcx:row idx="3">0.375</dcx:row>
+                </dcx:toleranceLimitUpper>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|temperature|k" unit="℃" scope="bias">
+                <dcx:heading lang="en">Lower acceptance limit of the bias</dcx:heading>
+                <dcx:toleranceLimitLower>
+                </dcx:toleranceLimitLower>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|temperature|k" unit="℃" scope="bias">
+                <dcx:heading lang="en">Upper acceptance limit of the bias</dcx:heading>
+                <dcx:toleranceLimitUpper>
+                </dcx:toleranceLimitUpper>
+            </dcx:column>
+            <dcx:column dataCategoryRef="conformity" quantity="3-4|temperature|k" unit="℃" scope="bias">
+                <dcx:heading lang="en">Conformity statement</dcx:heading>
+                <dcx:decisionRuleRef>
+                    <dcx:row idx="1">accept1</dcx:row> 
+                    <dcx:row idx="2">accept1</dcx:row> 
+                    <dcx:row idx="3">accept1</dcx:row>
+                </dcx:decisionRuleRef>
+            </dcx:column>
+        </dcx:calibrationResult>
+    </dcx:measurementResults>
+    <dcx:embeddedFiles>
+        <dcx:embeddedFile id="DCR_after_adjustment.xml">
+            <dcx:heading lang="en"></dcx:heading>
+            <dcx:heading lang="da"></dcx:heading>
+            <dcx:body lang="en"></dcx:body>
+            <dcx:body lang="da"></dcx:body>
+            <dcx:fileExtension>xml</dcx:fileExtension>
+            <dcx:fileContent>
+            </dcx:fileContent>
+        </dcx:embeddedFile>
+    </dcx:embeddedFiles>
+</dcx:digitalCalibrationCertificate>

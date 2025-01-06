@@ -3,7 +3,7 @@
                                 xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
                                 xmlns:dcx="https://dfm.dk" 
                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-                                xsi:schemaLocation="https://dfm.dk dcc.xsd">
+                                xsi:schemaLocation="https://dfm.dk dcx.xsd">
     <dcx:title value="digitalCalibrationCertificate">
         <dcx:heading lang="da">Kalibreringscertifikat</dcx:heading>
         <dcx:heading lang="en">Calibration certificate</dcx:heading>
@@ -14,17 +14,46 @@
         <dcx:heading lang="en">Administrative data</dcx:heading>
         <dcx:heading lang="da">Administrative data</dcx:heading>
         <dcx:coreData>
-            <dcx:uniqueDocumentIdentifier value="SKH_10112_2"/>
-            <dcx:clientTaskIdentifier value="xx28"/>
-            <dcx:uniqueTemplateIdentifier value="alsdkjfaodi"/>
-            <dcx:devicesForMeasurement value="item1"/>
-            <dcx:issueDate value="2022-02-11"/>
-            <dcx:beginPerformanceDate value="2022-02-10"/>
-            <dcx:endPerformanceDate value="2022-02-10"/>
-            <dcx:equipmentReceiptDate value="2022-02-09"/>
-            <dcx:performanceLocation value="atProvider"/>
-            <dcx:requestedLanguages value="en"/>
-            <dcx:requestedLanguages value="da"/>
+            <dcx:uniqueDocumentIdentifier value="SKH_10112_2">
+                <dcx:heading lang="en">Document number</dcx:heading>
+                <dcx:heading lang="da">Dokumentnummer</dcx:heading>
+            </dcx:uniqueDocumentIdentifier>
+            <dcx:clientTaskIdentifier value="xx28">
+                <dcx:heading lang="en">Client task number</dcx:heading>
+                <dcx:heading lang="da">Kundens opgavenummer</dcx:heading>
+            </dcx:clientTaskIdentifier>
+            <dcx:uniqueTemplateIdentifier value="alsdkjfaodi">
+                <dcx:heading lang="en">Template number</dcx:heading>
+                <dcx:heading lang="da">Skabelonnummer</dcx:heading>
+            </dcx:uniqueTemplateIdentifier>
+            <dcx:devicesForMeasurement value="item1">    
+                <dcx:heading lang="en">Device for measurement</dcx:heading>
+                <dcx:heading lang="da">Måleudstyr til kalibrering</dcx:heading>
+            </dcx:devicesForMeasurement>
+            <dcx:issueDate value="2022-02-11">
+                <dcx:heading lang="en">Issue date</dcx:heading>
+                <dcx:heading lang="da">Udstedelsesdato</dcx:heading>
+            </dcx:issueDate>
+            <dcx:beginPerformanceDate value="2022-02-10">
+                <dcx:heading lang="en">Performance date</dcx:heading>
+                <dcx:heading lang="da">Udførelsesdato</dcx:heading>
+            </dcx:beginPerformanceDate>
+            <dcx:endPerformanceDate value="2022-02-10"> 
+                <dcx:heading lang="en">Performance date</dcx:heading>
+                <dcx:heading lang="da">Udførelsesdato</dcx:heading>
+            </dcx:endPerformanceDate>
+            <dcx:equipmentReceiptDate value="2022-02-09">
+                <dcx:heading lang="en">Equipment receipt date</dcx:heading>
+                <dcx:heading lang="da">Udstyrs modtagelsesdato</dcx:heading>
+            </dcx:equipmentReceiptDate>
+            <dcx:performanceLocation value="atProvider">    
+                <dcx:heading lang="en">Performance location</dcx:heading>
+                <dcx:heading lang="da">Udførelsessted</dcx:heading>
+            </dcx:performanceLocation>
+            <dcx:requestedLanguages value="en da">
+                <dcx:heading lang="en">Requested language</dcx:heading>
+                <dcx:heading lang="da">Ønsket sprog</dcx:heading>
+            </dcx:requestedLanguages>
         </dcx:coreData>
         <dcx:dcxSoftware>
             <dcx:heading lang="en">Document software</dcx:heading>
@@ -34,6 +63,7 @@
         </dcx:dcxSoftware>
         <dcx:accreditation>
             <dcx:heading lang="en">Accreditation</dcx:heading>
+            <dcx:heading lang="da">Akkreditering</dcx:heading>
             <dcx:accreditationNorm value="ISO 17025">
                 <dcx:heading lang="da">Akkrediteringsområde</dcx:heading>
                 <dcx:heading lang="en">Accreditation norm</dcx:heading>
