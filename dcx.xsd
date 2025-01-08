@@ -42,8 +42,8 @@
         <xs:selector xpath="dcx:statementList/dcx:statement"/>
         <xs:field xpath="@id"/>
     </xs:key>
-    <xs:key name="PKmeasurementSetup">
-        <xs:selector xpath="dcx:measurementSetups/dcx:measurementSetup"/>
+    <xs:key name="PKmeasurementConfig">
+        <xs:selector xpath="dcx:measurementConfigs/dcx:measurementConfig"/>
         <xs:field xpath="@id"/>
     </xs:key>
     <xs:key name="PKmeasurementSeries">
@@ -52,19 +52,19 @@
     </xs:key>
 
     <xs:keyref name="ms2equip" refer="dcx:PKequipment">
-        <xs:selector xpath="dcx:measurementSetups/dcx:measurementSetup/dcx:equipmentRef"/>
+        <xs:selector xpath="dcx:measurementConfigs/dcx:measurementConfig/dcx:equipmentRef"/>
         <xs:field xpath="@equipmentRef"/>
     </xs:keyref>
     <xs:keyref name="ms2statetment" refer="dcx:PKstatement">
-        <xs:selector xpath="dcx:measurementSetups/dcx:measurementSetup/dcx:statementRef"/>
+        <xs:selector xpath="dcx:measurementConfigs/dcx:measurementConfig/dcx:statementRef"/>
         <xs:field xpath="."/>
     </xs:keyref>
-    <xs:keyref name="table2ms" refer="dcx:PKmeasurementSetup">
+    <xs:keyref name="table2ms" refer="dcx:PKmeasurementConfig">
         <xs:selector xpath="dcx:measurementResults/dcx:calibrationResult"/>
-        <xs:field xpath="@measurementSetupRef"/>
+        <xs:field xpath="@measurementConfigRef"/>
     </xs:keyref>
     <xs:keyref name="msequip2setting" refer="dcx:PKsetting">
-        <xs:selector xpath="dcx:measurementSetups/dcx:measurementSetup/dcx:equipmentRef/dcx:settingRef"/>
+        <xs:selector xpath="dcx:measurementConfigs/dcx:measurementConfig/dcx:equipmentRef/dcx:settingRef"/>
         <xs:field xpath="."/>
     </xs:keyref>
     <xs:keyref name="exceptionRefColumn2statement" refer="dcx:PKstatement">
@@ -93,16 +93,16 @@
             <xs:element name="statementList" type="dcx:statementListType" minOccurs="0"/>
             <xs:element name="equipmentList" type="dcx:equipmentListType"/>
             <xs:element name="settingList" type="dcx:settingListType" minOccurs="0"/>
-            <xs:element name="measurementSetupList" type="dcx:measurementSetupListType"/>
+            <xs:element name="measurementConfigList" type="dcx:measurementConfigListType"/>
             <xs:element name="measurementResultList" type="dcx:measurementResultListType" maxOccurs="unbounded" minOccurs="0">
                 <xs:unique name="calibrationResult">
                     <xs:selector xpath="dcx:calibrationResult"/>
-                    <xs:field xpath="@measurementSetupRef"/>
+                    <xs:field xpath="@measurementConfigRef"/>
                     <!--xs:field xpath="@serviceCategory"/>
                     <xs:field xpath="@customServiceCategory"/-->
                 </xs:unique>
             </xs:element>
-            <xs:element name="quantityUnitDefs" type="dcx:quantityUnitDefListType"/>
+            <xs:element name="quantityUnitDefs" type="dcx:quantityUnitDefListType" minOccurs="0"/>
             <xs:element name="embeddedFiles" type="dcx:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
             <xs:element name="codeableElementsAnnex" type="dcx:anyType" minOccurs="0"/>
         </xs:sequence>
@@ -975,11 +975,12 @@
                 <xs:enumeration value="@category" /> 
                 <xs:enumeration value="heading" /> 
                 <xs:enumeration value="manufacturer" /> 
-                <xs:enumeration value="productName" /> 
-                <xs:enumeration value="productType" /> 
-                <xs:enumeration value="productNumber" /> 
+                <xs:enumeration value="modelName" /> 
+                <xs:enumeration value="modelNumber" /> 
+                <xs:enumeration value="serialNumber" /> 
+                <xs:enumeration value="lotNumber" /> 
+                <xs:enumeration value="productClass" /> 
                 <xs:enumeration value="clientId" /> 
-                <xs:enumeration value="manufacturerId" /> 
                 <xs:enumeration value="serviceProviderId" /> 
                 <xs:enumeration value="prevCalibDate" /> 
                 <xs:enumeration value="calDueDate" /> 
@@ -1070,20 +1071,20 @@
     </xs:simpleType>
 
 <!-- ============================================================
-                      MEASUREMENT SETUP 
+                      MEASUREMENT CONFIGURATION 
     ============================================================ --> 
 
-    <xs:complexType name="measurementSetupListType">
+    <xs:complexType name="measurementConfigListType">
         <xs:annotation>
             <xs:documentation>
-                This type is a tabular of elements of measurementSetupType. For each field in the measurementSetupType a common columnHeading can be given here.
+                This type is a tabular of elements of measurementConfigType. For each field in the measurementConfigType a common columnHeading can be given here.
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="measurementSetup" type="dcx:measurementSetupType" maxOccurs="unbounded"/>
-            <xs:element name="columnHeadings" type="dcx:measurementSetupColumnHeadingsType" minOccurs="0">
-                <xs:unique name="uniquemeasurementSetupsColumnHeadings">
+            <xs:element name="measurementConfig" type="dcx:measurementConfigType" maxOccurs="unbounded"/>
+            <xs:element name="columnHeadings" type="dcx:measurementConfigColumnHeadingsType" minOccurs="0">
+                <xs:unique name="uniquemeasurementConfigsColumnHeadings">
                     <xs:selector xpath="dcx:column"/>
                     <xs:field xpath="@name"/>
                 </xs:unique>
@@ -1092,7 +1093,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="measurementSetupType">
+    <xs:complexType name="measurementConfigType">
         <xs:annotation>
             <xs:documentation>
                 Set of one or more measuring instruments and often other
@@ -1102,10 +1103,10 @@
                 DCC it is a list of references to elements of
                 measuringInstrumentType and instrumentSettingType. Each table in
                 the measutrementResults section must refer to exactely one
-                element of measurementSetupType.
+                element of measurementConfigType.
 
                 The measuringSystmeType is a list of simple fields without field headings.
-                A number of measurementSetups can be organized as rows in a tabular with columnHeadings defined by the measuringSystmeListType.
+                A number of measurementConfigs can be organized as rows in a tabular with columnHeadings defined by the measuringSystmeListType.
                 Each row may have a descriptive heading and body in multiple languages.
             </xs:documentation>
         </xs:annotation>
@@ -1131,16 +1132,16 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-    <xs:complexType name="measurementSetupColumnHeadingsType">
+    <xs:complexType name="measurementConfigColumnHeadingsType">
         <xs:sequence>
             <xs:element name="column" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
                     </xs:sequence>
-                    <xs:attribute name="name" type="dcx:measurementSetupColumnHeadingNamesType" use="required"/>
+                    <xs:attribute name="name" type="dcx:measurementConfigColumnHeadingNamesType" use="required"/>
                 </xs:complexType>
-                <xs:unique name="uniqueLanguagemeasurementSetup">
+                <xs:unique name="uniqueLanguagemeasurementConfig">
                     <xs:selector xpath="dcx:heading"/>
                     <xs:field xpath="@lang"/>
                 </xs:unique>
@@ -1148,7 +1149,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="measurementSetupColumnHeadingNamesType">
+    <xs:simpleType name="measurementConfigColumnHeadingNamesType">
         <xs:annotation>
             <xs:documentation>
             </xs:documentation>
@@ -1156,12 +1157,12 @@
             <xs:restriction base="xs:string">
                 <xs:enumeration value="@id" /> 
                 <xs:enumeration value="heading" /> 
-                <xs:enumeration value="body" /> 
-                <xs:enumeration value="equipmentRefs" /> 
+                <xs:enumeration value="deviceForMeasuremmentRefs" /> 
                 <xs:enumeration value="settingRefs" /> 
                 <xs:enumeration value="referenceRefs" /> 
                 <xs:enumeration value="statementRefs" />
                 <xs:enumeration value="operationalStatus" /> 
+                <xs:enumeration value="body" /> 
             </xs:restriction>
     </xs:simpleType>
 
@@ -1306,7 +1307,7 @@
             <!-- <xs:element name="embeddedFileRef" type="xs:IDREF" minOccurs="0" maxOccurs="unbounded"/> -->
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
-		<xs:attribute name="measurementSetupRef" type="xs:IDREF" use="required"/>
+		<xs:attribute name="measurementConfigRef" type="xs:IDREF" use="required"/>
 		<xs:attribute name="numRows" type="xs:int" use="required"/>
 		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="serviceCategory" type="xs:string" use="optional"/>
@@ -1333,7 +1334,7 @@
     <xs:complexType name="measurementResultListType">
         <xs:annotation>
         <xs:documentation>
-        Measurement results consists of a number of tables containing the calibration results with reference to relevant measuring systems under calibration, references used and applicalble statments.
+        Measurement results consists of a number of tables containing the calibration results with reference to relevant measuring configurations, references used and applicalble statments.
         </xs:documentation>
         </xs:annotation>
         <xs:sequence>
