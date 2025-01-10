@@ -25,18 +25,9 @@
         </dcx:dcxSoftware>
         <dcx:accreditation>
             <dcx:heading lang="en">Accreditation</dcx:heading>
-            <dcx:accreditationNorm value="ISO 17025">
-                <dcx:heading lang="da">Akkrediteringsområde</dcx:heading>
-                <dcx:heading lang="en">Accreditation norm</dcx:heading>
-                </dcx:accreditationNorm>
-            <dcx:accreditationLabId value="04-490">
-                <dcx:heading lang="da">Akkrediteringsnummer</dcx:heading>
-                <dcx:heading lang="en">Accreditation Id</dcx:heading>
-                </dcx:accreditationLabId>
-            <dcx:accreditationBody value="DANAK">
-                <dcx:heading lang="da">Akkrediteringsorgan</dcx:heading>
-                <dcx:heading lang="en">Accreditation body</dcx:heading>
-                </dcx:accreditationBody>
+            <dcx:accreditationNorm value="ISO 17025"/>
+            <dcx:accreditationLabId value="04-490"/>
+            <dcx:accreditationBody value="DANAK"/>
             <dcx:accreditationCountry value="DK"/>
             <dcx:accreditationApplicability value="wholly"/>
         </dcx:accreditation>
@@ -168,6 +159,11 @@
             <dcx:body lang="en"> relative humidity: 59.4 %RH ±10 %RH</dcx:body>
             <dcx:body lang="da">Relativ luftfugtighed: 59,4 %RH ±10 %RH</dcx:body>
         </dcx:statement>
+        <dcx:statement id="req1" category="clientRequirement">
+            <dcx:heading lang="da">Krav1 </dcx:heading>
+            <dcx:body lang="da">Certifikatet skal være fuldt dækket af akkreditering.</dcx:body>
+            <dcx:externalReference>url:</dcx:externalReference>
+        </dcx:statement>
     </dcx:statementList>
     <dcx:equipmentList>
         <dcx:heading lang="en">Used equipment</dcx:heading>
@@ -259,6 +255,15 @@
                     <dcx:row idx="2">pt2</dcx:row> 
                     <dcx:row idx="3">pt3</dcx:row>
                 </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="indication" unit="µL">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                <dcx:targetValue>
+                    <dcx:row idx="1">10</dcx:row>
+                    <dcx:row idx="2">20</dcx:row> 
+                    <dcx:row idx="3">30</dcx:row>
+                </dcx:targetValue>
             </dcx:column>
         </dcx:calibrationResult>
     </dcx:measurementResultList>

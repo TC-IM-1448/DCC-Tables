@@ -45,6 +45,9 @@ XSD_RESTRICTION_NAMES = [
 def transpose_2d_list(matrix):
     return [list(row) for row in zip(*matrix)]
 #%%
+def transpose2DList(lst):
+    return list(map(list, zip(*lst)))
+#%%
 
 def validate(xml_path: str, xsd_path: str) -> bool:
     if xsd_path[0:5]=="https":
@@ -391,13 +394,13 @@ def getNodePath(node: et._Element) -> str:
 def getNamesAndTypes(xsd_root: et._Element ,typeName: str) -> Tuple[list, list]: 
     """Extract data from schema regarding Type Element content names and types
       of elements and attribtues within the type element"""
-    elements = xpath_query(xsd_root, f'.//*[@name="{typeName}Type"]/*/xs:element')
+    elements = xpath_query(xsd_root, f'.//*[@name="{typeName}"]/*/xs:element')
     elementNames = [e.get('name') for e in elements if not e.get('name') == 'heading']
     elementTypes = [e.get('type') for e in elements if not e.get('name') == 'heading']
-    attributes = xpath_query(xsd_root, f'.//*[@name="{typeName}Type"]/xs:attribute')
-    attributeNames = [e.get('name') for e in attributes]
+    attributes = xpath_query(xsd_root, f'.//*[@name="{typeName}"]/xs:attribute')
+    attributeNames = ['@'+e.get('name') for e in attributes]
     attributeTypes = [e.get('type') for e in attributes]
-    return elementNames+attributeNames, elementTypes+attributeTypes
+    return attributeNames+elementNames, attributeTypes+elementTypes
 
 #%%
 def schemaGetAdministrativeDataStructure(xsd_root: et._Element) -> list:
@@ -434,7 +437,7 @@ def schemaGetAdministrativeDataStructure(xsd_root: et._Element) -> list:
         paths.append(path)
         xsdTypes.append(xsdType)
 
-    adminElementNames, adminElementTypes = getNamesAndTypes(xsd_root, 'administrativeData')
+    adminElementNames, adminElementTypes = getNamesAndTypes(xsd_root, 'administrativeDataType')
     N = adminElementNames.index('contactColumnHeadings')
     adminPath = root_path+'/dcx:administrativeData'
 
@@ -446,12 +449,15 @@ def schemaGetAdministrativeDataStructure(xsd_root: et._Element) -> list:
         xsdType = adminElementTypes[idx]
         append_to_data(discr, level, sectionPath, xsdType)
         
-        elementNames, elementTypes = getNamesAndTypes(xsd_root, sectionName) 
+        elementNames, elementTypes = getNamesAndTypes(xsd_root, sectionName+"Type") 
 
         for idx2,elementName in enumerate(elementNames):
             discr = elementName
             level = 2
-            subsecPath = sectionPath+f'/dcx:{elementName}'
+            if not elementName[0] == '@': 
+                subsecPath = sectionPath+f'/dcx:{elementName}'
+            else:
+                subsecPath = sectionPath+f'/{elementName}'
             xsdType = elementTypes[idx2]
             append_to_data(discr, level, subsecPath, xsdType)
         

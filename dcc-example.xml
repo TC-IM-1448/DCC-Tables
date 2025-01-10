@@ -51,8 +51,8 @@
                 <dcx:heading lang="da">Udførelsessted</dcx:heading>
             </dcx:performanceLocation>
             <dcx:requestedLanguages value="en da">
-                <dcx:heading lang="en">Requested language</dcx:heading>
-                <dcx:heading lang="da">Ønsket sprog</dcx:heading>
+                <dcx:heading lang="en">Requested languages</dcx:heading>
+                <dcx:heading lang="da">Ønskede sprog</dcx:heading>
             </dcx:requestedLanguages>
         </dcx:coreData>
         <dcx:dcxSoftware>
@@ -61,7 +61,7 @@
             <dcx:productName value="Manually"/>
             <dcx:version value="1.0.0"></dcx:version>
         </dcx:dcxSoftware>
-        <dcx:accreditation>
+        <dcx:accreditation statementRef="acc1" imageRefs="logo.png">
             <dcx:heading lang="en">Accreditation</dcx:heading>
             <dcx:heading lang="da">Akkreditering</dcx:heading>
             <dcx:accreditationNorm value="ISO 17025">
@@ -113,19 +113,28 @@
         </dcx:documentAuthorization>
         <dcx:contactColumnHeadings>
             <dcx:column name="@id">
-                <dcx:heading lang="en"></dcx:heading>
+                <dcx:heading lang="en">Id</dcx:heading>
+                <dcx:heading lang="da">ID</dcx:heading>
                 </dcx:column>
             <dcx:column name="@imageRefs">
                 <dcx:heading lang="en">image ref.</dcx:heading>
                 <dcx:heading lang="da">billedref.</dcx:heading>
             </dcx:column>
-                <dcx:column name="address/.">
-                <dcx:heading lang="da">adresse</dcx:heading>
-                <dcx:heading lang="en">address</dcx:heading>
-                </dcx:column>
+            <dcx:column name="name">
+                <dcx:heading lang="en">Name</dcx:heading>
+                <dcx:heading lang="da">Navn</dcx:heading>
+            </dcx:column>
             <dcx:column name="VATIN">
                 <dcx:heading lang="da">CVR/VATnr.</dcx:heading>
                 <dcx:heading lang="en">VATIN</dcx:heading>
+                </dcx:column>
+            <dcx:column name="url">
+                <dcx:heading lang="en">URL</dcx:heading>
+                <dcx:heading lang="da">URL</dcx:heading>
+                </dcx:column>
+            <dcx:column name="address">
+                <dcx:heading lang="da">adresse</dcx:heading>
+                <dcx:heading lang="en">address</dcx:heading>
                 </dcx:column>
             <dcx:column name="address/street">
                 <dcx:heading lang="en">street</dcx:heading>
@@ -149,34 +158,37 @@
             <dcx:column name="address/country">
                 <dcx:heading lang="en">Country</dcx:heading>
                 <dcx:heading lang="da">Land</dcx:heading></dcx:column>
-            <dcx:column name="contact/.">
+            <dcx:column name="contactInfo">
                 <dcx:heading lang="en">Kontakt person</dcx:heading>
                 <dcx:heading lang="da">Contact person</dcx:heading></dcx:column>
-            <dcx:column name="contact/attPerson">
+            <dcx:column name="contactInfo/attPerson">
                 <dcx:heading lang="da">Navn</dcx:heading>
                 <dcx:heading lang="en">Name</dcx:heading></dcx:column>
-            <dcx:column name="contact/email">
+            <dcx:column name="contactInfo/email">
                 <dcx:heading lang="en">email</dcx:heading>
                 <dcx:heading lang="da">email</dcx:heading></dcx:column>
-            <dcx:column name="contact/mobile">
+            <dcx:column name="contactInfo/mobile">
                 <dcx:heading lang="en">mobile</dcx:heading>
                 <dcx:heading lang="da">mobil</dcx:heading></dcx:column>
-            <dcx:column name="contact/phone">
+            <dcx:column name="contactInfo/phone">
                 <dcx:heading lang="da">Tlf.</dcx:heading>
                 <dcx:heading lang="en">Phone</dcx:heading></dcx:column>
-            <dcx:column name="contact/fax">
+            <dcx:column name="contactInfo/fax">
                 <dcx:heading lang="da">telefax</dcx:heading>
                 <dcx:heading lang="en">fax</dcx:heading></dcx:column>
-            <dcx:column name="position/.">
+            <dcx:column name="geoPosition">
                 <dcx:heading lang="en">position</dcx:heading>
                 <dcx:heading lang="da">Position</dcx:heading></dcx:column>
-            <dcx:column name="position/logitude">
+            <dcx:column name="geoPosition/@geoPositionSystem">
+                <dcx:heading lang="en">GPS coordinate</dcx:heading>
+                <dcx:heading lang="da">GPS</dcx:heading></dcx:column>
+            <dcx:column name="geoPosition/longitude">
                 <dcx:heading lang="en">Longitude</dcx:heading>
                 <dcx:heading lang="da">længdegrad</dcx:heading></dcx:column>
-            <dcx:column name="position/latitude">
+            <dcx:column name="geoPosition/latitude">
                 <dcx:heading lang="en">Latitude</dcx:heading>
                 <dcx:heading lang="da">Breddegrad</dcx:heading></dcx:column>
-            <dcx:column name="position/altitude">
+            <dcx:column name="geoPosition/altitude">
                 <dcx:heading lang="en">Altitude</dcx:heading>
                 <dcx:heading lang="da">højde</dcx:heading></dcx:column>
             <dcx:column name="body">
@@ -216,6 +228,108 @@
                 <dcx:mobile>2342 4556</dcx:mobile>
             </dcx:contactInfo>
         </dcx:serviceProvider>
+        <dcx:clientBillingInfo id="billingID" imageRefs="logo.png">
+            <dcx:heading lang="en">Billing Information</dcx:heading>
+            <dcx:heading lang="da">Fakturerings Information</dcx:heading>
+            <dcx:name>John Doe</dcx:name>
+            <dcx:address>
+                <dcx:street>Main Street</dcx:street>
+                <dcx:streetNo>123</dcx:streetNo>
+                <dcx:postOfficeBox>456</dcx:postOfficeBox>
+                <dcx:city>Sample City</dcx:city>
+                <dcx:district>Central</dcx:district>
+                <dcx:state>Sample State</dcx:state>
+                <dcx:postalCode>7890</dcx:postalCode>
+                <dcx:country>US</dcx:country>
+            </dcx:address>
+            <dcx:VATIN>US123456789</dcx:VATIN>
+            <dcx:url>http://example.com</dcx:url>
+            <dcx:contactInfo>
+                <dcx:attPerson>Jane Smith</dcx:attPerson>
+                <dcx:email>jane.smith@example.com</dcx:email>
+                <dcx:mobile>+1-234-567-8901</dcx:mobile>
+                <dcx:phone>+1-234-567-8902</dcx:phone>
+                <dcx:fax>+1-234-567-8903</dcx:fax>
+            </dcx:contactInfo>
+            <dcx:geoPosition geoPositionSystem="WGS84">
+                <dcx:longitude>-77.0364</dcx:longitude>
+                <dcx:latitude>38.8951</dcx:latitude>
+                <dcx:altitude>10</dcx:altitude>
+            </dcx:geoPosition>
+            <dcx:body lang="en">This is a sample billing information.</dcx:body>
+            <dcx:body lang="da">Dette er et eksempel.</dcx:body>
+        </dcx:clientBillingInfo>
+        <dcx:equipmentReturnInfo>
+            <dcx:heading lang="en">Billing Information</dcx:heading>
+            <dcx:heading lang="da">Fakturerings Information</dcx:heading>
+            <dcx:name>John Doe</dcx:name>
+            <dcx:address>
+                <dcx:street>Main Street</dcx:street>
+                <dcx:streetNo>123</dcx:streetNo>
+                <dcx:postOfficeBox>456</dcx:postOfficeBox>
+                <dcx:city>Sample City</dcx:city>
+                <dcx:district>Central</dcx:district>
+                <dcx:state>Sample State</dcx:state>
+                <dcx:postalCode>7890</dcx:postalCode>
+                <dcx:country>US</dcx:country>
+            </dcx:address>
+            <dcx:VATIN>US123456789</dcx:VATIN>
+            <dcx:url>http://example.com</dcx:url>
+            <dcx:contactInfo>
+                <dcx:attPerson>Jane Smith</dcx:attPerson>
+                <dcx:email>jane.smith@example.com</dcx:email>
+                <dcx:mobile>+1-234-567-8901</dcx:mobile>
+                <dcx:phone>+1-234-567-8902</dcx:phone>
+                <dcx:fax>+1-234-567-8903</dcx:fax>
+            </dcx:contactInfo>
+            <dcx:geoPosition geoPositionSystem="WGS84">
+                <dcx:longitude>-77.0364</dcx:longitude>
+                <dcx:latitude>38.8951</dcx:latitude>
+                <dcx:altitude>10</dcx:altitude>
+            </dcx:geoPosition>
+            <dcx:body lang="en">This is a sample billing information.</dcx:body>
+            <dcx:body lang="da">Dette er et eksempel.</dcx:body>
+        </dcx:equipmentReturnInfo>
+        <dcx:certificateReturnInfo id="certRetrunID">
+            <dcx:heading lang="en">Billing Information</dcx:heading>
+            <dcx:heading lang="da">Fakturerings Information</dcx:heading>
+            <dcx:name>Jane Doe</dcx:name>
+            <dcx:address>
+                <dcx:street>Elm Street</dcx:street>
+                <dcx:streetNo>456</dcx:streetNo>
+                <dcx:postOfficeBox>789</dcx:postOfficeBox>
+                <dcx:city>Example City</dcx:city>
+                <dcx:district>North</dcx:district>
+                <dcx:state>Example State</dcx:state>
+                <dcx:postalCode>12345</dcx:postalCode>
+                <dcx:country>US</dcx:country>
+            </dcx:address>
+            <dcx:VATIN>US987654321</dcx:VATIN>
+            <dcx:url>http://example.org</dcx:url>
+            <dcx:contactInfo>
+                <dcx:attPerson>John Smith</dcx:attPerson>
+                <dcx:email>john.smith@example.org</dcx:email>
+                <dcx:mobile>+1-987-654-3210</dcx:mobile>
+                <dcx:phone>+1-987-654-3211</dcx:phone>
+                <dcx:fax>+1-987-654-3212</dcx:fax>
+            </dcx:contactInfo>
+            <dcx:geoPosition geoPositionSystem="WGS84">
+                <dcx:longitude>-77.0365</dcx:longitude>
+                <dcx:latitude>38.8952</dcx:latitude>
+                <dcx:altitude>15</dcx:altitude>
+            </dcx:geoPosition>
+            <dcx:body lang="en">This is an updated sample billing information.</dcx:body>
+            <dcx:body lang="da">Dette er et opdateret eksempel.</dcx:body>
+        </dcx:certificateReturnInfo>
+        <dcx:location>
+            <dcx:name>loc1</dcx:name>
+        </dcx:location>
+        <dcx:location>
+            <dcx:name>loc2</dcx:name>
+        </dcx:location>
+        <dcx:location>
+            <dcx:name>loc3</dcx:name>
+        </dcx:location>
     </dcx:administrativeData>
     <dcx:statementList>
         <dcx:heading lang="en">Statements</dcx:heading>

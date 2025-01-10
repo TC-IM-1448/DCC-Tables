@@ -668,9 +668,7 @@
                 <xs:enumeration value="@id" /> 
                 <xs:enumeration value="@imageRefs" /> 
                 <xs:enumeration value="name" /> 
-                <xs:enumeration value="VATIN" /> 
-                <xs:enumeration value="url" /> 
-                <xs:enumeration value="address/." /> 
+                <xs:enumeration value="address" /> 
                 <xs:enumeration value="address/street" /> 
                 <xs:enumeration value="address/streetNo" /> 
                 <xs:enumeration value="address/postOfficeBox" /> 
@@ -679,17 +677,19 @@
                 <xs:enumeration value="address/state" /> 
                 <xs:enumeration value="address/postalCode" /> 
                 <xs:enumeration value="address/country" /> 
-                <xs:enumeration value="contact/." /> 
-                <xs:enumeration value="contact/attPerson" /> 
-                <xs:enumeration value="contact/email" /> 
-                <xs:enumeration value="contact/mobile" /> 
-                <xs:enumeration value="contact/phone" /> 
-                <xs:enumeration value="contact/fax" /> 
-                <xs:enumeration value="position/." /> 
-                <xs:enumeration value="position/@positionSystem" /> 
-                <xs:enumeration value="position/logitude" /> 
-                <xs:enumeration value="position/latitude" /> 
-                <xs:enumeration value="position/altitude" /> 
+                <xs:enumeration value="VATIN" /> 
+                <xs:enumeration value="url" /> 
+                <xs:enumeration value="contactInfo" /> 
+                <xs:enumeration value="contactInfo/attPerson" /> 
+                <xs:enumeration value="contactInfo/email" /> 
+                <xs:enumeration value="contactInfo/mobile" /> 
+                <xs:enumeration value="contactInfo/phone" /> 
+                <xs:enumeration value="contactInfo/fax" /> 
+                <xs:enumeration value="geoPosition" /> 
+                <xs:enumeration value="geoPosition/@geoPositionSystem" /> 
+                <xs:enumeration value="geoPosition/longitude" /> 
+                <xs:enumeration value="geoPosition/latitude" /> 
+                <xs:enumeration value="geoPosition/altitude" /> 
                 <xs:enumeration value="body" /> 
             </xs:restriction>
     </xs:simpleType>
@@ -700,11 +700,11 @@
                 <xs:sequence>
                     <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="name" type="xs:string"/> 
+                    <xs:element name="address" type="dcx:addressType" minOccurs="1"/>
                     <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
                     <xs:element name="url" type="xs:string" minOccurs="0"/>
-                    <xs:element name="address" type="dcx:addressType" minOccurs="1"/>
                     <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
-                    <xs:element name="position" type="dcx:positionType" minOccurs="0"/>
+                    <xs:element name="geoPosition" type="dcx:geoPositionType" minOccurs="0"/>
                     <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
                 <!-- <xs:attribute name="id" type="xs:ID" use="optional"/>
@@ -722,11 +722,11 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="name" type="xs:string"/> 
-            <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
             <xs:element name="address" type="dcx:addressType" minOccurs="0"/>
-            <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
-            <xs:element name="position" type="dcx:positionType" minOccurs="0"/>
+            <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
             <xs:element name="url" type="xs:string" minOccurs="0"/>
+            <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
+            <xs:element name="geoPosition" type="dcx:geoPositionType" minOccurs="0"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
@@ -770,22 +770,22 @@
         <xs:attribute name="idRef" type="xs:IDREF" use="optional"/>
     </xs:complexType>
 
-    <xs:complexType name="positionType">
+    <xs:complexType name="geoPositionType">
         <xs:annotation>
             <xs:documentation>
-                Position provided as longitude, latitude and altitude (optional) with WGS84 datum. 
+                Geographic position provided as longitude, latitude and altitude (optional) with WGS84 datum. 
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <!-- <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/> -->
-            <xs:element name="longitude" type="dcx:decimalFieldType"/>
-            <xs:element name="latitude" type="dcx:decimalFieldType" />
-            <xs:element name="altitutde" type="dcx:decimalFieldType" minOccurs="0"/>
+            <xs:element name="longitude" type="dcx:decimalType"/>
+            <xs:element name="latitude" type="dcx:decimalType" />
+            <xs:element name="altitude" type="dcx:decimalType" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="positionSystem" type="dcx:positionSystemType" use="required"/>
+        <xs:attribute name="geoPositionSystem" type="dcx:geoPositionSystemType" use="required"/>
     </xs:complexType>
 
-    <xs:simpleType name="positionSystemType">
+    <xs:simpleType name="geoPositionSystemType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="WGS84"/>
         </xs:restriction>

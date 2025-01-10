@@ -680,41 +680,47 @@ class DccGuiTool():
         sht.range((1,1)).expand('right').font.bold = True
         sht.range((1,1)).expand('right').color = colors["light_gray"]
         rowIdx = 2
-
-        # collect indexes of the "heading" elements toprow
-
+        
         # Get structure of the administrativeData from schema.  
-
-        #%%
         xsdAdmStruct, xsdConLocStruct = dcchf.schemaGetAdministrativeDataStructure(xsd_root)
-        # rowData: (level, description, value, headings, xPath)
+        
+        # Get data from the xml and write it to rowData 2D list
+        # ---------------------------------------------------------------------
         for rIdx, rowData in enumerate(xsdAdmStruct):
+            # Sheet heading: (level, description, value, headings, xsdType, xPath)
             xsdType = rowData[-2]
-            nodes = dcchf.xpath_query(root, rowData[-1])
+            descr = rowData[1]
+            xPath = rowData[-1]
+            nodes = dcchf.xpath_query(root, xPath)
             # print(rowData[1], end=': ')
             if len(nodes) == 0: continue
             if "FieldType" in xsdType:
                 value = nodes[0].attrib['value']
                 rowData[2] = value
-            if "@" in xsdType:
-                value = nodes[0].attrib[xsdType.strip('@')]
+            if "@" in descr: 
+                value = nodes[0]
                 rowData[2] = value
-            xmlheadings = nodes[0].findall("dcx:heading", ns)
-            print(xmlheadings)
-            # add the headings from xml to rowData 
-            for elm in xmlheadings:
-                lang = elm.attrib['lang']
-                if lang in langs:
-                    rowData[dlangIdx[lang]] = elm.text
-                    
+            else:
+                # add the headings from xml to rowData 
+                xmlheadings = nodes[0].findall("dcx:heading", ns)
+                for elm in xmlheadings:
+                    lang = elm.attrib['lang']
+                    if lang in langs:
+                        rowData[dlangIdx[lang]] = elm.text
+
+
         # write the rowData to the sheet    
         sht.range((rowIdx,1)).value = xsdAdmStruct
+        
 
-        # set the colors of the rows
-        sectColors = [None, colors["gray"], None] + [colors['blue']]*N
-        dataColors = [None, colors["light_gray"], colors['light_yellow']] + [colors['light_blue']]*N
+        # set colors and indentLevel in the sheet 
+        wb.app.screen_updating = False
+        sectColors = [colors["gray"], colors["gray"], colors['gray']] + [colors['blue']]*N + [colors['gray']]*2
+        dataColors = [colors["light_gray"], colors["light_gray"], colors['light_yellow']] + [colors['light_blue']]*N + [colors['light_gray']]*2
         for i, rowData in enumerate(xsdAdmStruct):
             sht.range((rowIdx+i,2)).api.IndentLevel = rowData[0]
+            sht.range((rowIdx+i,6)).api.IndentLevel = rowData[0]
+            sht.range((rowIdx+i,7)).api.IndentLevel = rowData[0]
             if rowData[0] <= 1 or rowData[-2] == 'dcx:responsiblePersonType':
                 # case of a section heading
                 for j,c in enumerate(sectColors):
@@ -727,7 +733,14 @@ class DccGuiTool():
         
         rng = sht.range((2,3))
         rng.color = colors["light_yellow"]      
-        #%% set validator dropdowns
+
+        rng = sht.range((1,1)).expand() 
+        rng.api.Borders.Weight = 2
+
+        wb.app.screen_updating = True
+
+        #%% set validator dropdowns in sheet
+        wb.app.screen_updating = False
         for rIdx, rowData in enumerate(xsdAdmStruct):
             xsdType = rowData[-2]
             rng = sht.range((rIdx,3))
@@ -744,11 +757,181 @@ class DccGuiTool():
             elif xsdType == 'dcx:accreditationApplicabilityFieldType':
                 self.applyValidationToRange(rng, 'accreditationApplicabilityType')
 
-        # Set column widths
-        sht.autofit(axis="columns")
 
-        # Insert contacts and Locations
+        #%% Set column widths in the sheet
+
+        # sht.autofit(axis="columns")
+
+        wb.app.screen_updating = True
+
+
         
+        # Load and Insert contacts and Locations
+        # =====================================================================
+        wb.app.screen_updating = False
+
+        # write a heading in the excel sheet 
+        rIdx = rowIdx + len(xsdAdmStruct) + 5
+        rng = sht.range((rIdx-1,1))
+        rng.value = ['Contacts & Locations']
+        rng.name = 'ContactAndLocationsStartRow'
+
+        # Write the column heading names 
+        # -----------------------------------
+
+        #find the contact and location names in the schema
+        xsdConLocNames = xsdConLocStruct[0][1:]  # ['client', 'serviceProvider', ..., 'location'] +  
+
+        # How many dcx:locations are there in the xml-file.
+        locationName = xsdConLocNames[-1] # 'location'
+        # number of dcx:location nodes in the xml-file.
+        locations = dcchf.xpath_query(root, f".//dcx:administrativeData//dcx:{locationName}")
+        numLocationsInXml = len(locations) # allways have at least one column for location entry
+        
+        # construct the column heading to be entered in excel sheet. 
+        tblHeading = ['level', 
+                      'schemaType',
+                      'description', 
+                      ] \
+                        + [f'heading[{lang}]' for lang in langs] \
+                        + xsdConLocNames \
+                        + ['location']*(numLocationsInXml) 
+               
+        # write to column headings to excel and apply formatting 
+        sht.range((rIdx,1)).value = tblHeading
+        sht.range((rIdx,1)).expand('right').font.bold = True
+        sht.range((rIdx,1)).expand('right').color = colors["gray"]
+        rIdx += 1
+
+        # write the row headings, types and level info to excel sheet
+        # --------------------------
+        
+        # get names and types: [['heading', '@id', '@imageRefs', ... ], ['dcx:stringWithLangType', 'dcx:stringWithLangType', 'xs:ID',...]]
+        conLocNames, conLocTypes = dcchf.getNamesAndTypes(xsd_root,"contactAndLocationType")
+
+        # level info is "" for elements in dcx:administrativeData, else either 'address', 'contactInfo', 'geoPosition' if in a subnode.
+        conLocLevel = [""]*len(conLocNames)
+        conLocSubSec = ['address', 'contactInfo', 'geoPosition']
+        for tag in conLocSubSec:
+            subStruct, subTypes = dcchf.getNamesAndTypes(xsd_root,tag+"Type")
+            idx = conLocNames.index(tag) + 1
+            conLocNames[idx:idx] = subStruct #[tag+'/'+subTag for subTag in subStruct]
+            conLocTypes[idx:idx] = subTypes
+            conLocLevel[idx:idx] = [tag]*len(subStruct)
+
+        conLocStruct = list(map(list,zip(conLocLevel, conLocTypes, conLocNames)))
+
+        # insert chosen languages for dcx:heading and dcx:body elements.  
+        conLocStruct[:0:] = [['', "dcx:stringWithLangType", f"heading[{lang}]"] for lang in langs]
+        idx = conLocNames.index('body')+len(langs)
+        conLocStruct[idx+1:idx+1] = [['', "dcx:stringWithLangType", f"body[{lang}]"] for lang in langs]
+        conLocStruct[idx][1] = "xs:string"
+
+        # write the row heading info and data into the xl-sheet. 
+        sht.range((rIdx,1)).value = conLocStruct
+
+        # get human readable column headings and insert in the sheet. 
+        # ------------------------
+                    # Perhaps Delete
+                    # tag = 'contactAndLocationColumnHeadingNamesType'
+                    # conLocColumnHeadingNames = dcchf.schema_get_restrictions(xsd_root, tag)[tag] 
+
+        # find the node with the human-readable column headings. 
+        tblColHeadingNode = dcchf.xpath_query(root, ".//dcx:contactColumnHeadings")[0]
+        # dcchf.print_node(tblColHeadingNode)
+
+        conLocStruct = dcchf.transpose_2d_list(conLocStruct)
+        conLocLevel, conLocTypes, conLocNames = conLocStruct
+
+
+
+        # for each row get the human readable headings (different languages)
+        for idx, name in enumerate(conLocNames):
+            # print(name)
+            if len(conLocLevel[idx]) > 0: 
+                level = conLocLevel[idx]
+                xsdType = conLocTypes[idx]
+                name = level+'/'+name
+            node = tblColHeadingNode.find(f".//dcx:column[@name='{name}']", ns)
+
+            if node != None: 
+                # find and insert the human readable row data headings to xl-sheet  
+                for i, lang in enumerate(langs):
+                    n = node.find(f".//*[@lang='{lang}']")
+                    print("n: ",n)
+                    if not n is None: 
+                        # dcchf.print_node(n)
+                        sht.range((rIdx+idx),(4+i)).value = n.text
+
+
+
+        
+        # find and insert contact / location data
+        # --------------------------------------------------
+        # sheet index of the client column
+        clientIdx = tblHeading.index('client')
+
+        # for each row get the data and insert in xl-sheet
+        adminNode = dcchf.xpath_query(root, "//dcx:administrativeData")[0] # the XML dcx:administrativeData node. 
+        conLocNodes = [adminNode.findall(f".//dcx:{clh}",ns) for clh in xsdConLocNames]
+        for cidx, nodes in enumerate(conLocNodes): # [[Element.'client'], [Element.'serviceProvider'], ..., [Element.'location', Element.'location',...]]
+            for ci, node in enumerate(nodes):
+                for ridx, name in enumerate(conLocNames): # ['heading[en]', '@id', ..., body[es]]
+                    # construct the correct subpath
+                
+                    subsec = conLocLevel[ridx]   # either ['', 'address', 'contactInfo','geoPosition']
+                    s = '' if len(subsec) == 0 else f'dcx:{subsec}/'
+                    if '@' in name: 
+                        subPath = f'{s}{name}'
+                    elif name == 'body':
+                        continue
+                    elif "[" in name:
+                        lang = extractHeadingLang(name)
+                        subPath = f"./{s}dcx:{name[:-4]}[@lang='{lang}']/text()"
+                    else:
+                        subPath = f'./{s}dcx:{name}/text()'
+                    value = dcchf.xpath_query(node,subPath)
+                    print(node, subPath, value)
+                    if len(value)>0:
+                        rng = sht.range((rIdx+ridx),(clientIdx+1+cidx+ci))
+                        rng.value = value[0]
+
+        
+        wb.app.screen_updating = True
+        #%%
+        # set cell colors of the contact and location table
+        wb.app.screen_updating = False
+        numConLocCols = len(xsdConLocNames) + numLocationsInXml
+            
+        for idx, xdsType in enumerate(conLocTypes):
+            if xdsType in ['dcx:stringWithLangType']: 
+                # case of column headings and bodies 
+                rowcolors = [None]*(3+len(langs)) + [colors['light_blue']]*numConLocCols
+                setBold = False
+            elif conLocNames[idx] == 'body' or xdsType in ['dcx:addressType', 'dcx:contactInfoType', 'dcx:geoPositionType']: 
+                # row body heading or case the 3 [address, contactInfo, geoPosition]
+                rowcolors = [colors['gray']]*3 + [colors['blue']]*len(langs) + [colors['gray']]*numConLocCols
+                setBold = True
+            else: # case data element
+                rowcolors = [colors['light_gray']]*3 + [colors['light_blue']]*len(langs) + [colors['light_yellow']]*numConLocCols
+                setBold = False
+            for j,c in enumerate(rowcolors):
+                rng = sht.range((rIdx+idx,j+1))
+                rng.color = c
+                rng.font.bold = setBold
+                rng.api.Borders.Weight = 2
+                
+
+        # sht.range((rowIdx+i,2)).api.IndentLevel = rowData[0]
+        wb.app.screen_updating = True
+        
+
+
+
+
+
+
+#%%
 
 def extractHeadingLang(s):
     r = re.findall(r'\[(.*?)\]', s)
