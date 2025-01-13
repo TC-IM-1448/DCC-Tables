@@ -28,26 +28,37 @@ DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
 
-HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
-                                        '@imageRefs',
-                                        'heading[1]',  
-                                        'body[1]', 
-                                        'externalReference'],
+SECTION_HEADINGS = {'statementList':[],
+                    'equipmentList':[],
+                    'settingList':[],
+                    'measurementConfigList':[],
+                    'quantityUnitDefList':[],
+                    'embeddedFileList':[],
+                    'table':[],
+                    'column':[],
+                    }
 
-    equipmentHeadings = ['in DCC', '@id', '@category',
-                            'heading[1]', 'manufacturer', 'productName', 'productType', 'productNumber',
-                            'client_id heading[1]', 'client_id value', 
-                            'manufact_id heading[1]', 'manufact_id value', 
-                            'calLab_id heading[1]', 'calLab_id value',
-                            'calDate','calDueDate', 'certId', 'certProvider',
+HEADINGS = dict(statementHeadings = ['in DCC', 
+                                     '@id', 
+                                     '@category', 
+                                    '@imageRefs',
+                                    'heading[1]',  
+                                    'body[1]', 
+                                    'externalReference'],
+
+    equipmentHeadings = ['in DCC', '@id', '@statementRef', '@category',
+                            'heading[1]', 'manufacturer', 'modelName', 'modelNumber', 
+                            'serialNumber', 'lotNumber', 'productClass',
+                            'clientId', 'serviceProviderId',
+                            'prevCalibDate','calibDueDate', 'prevCertId', 'prevCertProviderName',
                             ],
 
-    settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
+    settingsHeadings = ['in DCC', '@id', '@equipmentRef', 
                         'parameter', 'value', 'unit', 'softwareInstruction', 
-                        'heading[1]', 'body[1]', 'statementRefs',
+                        'heading[1]', 'body[1]', #'statementRefs',
                         ],
 
-    measuringSystemsHeadings = ['in DCC', '@id', 
+    measurementConfigHeadings = ['in DCC', '@id', 
                                 'heading[1]', 
                                 'equipmentRefs', 'settingRefs', 'statementRefs',
                                 'operationalStatus',
@@ -70,15 +81,17 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
                                 'heading[1]',
                                 '@statementRefs'],
 
-    administrativeDataHeadings = [ "heading[1]",  
-                                    "Description", 
-                                    "Value", 
-                                    "XPath"], 
+    administrativeDataHeadings = [  "level", 
+                                    "description",
+                                    "@value", 
+                                    "heading[1]",  
+                                    "xsdType",
+                                    "xPath"], 
 
     measurementResultHeadings = [   'tableCategory', 
                                     '@tableId', 
                                     '@serviceCategory', 
-                                    '@measuringSystemRef', 
+                                    '@measurementConfigRef', 
                                     '@customServiceCategory', 
                                     '@statementRefs',
                                     '@embeddedFileRefs',
@@ -102,8 +115,19 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
 
 class DccGuiTool(): 
     xsdDefInitCol = 3  
-
-    colors = dict(  yellow = "#ffd966",
+    xsdRestrictions = {}
+    xsdRoot = None
+    xsdTree = None
+    dccRoot = None  
+    dccTree = None  
+    wb = None   
+    sheetDef = None 
+    embeddedFilesPath = None
+    langs = []
+    
+    colors = dict(  white = "#ffffff",
+                    black = "#000000",
+                    yellow = "#ffd966",
                     light_yellow = '#fff2cc',
                     green = '#c6e0b4',
                     light_green = '#e2efda',
@@ -131,12 +155,12 @@ class DccGuiTool():
             os.mkdir(wbpath+'embeddedFiles')
         self.embeddedFilesPath = wbpath+'embeddedFiles'+os.sep
 
-    def loadSchemaFile(self, xsdFileName="dcc.xsd"):
+    def loadSchemaFile(self, xsdFileName="dcx.xsd"):
         self.xsdTree, self.xsdRoot  = dcchf.load_xml(xsdFileName)
         
-    def loadDCCFile(self, xmlFileName="SKH_10112_2.xml"):
+    def loadDCCFile(self, xmlFileName="dcc-example.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
-        errors = dcchf.validate(xmlFileName, 'dcc.xsd')    
+        errors = dcchf.validate(xmlFileName, 'dcx.xsd')    
         
         for sht in self.wb.sheets: 
             if not sht.name == "Definitions": sht.delete()
@@ -151,6 +175,7 @@ class DccGuiTool():
         xsd_root = self.xsdRoot
         sht_def = self.sheetDef
         drestr = dcchf.schema_get_restrictions(xsd_root)
+        self.wb.app.screen_updating = False
         rng = sht_def.range((1,3)).expand()
         rng.clear()
         j = self.xsdDefInitCol
@@ -162,6 +187,7 @@ class DccGuiTool():
             rng.font.bold = True
         self.dccDefInitCol = i+1
         self.xsdRestrictions = drestr
+        self.wb.app.screen_updating = True
         return drestr
 
     def chooseLanguages(self, languages):
@@ -191,54 +217,111 @@ class DccGuiTool():
             sht.tables[tableName].resize(rng)
 
     def getHeadingOrBodyFromXlHeadingTag(self, node: et._Element, headingTag:str) -> str: 
+        """Get the heading or body text from the node based on the headingTag"""
         h = headingTag
 
         lang = h[h.index('[')+1:h.index(']')]
         headOrBody = h.split('[')[0]
-        searchStr = f'./dcc:{headOrBody}[@lang="{lang}"]'
+        searchStr = f'./dcx:{headOrBody}[@lang="{lang}"]'
         nodes = node.findall(searchStr, node.nsmap)
         if len(nodes) > 0: return nodes[0].text
         else: return None
 
     def loadDccSequence(self):
         self.loadDCCAdministrativeInformation(after='Definitions',
-                                              heading=self.headings['administrativeDataHeadings'])
+                                              heading=self.headings['administrativeDataHeadings']
+                                              )
         
         self.loadDccInfoTable(heading = self.headings['statementHeadings'], 
-                                nodeTag="dcc:statements",
-                                subNodeTag="dcc:statement",
+                                nodeTag="dcx:statementList",
+                                subNodeTag="dcx:statement",
                                 place_sheet_after='AdministrativeData')
         
         self.loadDccInfoTable(heading = self.headings['equipmentHeadings'], 
-                                nodeTag="dcc:equipment", 
-                                subNodeTag="dcc:equipmentItem",
-                                place_sheet_after='statements')
+                                nodeTag="dcx:equipmentList", 
+                                subNodeTag="dcx:equipment",
+                                place_sheet_after='statementList')
         
         self.loadDccInfoTable( heading = self.headings['settingsHeadings'], 
-                                nodeTag="dcc:settings", 
-                                subNodeTag="dcc:setting",
-                                place_sheet_after='equipment')
-        self.loadDccInfoTable( heading = self.headings['measuringSystemsHeadings'], 
-                                nodeTag="dcc:measuringSystems", 
-                                subNodeTag="dcc:measuringSystem",
-                                place_sheet_after='settings')
+                                nodeTag="dcx:settingList", 
+                                subNodeTag="dcx:setting",
+                                place_sheet_after='equipmentList')
+        self.loadDccInfoTable( heading = self.headings['measurementConfigHeadings'], 
+                                nodeTag="dcx:measurementConfigList", 
+                                subNodeTag="dcx:measurementConfig",
+                                place_sheet_after='settingList')
         self.loadDccInfoTable( heading = self.headings['embeddedFilesHeadings'], 
-                                nodeTag="dcc:embeddedFiles", 
-                                subNodeTag="dcc:embeddedFile",
-                                place_sheet_after='measuringSystems')
+                                nodeTag="dcx:embeddedFileList", 
+                                subNodeTag="dcx:embeddedFile",
+                                place_sheet_after='measurementConfigList')
         self.loadDccInfoTable(heading=self.headings['quantityUnitDefsHeadings'],
-                              nodeTag="dcc:quantityUnitDefs", 
-                              subNodeTag="dcc:quantityUnitDef",
-                              place_sheet_after="embeddedFiles")
+                              nodeTag="dcx:quantityUnitDefList", 
+                              subNodeTag="dcx:quantityUnitDef",
+                              place_sheet_after="embeddedFileList")
         self.loadDCCMeasurementResults(heading=self.headings['measurementResultHeadings'])
 
+
+    def loadDccTableHeadings(self,
+                         nodeTag="dcx:statementList", 
+                         place_sheet_after='AdministrativeData' ): 
+        root = self.dccRoot
+        xsd_root = self.xsdRoot
+        ns = root.nsmap
+        wb = self.wb
+        colors = self.colors
+        langs = self.langs
+        numLangs = len(langs)
+
+        #%%
+        # insert the sheet if it is missing
+        nodeTag = "dcx:quantityUnitDefList"
+        shtName = nodeTag.replace('dcx:','')    # stratements
+        if not shtName in wb.sheet_names:
+            wb.sheets.add(shtName, after=place_sheet_after)
+        sht = wb.sheets[shtName]
+        node = root.find(".//"+nodeTag,ns) 
+
+        #%% 
+        
+        SECTION_HEADINGS = {'statementList':[],
+                    'equipmentList':[],
+                    'settingList':[],
+                    'measurementConfigList':[],
+                    'quantityUnitDefList':[],
+                    'embeddedFileList':[],
+                    'table':[],
+                    'column':[],
+                    }
+        #%% 
+        global SECTION_HEADINGS
+        for secTag in SECTION_HEADINGS.keys():
+            # build infoTable heading from schema dcx.xsd. 
+            secTypeTag = secTag.replace("List","") + "Type"
+            tblHeading, tblHeadingType = dcchf.getNamesAndTypes(xsd_root, secTypeTag, exclude_heading=False)
+            # insert selected languages
+            for k in ['heading', 'body']:
+                if k in tblHeading:
+                    i = tblHeading.index(k)
+                    tblHeading[i:i+1] = [f"{k}[{l}]" for l in langs]
+            SECTION_HEADINGS[secTag] = tblHeading
+        SECTION_HEADINGS['column'][1:1+1]=['dataCategory']
+        i = SECTION_HEADINGS['table'].index('column')
+        SECTION_HEADINGS['table'].pop(i)
+        
+        
+        for H in SECTION_HEADINGS.keys(): 
+            print(f"{H}:") 
+            for h in SECTION_HEADINGS[H]: print(f"\t{h}")
+        #  self.headings[shtName]
+
+        #%%
 
     def loadDccInfoTable(self, 
                          heading=['in DCC', '@category', '@statementId', 
                                   'heading[1]', 'body[1]', 
                                   'heading[2]', 'body[2]'], 
-                         nodeTag="dcc:statements", 
-                         subNodeTag="dcc:statement",
+                         nodeTag="dcx:statements", 
+                         subNodeTag="dcx:statement",
                          place_sheet_after='AdministrativeData' ): 
         root = self.dccRoot
         ns = root.nsmap
@@ -249,8 +332,8 @@ class DccGuiTool():
         lang2 = 'en'
 
 
-        shtName = nodeTag.replace('dcc:','')    # stratements
-        subNodeAttrId = shtName[:-1]+'Id'        # statementId
+        shtName = nodeTag.replace('dcx:','')    # stratements
+        # subNodeAttrId = shtName[:-1]+'Id'        # statementId
         if not shtName in wb.sheet_names:
             wb.sheets.add(shtName, after=place_sheet_after)
         sht = wb.sheets[shtName]
@@ -258,7 +341,7 @@ class DccGuiTool():
 
         # Write the Sheet headings
         sht.range((1,1)).value = [[f'heading[{lang}]'] for lang in self.langs]
-        nodeHeadings = node.findall("dcc:heading",ns)
+        nodeHeadings = node.findall("dcx:heading",ns)
         for h in nodeHeadings:
             lang = h.attrib['lang']
             if lang in self.langs: 
@@ -296,31 +379,31 @@ class DccGuiTool():
                     rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subNode, h))
                 elif h.startswith('body['):
                     rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subNode, h))
-                elif nodeTag == "dcc:equipment" and any([x in issuerIdMap.keys() for x in h.split()]):  # For parsing equipment identifications
+                elif nodeTag == "dcx:equipment" and any([x in issuerIdMap.keys() for x in h.split()]):  # For parsing equipment identifications
                     who, what = h.split(' ')
                     issuer = issuerIdMap[who]
-                    subSubNode = subNode.find(f'dcc:identification[@issuer="{issuer}"]', ns)
+                    subSubNode = subNode.find(f'dcx:identification[@issuer="{issuer}"]', ns)
                     if subSubNode is None: 
                         rowData.append(None)
                     elif what == 'value': 
                         # print('subnode: ',subSubNode.attrib['issuer'])
-                        rowData.append(subSubNode.find('./dcc:value', ns).text)
+                        rowData.append(subSubNode.find('./dcx:value', ns).text)
                     elif what.startswith('heading') or what.startswith('body'): 
                         rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subSubNode, what))
                     else:
                         rowData.append(None)
-                elif nodeTag == "dcc:quantityUnitDefs" and h.find("unit") >= 0: 
-                    nodes =  subNode.findall(f'./dcc:{h}', ns)
+                elif nodeTag == "dcx:quantityUnitDefs" and h.find("unit") >= 0: 
+                    nodes =  subNode.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: rowData.append("'"+nodes[0].text)
                     else: rowData.append(None)
                 else: 
-                    nodes =  subNode.findall(f'./dcc:{h}', ns)
+                    nodes =  subNode.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text)
                     else: rowData.append(None)
-                if nodeTag == "dcc:embeddedFiles" and h=="@id": 
+                if nodeTag == "dcx:embeddedFiles" and h=="@id": 
                     fileId = subNode.attrib[h.strip('@')]
                     filePath = self.embeddedFilesPath+fileId
-                    fileData = subNode.find("dcc:fileContent", ns).text
+                    fileData = subNode.find("dcx:fileContent", ns).text
                     fileIsSaved = self.saveEmbeddedFileToFolder(filePath, fileData)
                     cidx = len(heading)+1
                     if fileId.split('.')[-1].lower() in ['png', 'emf', 'jpg'] and fileIsSaved:
@@ -332,7 +415,7 @@ class DccGuiTool():
             # rng = sht.range((tblRowIdx+1+idx,1))
             # rng.value = rowData
 
-            if nodeTag == "dcc:measuringSystems": 
+            if nodeTag == "dcx:measuringSystems": 
                 sht.range((1,3)).column_width = 30
 
 
@@ -343,49 +426,49 @@ class DccGuiTool():
         rng.api.WrapText = True
         rng.columns
 
-        if shtName == "statements": 
+        if shtName == "statementList": 
             #Apply statement category validator to the statement@category column
             rng = sht.range("Table_"+shtName+"['@category]") 
             self.applyValidationToRange(rng, 'statementCategoryType')
-            statementIdRng = wb.sheets['statements'].range("Table_statements['@id]")
+            statementIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
             statementIdRng.name = "statementsIdRange"
         
-        if shtName == "equipment":
+        if shtName == "equipmentList":
             #Apply equipment category type validator to the equipment@category column
             rng = sht.range("Table_"+shtName+"['@category]")
             self.applyValidationToRange(rng, 'equipmentCategoryType')
             # Give a name to the equipmentId column
-            equipIdRng = wb.sheets['equipment'].range("Table_equipment['@id]")
+            equipIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
             equipIdRng.name = "equipIdRange"
         
-        if shtName == "settings":
+        if shtName == "settingList":
             #Apply equipmentId validator to the setting@refId column
             rng = sht.range("Table_"+shtName+"['@equipmentRef]")
             self.applyValidationToRange(rng, 'equipIdRange')
 
-        if shtName == 'measuringSystems': 
+        if shtName == 'measurementConfigList': 
             # Give a name to the measurementId column
             measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
-            measuringSysIdRng.name = "measuringSystemIdRange"
+            measuringSysIdRng.name = "measurementConfigIdRange"
             #Apply operationalStatus validator to the measuringSystems@operationalStatus column
             rng = sht.range("Table_"+shtName+"[operationalStatus]")
             self.applyValidationToRange(rng, 'operationalStatusType')
 
-        if shtName == "quantityUnitDefs":
+        if shtName == "quantityUnitDefList":
             #Apply equipmentId validator to the setting@refId column
             rng = sht.range("Table_"+shtName+"['@quantityCodeSystem]")
             self.applyValidationToRange(rng, 'quantityCodeSystemType')
             quIdRng = sht.range("Table_"+shtName+"['@id]") 
             quIdRng.name = "quantityUnitDefIdRange"
 
-        if shtName == 'embeddedFiles': 
+        if shtName == 'embeddedFileList': 
             # Give a name to the measurementId column
             measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
             measuringSysIdRng.name = "embeddedFilesIdRange"
-            rng = wb.sheets['statements'].range("Table_statements['@imageRefs]")
+            rng = wb.sheets['statementList'].range("Table_statementList['@imageRefs]")
             self.applyValidationToRange(rng, 'embeddedFilesIdRange')
         # Apply Validation
-        # validatorMap= {'dcc:statements': }
+        # validatorMap= {'dcx:statements': }
 
     def applyValidationToRange(self, rng, restrictionName:str):
             # insert validation on table headings
@@ -422,23 +505,25 @@ class DccGuiTool():
         lang1 = 'en'
         lang2 = 'da'
 
-        measurementResults = root.find(".//dcc:measurementResults",ns) 
+        measurementResults = root.find(".//dcx:measurementResultList",ns) 
         print(measurementResults)
-        tableIds = [c.attrib["tableId"] for c in measurementResults.getchildren()]
-        calibrationResults = measurementResults.findall("dcc:calibrationResult",ns)
-        calibResIds = [tbl.attrib['tableId'] for tbl in calibrationResults]
-        measurementSeries = measurementResults.findall("dcc:measurementSeries",ns)
-        measSerIds = [tbl.attrib['tableId'] for tbl in measurementSeries]
+        idTag = 'tableId'
+        resultId = [c.attrib[idTag] for c in measurementResults.getchildren() if idTag in c.attrib]
+        resultNodes = [c for c in measurementResults.getchildren() if idTag in c.attrib]
+        calibrationResults = measurementResults.findall("dcx:calibrationResult",ns)
+        calibResIds = [tbl.attrib[idTag] for tbl in calibrationResults]
+        measurementSeries = measurementResults.findall("dcx:measurementSeries",ns)
+        measSerIds = [tbl.attrib[idTag] for tbl in measurementSeries]
 
-        for tableId in tableIds: 
+        for tableId in resultId: 
             if not tableId in wb.sheet_names:
                 wb.sheets.add(tableId, after=wb.sheet_names[-1])
-        sht = wb.sheets[tableIds[0]]
+        sht = wb.sheets[resultId[0]]
         sht.activate()
 
-        for tbl in measurementResults.getchildren(): 
+        for tbl in resultNodes: 
             tblType = dcchf.rev_ns_tag(tbl).split(':')[-1]
-            tableId = tbl.attrib['tableId']
+            tableId = tbl.attrib[idTag]
             # print(f"{tblId} : {tblCategoryType}")
             tabelHeadings = heading
                         
@@ -461,10 +546,10 @@ class DccGuiTool():
                     except KeyError:
                         rng.value = None
                     self.applyValidationToRange(rng,'serviceCategoryType')
-                elif h == '@measuringSystemRef': 
+                elif h == '@measurementConfigRef': 
                     rng = sht.range((idx,2))
-                    rng.value = tbl.attrib['measuringSystemRef']
-                    self.applyValidationToRange(rng, 'measuringSystemIdRange')
+                    rng.value = tbl.attrib['measurementConfigRef']
+                    self.applyValidationToRange(rng, 'measurementConfigIdRange')
                 elif h.startswith('heading['): 
                     rng = sht.range((idx,2))
                     rng.value = self.getHeadingOrBodyFromXlHeadingTag(tbl, h)
@@ -474,7 +559,7 @@ class DccGuiTool():
                         rng.value = tbl.attrib[h.strip('@')]
                 else:
                     rng = sht.range((idx,2)) 
-                    nodes =  tbl.findall(f'./dcc:{h}', ns)
+                    nodes =  tbl.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: 
                         rng.value = nodes[0].text
                     else:
@@ -493,7 +578,7 @@ class DccGuiTool():
             numCols = int(tbl.attrib['numCols'])
 
             # Now load the columns
-            columns = tbl.findall("dcc:column", ns)
+            columns = tbl.findall("dcx:column", ns)
             columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
             columnHeading = self.headings['columnHeading']
             headingColorDefs = {'scope': 'yellow',
@@ -526,20 +611,20 @@ class DccGuiTool():
                     sht.range((rowIdx,cIdx)).value = "'"+a 
 
                 # insert the dataCategory. 
-                # dataList = col.find('dcc:dataList',ns)
+                # dataList = col.find('dcx:dataList',ns)
                 rowIdx = colInitRowIdx + columnHeading.index('dataCategory')
                 dataCategory = dcchf.rev_ns_tag(col.getchildren()[-1])
-                dataCategory = dataCategory.replace("dcc:", "", 1)
+                dataCategory = dataCategory.replace("dcx:", "", 1)
                 sht.range((rowIdx,cIdx)).value = dataCategory 
 
                 # instert the unit
-                # unit = col.find("dcc:unit",ns).text
+                # unit = col.find("dcx:unit",ns).text
                 # rowIdx = colInitRowIdx + columnHeading.index('unit')
                 # sht.range(((rowIdx,cIdx))).value = unit                
 
                 # Insert human readable heading in two languages. 
                 for idx, lang in enumerate(self.langs):
-                    xpath =  './/dcc:heading[@lang="{lang}"]'.format(lang=lang)
+                    xpath =  './/dcx:heading[@lang="{lang}"]'.format(lang=lang)
                     elm = col.find(xpath,ns)
                     if elm is None: 
                         val = None
@@ -554,7 +639,7 @@ class DccGuiTool():
                 dataList = col.getchildren()[-1]
                 dataPoints = {int(pt.attrib['idx']): pt.text for pt in dataList}
                 if len(dataPoints) > 0:  
-                    # dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcc:")
+                    # dataType = dcchf.rev_ns_tag(dataList.getchildren()[0]).strip("dcx:")
                     # sht.range((rowIdx,cIdx)).value = dataType
                     for k,v in dataPoints.items(): 
                         sht.range((rowIdx+k,cIdx)).value = v 
@@ -603,16 +688,16 @@ class DccGuiTool():
         for element in section.iter():
             head=[]
             # for child in element.getchildren():
-            #     if dcchf.rev_ns_tag(child) == "dcc:heading":
+            #     if dcchf.rev_ns_tag(child) == "dcx:heading":
             #         head.append(child.text)
 
-            head = [child.text for child in element.getchildren() if dcchf.rev_ns_tag(child) == "dcc:heading"]
-            elmHeadings = {h.attrib['lang']: h.text for h in element.findall("dcc:heading",root.nsmap)}
+            head = [child.text for child in element.getchildren() if dcchf.rev_ns_tag(child) == "dcx:heading"]
+            elmHeadings = {h.attrib['lang']: h.text for h in element.findall("dcx:heading",root.nsmap)}
             head = [elmHeadings[lang] if lang in elmHeadings.keys() else '' for lang in self.langs ]
             if any(head):
                 sht.range((line,1)).value = head + ['', '', self.dccTree.getpath(element)]
                 sht.range((line,1),(line,N)).color = self.colors["light_yellow"]
-                sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace('dcc:','')
+                sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace('dcx:','')
                 sht.range((line,N+1)).font.bold = True
                 line+=1
                 for k,v in element.attrib.items(): 
@@ -623,10 +708,10 @@ class DccGuiTool():
                     sht.range((line,N+3)).value = self.dccTree.getpath(element)
                     line+=1
             if type(element.text)!=type(None): 
-                if dcchf.rev_ns_tag(element)!="dcc:heading": 
+                if dcchf.rev_ns_tag(element)!="dcx:heading": 
                     if not(element.text.startswith('\n')):
                         # print(element)
-                        sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace("dcc:",'')
+                        sht.range((line,N+1)).value = dcchf.rev_ns_tag(element).replace("dcx:",'')
                         sht.range((line,N+3)).value = self.dccTree.getpath(element)
                         rng = sht.range((line,N+2))
                         rng.value = str(element.text)
@@ -634,76 +719,285 @@ class DccGuiTool():
                         line+=1
         return line
 
-                
+             
     def loadDCCAdministrativeInformation(self, after='Definitions', 
-                                         heading=["heading[1]", 
+                                         heading=[
+                                                  "level",
+                                                  "description", 
+                                                  "@value", 
+                                                  "heading[1]", 
                                                   "heading[2]", 
-                                                  "Description", 
-                                                  "Value", 
-                                                  "XPath"]):
+                                                  "xPath"]):
         root = self.dccRoot
+        xsd_root = self.xsdRoot
         ns = root.nsmap
         wb = self.wb
-        N = numLang = len(self.langs)
-
+        colors = self.colors
+        langs = self.langs
+        N = numLang = len(langs)
+        hlangIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
+        
+        #%%
+        # Prepare the administrativeData sheet 
         if not 'administrativeData' in wb.sheet_names:
             wb.sheets.add('administrativeData', after=after)
-        
         sht = wb.sheets['administrativeData']
         sht.clear()
+        # Write the heading
         toprow = heading
         sht.range((1,1)).value = toprow
         sht.range((1,1)).expand('right').font.bold = True
-        hIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
-        titles = [self.getHeadingOrBodyFromXlHeadingTag(root, heading[i]) for i in hIdx]
+        sht.range((1,1)).expand('right').color = colors["light_gray"]
+        rowIdx = 2
         
-        # head = [h.text for h in root.findall('./dcc:heading', ns)]
-        sht.range((2,1)).value = titles
-        sht.range((2,1),(2,N)).color = self.colors["light_yellow"]
-        sht.range((2,N+1)).value = ['Certificate-Title', None, '/dcc:digitalCalibrationCertificate']
-        sht.range((2,N+1)).font.bold = True
-        lineIdx = 3
-        adm=root.find("dcc:administrativeData", ns)
-        elements = [
-                    "dcc:coreData",
-                    "dcc:serviceProvider",
-                    "dcc:accreditation",
-                    "dcc:respPersons",
-                    "dcc:client",
-                    "dcc:equipmentReturnInfo",
-                    "dcc:clientBillingInfo",
-                    "dcc:certificateReturnInfo",
-                    "dcc:performanceSite",
-                   ]
-                
-        for elm in elements: 
-            sections = adm.findall(elm,ns)
-            for sec in sections: 
-                # print(f"write_to_admin(sec= {sec})")
-                lineIdx = self.write_to_admin(sht, root, lineIdx, sec)
-        # soft=adm.find("dcc:dccSoftware", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx, soft)
-        # core=adm.find("dcc:coreData", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx, core)
-        # callab=adm.find("dcc:calibrationLaboratory", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,callab)
-        # accr=adm.find("dcc:accreditation", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx, accr)
-        # respPers=adm.find("dcc:respPersons", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,respPers)
-        # cust=adm.find("dcc:customer", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:equipmentReturnInfo", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:customerBillingInfo", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:certificateReturnInfo", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # cust=adm.find("dcc:performanceLocation", ns)
-        # lineIdx = self.write_to_admin(sht, root, lineIdx,cust)
-        # rng = sht.range((1,1)).expand()
-        sht.autofit(axis="columns")
+        # Get structure of the administrativeData from schema.  
+        xsdAdmStruct, xsdConLocStruct = dcchf.schemaGetAdministrativeDataStructure(xsd_root)
+        
+        # Get data from the xml and write it to rowData 2D list
+        # ---------------------------------------------------------------------
+        dlangIdx = {extractHeadingLang(elm):i for i, elm in enumerate(heading) if elm.startswith('heading[')}
+        for rIdx, rowData in enumerate(xsdAdmStruct):
+            # Sheet heading: (level, description, value, headings, xsdType, xPath)
+            xsdType = rowData[-2]
+            descr = rowData[1]
+            xPath = rowData[-1]
+            nodes = dcchf.xpath_query(root, xPath)
+            # print(rowData[1], end=': ')
+            if len(nodes) == 0: continue
+            if "FieldType" in xsdType:
+                value = nodes[0].attrib['value']
+                rowData[2] = value
+            if "@" in descr: 
+                value = nodes[0]
+                rowData[2] = value
+            else:
+                # add the headings from xml to rowData 
+                xmlheadings = nodes[0].findall("dcx:heading", ns)
+                for elm in xmlheadings:
+                    lang = elm.attrib['lang']
+                    if lang in langs:
+                        rowData[dlangIdx[lang]] = elm.text
 
+
+        # write the rowData to the sheet    
+        sht.range((rowIdx,1)).value = xsdAdmStruct
+        
+
+        # set colors and indentLevel in the sheet 
+        wb.app.screen_updating = False
+        sectColors = [colors["gray"], colors["gray"], colors['gray']] + [colors['blue']]*N + [colors['gray']]*2
+        dataColors = [colors["light_gray"], colors["light_gray"], colors['light_yellow']] + [colors['light_blue']]*N + [colors['light_gray']]*2
+        for i, rowData in enumerate(xsdAdmStruct):
+            sht.range((rowIdx+i,2)).api.IndentLevel = rowData[0]
+            sht.range((rowIdx+i,6)).api.IndentLevel = rowData[0]
+            sht.range((rowIdx+i,7)).api.IndentLevel = rowData[0]
+            if rowData[0] <= 1 or rowData[-2] == 'dcx:responsiblePersonType':
+                # case of a section heading
+                for j,c in enumerate(sectColors):
+                    sht.range((rowIdx+i,j+1)).color = c
+                    sht.range((rowIdx+i,j+1)).font.bold = True
+            else: 
+                # case of a data row
+                for j,c in enumerate(dataColors):
+                    sht.range((rowIdx+i,j+1)).color = c
+        
+        rng = sht.range((2,3))
+        rng.color = colors["light_yellow"]      
+
+        rng = sht.range((1,1)).expand() 
+        rng.api.Borders.Weight = 2
+
+        wb.app.screen_updating = False
+
+        #%% set validator dropdowns in sheet
+        for rIdx, rowData in enumerate(xsdAdmStruct, start=2):
+            xsdType = rowData[-2]
+            rng = sht.range((rIdx,3))
+            if xsdType == 'dcx:transactionContentFieldType':
+                self.applyValidationToRange(rng, 'transactionContentType')
+            elif xsdType == 'dcx:dcx:performanceLocationFieldType':
+                self.applyValidationToRange(rng, 'performanceLocationType')
+            elif xsdType == 'dcx:accreditationNormFieldType':
+                self.applyValidationToRange(rng, 'accreditationNormType')
+            elif xsdType == 'dcx:stringISO3166FieldType':
+                self.applyValidationToRange(rng, 'stringISO3166Type')
+            elif xsdType == 'dcx:accreditationApplicabilityFieldType':
+                self.applyValidationToRange(rng, 'accreditationApplicabilityType')
+
+        wb.app.screen_updating = True
+
+
+        
+        # Load and Insert contacts and Locations
+        # =====================================================================
+        wb.app.screen_updating = False
+
+        # write a heading in the excel sheet 
+        rIdx = rowIdx + len(xsdAdmStruct) + 5
+        rng = sht.range((rIdx-1,1))
+        rng.value = ['Contacts & Locations']
+        rng.name = 'ContactAndLocationsStartRow'
+
+        # Write the column heading names 
+        # -----------------------------------
+
+        #find the contact and location names in the schema
+        xsdConLocNames = xsdConLocStruct[0][1:]  # ['client', 'serviceProvider', ..., 'location'] +  
+
+        # How many dcx:locations are there in the xml-file.
+        locationName = xsdConLocNames[-1] # 'location'
+        # number of dcx:location nodes in the xml-file.
+        locations = dcchf.xpath_query(root, f".//dcx:administrativeData//dcx:{locationName}")
+        numLocationsInXml = len(locations) # allways have at least one column for location entry
+        
+        # construct the column heading to be entered in excel sheet. 
+        tblHeading = ['level', 
+                      'schemaType',
+                      'description', 
+                      ] \
+                        + [f'heading[{lang}]' for lang in langs] \
+                        + xsdConLocNames \
+                        + ['location']*(numLocationsInXml) 
+               
+        # write to column headings to excel and apply formatting 
+        sht.range((rIdx,1)).value = tblHeading
+        sht.range((rIdx,1)).expand('right').font.bold = True
+        sht.range((rIdx,1)).expand('right').color = colors["gray"]
+        rIdx += 1
+
+        # write the row headings, types and level info to excel sheet
+        # --------------------------
+        
+        # get names and types: [['heading', '@id', '@imageRefs', ... ], ['dcx:stringWithLangType', 'dcx:stringWithLangType', 'xs:ID',...]]
+        conLocNames, conLocTypes = dcchf.getNamesAndTypes(xsd_root,"contactAndLocationType")
+
+        # level info is "" for elements in dcx:administrativeData, else either 'address', 'contactInfo', 'geoPosition' if in a subnode.
+        conLocLevel = [""]*len(conLocNames)
+        conLocSubSec = ['address', 'contactInfo', 'geoPosition']
+        for tag in conLocSubSec:
+            subStruct, subTypes = dcchf.getNamesAndTypes(xsd_root,tag+"Type")
+            idx = conLocNames.index(tag) + 1
+            conLocNames[idx:idx] = subStruct #[tag+'/'+subTag for subTag in subStruct]
+            conLocTypes[idx:idx] = subTypes
+            conLocLevel[idx:idx] = [tag]*len(subStruct)
+
+        conLocStruct = list(map(list,zip(conLocLevel, conLocTypes, conLocNames)))
+
+        # insert chosen languages for dcx:heading and dcx:body elements.  
+        conLocStruct[:0:] = [['', "dcx:stringWithLangType", f"heading[{lang}]"] for lang in langs]
+        idx = conLocNames.index('body')+len(langs)
+        conLocStruct[idx+1:idx+1] = [['', "dcx:stringWithLangType", f"body[{lang}]"] for lang in langs]
+        conLocStruct[idx][1] = "xs:string"
+
+        # write the row heading info and data into the xl-sheet. 
+        sht.range((rIdx,1)).value = conLocStruct
+
+        # get human readable column headings and insert in the sheet. 
+        # ------------------------
+                    # Perhaps Delete
+                    # tag = 'contactAndLocationColumnHeadingNamesType'
+                    # conLocColumnHeadingNames = dcchf.schema_get_restrictions(xsd_root, tag)[tag] 
+
+        # find the node with the human-readable column headings. 
+        tblColHeadingNode = dcchf.xpath_query(root, ".//dcx:contactColumnHeadings")[0]
+        # dcchf.print_node(tblColHeadingNode)
+
+        conLocStruct = dcchf.transpose_2d_list(conLocStruct)
+        conLocLevel, conLocTypes, conLocNames = conLocStruct
+
+
+
+        # for each row get the human readable headings (different languages)
+        for idx, name in enumerate(conLocNames):
+            # print(name)
+            if len(conLocLevel[idx]) > 0: 
+                level = conLocLevel[idx]
+                xsdType = conLocTypes[idx]
+                name = level+'/'+name
+            node = tblColHeadingNode.find(f".//dcx:column[@name='{name}']", ns)
+
+            if node != None: 
+                # find and insert the human readable row data headings to xl-sheet  
+                for i, lang in enumerate(langs):
+                    n = node.find(f".//*[@lang='{lang}']")
+                    print("n: ",n)
+                    if not n is None: 
+                        # dcchf.print_node(n)
+                        sht.range((rIdx+idx),(4+i)).value = n.text
+
+
+
+        
+        # find and insert contact / location data
+        # --------------------------------------------------
+        # sheet index of the client column
+        clientIdx = tblHeading.index('client')
+
+        # for each row get the data and insert in xl-sheet
+        adminNode = dcchf.xpath_query(root, "//dcx:administrativeData")[0] # the XML dcx:administrativeData node. 
+        conLocNodes = [adminNode.findall(f".//dcx:{clh}",ns) for clh in xsdConLocNames]
+        for cidx, nodes in enumerate(conLocNodes): # [[Element.'client'], [Element.'serviceProvider'], ..., [Element.'location', Element.'location',...]]
+            for ci, node in enumerate(nodes):
+                for ridx, name in enumerate(conLocNames): # ['heading[en]', '@id', ..., body[es]]
+                    # construct the correct subpath
+                
+                    subsec = conLocLevel[ridx]   # either ['', 'address', 'contactInfo','geoPosition']
+                    s = '' if len(subsec) == 0 else f'dcx:{subsec}/'
+                    if '@' in name: 
+                        subPath = f'{s}{name}'
+                    elif name == 'body':
+                        continue
+                    elif "[" in name:
+                        lang = extractHeadingLang(name)
+                        subPath = f"./{s}dcx:{name[:-4]}[@lang='{lang}']/text()"
+                    else:
+                        subPath = f'./{s}dcx:{name}/text()'
+                    value = dcchf.xpath_query(node,subPath)
+                    print(node, subPath, value)
+                    if len(value)>0:
+                        rng = sht.range((rIdx+ridx),(clientIdx+1+cidx+ci))
+                        rng.value = value[0]
+
+        
+        # wb.app.screen_updating = True
+        #%%
+        # set cell colors of the contact and location table
+        wb.app.screen_updating = False
+        numConLocCols = len(xsdConLocNames) + numLocationsInXml
+            
+        for idx, xdsType in enumerate(conLocTypes):
+            if xdsType in ['dcx:stringWithLangType']: 
+                # case of column headings and bodies 
+                rowcolors = [None]*(3+len(langs)) + [colors['light_blue']]*numConLocCols
+                setBold = False
+            elif conLocNames[idx] == 'body' or xdsType in ['dcx:addressType', 'dcx:contactInfoType', 'dcx:geoPositionType']: 
+                # row body heading or case the 3 [address, contactInfo, geoPosition]
+                rowcolors = [colors['gray']]*3 + [colors['blue']]*len(langs) + [colors['gray']]*numConLocCols
+                setBold = True
+            else: # case data element
+                rowcolors = [colors['light_gray']]*3 + [colors['light_blue']]*len(langs) + [colors['light_yellow']]*numConLocCols
+                setBold = False
+            for j,c in enumerate(rowcolors):
+                rng = sht.range((rIdx+idx,j+1))
+                rng.color = c
+                rng.font.bold = setBold
+                rng.api.Borders.Weight = 2
+                
+        # set column widths
+        columnWidths = [4,25,23.33]+[26]*numConLocCols
+        for idx,width in enumerate(columnWidths):
+            sht.range((1,idx+1)).column_width = width
+
+        # sht.range((rowIdx+i,2)).api.IndentLevel = rowData[0]
+        wb.app.screen_updating = True
+        
+
+
+
+
+
+
+#%%
 
 def extractHeadingLang(s):
     r = re.findall(r'\[(.*?)\]', s)
@@ -754,7 +1048,7 @@ def exportToXmlFile(wb, fileName='output.xml'):
             xpathTags = xpath.split('/')[1:]
             current_node = parent
             for i, nodeTag in enumerate(xpathTags):
-                tag = nodeTag.replace('dcc:','')
+                tag = nodeTag.replace('dcx:','')
                 tag = tag.split("[",1)[0]
                 sub_nodes = current_node.findall(nodeTag, ns)
                 sub_node = sub_nodes[-1] if len(sub_nodes) > 0 else None
@@ -781,11 +1075,11 @@ def exportToXmlFile(wb, fileName='output.xml'):
             if adminSht.range((rowIdx,colIdxXpath-2)).font.bold :
                 exportHeading(current_node, elmMaker, adminSht, adminHeading, rowIdx) 
                 
-    s = '/dcc:digitalCalibrationCertificate'
+    s = '/dcx:digitalCalibrationCertificate'
     xpath_list = [xpth.value.replace(s,'.') for xpth in rngXpath]
     add_subtree(exportRoot, xpath_list)
     # dcchf.print_node(exportRoot)
-    mainSignerNodes = exportRoot.findall('./dcc:administrativeData/dcc:respPersons/*/dcc:mainSigner', ns)
+    mainSignerNodes = exportRoot.findall('./dcx:administrativeData/dcx:respPersons/*/dcx:mainSigner', ns)
     for mainSignerNode in mainSignerNodes: 
         mainSignerNode.text = mainSignerNode.text.lower()
 
@@ -793,7 +1087,7 @@ def exportToXmlFile(wb, fileName='output.xml'):
 
     # set TRUE/FALSE to true/false
 
-    adminNode = exportRoot.find('./dcc:administrativeData', ns)
+    adminNode = exportRoot.find('./dcx:administrativeData', ns)
     print(adminNode)
     dcchf.print_node(exportRoot)
 
@@ -857,7 +1151,7 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
 
     global NUM_LANGS
 
-    for i, efn in enumerate(embeddedFilesNode.findall("./dcc:embeddedFile",ns)): 
+    for i, efn in enumerate(embeddedFilesNode.findall("./dcx:embeddedFile",ns)): 
         filepath = sht.range((NUM_LANGS+2+i,ncols+1)).value
         print(f"loading file: {filepath}")
         base64str = encode_file_to_base64(filepath)
@@ -909,7 +1203,7 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
                             elm = elmMaker('heading',row[i], lang=lang)
                         else: 
                             elm = elmMaker('value',str(row[i]))
-                        idNode = node.find(f'./dcc:identification[@issuer="{issuer}"]', node.nsmap)
+                        idNode = node.find(f'./dcx:identification[@issuer="{issuer}"]', node.nsmap)
                         if idNode is None:
                             idNode = elmMaker('identification',issuer=issuer)
                             node.append(idNode)
@@ -1044,7 +1338,8 @@ class MainApp(tk.Tk):
         dccFileName = 'Examples\\Stip-230063-V1.xml'
         dccFileName = 'Examples\\Template_TemperatureCal.xml'
         dccFileName = 'SKH_10112_2.xml'
-        #self.guiTool.loadDCCFile(dccFileName)
+        dccFileName = 'dcc-example.xml'
+        # self.guiTool.loadDCCFile(dccFileName)
         #self.label2.config(text=dccFileName)
         # self.loadDCCsequence()
         # exportToXmlFile('output.xml')

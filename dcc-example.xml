@@ -1,0 +1,1303 @@
+<?xml version="1.0" ?>
+<dcx:digitalCalibrationExchange schemaVersion="1.0.0" 
+                                xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+                                xmlns:dcx="https://dfm.dk" 
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                                xsi:schemaLocation="https://dfm.dk dcx.xsd">
+    <dcx:title value="digitalCalibrationCertificate">
+        <dcx:heading lang="da">Kalibreringscertifikat</dcx:heading>
+        <dcx:heading lang="en">Calibration certificate</dcx:heading>
+    </dcx:title>
+    <dcx:subtitle lang="en">Pippettes</dcx:subtitle>
+    <dcx:subtitle lang="da">Volumen pipetter</dcx:subtitle>
+    <dcx:administrativeData>
+        <dcx:heading lang="en">Administrative data</dcx:heading>
+        <dcx:heading lang="da">Administrative data</dcx:heading>
+        <dcx:coreData>
+            <dcx:uniqueDocumentIdentifier value="SKH_10112_2">
+                <dcx:heading lang="en">Document number</dcx:heading>
+                <dcx:heading lang="da">Dokumentnummer</dcx:heading>
+            </dcx:uniqueDocumentIdentifier>
+            <dcx:clientTaskIdentifier value="xx28">
+                <dcx:heading lang="en">Client task number</dcx:heading>
+                <dcx:heading lang="da">Kundens opgavenummer</dcx:heading>
+            </dcx:clientTaskIdentifier>
+            <dcx:uniqueTemplateIdentifier value="alsdkjfaodi">
+                <dcx:heading lang="en">Template number</dcx:heading>
+                <dcx:heading lang="da">Skabelonnummer</dcx:heading>
+            </dcx:uniqueTemplateIdentifier>
+            <dcx:devicesForMeasurement value="item1">    
+                <dcx:heading lang="en">Device for measurement</dcx:heading>
+                <dcx:heading lang="da">Måleudstyr til kalibrering</dcx:heading>
+            </dcx:devicesForMeasurement>
+            <dcx:issueDate value="2022-02-11">
+                <dcx:heading lang="en">Issue date</dcx:heading>
+                <dcx:heading lang="da">Udstedelsesdato</dcx:heading>
+            </dcx:issueDate>
+            <dcx:beginPerformanceDate value="2022-02-10">
+                <dcx:heading lang="en">Performance date</dcx:heading>
+                <dcx:heading lang="da">Udførelsesdato</dcx:heading>
+            </dcx:beginPerformanceDate>
+            <dcx:endPerformanceDate value="2022-02-10"> 
+                <dcx:heading lang="en">Performance date</dcx:heading>
+                <dcx:heading lang="da">Udførelsesdato</dcx:heading>
+            </dcx:endPerformanceDate>
+            <dcx:equipmentReceiptDate value="2022-02-09">
+                <dcx:heading lang="en">Equipment receipt date</dcx:heading>
+                <dcx:heading lang="da">Udstyrs modtagelsesdato</dcx:heading>
+            </dcx:equipmentReceiptDate>
+            <dcx:performanceLocation value="atProvider">    
+                <dcx:heading lang="en">Performance location</dcx:heading>
+                <dcx:heading lang="da">Udførelsessted</dcx:heading>
+            </dcx:performanceLocation>
+            <dcx:requestedLanguages value="en da">
+                <dcx:heading lang="en">Requested languages</dcx:heading>
+                <dcx:heading lang="da">Ønskede sprog</dcx:heading>
+            </dcx:requestedLanguages>
+        </dcx:coreData>
+        <dcx:dcxSoftware>
+            <dcx:heading lang="en">Document software</dcx:heading>
+            <dcx:manufacturer value="DFM"/>
+            <dcx:productName value="Manually"/>
+            <dcx:version value="1.0.0"></dcx:version>
+        </dcx:dcxSoftware>
+        <dcx:accreditation statementRef="acc1" imageRefs="logo.png">
+            <dcx:heading lang="en">Accreditation</dcx:heading>
+            <dcx:heading lang="da">Akkreditering</dcx:heading>
+            <dcx:accreditationNorm value="ISO 17025">
+                <dcx:heading lang="da">Akkrediteringsområde</dcx:heading>
+                <dcx:heading lang="en">Accreditation norm</dcx:heading>
+                </dcx:accreditationNorm>
+            <dcx:accreditationLabId value="04-490">
+                <dcx:heading lang="da">Akkrediteringsnummer</dcx:heading>
+                <dcx:heading lang="en">Accreditation Id</dcx:heading>
+                </dcx:accreditationLabId>
+            <dcx:accreditationBody value="DANAK">
+                <dcx:heading lang="da">Akkrediteringsorgan</dcx:heading>
+                <dcx:heading lang="en">Accreditation body</dcx:heading>
+                </dcx:accreditationBody>
+            <dcx:accreditationCountry value="DK">
+                <dcx:heading lang="da">Land</dcx:heading>
+                <dcx:heading lang="en">Country</dcx:heading>
+                </dcx:accreditationCountry>
+            <dcx:accreditationApplicability value="wholly">
+                <dcx:heading lang="da">Akkrediteringsdækning</dcx:heading>
+                <dcx:heading lang="en">accreditation applicability</dcx:heading>
+            </dcx:accreditationApplicability>
+        </dcx:accreditation>
+        <dcx:conformityResult>
+            <dcx:heading lang="en">Conformity Result</dcx:heading>
+            <dcx:heading lang="da">Overensstemmelsesvurdering</dcx:heading>
+            <dcx:conformityResult value="pass"/>
+            <dcx:decisionRuleRef value="meth2"/>
+        </dcx:conformityResult>
+        <dcx:documentAuthorization>
+            <dcx:heading lang="en">Document authorization</dcx:heading>
+            <dcx:authorizingPerson>
+                <dcx:heading lang="en">Main signer</dcx:heading>
+                <dcx:heading lang="da">Underskriftsberettiget</dcx:heading>
+                <dcx:name value="Erling T. Nielsen">
+                    <dcx:heading lang="da">Navn</dcx:heading>
+                    <dcx:heading lang="en">Name</dcx:heading>
+                    </dcx:name>
+                <dcx:email value="etn@dandiag.dk">
+                    <dcx:heading lang="da">Email</dcx:heading>
+                    <dcx:heading lang="en">email</dcx:heading>
+                    </dcx:email>
+            </dcx:authorizingPerson>
+            <dcx:coSigner>
+                <dcx:heading lang="en">Lab technitian</dcx:heading>
+                <dcx:heading lang="da">Laboratorietekniker</dcx:heading>
+                <dcx:name value="Hans H. Andersen"/>
+            </dcx:coSigner>
+        </dcx:documentAuthorization>
+        <dcx:contactColumnHeadings>
+            <dcx:column name="@id">
+                <dcx:heading lang="en">Id</dcx:heading>
+                <dcx:heading lang="da">ID</dcx:heading>
+                </dcx:column>
+            <dcx:column name="@imageRefs">
+                <dcx:heading lang="en">image ref.</dcx:heading>
+                <dcx:heading lang="da">billedref.</dcx:heading>
+            </dcx:column>
+            <dcx:column name="name">
+                <dcx:heading lang="en">Name</dcx:heading>
+                <dcx:heading lang="da">Navn</dcx:heading>
+            </dcx:column>
+            <dcx:column name="VATIN">
+                <dcx:heading lang="da">CVR/VATnr.</dcx:heading>
+                <dcx:heading lang="en">VATIN</dcx:heading>
+                </dcx:column>
+            <dcx:column name="url">
+                <dcx:heading lang="en">URL</dcx:heading>
+                <dcx:heading lang="da">URL</dcx:heading>
+                </dcx:column>
+            <dcx:column name="address">
+                <dcx:heading lang="da">adresse</dcx:heading>
+                <dcx:heading lang="en">address</dcx:heading>
+                </dcx:column>
+            <dcx:column name="address/street">
+                <dcx:heading lang="en">street</dcx:heading>
+                <dcx:heading lang="da">vejnavn</dcx:heading>
+                </dcx:column>
+            <dcx:column name="address/streetNo">
+                <dcx:heading lang="en">street no.</dcx:heading>
+                <dcx:heading lang="da">vejnummber</dcx:heading></dcx:column>    
+            <dcx:column name="address/postOfficeBox">
+                <dcx:heading lang="en">PO box.</dcx:heading>
+                <dcx:heading lang="da">Postboks</dcx:heading></dcx:column>       
+            <dcx:column name="address/city">
+                <dcx:heading lang="da">By</dcx:heading>
+                <dcx:heading lang="en">City</dcx:heading></dcx:column>
+            <dcx:column name="address/state">
+                <dcx:heading lang="en">Region</dcx:heading>
+                <dcx:heading lang="da">State</dcx:heading></dcx:column>
+            <dcx:column name="address/postalCode">
+                <dcx:heading lang="da">Postnummer</dcx:heading>
+                <dcx:heading lang="en">postal code</dcx:heading></dcx:column>
+            <dcx:column name="address/country">
+                <dcx:heading lang="en">Country</dcx:heading>
+                <dcx:heading lang="da">Land</dcx:heading></dcx:column>
+            <dcx:column name="contactInfo">
+                <dcx:heading lang="en">Kontakt person</dcx:heading>
+                <dcx:heading lang="da">Contact person</dcx:heading></dcx:column>
+            <dcx:column name="contactInfo/attPerson">
+                <dcx:heading lang="da">Navn</dcx:heading>
+                <dcx:heading lang="en">Name</dcx:heading></dcx:column>
+            <dcx:column name="contactInfo/email">
+                <dcx:heading lang="en">email</dcx:heading>
+                <dcx:heading lang="da">email</dcx:heading></dcx:column>
+            <dcx:column name="contactInfo/mobile">
+                <dcx:heading lang="en">mobile</dcx:heading>
+                <dcx:heading lang="da">mobil</dcx:heading></dcx:column>
+            <dcx:column name="contactInfo/phone">
+                <dcx:heading lang="da">Tlf.</dcx:heading>
+                <dcx:heading lang="en">Phone</dcx:heading></dcx:column>
+            <dcx:column name="contactInfo/fax">
+                <dcx:heading lang="da">telefax</dcx:heading>
+                <dcx:heading lang="en">fax</dcx:heading></dcx:column>
+            <dcx:column name="geoPosition">
+                <dcx:heading lang="en">position</dcx:heading>
+                <dcx:heading lang="da">Position</dcx:heading></dcx:column>
+            <dcx:column name="geoPosition/@geoPositionSystem">
+                <dcx:heading lang="en">GPS coordinate</dcx:heading>
+                <dcx:heading lang="da">GPS</dcx:heading></dcx:column>
+            <dcx:column name="geoPosition/longitude">
+                <dcx:heading lang="en">Longitude</dcx:heading>
+                <dcx:heading lang="da">længdegrad</dcx:heading></dcx:column>
+            <dcx:column name="geoPosition/latitude">
+                <dcx:heading lang="en">Latitude</dcx:heading>
+                <dcx:heading lang="da">Breddegrad</dcx:heading></dcx:column>
+            <dcx:column name="geoPosition/altitude">
+                <dcx:heading lang="en">Altitude</dcx:heading>
+                <dcx:heading lang="da">højde</dcx:heading></dcx:column>
+            <dcx:column name="body">
+                <dcx:heading lang="en">Note</dcx:heading>
+                <dcx:heading lang="da">Noter</dcx:heading></dcx:column>
+        </dcx:contactColumnHeadings>
+        <dcx:client id="id1" imageRefs="logo.png">
+            <dcx:heading lang="en">Customer</dcx:heading>
+            <dcx:heading lang="da">Kunde</dcx:heading>
+            <dcx:name>Dandiag A/S</dcx:name>
+            <dcx:address>
+                <dcx:street>Baldershøj</dcx:street>
+                <dcx:streetNo>19</dcx:streetNo>
+                <dcx:city>Ishøj</dcx:city>
+                <dcx:country>DK</dcx:country>
+            </dcx:address>
+            <dcx:contactInfo>
+                <dcx:attPerson>Scott Kenney Hansen</dcx:attPerson>
+                <dcx:email>skh@dandiag.com</dcx:email>
+                <dcx:phone>23 34 3456</dcx:phone>
+            </dcx:contactInfo>
+        </dcx:client>
+        <dcx:serviceProvider>
+            <dcx:heading lang="en">Calibration laboratory</dcx:heading>
+            <dcx:heading lang="da">Kalibreringslaboratorium</dcx:heading>
+            <dcx:name>Dandiag A/S</dcx:name>
+            <dcx:address>
+                <dcx:street>Baldershøj</dcx:street>
+                <dcx:streetNo>19</dcx:streetNo>
+                <dcx:postalCode>2635</dcx:postalCode>
+                <dcx:city>Ishøj</dcx:city>
+                <dcx:country>DK</dcx:country>
+            </dcx:address>
+            <dcx:contactInfo>
+                <dcx:attPerson></dcx:attPerson>
+                <dcx:email>nln@dandiag.com</dcx:email>
+                <dcx:mobile>2342 4556</dcx:mobile>
+            </dcx:contactInfo>
+        </dcx:serviceProvider>
+        <dcx:clientBillingInfo id="billingID" imageRefs="logo.png">
+            <dcx:heading lang="en">Billing Information</dcx:heading>
+            <dcx:heading lang="da">Fakturerings Information</dcx:heading>
+            <dcx:name>John Doe</dcx:name>
+            <dcx:address>
+                <dcx:street>Main Street</dcx:street>
+                <dcx:streetNo>123</dcx:streetNo>
+                <dcx:postOfficeBox>456</dcx:postOfficeBox>
+                <dcx:city>Sample City</dcx:city>
+                <dcx:district>Central</dcx:district>
+                <dcx:state>Sample State</dcx:state>
+                <dcx:postalCode>7890</dcx:postalCode>
+                <dcx:country>US</dcx:country>
+            </dcx:address>
+            <dcx:VATIN>US123456789</dcx:VATIN>
+            <dcx:url>http://example.com</dcx:url>
+            <dcx:contactInfo>
+                <dcx:attPerson>Jane Smith</dcx:attPerson>
+                <dcx:email>jane.smith@example.com</dcx:email>
+                <dcx:mobile>+1-234-567-8901</dcx:mobile>
+                <dcx:phone>+1-234-567-8902</dcx:phone>
+                <dcx:fax>+1-234-567-8903</dcx:fax>
+            </dcx:contactInfo>
+            <dcx:geoPosition geoPositionSystem="WGS84">
+                <dcx:longitude>-77.0364</dcx:longitude>
+                <dcx:latitude>38.8951</dcx:latitude>
+                <dcx:altitude>10</dcx:altitude>
+            </dcx:geoPosition>
+            <dcx:body lang="en">This is a sample billing information.</dcx:body>
+            <dcx:body lang="da">Dette er et eksempel.</dcx:body>
+        </dcx:clientBillingInfo>
+        <dcx:equipmentReturnInfo>
+            <dcx:heading lang="en">Billing Information</dcx:heading>
+            <dcx:heading lang="da">Fakturerings Information</dcx:heading>
+            <dcx:name>John Doe</dcx:name>
+            <dcx:address>
+                <dcx:street>Main Street</dcx:street>
+                <dcx:streetNo>123</dcx:streetNo>
+                <dcx:postOfficeBox>456</dcx:postOfficeBox>
+                <dcx:city>Sample City</dcx:city>
+                <dcx:district>Central</dcx:district>
+                <dcx:state>Sample State</dcx:state>
+                <dcx:postalCode>7890</dcx:postalCode>
+                <dcx:country>US</dcx:country>
+            </dcx:address>
+            <dcx:VATIN>US123456789</dcx:VATIN>
+            <dcx:url>http://example.com</dcx:url>
+            <dcx:contactInfo>
+                <dcx:attPerson>Jane Smith</dcx:attPerson>
+                <dcx:email>jane.smith@example.com</dcx:email>
+                <dcx:mobile>+1-234-567-8901</dcx:mobile>
+                <dcx:phone>+1-234-567-8902</dcx:phone>
+                <dcx:fax>+1-234-567-8903</dcx:fax>
+            </dcx:contactInfo>
+            <dcx:geoPosition geoPositionSystem="WGS84">
+                <dcx:longitude>-77.0364</dcx:longitude>
+                <dcx:latitude>38.8951</dcx:latitude>
+                <dcx:altitude>10</dcx:altitude>
+            </dcx:geoPosition>
+            <dcx:body lang="en">This is a sample billing information.</dcx:body>
+            <dcx:body lang="da">Dette er et eksempel.</dcx:body>
+        </dcx:equipmentReturnInfo>
+        <dcx:certificateReturnInfo id="certRetrunID">
+            <dcx:heading lang="en">Billing Information</dcx:heading>
+            <dcx:heading lang="da">Fakturerings Information</dcx:heading>
+            <dcx:name>Jane Doe</dcx:name>
+            <dcx:address>
+                <dcx:street>Elm Street</dcx:street>
+                <dcx:streetNo>456</dcx:streetNo>
+                <dcx:postOfficeBox>789</dcx:postOfficeBox>
+                <dcx:city>Example City</dcx:city>
+                <dcx:district>North</dcx:district>
+                <dcx:state>Example State</dcx:state>
+                <dcx:postalCode>12345</dcx:postalCode>
+                <dcx:country>US</dcx:country>
+            </dcx:address>
+            <dcx:VATIN>US987654321</dcx:VATIN>
+            <dcx:url>http://example.org</dcx:url>
+            <dcx:contactInfo>
+                <dcx:attPerson>John Smith</dcx:attPerson>
+                <dcx:email>john.smith@example.org</dcx:email>
+                <dcx:mobile>+1-987-654-3210</dcx:mobile>
+                <dcx:phone>+1-987-654-3211</dcx:phone>
+                <dcx:fax>+1-987-654-3212</dcx:fax>
+            </dcx:contactInfo>
+            <dcx:geoPosition geoPositionSystem="WGS84">
+                <dcx:longitude>-77.0365</dcx:longitude>
+                <dcx:latitude>38.8952</dcx:latitude>
+                <dcx:altitude>15</dcx:altitude>
+            </dcx:geoPosition>
+            <dcx:body lang="en">This is an updated sample billing information.</dcx:body>
+            <dcx:body lang="da">Dette er et opdateret eksempel.</dcx:body>
+        </dcx:certificateReturnInfo>
+        <dcx:location>
+            <dcx:name>loc1</dcx:name>
+        </dcx:location>
+        <dcx:location>
+            <dcx:name>loc2</dcx:name>
+        </dcx:location>
+        <dcx:location>
+            <dcx:name>loc3</dcx:name>
+        </dcx:location>
+    </dcx:administrativeData>
+    <dcx:statementList>
+        <dcx:heading lang="en">Statements</dcx:heading>
+        <dcx:heading lang="da">Bemærkninger</dcx:heading>
+
+        <dcx:statement id="s01" category="general">
+            <dcx:heading lang="en">Reprint</dcx:heading>
+            <dcx:heading lang="da">Gengivelse af rapport i uddrag</dcx:heading>
+            <dcx:body lang="en">Excerpts of this report may only be reproduced with the written permission of the calibration laboratory.</dcx:body>
+            <dcx:body lang="da">Denne rapport må ikke gengives i uddrag undtaget med laboratoriets skriftlige tilladelse.</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="conf1" category="general">
+            <dcx:heading lang="en">Decision rule</dcx:heading>
+            <dcx:heading lang="da">Grundlag for overensstemmelseserklæring</dcx:heading>
+            <dcx:body lang="en">Conformity status "pass" is given if a value plus the uncertainy is smaller than the upper tolerance level AND the value minus its uncertainty is smaller thatn its uncertainty levvel.</dcx:body>
+            <dcx:body lang="da">Overensstemmelseserklæringen "godkendt" ("pass") tildeles dersom en værdi plus dens usikkerehed er mindre end den øvre tolerancegrænse OG værdien minus dens usikkerhed er større end den øvre tolranncegrænse.</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="acc1" category="accreditation">
+            <dcx:heading lang="en">Accreditation</dcx:heading>
+            <dcx:heading lang="da">Akkreditering</dcx:heading>
+            <dcx:body lang="en">The calibration is caried out under DANAK accreditation no. 490 unless clearly statet in the tabel of results.
+
+                DANis the national accreditation body in Denmark in compliance with Regulation (EC) No. 765/2008 of the European Parliament and of the Council.
+
+                DANis covered by the multilateral agreements for testing, medical examination, calibration, proficiency testing providers and reference material producers under European co-operation for Accreditation (EA) and under International Laboratory Accreditation Cooperation (ILAC) based on peer-evaluation. This implies that accredited reports and certificates issued by companies accredited by DANAK are recognized across borders by members of EA and ILAC equal to reports and certificates issued by companies accredited by these members</dcx:body>
+            <dcx:body lang="da">Kalibreringen er udført under DANAK akkreditering nr. 490 med mindre det tydeligt fremgår i resultattabellerne.
+
+                DANer det nationale akkrediteringsorgan i Danmark i overensstemmelse med Europa-Parlamentet og Rådetsforordning (EF) Nr. 765/2008.
+
+                DANer omfattet af de multilaterale aftaler for prøvning, medicinsk undersøgelse, kalibrering, udbud af præstationsprøvning og produktion af referencematerialer i European co-operation for Accreditation (EA) og i International Laboratory Accreditation Cooperation (ILAC) baseret på peer-evaluering. Dette indebærer, at akkrediterede rapporter og certifikater udstedt af virksomheder akkrediteret af DANAK anerkendes på tværs af landegrænser af medlemmer i EA og ILAC på linje med rapporter og certifikater udstedt af disse medlemmers akkrediterede virksomheder.</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="accex" category="accreditationException">
+            <dcx:heading lang="en">Accreditation exception</dcx:heading>
+            <dcx:heading lang="da">Undtagelse fra akkreditering</dcx:heading>
+            <dcx:body lang="en">Calibration point 3 (120 µm) is not under accreditation.</dcx:body>
+            <dcx:body lang="da">Tredie kalibreringspunkt (120 µl) er ikke udført under akkreditering</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="meth1" category="method">
+            <dcx:heading lang="en">Calibration method</dcx:heading>
+            <dcx:heading lang="da">Kalibrering metode</dcx:heading>
+            <dcx:body lang="en">Calibration is performed in accordance with Dandiags internal procedure PIP-005</dcx:body>
+            <dcx:body lang="da">Pipetten er kalibreret med en multikanalsvægt.  Dandiags interne procedure PIP-005</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="meth2" category="method">
+            <dcx:heading lang="en">Used method</dcx:heading>
+            <dcx:heading lang="da">Anvendt metode</dcx:heading>
+            <dcx:body lang="en">The calibration is carried out by using the gravimetric performance test method. The used method is based on the
+                DS/ISO 8655 standard. The used liquid is water according to DS/EN ISO 3696, grade 3.
+                The conversion from mass to volume is done by using the calculation in DS/ISO/TR 20461.</dcx:body>
+            <dcx:body lang="da">Kalibreringen er udført ved brug af den gravimetriske performance-test-metode. Metoden er baseret på standarden DS/EN ISO 8655. Der er anvandt fydende vand af grad3 jvf. DS/EN ISO 3696. Konvertering fra masse til volumen er udført I overensstemmelse med DS/ISO/TR 20461. </dcx:body>
+        </dcx:statement>
+        <dcx:statement id="meth3" category="method">
+            <dcx:heading lang="en">Z-factor</dcx:heading>
+            <dcx:heading lang="da">Z-faktor</dcx:heading>
+            <dcx:body lang="en"> Z-factor is calculated according to DS/EN ISO 8655 part 6.</dcx:body>
+            <dcx:body lang="da">Z-faktor er beregnet ifølge DS/EN ISO 8655 part 6.</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="meth4" category="method">
+            <dcx:heading lang="en">Uncertainty</dcx:heading>
+            <dcx:heading lang="da">Usikkerhed</dcx:heading>
+            <dcx:body lang="en">The reported expanded uncertainty [±U] is given as the measurement standard uncertainty multiplied with the
+                covge factor k=2 which corresponds to a coverage probability of approximately 95%</dcx:body>
+            <dcx:body lang="da">Den rapporterede måleusikkerhed er angivet som standard måleusikkerheden ganget med dækningsfaktoren k=2 svarende til en dækningssansylighed på ca. 95%.</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="env1" category="method">
+            <dcx:heading lang="en">Environment</dcx:heading>
+            <dcx:heading lang="da">Miljøfaktor</dcx:heading>
+            <dcx:body lang="en">Pressure: 1011 hPa ±10 hPa</dcx:body>
+            <dcx:body lang="da">Tryk: 1011 hPa ±10 hPa</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="env2" category="method">
+            <dcx:heading lang="en">Environment</dcx:heading>
+            <dcx:heading lang="da">Miljøfaktor</dcx:heading>
+            <dcx:body lang="en">Temperature: 20.5°C±0,4°C</dcx:body>
+            <dcx:body lang="da">Temperatur: 20,5°C±0,4°C</dcx:body>
+        </dcx:statement>
+        <dcx:statement id="env3" category="method">
+            <dcx:heading lang="en">Evironment</dcx:heading>
+            <dcx:heading lang="da">Miljøfaktor</dcx:heading>
+            <dcx:body lang="en"> relative humidity: 59.4 %RH ±10 %RH</dcx:body>
+            <dcx:body lang="da">Relativ luftfugtighed: 59,4 %RH ±10 %RH</dcx:body>
+        </dcx:statement>
+    </dcx:statementList>
+    <dcx:equipmentList>
+        <dcx:heading lang="en">Used equipment</dcx:heading>
+        <dcx:heading lang="da">Anvendt udstyr</dcx:heading>
+        <dcx:equipment category="deviceForMeasurement" id="item1">
+            <dcx:heading lang="en">Pipette with 12 channels 50-1200 µm</dcx:heading>
+            <dcx:heading lang="da">Pipette med 12 kanaler 50-1200 µm</dcx:heading>
+            <dcx:manufacturer>Biohit</dcx:manufacturer>
+            <dcx:modelName>Picus</dcx:modelName>
+            <dcx:serialNumber>12008522</dcx:serialNumber>
+            <dcx:clientId>ID107</dcx:clientId>
+        </dcx:equipment>
+        <dcx:equipment category="deviceForMeasurement" id="item2">
+            <dcx:heading lang="en">Pipette tip (1200 µl)</dcx:heading>
+            <dcx:heading lang="da">Pipettespids</dcx:heading>
+            <dcx:manufacturer>Satorius</dcx:manufacturer>
+            <dcx:modelName>Optifit</dcx:modelName>
+            <dcx:serialNumber>ss23987</dcx:serialNumber>
+        </dcx:equipment>
+        <dcx:equipment category="referenceStandard" id="ref1">
+            <dcx:heading lang="en">Balance. 
+	resolution: 0.00001 g.
+                calibrated: 2021-11-25.</dcx:heading>
+            <dcx:heading lang="da">Vægt. 
+                Opløsning:  0,00001 g.  
+                Kalibreret: 2021-11-25</dcx:heading>
+            <dcx:manufacturer>Satorius</dcx:manufacturer>
+            <dcx:serviceProviderId>ID148</dcx:serviceProviderId>
+        </dcx:equipment>
+        <dcx:columnHeadings>
+            <dcx:column name='heading'>
+                <dcx:heading lang="en">Used equipment</dcx:heading>
+                <dcx:heading lang="da">Anvendt udstyr</dcx:heading>
+            </dcx:column>
+            <dcx:column name='manufacturer'>
+                <dcx:heading lang="en">Manufacturer</dcx:heading>
+                <dcx:heading lang="da">Fabrikat</dcx:heading>
+            </dcx:column>
+            <dcx:column name='modelName'>
+                <dcx:heading lang="en">Product name</dcx:heading>
+                <dcx:heading lang="da">Produktnavn</dcx:heading>
+            </dcx:column>
+            <dcx:column name='modelNumber'>
+                <dcx:heading lang="en">Product number</dcx:heading>
+                <dcx:heading lang="da">Produkttype</dcx:heading>
+            </dcx:column>
+            <dcx:column name='clientId'>
+                <dcx:heading lang="en">Customer ID</dcx:heading>
+                <dcx:heading lang="da">Kundens ID</dcx:heading>
+            </dcx:column>
+            <dcx:column name='serialNumber'>
+                <dcx:heading lang="en">Serial number</dcx:heading>
+                <dcx:heading lang="da">Serienummer</dcx:heading>
+            </dcx:column>
+            <dcx:column name='serviceProviderId'>
+                <dcx:heading lang="en">DFM number</dcx:heading>
+                <dcx:heading lang="da">DFMnummer</dcx:heading>
+            </dcx:column>
+            <dcx:column name="prevCalibDate">
+                <dcx:heading lang="en">previous Calibration Date</dcx:heading>
+                <dcx:heading lang="da">seneste kalibreringsdato</dcx:heading>
+            </dcx:column>
+        </dcx:columnHeadings>
+    </dcx:equipmentList>
+    <dcx:settingList>
+        <dcx:heading lang="en">Settings</dcx:heading>
+        <dcx:heading lang="da">Indstillinger</dcx:heading>
+        <dcx:setting id="ch1" equipmentRef="item1">
+            <dcx:heading lang="en">Channel</dcx:heading>
+            <dcx:heading lang="da">Kanal</dcx:heading>
+            <dcx:value>1</dcx:value>
+        </dcx:setting>
+        <dcx:setting id="ch2" equipmentRef="item1">
+            <dcx:heading lang="en">Channel</dcx:heading>
+            <dcx:heading lang="da">Kanal</dcx:heading>
+            <dcx:value>2</dcx:value>
+        </dcx:setting>
+        <dcx:setting id="ch3" equipmentRef="item1">
+            <dcx:heading lang="en">Channel</dcx:heading>
+            <dcx:heading lang="da">Kanal</dcx:heading>
+            <dcx:value>3</dcx:value>
+        </dcx:setting>
+        <dcx:setting id="sin" equipmentRef="item1">
+            <dcx:heading lang="en">Speed in</dcx:heading>
+            <dcx:heading lang="da">Hastighed ind</dcx:heading>
+            <dcx:body lang="en">Same speed is used in all measurements</dcx:body>
+            <dcx:body lang="da">Samme hastighed er anvendt I alle målinger</dcx:body>
+            <dcx:parameter>speed-in</dcx:parameter>
+            <dcx:value>5</dcx:value>
+        </dcx:setting>
+        <dcx:setting id="sout" equipmentRef="item1">
+            <dcx:heading lang="en">speed out</dcx:heading>
+            <dcx:heading lang="da">Hastighed ud</dcx:heading>
+            <dcx:body lang="en">Same speed is used in all measurements</dcx:body>
+            <dcx:body lang="da">Samme hastighed er anvendt I alle målinger</dcx:body>
+            <dcx:parameter>speed-out</dcx:parameter>
+            <dcx:value>5</dcx:value>
+        </dcx:setting>
+        <dcx:columnHeadings>
+            <dcx:column name='heading'>
+                <dcx:heading lang="en">-</dcx:heading>
+                <dcx:heading lang="da">-</dcx:heading>
+            </dcx:column>
+            <dcx:column name='body'>
+                <dcx:heading lang="en">description</dcx:heading>
+                <dcx:heading lang="da">beskrivelse</dcx:heading>
+            </dcx:column>
+            <dcx:column name='parameter'>
+                <dcx:heading lang="en">parameter</dcx:heading>
+                <dcx:heading lang="da">parameter</dcx:heading>
+            </dcx:column>
+            <dcx:column name='value'>
+                <dcx:heading lang="en">value</dcx:heading>
+                <dcx:heading lang="da">værdi</dcx:heading>
+            </dcx:column>
+            <dcx:column name='unit'>
+                <dcx:heading lang="en">unit</dcx:heading>
+                <dcx:heading lang="da">enhed</dcx:heading>
+            </dcx:column>
+        </dcx:columnHeadings>
+    </dcx:settingList>
+    <dcx:measurementConfigList>
+        <dcx:heading lang="en">Measuring Systems Under Calibration</dcx:heading>
+        <dcx:heading lang="da">Målesystemer</dcx:heading>
+        <dcx:measurementConfig id="ms1">
+            <dcx:heading lang="en">Channel 1</dcx:heading>
+            <dcx:heading lang="da">Kanal 1</dcx:heading>
+            <dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
+            <dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
+            <dcx:settingRefs>ch1 sin sout</dcx:settingRefs>
+            <dcx:statementRefs>meth2</dcx:statementRefs>
+            <dcx:operationalStatus>as found</dcx:operationalStatus>
+            <dcx:body lang="da">-</dcx:body>
+            <dcx:body lang="en">-</dcx:body>
+        </dcx:measurementConfig>
+        <dcx:measurementConfig id="ms2">
+            <dcx:heading lang="en">Channel 2</dcx:heading>
+            <dcx:heading lang="da">Kanal 2</dcx:heading>
+            <dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
+            <dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
+            <dcx:settingRefs>ch2 sin sout</dcx:settingRefs>
+            <dcx:statementRefs>meth2</dcx:statementRefs>
+            <dcx:operationalStatus>as found</dcx:operationalStatus>
+            <dcx:body lang="da">-</dcx:body>
+            <dcx:body lang="en">-</dcx:body>
+        </dcx:measurementConfig>
+        <dcx:columnHeadings>
+            <dcx:column name='heading'>
+                <dcx:heading lang="en">Measuring system</dcx:heading>
+                <dcx:heading lang="da">Målesystem</dcx:heading>
+            </dcx:column>
+            <dcx:column name='deviceForMeasurementRefs'>
+                <dcx:heading lang="en">Equipment ref.</dcx:heading>
+                <dcx:heading lang="da">Udstyrsref.</dcx:heading>
+            </dcx:column>
+            <dcx:column name='settingRefs'>
+                <dcx:heading lang="en">Setting ref.</dcx:heading>
+                <dcx:heading lang="da">Indstillingsref.</dcx:heading>
+            </dcx:column>
+            <dcx:column name='statementRefs'>
+                <dcx:heading lang="en">Method ref.</dcx:heading>
+                <dcx:heading lang="da">Metoderef.</dcx:heading>
+            </dcx:column>
+            <dcx:column name='operationalStatus'>
+                <dcx:heading lang="en">Operational status.</dcx:heading>
+                <dcx:heading lang="da">Kalibrerings tidspunkt i forhod til vedlighold: Før (as found). Efter (as left).</dcx:heading>
+            </dcx:column>
+        </dcx:columnHeadings>
+    </dcx:measurementConfigList>
+    <dcx:measurementResultList>
+        <dcx:heading lang="en">Calibration and Measurement Results</dcx:heading>    
+        <dcx:calibrationResult tableId="calRes0" measurementConfigRef="ms1" serviceCategory="not defined" numRows='3' numCols='14'>
+            <dcx:heading lang="en">New format of calibration data</dcx:heading>
+            <dcx:heading lang="da">Kalibreringsresultat nyt format</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="1">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                <dcx:rowTag>
+                    <dcx:row idx="1">pt1</dcx:row>
+                    <dcx:row idx="2">pt2</dcx:row> 
+                    <dcx:row idx="3">pt3</dcx:row>
+                </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="µL" scope="indication">
+                <dcx:heading lang="en">Item indication</dcx:heading>
+                <dcx:heading lang="da">Emnets visning</dcx:heading>
+                <dcx:value>
+                    <dcx:row idx="1">120</dcx:row> 
+                    <dcx:row idx="2">600</dcx:row> 
+                    <dcx:row idx="3">1200</dcx:row>
+                </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="-" unit="µL">
+                <dcx:heading lang="en">Approach to target (a: from above, b: from below)</dcx:heading>
+                <dcx:heading lang="da">Tilnærmelse til målværdi (oppefra [a], nedefra [b])</dcx:heading>
+                    <dcx:approachToTarget>
+                        <dcx:row idx="1">b</dcx:row> 
+                        <dcx:row idx="2">b</dcx:row> 
+                        <dcx:row idx="3">b</dcx:row>
+                    </dcx:approachToTarget>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="µL">
+                <dcx:heading lang="en">Systematic error</dcx:heading>
+                <dcx:heading lang="da">Systematisk fejl</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1.21</dcx:row> 
+                        <dcx:row idx="2">0.3 </dcx:row>
+                        <dcx:row idx="3">-0.9</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3" scope="bias" unit="µL">
+                <dcx:heading lang="en">Calibration uncertainty</dcx:heading>
+                <dcx:heading lang="da">Kalibreringsusikkerhed</dcx:heading>
+                    <dcx:expandedUncertainty>
+                        <dcx:row idx="1">0.35</dcx:row> 
+                        <dcx:row idx="2">1.5 </dcx:row>
+                        <dcx:row idx="3">2.4</dcx:row>
+                    </dcx:expandedUncertainty>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="%">
+                <dcx:heading lang="en">Systematic error (relative)</dcx:heading>
+                <dcx:heading lang="da">Systematisk fejl (relativ)</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1.01</dcx:row> 
+                        <dcx:row idx="2">0.05 </dcx:row>
+                        <dcx:row idx="3">-0.08</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3" scope="bias" unit="%">
+                <dcx:heading lang="en">Calibration uncertainty (relative)</dcx:heading>
+                <dcx:heading lang="da">Kalibreringsusikkerhed (relativ)</dcx:heading>
+                    <dcx:expandedUncertainty>
+                        <dcx:row idx="1">0.29</dcx:row> 
+                        <dcx:row idx="2">0.25 </dcx:row>
+                        <dcx:row idx="3">0.2</dcx:row>
+                    </dcx:expandedUncertainty>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="µL">
+                <dcx:heading lang="en">Repeatability</dcx:heading>
+                <dcx:heading lang="da">Repeterbarhed</dcx:heading>
+                    <dcx:statStd>
+                        <dcx:row idx="1">0.13</dcx:row> 
+                        <dcx:row idx="2">0.24 </dcx:row>
+                        <dcx:row idx="3">0.48</dcx:row>
+                    </dcx:statStd>
+            </dcx:column>
+
+            <dcx:column  dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="%">
+                <dcx:heading lang="en">Repeatability (relative)</dcx:heading>
+                <dcx:heading lang="da">Repeterbarhed (relativ)</dcx:heading>
+                    <dcx:statStd>
+                        <dcx:row idx="1">0.11</dcx:row> 
+                        <dcx:row idx="2">0.04 </dcx:row>
+                        <dcx:row idx="3">0.04</dcx:row>
+                    </dcx:statStd>
+            </dcx:column>
+
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="-">
+                <dcx:heading lang="en">Conformity statement</dcx:heading>
+                <dcx:heading lang="da">Overensstemmelseserklæring</dcx:heading>
+                    <dcx:conformity>
+                        <dcx:row idx="1">pass</dcx:row> 
+                        <dcx:row idx="2">pass</dcx:row>
+                        <dcx:row idx="3">pass</dcx:row>
+                    </dcx:conformity>
+            </dcx:column>
+
+            <dcx:column  dataCategoryRef="-" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="QU-Zfactor">
+                <dcx:heading lang="en">Z-factor</dcx:heading>
+                <dcx:heading lang="da">Z faktor</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1.003</dcx:row> 
+                        <dcx:row idx="2">1.003 </dcx:row>
+                        <dcx:row idx="3">1.003</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference Value</dcx:heading>
+                <dcx:heading lang="da">Referencens værdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">121.21</dcx:row> 
+                        <dcx:row idx="2">600.3 </dcx:row>
+                        <dcx:row idx="3">1199.1</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3" scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">120</dcx:row> 
+                        <dcx:row idx="2">600 </dcx:row>
+                        <dcx:row idx="3">1200</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="-" unit="-">
+                <dcx:heading lang="en">Exception to accreditation</dcx:heading>
+                <dcx:heading lang="da">Undtagelse fra akkreditering</dcx:heading>
+                    <dcx:accreditationExceptionRef>
+                        <dcx:row idx="3">accex</dcx:row>
+                    </dcx:accreditationExceptionRef>
+            </dcx:column>
+            <dcx:column dataCategoryRef="expandedUncertainty" quantity="-"  scope="-" unit="-">
+                <dcx:heading lang="en">Uncertainty k factor</dcx:heading>
+                <dcx:heading lang="da">Usikkerhed k-faktor</dcx:heading>
+                    <dcx:uncertaintyCoverageFactor_k>
+                        <dcx:row idx="1">2</dcx:row> 
+                        <dcx:row idx="2">2</dcx:row> 
+                        <dcx:row idx="3">2</dcx:row>
+                    </dcx:uncertaintyCoverageFactor_k>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="1" quantityUnitDefRef="QU-Zfactor">
+                <dcx:heading lang="en">Calculation of Z-factor</dcx:heading>
+                <dcx:heading lang="da">Bergning af Z-faktor</dcx:heading>
+                    <dcx:methodRef>
+                        <dcx:row idx="1">meth3</dcx:row> 
+                        <dcx:row idx="2">meth3</dcx:row>
+                        <dcx:row idx="3">meth3</dcx:row>
+                    </dcx:methodRef>
+            </dcx:column>
+            <dcx:column dataCategoryRef="conformity" quantity="-" scope="bias" unit="-">
+                <dcx:heading lang="en">Conformity status decision rule</dcx:heading>
+                <dcx:heading lang="da">Grundlag for overensstemmelseserklæring</dcx:heading>
+                    <dcx:decisionRuleRef>
+                        <dcx:row idx="1">conf1</dcx:row> 
+                        <dcx:row idx="2">conf1</dcx:row>
+                        <dcx:row idx="3">conf1</dcx:row>
+                    </dcx:decisionRuleRef>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" scope="bias" unit="1">
+                <dcx:heading lang="en">Data-series used for calculation of repeatability and systematic error</dcx:heading>
+                <dcx:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed og systematisk fejl</dcx:heading>
+                    <dcx:measurementSeriesRef>
+                        <dcx:row idx="1">ser11</dcx:row> 
+                        <dcx:row idx="2">ser12</dcx:row>
+                        <dcx:row idx="3">ser13</dcx:row>
+                    </dcx:measurementSeriesRef>
+            </dcx:column>
+        </dcx:calibrationResult>
+
+        <dcx:calibrationResult  tableId="calRes2" measurementConfigRef="ms2"  numRows='3' numCols='13'>
+            <dcx:heading lang="en">Calibration result chanel 2</dcx:heading>
+            <dcx:heading lang="da">Kalibreringsresultat kanal 2</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="1">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row>
+                        <dcx:row idx="3">p3</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">120</dcx:row> 
+                        <dcx:row idx="2">600</dcx:row>
+                        <dcx:row idx="3">1200</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference Value</dcx:heading>
+                <dcx:heading lang="da">Referencens værdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">121.0752</dcx:row> 
+                        <dcx:row idx="2">600.0417 </dcx:row>
+                        <dcx:row idx="3">1198.901</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="indication" unit="µL">
+                <dcx:heading lang="en">Item indication</dcx:heading>
+                <dcx:heading lang="da">Emnets visning</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">120</dcx:row> 
+                        <dcx:row idx="2">600</dcx:row>
+                        <dcx:row idx="3">1200</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="bias" unit="µL">
+                <dcx:heading lang="en">Systematic error</dcx:heading>
+                <dcx:heading lang="da">Systematisk fejl</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1.08</dcx:row> 
+                        <dcx:row idx="2">0.04 </dcx:row>
+                        <dcx:row idx="3">-1.1</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="bias" unit="µL">
+                <dcx:heading lang="en">Calibration uncertainty</dcx:heading>
+                <dcx:heading lang="da">Kalibreringsusikkerhed</dcx:heading>
+                    <dcx:expandedUncertainty>
+                        <dcx:row idx="1">0.35</dcx:row> 
+                        <dcx:row idx="2">1.5 </dcx:row>
+                        <dcx:row idx="3">2.4</dcx:row>
+                    </dcx:expandedUncertainty>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="bias" unit="%">
+                <dcx:heading lang="en">Systematic error (relative)</dcx:heading>
+                <dcx:heading lang="da">Systematisk fejl (relativ)</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">0.9</dcx:row> 
+                        <dcx:row idx="2">0.01 </dcx:row>
+                        <dcx:row idx="3">-0.09</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="bias" unit="%">
+                <dcx:heading lang="en">Calibration uncertainty (relative)</dcx:heading>
+                <dcx:heading lang="da">Kalibreringsusikkerhed (relativ)</dcx:heading>
+                    <dcx:expandedUncertainty>
+                        <dcx:row idx="1">0.29</dcx:row> 
+                        <dcx:row idx="2">0.25 </dcx:row>
+                        <dcx:row idx="3">0.2</dcx:row>
+                    </dcx:expandedUncertainty>
+            </dcx:column>
+            <dcx:column dataCategoryRef="expandedUncertainty" quantity="-" scope="-" unit="-">
+                <dcx:heading lang="en">Uncertainty k factor</dcx:heading>
+                <dcx:heading lang="da">Usikkerhed k-faktor</dcx:heading>
+                    <dcx:uncertaintyCoverageFactor_k>
+                        <dcx:row idx="1">2</dcx:row> 
+                        <dcx:row idx="2">2 </dcx:row>
+                        <dcx:row idx="3">2</dcx:row>
+                    </dcx:uncertaintyCoverageFactor_k>
+            </dcx:column>
+            <dcx:column dataCategoryRef="repeatability" quantity="3-4|volume|m3"  scope="bias" unit="µL">
+                <dcx:heading lang="en">Repeatability</dcx:heading>
+                <dcx:heading lang="da">Repeterbarhed</dcx:heading>
+                    <dcx:statStd>
+                        <dcx:row idx="1">0.13</dcx:row> 
+                        <dcx:row idx="2">0.24 </dcx:row>
+                        <dcx:row idx="3">0.6</dcx:row>
+                    </dcx:statStd>
+            </dcx:column>
+            <dcx:column dataCategoryRef="repeatability" quantity="3-4|volume|m3"  scope="bias" unit="%">
+                <dcx:heading lang="en">Repeatability (relative)</dcx:heading>
+                <dcx:heading lang="da">Repeterbarhed (relativ)</dcx:heading>
+                    <dcx:statStd>
+                        <dcx:row idx="1">0.11</dcx:row> 
+                        <dcx:row idx="2">0.04 </dcx:row>
+                        <dcx:row idx="3">0.05</dcx:row>
+                    </dcx:statStd>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="quantityUnitDefRef"  scope="environment" unit="1" quantityUnitDefRef="QU-Zfactor">
+                <dcx:heading lang="en">Z-factor</dcx:heading>
+                <dcx:heading lang="da">Z faktor</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1.003</dcx:row> 
+                        <dcx:row idx="2">1.003 </dcx:row>
+                        <dcx:row idx="3">1.003</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="quantityUnitDefRef" scope="environment" unit="-" quantityUnitDefRef="QU-Zfactor">
+                <dcx:heading lang="en">Calculation of Z-factor</dcx:heading>
+                <dcx:heading lang="da">Bergning af Z-faktor</dcx:heading>
+                    <dcx:methodRef>
+                        <dcx:row idx="1">meth3</dcx:row> 
+                        <dcx:row idx="2">meth3 </dcx:row>
+                        <dcx:row idx="3">meth3</dcx:row>
+                    </dcx:methodRef>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3" unit="1" scope="bias">
+                <dcx:heading lang="en">Data-series used for calculation of repeatability</dcx:heading>
+                <dcx:heading lang="da">Måleserier som danner grundlag for beregning af repeterbarhed</dcx:heading>
+                    <dcx:measurementSeriesRef>
+                        <dcx:row idx="1">ser21</dcx:row> 
+                        <dcx:row idx="2">ser22 </dcx:row>
+                        <dcx:row idx="3">ser23</dcx:row>
+                    </dcx:measurementSeriesRef>
+            </dcx:column>
+        </dcx:calibrationResult>
+        <dcx:measurementSeries  tableId="ser11" measurementConfigRef="ms1" numRows='10' numCols='3'>
+            <dcx:heading lang="en">Series of measurement channel 1</dcx:heading>
+            <dcx:heading lang="da">Måleserie kanal 1</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row> 
+                        <dcx:row idx="3">p3</dcx:row> 
+                        <dcx:row idx="4">p4</dcx:row> 
+                        <dcx:row idx="5">p5</dcx:row> 
+                        <dcx:row idx="6">p6</dcx:row> 
+                        <dcx:row idx="7">p7</dcx:row> 
+                        <dcx:row idx="8">p8</dcx:row> 
+                        <dcx:row idx="9">p9</dcx:row> 
+                        <dcx:row idx="10">p10</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">120</dcx:row> 
+                        <dcx:row idx="2">120</dcx:row> 
+                        <dcx:row idx="3">120</dcx:row> 
+                        <dcx:row idx="4">120</dcx:row> 
+                        <dcx:row idx="5">120</dcx:row> 
+                        <dcx:row idx="6">120</dcx:row> 
+                        <dcx:row idx="7">120</dcx:row> 
+                        <dcx:row idx="8">120</dcx:row> 
+                        <dcx:row idx="9">120</dcx:row> 
+                        <dcx:row idx="10">120</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference value</dcx:heading>
+                <dcx:heading lang="da">Referenceværdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">121.3229</dcx:row> 
+                        <dcx:row idx="2">121.1223</dcx:row> 
+                        <dcx:row idx="3">121.1724</dcx:row> 
+                        <dcx:row idx="4">121.1022</dcx:row> 
+                        <dcx:row idx="5">121.2025</dcx:row> 
+                        <dcx:row idx="6">121.1825</dcx:row> 
+                        <dcx:row idx="7">121.3129</dcx:row> 
+                        <dcx:row idx="8">121.042</dcx:row> 
+                        <dcx:row idx="9">121.1724</dcx:row> 
+                        <dcx:row idx="10">121.5034</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+        </dcx:measurementSeries>
+        <dcx:measurementSeries  tableId="ser12" measurementConfigRef="ms1"  numRows='10' numCols='4'>
+            <dcx:heading lang="en">Series of measurement channel 1</dcx:heading>
+            <dcx:heading lang="da">Måleserie kanal 1</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row> 
+                        <dcx:row idx="3">p3</dcx:row> 
+                        <dcx:row idx="4">p4</dcx:row> 
+                        <dcx:row idx="5">p5</dcx:row> 
+                        <dcx:row idx="6">p6</dcx:row> 
+                        <dcx:row idx="7">p7</dcx:row> 
+                        <dcx:row idx="8">p8</dcx:row> 
+                        <dcx:row idx="9">p9</dcx:row> 
+                        <dcx:row idx="10">p10</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">600</dcx:row> 
+                        <dcx:row idx="2">600</dcx:row> 
+                        <dcx:row idx="3">600</dcx:row> 
+                        <dcx:row idx="4">600</dcx:row> 
+                        <dcx:row idx="5">600</dcx:row> 
+                        <dcx:row idx="6">600</dcx:row> 
+                        <dcx:row idx="7">600</dcx:row> 
+                        <dcx:row idx="8">600</dcx:row> 
+                        <dcx:row idx="9">600</dcx:row> 
+                        <dcx:row idx="10">600</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference value</dcx:heading>
+                <dcx:heading lang="da">Referenceværdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">600.5463</dcx:row> 
+                        <dcx:row idx="2">600.466</dcx:row> 
+                        <dcx:row idx="3">599.784</dcx:row> 
+                        <dcx:row idx="4">600.5262</dcx:row> 
+                        <dcx:row idx="5">600.4058</dcx:row> 
+                        <dcx:row idx="6">600.1049</dcx:row> 
+                        <dcx:row idx="7">600.3457</dcx:row> 
+                        <dcx:row idx="8">600.3757</dcx:row> 
+                        <dcx:row idx="9">600.7067</dcx:row> 
+                        <dcx:row idx="10">600.1952</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="indication" unit="µL">
+                <dcx:heading lang="en">Item indication</dcx:heading>
+                <dcx:heading lang="da">Emnets visning</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">600</dcx:row> 
+                        <dcx:row idx="2">600</dcx:row> 
+                        <dcx:row idx="3">600</dcx:row> 
+                        <dcx:row idx="4">600</dcx:row> 
+                        <dcx:row idx="5">600</dcx:row> 
+                        <dcx:row idx="6">600</dcx:row> 
+                        <dcx:row idx="7">600</dcx:row> 
+                        <dcx:row idx="8">600</dcx:row> 
+                        <dcx:row idx="9">600</dcx:row> 
+                        <dcx:row idx="10">600</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+        </dcx:measurementSeries>
+        <dcx:measurementSeries  tableId="ser13" measurementConfigRef="ms1"  numRows='10' numCols='4'>
+            <dcx:heading lang="en">Series of measurement channel 1</dcx:heading>
+            <dcx:heading lang="da">Måleserie kanal 1</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" unit="-" scope="-">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row> 
+                        <dcx:row idx="3">p3</dcx:row> 
+                        <dcx:row idx="4">p4</dcx:row> 
+                        <dcx:row idx="5">p5</dcx:row> 
+                        <dcx:row idx="6">p6</dcx:row> 
+                        <dcx:row idx="7">p7</dcx:row> 
+                        <dcx:row idx="8">p8</dcx:row> 
+                        <dcx:row idx="9">p9</dcx:row> 
+                        <dcx:row idx="10">p10</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">1200</dcx:row> 
+                        <dcx:row idx="2">1200</dcx:row> 
+                        <dcx:row idx="3">1200</dcx:row> 
+                        <dcx:row idx="4">1200</dcx:row> 
+                        <dcx:row idx="5">1200</dcx:row> 
+                        <dcx:row idx="6">1200</dcx:row> 
+                        <dcx:row idx="7">1200</dcx:row> 
+                        <dcx:row idx="8">1200</dcx:row> 
+                        <dcx:row idx="9">1200</dcx:row> 
+                        <dcx:row idx="10">1200</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference value</dcx:heading>
+                <dcx:heading lang="da">Referenceværdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1199.488</dcx:row> 
+                        <dcx:row idx="2">1199.046</dcx:row> 
+                        <dcx:row idx="3">1198.043</dcx:row> 
+                        <dcx:row idx="4">1198.615</dcx:row> 
+                        <dcx:row idx="5">1199.478</dcx:row> 
+                        <dcx:row idx="6">1199.949</dcx:row> 
+                        <dcx:row idx="7">1198.966</dcx:row> 
+                        <dcx:row idx="8">1199.087</dcx:row> 
+                        <dcx:row idx="9">1198.896</dcx:row> 
+                        <dcx:row idx="10">1199.247</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="indication" unit="µL">
+                <dcx:heading lang="en">Item indication</dcx:heading>
+                <dcx:heading lang="da">Emnets visning</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1200</dcx:row> 
+                        <dcx:row idx="2">1200</dcx:row> 
+                        <dcx:row idx="3">1200</dcx:row> 
+                        <dcx:row idx="4">1200</dcx:row> 
+                        <dcx:row idx="5">1200</dcx:row> 
+                        <dcx:row idx="6">1200</dcx:row> 
+                        <dcx:row idx="7">1200</dcx:row> 
+                        <dcx:row idx="8">1200</dcx:row> 
+                        <dcx:row idx="9">1200</dcx:row> 
+                        <dcx:row idx="10">1200</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+        </dcx:measurementSeries>
+        <dcx:measurementSeries  tableId="ser21" measurementConfigRef="ms2" numRows='10' numCols='3'>
+            <dcx:heading lang="en">Series of measurement channel 2</dcx:heading>
+            <dcx:heading lang="da">Måleserie kanal 2</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row> 
+                        <dcx:row idx="3">p3</dcx:row> 
+                        <dcx:row idx="4">p4</dcx:row> 
+                        <dcx:row idx="5">p5</dcx:row> 
+                        <dcx:row idx="6">p6</dcx:row> 
+                        <dcx:row idx="7">p7</dcx:row> 
+                        <dcx:row idx="8">p8</dcx:row> 
+                        <dcx:row idx="9">p9</dcx:row> 
+                        <dcx:row idx="10">p10</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">120</dcx:row> 
+                        <dcx:row idx="2">120</dcx:row> 
+                        <dcx:row idx="3">120</dcx:row> 
+                        <dcx:row idx="4">120</dcx:row> 
+                        <dcx:row idx="5">120</dcx:row> 
+                        <dcx:row idx="6">120</dcx:row> 
+                        <dcx:row idx="7">120</dcx:row> 
+                        <dcx:row idx="8">120</dcx:row> 
+                        <dcx:row idx="9">120</dcx:row> 
+                        <dcx:row idx="10">120</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference value</dcx:heading>
+                <dcx:heading lang="da">Referenceværdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">121.1925</dcx:row> 
+                        <dcx:row idx="2">120.9919</dcx:row> 
+                        <dcx:row idx="3">121.012</dcx:row> 
+                        <dcx:row idx="4">120.9919</dcx:row> 
+                        <dcx:row idx="5">121.0822</dcx:row> 
+                        <dcx:row idx="6">121.0621</dcx:row> 
+                        <dcx:row idx="7">121.1724</dcx:row> 
+                        <dcx:row idx="8">120.9217</dcx:row> 
+                        <dcx:row idx="9">120.9618</dcx:row> 
+                        <dcx:row idx="10">121.363</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+        </dcx:measurementSeries>
+        <dcx:measurementSeries  tableId="ser22" measurementConfigRef="ms2" numRows='10' numCols='4'>
+            <dcx:heading lang="en">Series of measurement channel 2</dcx:heading>
+            <dcx:heading lang="da">Måleserie kanal 2</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row> 
+                        <dcx:row idx="3">p3</dcx:row> 
+                        <dcx:row idx="4">p4</dcx:row> 
+                        <dcx:row idx="5">p5</dcx:row> 
+                        <dcx:row idx="6">p6</dcx:row> 
+                        <dcx:row idx="7">p7</dcx:row> 
+                        <dcx:row idx="8">p8</dcx:row> 
+                        <dcx:row idx="9">p9</dcx:row> 
+                        <dcx:row idx="10">p10</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                    <dcx:targetValue>
+                        <dcx:row idx="1">600</dcx:row> 
+                        <dcx:row idx="2">600</dcx:row> 
+                        <dcx:row idx="3">600</dcx:row> 
+                        <dcx:row idx="4">600</dcx:row> 
+                        <dcx:row idx="5">600</dcx:row> 
+                        <dcx:row idx="6">600</dcx:row> 
+                        <dcx:row idx="7">600</dcx:row> 
+                        <dcx:row idx="8">600</dcx:row> 
+                        <dcx:row idx="9">600</dcx:row> 
+                        <dcx:row idx="10">600</dcx:row>
+                    </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference value</dcx:heading>
+                <dcx:heading lang="da">Referenceværdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">600.1751</dcx:row> 
+                        <dcx:row idx="2">600.1651</dcx:row> 
+                        <dcx:row idx="3">599.5332</dcx:row> 
+                        <dcx:row idx="4">600.2353</dcx:row> 
+                        <dcx:row idx="5">600.0949</dcx:row> 
+                        <dcx:row idx="6">599.804</dcx:row> 
+                        <dcx:row idx="7">600.0147</dcx:row> 
+                        <dcx:row idx="8">600.1049</dcx:row> 
+                        <dcx:row idx="9">600.3858</dcx:row> 
+                        <dcx:row idx="10">599.9043</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="indication" unit="µL">
+                <dcx:heading lang="en">Item indication</dcx:heading>
+                <dcx:heading lang="da">Emnets visning</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">600</dcx:row> 
+                        <dcx:row idx="2">600</dcx:row> 
+                        <dcx:row idx="3">600</dcx:row> 
+                        <dcx:row idx="4">600</dcx:row> 
+                        <dcx:row idx="5">600</dcx:row> 
+                        <dcx:row idx="6">600</dcx:row> 
+                        <dcx:row idx="7">600</dcx:row> 
+                        <dcx:row idx="8">600</dcx:row> 
+                        <dcx:row idx="9">600</dcx:row> 
+                        <dcx:row idx="10">600</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+        </dcx:measurementSeries>
+        <dcx:measurementSeries  tableId="ser23" measurementConfigRef="ms2" numRows='10' numCols='4'>
+            <dcx:heading lang="en">Series of measurement channel 2</dcx:heading>
+            <dcx:heading lang="da">Måleserie kanal 2</dcx:heading>
+            <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="-">
+                <dcx:heading lang="en">Customer Tags</dcx:heading>
+                <dcx:heading lang="da">Kundens kode</dcx:heading>
+                    <dcx:rowTag>
+                        <dcx:row idx="1">p1</dcx:row> 
+                        <dcx:row idx="2">p2</dcx:row> 
+                        <dcx:row idx="3">p3</dcx:row> 
+                        <dcx:row idx="4">p4</dcx:row> 
+                        <dcx:row idx="5">p5</dcx:row> 
+                        <dcx:row idx="6">p6</dcx:row> 
+                        <dcx:row idx="7">p7</dcx:row> 
+                        <dcx:row idx="8">p8</dcx:row> 
+                        <dcx:row idx="9">p9</dcx:row> 
+                        <dcx:row idx="10">p10</dcx:row>
+                    </dcx:rowTag>
+            </dcx:column>
+            <dcx:column dataCategoryRef="targetValue" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Calibration Point</dcx:heading>
+                <dcx:heading lang="da">Kalibreringspunkt</dcx:heading>
+                <dcx:targetValue>
+                    <dcx:row idx="1">1200</dcx:row> 
+                    <dcx:row idx="2">1200</dcx:row> 
+                    <dcx:row idx="3">1200</dcx:row> 
+                    <dcx:row idx="4">1200</dcx:row> 
+                    <dcx:row idx="5">1200</dcx:row> 
+                    <dcx:row idx="6">1200</dcx:row> 
+                    <dcx:row idx="7">1200</dcx:row> 
+                    <dcx:row idx="8">1200</dcx:row> 
+                    <dcx:row idx="9">1200</dcx:row> 
+                    <dcx:row idx="10">1200</dcx:row>
+                </dcx:targetValue>
+            </dcx:column>
+            <dcx:column dataCategoryRef="value" quantity="3-4|volume|m3"  scope="reference" unit="µL">
+                <dcx:heading lang="en">Reference value</dcx:heading>
+                <dcx:heading lang="da">Referenceværdi</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1199.468</dcx:row> 
+                        <dcx:row idx="2">1198.896</dcx:row> 
+                        <dcx:row idx="3">1197.893</dcx:row> 
+                        <dcx:row idx="4">1198.405</dcx:row> 
+                        <dcx:row idx="5">1199.267</dcx:row> 
+                        <dcx:row idx="6">1199.819</dcx:row> 
+                        <dcx:row idx="7">1198.755</dcx:row> 
+                        <dcx:row idx="8">1198.946</dcx:row> 
+                        <dcx:row idx="9">1198.575</dcx:row> 
+                        <dcx:row idx="10">1198.986</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+            <dcx:column dataCategoryRef="-" quantity="3-4|volume|m3"  scope="indication" unit="µL">
+                <dcx:heading lang="en">Item indication</dcx:heading>
+                <dcx:heading lang="da">Emnets visning</dcx:heading>
+                    <dcx:value>
+                        <dcx:row idx="1">1200</dcx:row> 
+                        <dcx:row idx="2">1200</dcx:row> 
+                        <dcx:row idx="3">1200</dcx:row> 
+                        <dcx:row idx="4">1200</dcx:row> 
+                        <dcx:row idx="5">1200</dcx:row> 
+                        <dcx:row idx="6">1200</dcx:row> 
+                        <dcx:row idx="7">1200</dcx:row> 
+                        <dcx:row idx="8">1200</dcx:row> 
+                        <dcx:row idx="9">1200</dcx:row> 
+                        <dcx:row idx="10">1200</dcx:row>
+                    </dcx:value>
+            </dcx:column>
+        </dcx:measurementSeries>
+    </dcx:measurementResultList>
+    
+    <dcx:quantityUnitDefList>
+        <dcx:heading lang="en">Definition of Units and Qauntities</dcx:heading>
+        <dcx:quantityUnitDef id="QU-Zfactor" statementRefs="meth3" >
+            <dcx:heading lang="en">Z-factor</dcx:heading>
+            <dcx:heading lang="da">Z-faktor</dcx:heading>
+            <dcx:quantityCodeSystem>other</dcx:quantityCodeSystem>
+            <dcx:quantityCode>Z-factor</dcx:quantityCode>
+            <dcx:unitUsed>1</dcx:unitUsed>
+            <dcx:functionToSIunit>1+0*value</dcx:functionToSIunit>
+            <dcx:unitSI>1</dcx:unitSI>
+        </dcx:quantityUnitDef>
+        <dcx:quantityUnitDef id="QU_IEC_60050" >
+            <dcx:heading lang="en">Z-factor</dcx:heading>
+            <dcx:heading lang="da">Z-faktor</dcx:heading>
+            <dcx:quantityCodeSystem>ISO/IEC 80000</dcx:quantityCodeSystem>
+            <dcx:unitSI>1</dcx:unitSI>
+        </dcx:quantityUnitDef>
+    </dcx:quantityUnitDefList>
+
+	<dcx:embeddedFileList>
+		<dcx:heading lang="en">Embedded files</dcx:heading>
+		<dcx:heading lang="da">Indlejrede filer</dcx:heading>
+		<dcx:embeddedFile id="logo.png">
+			<dcx:heading lang="en">Logo of Calibration Laboratory</dcx:heading>
+			<dcx:heading lang="da">Kalibreringslaboratoriets Logo</dcx:heading>
+			<dcx:body lang="en">-</dcx:body>
+			<dcx:body lang="da">-</dcx:body>
+			<dcx:fileExtension>png</dcx:fileExtension>
+			<dcx:fileContent>iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAIAAACR5s1WAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANQSURBVFhH7ZddSFNhHMZfV47MQQsquwoSAvsg6UKDNKeZGSL0oRd92GVX3mmEqd2kXkXadzazQommTU2nmZoKfmBqKZQg5FJoE5WpWa2m5ly/7WQNPy7UiwUdeDj8n/f8n/P+9o73PRwxa7dbzWaryeQRfftkslksYnJ8/KFKlatQaD2hWwrFy9hYJ0SeUnlHiHue0HUhXkRHOyHy16/H3/eEbgpRHRMjQ8gQfyVDzEmGmJMMMadlQ9BzV4jcBeOr0bIh8n19H6nV2jVr5o2vRsuA4Nfzmu0vLbONjpbs23d7QcOKtWyIoeYWh8PxfP9+T0IMNjQCURYUJEPIEP8JhG1sjHNQguB6Q4hbrlrrmhjLFTsPAixuIalz0SCPpWaEcSwRakTN3FJnjhDloaFiZnKyIy3tvpcXySfbtnVlZDYmnOOhzFQRFtadmVV+IITaHYJH5K9b15ma1n4xRfpceOrvT7D+1CkmxlZFHiZYFhws4TadP991JaNgix+38ryVHZcuvU6+wMmLLdy+faCkRPDcSYuF7xAADeHh2JHWVsIwdmVmYd+kX6Z2h6Dz8caN1LOzjnyVyvXtcBRrfvUKPuz7nBxsW3IyQbA+9/Zi9YGBBOmnnrHZ8ry96ayMjMQ6Ib709QFBvjwkBGuqrgaCjo7UNCzU1PMh1Orpr19tllFeKNjKQ85nDZSWSivfneWkb0lMJAjESFsb9tmePc4l9PWdmpj4PjgIBJ0sNrdkCBliUQij0fMQDAHBkEGjwQ43NwPB7np7JQPbmZq+1Ba1T//8vUWPRGPNNTVAYN9lZ2PbkpKkLTre04N136I/rVYJwhARgRX8oAqNJtfLiwOqYNPmhjNnDZpwasLFu3Y3nE0oDtgJgTsEMz1QKuvi42tPnNSuXUtnod9WghWhB6Wgfm8gQd2OHdQcVlVRUfWnzzzaoMbSXxcXV3PsOD+bZq1a3Z6S4jy26cNzjnKFjmWQzlQmxnKlwR2CBkZYWyR1ugeRFHRO6bLSf0REuvsniFg2ll9+i8oQf/WvQfj4eBiCLQoBWwW/lNhg2UKYauuAKA4IuLagYcW66jo0hX1qql+vN+qKPhYtKWNRUZ9O92N4BAhzbS31vIYV64NON9TU9AseRWu+49nYaQAAAABJRU5ErkJggg==
+</dcx:fileContent>
+		</dcx:embeddedFile>
+		<dcx:embeddedFile id="logoLarge.png">
+			<dcx:heading lang="en">Large Logo of Calibration Laboratory</dcx:heading>
+			<dcx:heading lang="da">Kalibreringslaboratoriets Store Logo</dcx:heading>
+			<dcx:body lang="en">-</dcx:body>
+			<dcx:body lang="da">-</dcx:body>
+			<dcx:fileExtension>png</dcx:fileExtension>
+			<dcx:fileContent>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</dcx:fileContent>
+		</dcx:embeddedFile>
+	</dcx:embeddedFileList>
+</dcx:digitalCalibrationExchange>
