@@ -28,26 +28,37 @@ DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
 
-HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category', 
-                                        '@imageRefs',
-                                        'heading[1]',  
-                                        'body[1]', 
-                                        'externalReference'],
+SECTION_HEADINGS = {'statementList':[],
+                    'equipmentList':[],
+                    'settingList':[],
+                    'measurementConfigList':[],
+                    'quantityUnitDefList':[],
+                    'embeddedFileList':[],
+                    'table':[],
+                    'column':[],
+                    }
 
-    equipmentHeadings = ['in DCC', '@id', '@category',
-                            'heading[1]', 'manufacturer', 'productName', 'productType', 'productNumber',
-                            'client_id heading[1]', 'client_id value', 
-                            'manufact_id heading[1]', 'manufact_id value', 
-                            'calLab_id heading[1]', 'calLab_id value',
-                            'calDate','calDueDate', 'certId', 'certProvider',
+HEADINGS = dict(statementHeadings = ['in DCC', 
+                                     '@id', 
+                                     '@category', 
+                                    '@imageRefs',
+                                    'heading[1]',  
+                                    'body[1]', 
+                                    'externalReference'],
+
+    equipmentHeadings = ['in DCC', '@id', '@statementRef', '@category',
+                            'heading[1]', 'manufacturer', 'modelName', 'modelNumber', 
+                            'serialNumber', 'lotNumber', 'productClass',
+                            'clientId', 'serviceProviderId',
+                            'prevCalibDate','calibDueDate', 'prevCertId', 'prevCertProviderName',
                             ],
 
-    settingsHeadings = ['in DCC', '@settingId', '@equipmentRef', 
+    settingsHeadings = ['in DCC', '@id', '@equipmentRef', 
                         'parameter', 'value', 'unit', 'softwareInstruction', 
-                        'heading[1]', 'body[1]', 'statementRefs',
+                        'heading[1]', 'body[1]', #'statementRefs',
                         ],
 
-    measuringSystemsHeadings = ['in DCC', '@id', 
+    measurementConfigHeadings = ['in DCC', '@id', 
                                 'heading[1]', 
                                 'equipmentRefs', 'settingRefs', 'statementRefs',
                                 'operationalStatus',
@@ -80,7 +91,7 @@ HEADINGS = dict(statementHeadings = ['in DCC', '@id', '@category',
     measurementResultHeadings = [   'tableCategory', 
                                     '@tableId', 
                                     '@serviceCategory', 
-                                    '@measuringSystemRef', 
+                                    '@measurementConfigRef', 
                                     '@customServiceCategory', 
                                     '@statementRefs',
                                     '@embeddedFileRefs',
@@ -164,6 +175,7 @@ class DccGuiTool():
         xsd_root = self.xsdRoot
         sht_def = self.sheetDef
         drestr = dcchf.schema_get_restrictions(xsd_root)
+        self.wb.app.screen_updating = False
         rng = sht_def.range((1,3)).expand()
         rng.clear()
         j = self.xsdDefInitCol
@@ -175,6 +187,7 @@ class DccGuiTool():
             rng.font.bold = True
         self.dccDefInitCol = i+1
         self.xsdRestrictions = drestr
+        self.wb.app.screen_updating = True
         return drestr
 
     def chooseLanguages(self, languages):
@@ -227,26 +240,81 @@ class DccGuiTool():
         self.loadDccInfoTable(heading = self.headings['equipmentHeadings'], 
                                 nodeTag="dcx:equipmentList", 
                                 subNodeTag="dcx:equipment",
-                                place_sheet_after='statements')
+                                place_sheet_after='statementList')
         
         self.loadDccInfoTable( heading = self.headings['settingsHeadings'], 
                                 nodeTag="dcx:settingList", 
                                 subNodeTag="dcx:setting",
-                                place_sheet_after='equipment')
-        self.loadDccInfoTable( heading = self.headings['measuringSystemsHeadings'], 
-                                nodeTag="dcx:measuringSystems", 
-                                subNodeTag="dcx:measuringSystem",
-                                place_sheet_after='settings')
+                                place_sheet_after='equipmentList')
+        self.loadDccInfoTable( heading = self.headings['measurementConfigHeadings'], 
+                                nodeTag="dcx:measurementConfigList", 
+                                subNodeTag="dcx:measurementConfig",
+                                place_sheet_after='settingList')
         self.loadDccInfoTable( heading = self.headings['embeddedFilesHeadings'], 
-                                nodeTag="dcx:embeddedFiles", 
+                                nodeTag="dcx:embeddedFileList", 
                                 subNodeTag="dcx:embeddedFile",
-                                place_sheet_after='measuringSystems')
+                                place_sheet_after='measurementConfigList')
         self.loadDccInfoTable(heading=self.headings['quantityUnitDefsHeadings'],
-                              nodeTag="dcx:quantityUnitDefs", 
+                              nodeTag="dcx:quantityUnitDefList", 
                               subNodeTag="dcx:quantityUnitDef",
-                              place_sheet_after="embeddedFiles")
+                              place_sheet_after="embeddedFileList")
         self.loadDCCMeasurementResults(heading=self.headings['measurementResultHeadings'])
 
+
+    def loadDccTableHeadings(self,
+                         nodeTag="dcx:statementList", 
+                         place_sheet_after='AdministrativeData' ): 
+        root = self.dccRoot
+        xsd_root = self.xsdRoot
+        ns = root.nsmap
+        wb = self.wb
+        colors = self.colors
+        langs = self.langs
+        numLangs = len(langs)
+
+        #%%
+        # insert the sheet if it is missing
+        nodeTag = "dcx:quantityUnitDefList"
+        shtName = nodeTag.replace('dcx:','')    # stratements
+        if not shtName in wb.sheet_names:
+            wb.sheets.add(shtName, after=place_sheet_after)
+        sht = wb.sheets[shtName]
+        node = root.find(".//"+nodeTag,ns) 
+
+        #%% 
+        
+        SECTION_HEADINGS = {'statementList':[],
+                    'equipmentList':[],
+                    'settingList':[],
+                    'measurementConfigList':[],
+                    'quantityUnitDefList':[],
+                    'embeddedFileList':[],
+                    'table':[],
+                    'column':[],
+                    }
+        #%% 
+        global SECTION_HEADINGS
+        for secTag in SECTION_HEADINGS.keys():
+            # build infoTable heading from schema dcx.xsd. 
+            secTypeTag = secTag.replace("List","") + "Type"
+            tblHeading, tblHeadingType = dcchf.getNamesAndTypes(xsd_root, secTypeTag, exclude_heading=False)
+            # insert selected languages
+            for k in ['heading', 'body']:
+                if k in tblHeading:
+                    i = tblHeading.index(k)
+                    tblHeading[i:i+1] = [f"{k}[{l}]" for l in langs]
+            SECTION_HEADINGS[secTag] = tblHeading
+        SECTION_HEADINGS['column'][1:1+1]=['dataCategory']
+        i = SECTION_HEADINGS['table'].index('column')
+        SECTION_HEADINGS['table'].pop(i)
+        
+        
+        for H in SECTION_HEADINGS.keys(): 
+            print(f"{H}:") 
+            for h in SECTION_HEADINGS[H]: print(f"\t{h}")
+        #  self.headings[shtName]
+
+        #%%
 
     def loadDccInfoTable(self, 
                          heading=['in DCC', '@category', '@statementId', 
@@ -265,7 +333,7 @@ class DccGuiTool():
 
 
         shtName = nodeTag.replace('dcx:','')    # stratements
-        subNodeAttrId = shtName[:-1]+'Id'        # statementId
+        # subNodeAttrId = shtName[:-1]+'Id'        # statementId
         if not shtName in wb.sheet_names:
             wb.sheets.add(shtName, after=place_sheet_after)
         sht = wb.sheets[shtName]
@@ -358,46 +426,46 @@ class DccGuiTool():
         rng.api.WrapText = True
         rng.columns
 
-        if shtName == "statements": 
+        if shtName == "statementList": 
             #Apply statement category validator to the statement@category column
             rng = sht.range("Table_"+shtName+"['@category]") 
             self.applyValidationToRange(rng, 'statementCategoryType')
-            statementIdRng = wb.sheets['statements'].range("Table_statements['@id]")
+            statementIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
             statementIdRng.name = "statementsIdRange"
         
-        if shtName == "equipment":
+        if shtName == "equipmentList":
             #Apply equipment category type validator to the equipment@category column
             rng = sht.range("Table_"+shtName+"['@category]")
             self.applyValidationToRange(rng, 'equipmentCategoryType')
             # Give a name to the equipmentId column
-            equipIdRng = wb.sheets['equipment'].range("Table_equipment['@id]")
+            equipIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
             equipIdRng.name = "equipIdRange"
         
-        if shtName == "settings":
+        if shtName == "settingList":
             #Apply equipmentId validator to the setting@refId column
             rng = sht.range("Table_"+shtName+"['@equipmentRef]")
             self.applyValidationToRange(rng, 'equipIdRange')
 
-        if shtName == 'measuringSystems': 
+        if shtName == 'measurementConfigList': 
             # Give a name to the measurementId column
             measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
-            measuringSysIdRng.name = "measuringSystemIdRange"
+            measuringSysIdRng.name = "measurementConfigIdRange"
             #Apply operationalStatus validator to the measuringSystems@operationalStatus column
             rng = sht.range("Table_"+shtName+"[operationalStatus]")
             self.applyValidationToRange(rng, 'operationalStatusType')
 
-        if shtName == "quantityUnitDefs":
+        if shtName == "quantityUnitDefList":
             #Apply equipmentId validator to the setting@refId column
             rng = sht.range("Table_"+shtName+"['@quantityCodeSystem]")
             self.applyValidationToRange(rng, 'quantityCodeSystemType')
             quIdRng = sht.range("Table_"+shtName+"['@id]") 
             quIdRng.name = "quantityUnitDefIdRange"
 
-        if shtName == 'embeddedFiles': 
+        if shtName == 'embeddedFileList': 
             # Give a name to the measurementId column
             measuringSysIdRng = sht.range("Table_"+shtName+"['@id]")
             measuringSysIdRng.name = "embeddedFilesIdRange"
-            rng = wb.sheets['statements'].range("Table_statements['@imageRefs]")
+            rng = wb.sheets['statementList'].range("Table_statementList['@imageRefs]")
             self.applyValidationToRange(rng, 'embeddedFilesIdRange')
         # Apply Validation
         # validatorMap= {'dcx:statements': }
@@ -437,23 +505,25 @@ class DccGuiTool():
         lang1 = 'en'
         lang2 = 'da'
 
-        measurementResults = root.find(".//dcx:measurementResults",ns) 
+        measurementResults = root.find(".//dcx:measurementResultList",ns) 
         print(measurementResults)
-        tableIds = [c.attrib["tableId"] for c in measurementResults.getchildren()]
+        idTag = 'tableId'
+        resultId = [c.attrib[idTag] for c in measurementResults.getchildren() if idTag in c.attrib]
+        resultNodes = [c for c in measurementResults.getchildren() if idTag in c.attrib]
         calibrationResults = measurementResults.findall("dcx:calibrationResult",ns)
-        calibResIds = [tbl.attrib['tableId'] for tbl in calibrationResults]
+        calibResIds = [tbl.attrib[idTag] for tbl in calibrationResults]
         measurementSeries = measurementResults.findall("dcx:measurementSeries",ns)
-        measSerIds = [tbl.attrib['tableId'] for tbl in measurementSeries]
+        measSerIds = [tbl.attrib[idTag] for tbl in measurementSeries]
 
-        for tableId in tableIds: 
+        for tableId in resultId: 
             if not tableId in wb.sheet_names:
                 wb.sheets.add(tableId, after=wb.sheet_names[-1])
-        sht = wb.sheets[tableIds[0]]
+        sht = wb.sheets[resultId[0]]
         sht.activate()
 
-        for tbl in measurementResults.getchildren(): 
+        for tbl in resultNodes: 
             tblType = dcchf.rev_ns_tag(tbl).split(':')[-1]
-            tableId = tbl.attrib['tableId']
+            tableId = tbl.attrib[idTag]
             # print(f"{tblId} : {tblCategoryType}")
             tabelHeadings = heading
                         
@@ -476,10 +546,10 @@ class DccGuiTool():
                     except KeyError:
                         rng.value = None
                     self.applyValidationToRange(rng,'serviceCategoryType')
-                elif h == '@measuringSystemRef': 
+                elif h == '@measurementConfigRef': 
                     rng = sht.range((idx,2))
-                    rng.value = tbl.attrib['measuringSystemRef']
-                    self.applyValidationToRange(rng, 'measuringSystemIdRange')
+                    rng.value = tbl.attrib['measurementConfigRef']
+                    self.applyValidationToRange(rng, 'measurementConfigIdRange')
                 elif h.startswith('heading['): 
                     rng = sht.range((idx,2))
                     rng.value = self.getHeadingOrBodyFromXlHeadingTag(tbl, h)
@@ -666,8 +736,7 @@ class DccGuiTool():
         langs = self.langs
         N = numLang = len(langs)
         hlangIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
-        dlangIdx = {extractHeadingLang(elm):i for i, elm in enumerate(heading) if elm.startswith('heading[')}
-
+        
         #%%
         # Prepare the administrativeData sheet 
         if not 'administrativeData' in wb.sheet_names:
@@ -686,6 +755,7 @@ class DccGuiTool():
         
         # Get data from the xml and write it to rowData 2D list
         # ---------------------------------------------------------------------
+        dlangIdx = {extractHeadingLang(elm):i for i, elm in enumerate(heading) if elm.startswith('heading[')}
         for rIdx, rowData in enumerate(xsdAdmStruct):
             # Sheet heading: (level, description, value, headings, xsdType, xPath)
             xsdType = rowData[-2]
@@ -737,14 +807,13 @@ class DccGuiTool():
         rng = sht.range((1,1)).expand() 
         rng.api.Borders.Weight = 2
 
-        wb.app.screen_updating = True
+        wb.app.screen_updating = False
 
         #%% set validator dropdowns in sheet
-        wb.app.screen_updating = False
-        for rIdx, rowData in enumerate(xsdAdmStruct):
+        for rIdx, rowData in enumerate(xsdAdmStruct, start=2):
             xsdType = rowData[-2]
             rng = sht.range((rIdx,3))
-            if xsdType == 'dcx:transactionContentType':
+            if xsdType == 'dcx:transactionContentFieldType':
                 self.applyValidationToRange(rng, 'transactionContentType')
             elif xsdType == 'dcx:dcx:performanceLocationFieldType':
                 self.applyValidationToRange(rng, 'performanceLocationType')
@@ -752,15 +821,8 @@ class DccGuiTool():
                 self.applyValidationToRange(rng, 'accreditationNormType')
             elif xsdType == 'dcx:stringISO3166FieldType':
                 self.applyValidationToRange(rng, 'stringISO3166Type')
-            elif xsdType == 'dcx:stringISO639FieldType':
-                self.applyValidationToRange(rng, 'stringISO639Type')
             elif xsdType == 'dcx:accreditationApplicabilityFieldType':
                 self.applyValidationToRange(rng, 'accreditationApplicabilityType')
-
-
-        #%% Set column widths in the sheet
-
-        # sht.autofit(axis="columns")
 
         wb.app.screen_updating = True
 
@@ -897,7 +959,7 @@ class DccGuiTool():
                         rng.value = value[0]
 
         
-        wb.app.screen_updating = True
+        # wb.app.screen_updating = True
         #%%
         # set cell colors of the contact and location table
         wb.app.screen_updating = False
@@ -921,6 +983,10 @@ class DccGuiTool():
                 rng.font.bold = setBold
                 rng.api.Borders.Weight = 2
                 
+        # set column widths
+        columnWidths = [4,25,23.33]+[26]*numConLocCols
+        for idx,width in enumerate(columnWidths):
+            sht.range((1,idx+1)).column_width = width
 
         # sht.range((rowIdx+i,2)).api.IndentLevel = rowData[0]
         wb.app.screen_updating = True
@@ -1272,7 +1338,8 @@ class MainApp(tk.Tk):
         dccFileName = 'Examples\\Stip-230063-V1.xml'
         dccFileName = 'Examples\\Template_TemperatureCal.xml'
         dccFileName = 'SKH_10112_2.xml'
-        #self.guiTool.loadDCCFile(dccFileName)
+        dccFileName = 'dcc-example.xml'
+        # self.guiTool.loadDCCFile(dccFileName)
         #self.label2.config(text=dccFileName)
         # self.loadDCCsequence()
         # exportToXmlFile('output.xml')

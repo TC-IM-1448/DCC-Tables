@@ -29,12 +29,12 @@ XSD_RESTRICTION_NAMES = [
                         'tableCategoryType',
                         'approachToTargetRestrictType',
                         'quantityCodeSystemType',
-                        'positionSystemType',
+                        'geoPositionSystemType',
                         'contactAndLocationColumnHeadingNamesType',
                         'statementColumnHeadingNamesType',
                         'equipmentColumnHeadingNamesType',
                         'settingColumnHeadingNamesType',
-                        'measurementSetupColumnHeadingNamesType',
+                        'measurementConfigColumnHeadingNamesType',
                         'quantityUnitDefsColumnHeadingNamesType',
                         ]
 # et.register_namespace("si", SI.strip('{}'))
@@ -391,12 +391,18 @@ def getNodePath(node: et._Element) -> str:
     """Returns the xpath of the element"""
     return node.getroottree().getpath(node)
 
-def getNamesAndTypes(xsd_root: et._Element ,typeName: str) -> Tuple[list, list]: 
+def getNamesAndTypes(xsd_root: et._Element ,
+                     typeName: str,
+                     exclude_heading = True) -> Tuple[list, list]: 
     """Extract data from schema regarding Type Element content names and types
       of elements and attribtues within the type element"""
     elements = xpath_query(xsd_root, f'.//*[@name="{typeName}"]/*/xs:element')
-    elementNames = [e.get('name') for e in elements if not e.get('name') == 'heading']
-    elementTypes = [e.get('type') for e in elements if not e.get('name') == 'heading']
+    if exclude_heading:
+        elementNames = [e.get('name') for e in elements if not e.get('name') == 'heading']
+        elementTypes = [e.get('type') for e in elements if not e.get('name') == 'heading']
+    else:
+        elementNames = [e.get('name') for e in elements]
+        elementTypes = [e.get('type') for e in elements]
     attributes = xpath_query(xsd_root, f'.//*[@name="{typeName}"]/xs:attribute')
     attributeNames = ['@'+e.get('name') for e in attributes]
     attributeTypes = [e.get('type') for e in attributes]

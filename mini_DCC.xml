@@ -229,10 +229,10 @@
             <dcx:value>5</dcx:value>
         </dcx:setting>
     </dcx:settingList>
-    <dcx:measurementSetupList>
+    <dcx:measurementConfigList>
         <dcx:heading lang="en">Measuring Systems Under Calibration</dcx:heading>
         <dcx:heading lang="da">Målesystemer</dcx:heading>
-        <dcx:measurementSetup id="ms1">
+        <dcx:measurementConfig id="ms1">
             <dcx:heading lang="en">Channel 1</dcx:heading>
             <dcx:heading lang="da">Kanal 1</dcx:heading>
             <dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
@@ -242,11 +242,11 @@
             <dcx:operationalStatus>as found</dcx:operationalStatus>
             <dcx:body lang="da">-</dcx:body>
             <dcx:body lang="en">-</dcx:body>
-        </dcx:measurementSetup>
-    </dcx:measurementSetupList>
+        </dcx:measurementConfig>
+    </dcx:measurementConfigList>
     <dcx:measurementResultList>
         <dcx:heading lang="en">Calibration and Measurement Results</dcx:heading>    
-        <dcx:calibrationResult tableId="calRes0" measurementSetupRef="ms1" serviceCategory="-" numRows='3' numCols='14'>
+        <dcx:calibrationResult tableId="calRes0" measurementConfigRef="ms1" serviceCategory="-" numRows='3' numCols='14'>
             <dcx:column dataCategoryRef="-" quantity="-" scope="-" unit="1">
                 <dcx:heading lang="en">Customer Tags</dcx:heading>
                 <dcx:heading lang="da">Kundens kode</dcx:heading>
@@ -267,7 +267,7 @@
             </dcx:column>
         </dcx:calibrationResult>
     </dcx:measurementResultList>
-    <dcx:quantityUnitDefs/>
+    <dcx:quantityUnitDefList/>
     <dcx:embeddedFiles>
       <dcx:embeddedFile id="logo.png">
           <dcx:fileExtension>png</dcx:fileExtension>

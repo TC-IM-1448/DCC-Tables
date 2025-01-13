@@ -36,7 +36,7 @@
     </xs:key>
     <xs:key name="PKsetting">
         <xs:selector xpath="dcx:settingList/dcx:setting"/>
-        <xs:field xpath="@settingId"/>
+        <xs:field xpath="@id"/>
     </xs:key>
     <xs:key name="PKstatement">
         <xs:selector xpath="dcx:statementList/dcx:statement"/>
@@ -102,8 +102,8 @@
                     <xs:field xpath="@customServiceCategory"/-->
                 </xs:unique>
             </xs:element>
-            <xs:element name="quantityUnitDefs" type="dcx:quantityUnitDefListType" minOccurs="0"/>
-            <xs:element name="embeddedFiles" type="dcx:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="quantityUnitDefList" type="dcx:quantityUnitDefListType" minOccurs="0"/>
+            <xs:element name="embeddedFileList" type="dcx:embeddedFileListType" maxOccurs="1" minOccurs="0"/>
             <xs:element name="codeableElementsAnnex" type="dcx:anyType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="schemaVersion" use="required">
@@ -934,9 +934,9 @@
             <xs:element name="prevCertId" type="xs:string" minOccurs="0"/> 
             <xs:element name="prevCertProviderName" type="xs:string" minOccurs="0"/> 
         </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="category"  type="dcx:equipmentCategoryType" use="required"/>
         <xs:attribute name="statementRef" type="xs:IDREF" use="optional"/>
-        <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="equipmentCategoryType">
@@ -1031,7 +1031,7 @@
             <xs:element name="softwareInstruction" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="statementRef" type="xs:IDREF" minOccurs="0"/>		
         </xs:sequence>
-        <xs:attribute name="settingId" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
         <xs:attribute name="equipmentRef" type="xs:IDREF" use="required"/>
     </xs:complexType>
     
@@ -1058,7 +1058,7 @@
             </xs:documentation>
         </xs:annotation>
             <xs:restriction base="xs:string">
-                <xs:enumeration value="@settingId" /> 
+                <xs:enumeration value="@id" /> 
                 <xs:enumeration value="@equipmentRef" /> 
                 <xs:enumeration value="heading" /> 
                 <xs:enumeration value="body" /> 
@@ -1157,7 +1157,7 @@
             <xs:restriction base="xs:string">
                 <xs:enumeration value="@id" /> 
                 <xs:enumeration value="heading" /> 
-                <xs:enumeration value="deviceForMeasuremmentRefs" /> 
+                <xs:enumeration value="deviceForMeasurementRefs" /> 
                 <xs:enumeration value="settingRefs" /> 
                 <xs:enumeration value="referenceRefs" /> 
                 <xs:enumeration value="statementRefs" />
@@ -1308,11 +1308,11 @@
         </xs:sequence>
 		<xs:attribute name="tableId" type="xs:ID" use="required"/>
 		<xs:attribute name="measurementConfigRef" type="xs:IDREF" use="required"/>
-		<xs:attribute name="numRows" type="xs:int" use="required"/>
-		<xs:attribute name="numCols" type="xs:int" use="required"/>
 		<xs:attribute name="serviceCategory" type="xs:string" use="optional"/>
 		<xs:attribute name="statementRefs" type="xs:IDREFS" use="optional"/>		
         <xs:attribute name="embeddedFileRefs" type="xs:IDREFS" use="optional" />
+		<xs:attribute name="numRows" type="xs:int" use="required"/>
+		<xs:attribute name="numCols" type="xs:int" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="tableCategoryType">
@@ -1471,7 +1471,7 @@
         <xs:attribute name="quantity" type="dcx:quantityType" use="required"/>
         <xs:attribute name="unit" type="dcx:unitType" use="required"/>
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
-		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
+		<!-- <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/> -->
     </xs:complexType>
 
     
