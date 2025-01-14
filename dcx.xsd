@@ -1257,7 +1257,7 @@
                         <xs:sequence>
                             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
                         </xs:sequence>
-                        <xs:attribute name="name" type="dcx:quantityUnitDefsColumnHeadingNamesType" use="required"/>
+                        <xs:attribute name="name" type="dcx:quantityUnitDefColumnHeadingNamesType" use="required"/>
                     </xs:complexType>
                     <xs:unique name="uniqueLanguageQUDefs">
                         <xs:selector xpath="dcx:heading"/>
@@ -1267,7 +1267,7 @@
             </xs:sequence>
         </xs:complexType>
     
-        <xs:simpleType name="quantityUnitDefsColumnHeadingNamesType">
+        <xs:simpleType name="quantityUnitDefColumnHeadingNamesType">
             <xs:annotation>
                 <xs:documentation>
                 </xs:documentation>
@@ -1350,10 +1350,10 @@
                 </xs:complexType>
                 <xs:unique name="column">
                     <xs:selector xpath="dcx:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
                     <xs:field xpath="@unit"/>
+                    <xs:field xpath="@dataCategoryRef"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="*/@dataCategory"/>
                 </xs:unique>
@@ -1368,10 +1368,10 @@
                 </xs:complexType>
                 <xs:unique name="dataFittingColumn">
                     <xs:selector xpath="dcx:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
                     <xs:field xpath="@unit"/>
+                    <xs:field xpath="@dataCategoryRef"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="*/@dataCategory"/>
                 </xs:unique>
@@ -1386,10 +1386,10 @@
                 </xs:complexType>
                 <xs:unique name="calibrationCurveColumn">
                     <xs:selector xpath="dcx:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
                     <xs:field xpath="@unit"/>
+                    <xs:field xpath="@dataCategoryRef"/>
 					<xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="*/@dataCategory"/>
                 </xs:unique>
@@ -1404,10 +1404,10 @@
                 </xs:complexType>
                 <xs:unique name="measSerDataColumn">
                     <xs:selector xpath="dcx:column"/>
-                    <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@scope"/>
                     <xs:field xpath="@quantity"/>
                     <xs:field xpath="@unit"/>
+                    <xs:field xpath="@dataCategoryRef"/>
                     <xs:field xpath="@quantityUnitDefRef"/>
                     <xs:field xpath="*/@dataCategory"/>
                 </xs:unique>
@@ -1471,7 +1471,7 @@
         <xs:attribute name="quantity" type="dcx:quantityType" use="required"/>
         <xs:attribute name="unit" type="dcx:unitType" use="required"/>
 		<xs:attribute name="quantityUnitDefRef" type="xs:IDREF" use="optional" default="NULL"/>
-		<!-- <xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/> -->
+		<xs:attribute name="settingRef" type="xs:IDREFS" use="optional"/>
     </xs:complexType>
 
     

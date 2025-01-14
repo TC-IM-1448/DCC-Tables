@@ -28,6 +28,7 @@ DCC='{https://dfm.dk}'
 
 xlValidateList = xw.constants.DVType.xlValidateList
 
+
 SECTION_HEADINGS = {'statementList':[],
                     'equipmentList':[],
                     'settingList':[],
@@ -36,80 +37,85 @@ SECTION_HEADINGS = {'statementList':[],
                     'embeddedFileList':[],
                     'table':[],
                     'column':[],
+                    'administrativeData':[],
+                    'contactAndLocation':[],
+                    'address':[],
+                    'contactInfo':[],
+                    'geoPosition':[],
                     }
 
-HEADINGS = dict(statementHeadings = ['in DCC', 
-                                     '@id', 
-                                     '@category', 
+HEADINGS = dict(statementList = ['in DCC', 
+                                    '@id', 
+                                    '@category', 
                                     '@imageRefs',
                                     'heading[1]',  
                                     'body[1]', 
                                     'externalReference'],
 
-    equipmentHeadings = ['in DCC', '@id', '@statementRef', '@category',
-                            'heading[1]', 'manufacturer', 'modelName', 'modelNumber', 
-                            'serialNumber', 'lotNumber', 'productClass',
-                            'clientId', 'serviceProviderId',
-                            'prevCalibDate','calibDueDate', 'prevCertId', 'prevCertProviderName',
-                            ],
-
-    settingsHeadings = ['in DCC', '@id', '@equipmentRef', 
-                        'parameter', 'value', 'unit', 'softwareInstruction', 
-                        'heading[1]', 'body[1]', #'statementRefs',
+    equipmentList = ['in DCC', '@id', '@statementRef', '@category',
+                        'heading[1]', 'manufacturer', 'modelName', 'modelNumber', 
+                        'serialNumber', 'lotNumber', 'productClass',
+                        'clientId', 'serviceProviderId',
+                        'prevCalibDate','calibDueDate', 'prevCertId', 'prevCertProviderName',
                         ],
 
-    measurementConfigHeadings = ['in DCC', '@id', 
+    settingList = [ 'in DCC', '@id', '@equipmentRef', 
+                    'parameter', 'value', 'unit', 'softwareInstruction', 
+                    'heading[1]', 'body[1]', #'statementRefs',
+                    ],
+
+    measurementConfigList = [   'in DCC', '@id', 
                                 'heading[1]', 
                                 'equipmentRefs', 'settingRefs', 'statementRefs',
                                 'operationalStatus',
                                 'body[1]', 
                                 ], 
 
-    embeddedFilesHeadings = ['in DCC', '@id', 
-                             'heading[1]',
-                             'body[1]',
-                             'fileExtension'],
+    embeddedFileList = ['in DCC', '@id', 
+                        'heading[1]',
+                        'body[1]',
+                        'fileExtension'],
 
-    quantityUnitDefsHeadings = ['in DCC', 
-                                '@id',
-                                '@quantityCodeSystem',
-                                'quantityCode',
-                                'unitUsed',
-                                'functionToSIunit',
-                                'unitSI',
-                                'externalRefs',
-                                'heading[1]',
-                                '@statementRefs'],
+    quantityUnitDefList = [ 'in DCC', 
+                            '@id',
+                            '@quantityCodeSystem',
+                            'quantityCode',
+                            'unitUsed',
+                            'functionToSIunit',
+                            'unitSI',
+                            'externalRefs',
+                            'heading[1]',
+                            '@statementRefs'],
 
-    administrativeDataHeadings = [  "level", 
-                                    "description",
-                                    "@value", 
-                                    "heading[1]",  
-                                    "xsdType",
-                                    "xPath"], 
+    administrativeData = [  "level", 
+                            "description",
+                            "@value", 
+                            "heading[1]",  
+                            "xsdType",
+                            "xPath"], 
 
-    measurementResultHeadings = [   'tableCategory', 
-                                    '@tableId', 
-                                    '@serviceCategory', 
-                                    '@measurementConfigRef', 
-                                    '@customServiceCategory', 
-                                    '@statementRefs',
-                                    '@embeddedFileRefs',
-                                    'heading[1]', 
-                                    'conformityStatus', 
-                                    'conformityStatusRef',
-                                    '@numRows', 
-                                    '@numCols'], 
+    table = [   'tableCategory', 
+                '@tableId', 
+                '@serviceCategory', 
+                '@measurementConfigRef', 
+                '@customServiceCategory', 
+                '@statementRefs',
+                '@embeddedFileRefs',
+                'heading[1]', 
+                'conformityStatus', 
+                'conformityStatusRef',
+                '@numRows', 
+                '@numCols'], 
 
-    columnHeading = ['scope', 
-                     'dataCategory', 
-                     'dataCategoryRef', 
-                     'quantity', 
-                     'unit', 
-                     'quantityUnitDefRef', 
-                     'equipmentRef', 
-                     'heading[1]', 
-                     'idx']
+    column = [  'scope', 
+                'dataCategory', 
+                'dataCategoryRef', 
+                'quantity', 
+                'unit', 
+                'quantityUnitDefRef', 
+                'equipmentRef', 
+                'heading[1]', 
+                'idx']
     )
 
 
@@ -167,7 +173,8 @@ class DccGuiTool():
         self.loadSchemaRestrictions()
         langs = dcchf.get_languages(self.dccRoot)
         self.chooseLanguages(langs + ['---']+self.xsdRestrictions['stringISO639Type'])
-        self.updateHeadingLanguages(self.langs)
+        # self.updateHeadingLanguages(self.langs)
+        self.loadXSDTableHeadings()
         self.loadDccSequence()
         return errors
 
@@ -196,6 +203,7 @@ class DccGuiTool():
         app.wait_window(languageDialog.top)
 
     def updateHeadingLanguages(self, langs):
+        """ DBH: Probably obsolete function now. """
         global HEADINGS
         headings = {}
         for k,v in HEADINGS.items():
@@ -229,91 +237,86 @@ class DccGuiTool():
 
     def loadDccSequence(self):
         self.loadDCCAdministrativeInformation(after='Definitions',
-                                              heading=self.headings['administrativeDataHeadings']
+                                              heading=self.headings['administrativeData']
                                               )
         
-        self.loadDccInfoTable(heading = self.headings['statementHeadings'], 
+        self.loadDccInfoTable(heading = self.headings['statementList'], 
                                 nodeTag="dcx:statementList",
                                 subNodeTag="dcx:statement",
                                 place_sheet_after='AdministrativeData')
         
-        self.loadDccInfoTable(heading = self.headings['equipmentHeadings'], 
+        self.loadDccInfoTable(heading = self.headings['equipmentList'], 
                                 nodeTag="dcx:equipmentList", 
                                 subNodeTag="dcx:equipment",
                                 place_sheet_after='statementList')
         
-        self.loadDccInfoTable( heading = self.headings['settingsHeadings'], 
+        self.loadDccInfoTable( heading = self.headings['settingList'], 
                                 nodeTag="dcx:settingList", 
                                 subNodeTag="dcx:setting",
                                 place_sheet_after='equipmentList')
-        self.loadDccInfoTable( heading = self.headings['measurementConfigHeadings'], 
+        
+        self.loadDccInfoTable( heading = self.headings['measurementConfigList'], 
                                 nodeTag="dcx:measurementConfigList", 
                                 subNodeTag="dcx:measurementConfig",
                                 place_sheet_after='settingList')
-        self.loadDccInfoTable( heading = self.headings['embeddedFilesHeadings'], 
+        
+        self.loadDccInfoTable( heading = self.headings['embeddedFileList'], 
                                 nodeTag="dcx:embeddedFileList", 
                                 subNodeTag="dcx:embeddedFile",
                                 place_sheet_after='measurementConfigList')
-        self.loadDccInfoTable(heading=self.headings['quantityUnitDefsHeadings'],
+        
+        self.loadDccInfoTable(heading=self.headings['quantityUnitDefList'],
                               nodeTag="dcx:quantityUnitDefList", 
                               subNodeTag="dcx:quantityUnitDef",
                               place_sheet_after="embeddedFileList")
-        self.loadDCCMeasurementResults(heading=self.headings['measurementResultHeadings'])
-
-
-    def loadDccTableHeadings(self,
-                         nodeTag="dcx:statementList", 
-                         place_sheet_after='AdministrativeData' ): 
-        root = self.dccRoot
-        xsd_root = self.xsdRoot
-        ns = root.nsmap
-        wb = self.wb
-        colors = self.colors
-        langs = self.langs
-        numLangs = len(langs)
-
-        #%%
-        # insert the sheet if it is missing
-        nodeTag = "dcx:quantityUnitDefList"
-        shtName = nodeTag.replace('dcx:','')    # stratements
-        if not shtName in wb.sheet_names:
-            wb.sheets.add(shtName, after=place_sheet_after)
-        sht = wb.sheets[shtName]
-        node = root.find(".//"+nodeTag,ns) 
-
-        #%% 
         
-        SECTION_HEADINGS = {'statementList':[],
-                    'equipmentList':[],
-                    'settingList':[],
-                    'measurementConfigList':[],
-                    'quantityUnitDefList':[],
-                    'embeddedFileList':[],
-                    'table':[],
-                    'column':[],
-                    }
+        self.loadDCCMeasurementResults(heading=self.headings['table'])
+
+
+    def loadXSDTableHeadings(self):
+        xsd_root = self.xsdRoot
+        langs = self.langs
+       
         #%% 
         global SECTION_HEADINGS
-        for secTag in SECTION_HEADINGS.keys():
-            # build infoTable heading from schema dcx.xsd. 
+        headings = SECTION_HEADINGS.copy()
+        for secTag in headings.keys():
+            # build infoTable heading from schema dcx.xsd.
             secTypeTag = secTag.replace("List","") + "Type"
             tblHeading, tblHeadingType = dcchf.getNamesAndTypes(xsd_root, secTypeTag, exclude_heading=False)
+            if secTag == "administrativeData":
+                 tblHeading = [ "level", 
+                                "description",
+                                "@value",
+                                "heading",
+                                "xsdType",
+                                "xPath"]
             # insert selected languages
             for k in ['heading', 'body']:
                 if k in tblHeading:
                     i = tblHeading.index(k)
                     tblHeading[i:i+1] = [f"{k}[{l}]" for l in langs]
-            SECTION_HEADINGS[secTag] = tblHeading
-        SECTION_HEADINGS['column'][1:1+1]=['dataCategory']
-        i = SECTION_HEADINGS['table'].index('column')
-        SECTION_HEADINGS['table'].pop(i)
-        
-        
-        for H in SECTION_HEADINGS.keys(): 
-            print(f"{H}:") 
-            for h in SECTION_HEADINGS[H]: print(f"\t{h}")
-        #  self.headings[shtName]
+            # insert column for selecting rows to export. 
+            if "List" in secTag:
+                tblHeading[0:0] = ['in xml']
+            
+            headings[secTag] = tblHeading
 
+        # Customize particular headings. 
+        headings['column'][1:1]=['dataCategory']
+        i = headings['table'].index('column')
+        headings['table'].pop(i)
+        headings['embeddedFileList'].pop(-1)
+        self.headings = headings
+         
+        HEADINGS = headings.copy()
+
+
+        # print the constructed dictionary 
+        for H in headings.keys(): 
+            print(f"{H}:") 
+            for h in headings[H]: print(f"\t{h}")
+        
         #%%
 
     def loadDccInfoTable(self, 
@@ -328,11 +331,10 @@ class DccGuiTool():
         wb = self.wb
         langs = self.langs
         N = len(self.langs)
-        lang1 = 'da'
-        lang2 = 'en'
 
 
-        shtName = nodeTag.replace('dcx:','')    # stratements
+        # insert the sheet if it is missing
+        shtName = nodeTag.replace('dcx:','')    # statementList, equipmentList, ...
         # subNodeAttrId = shtName[:-1]+'Id'        # statementId
         if not shtName in wb.sheet_names:
             wb.sheets.add(shtName, after=place_sheet_after)
@@ -340,16 +342,28 @@ class DccGuiTool():
         node = root.find(".//"+nodeTag,ns) 
 
         # Write the Sheet headings
-        sht.range((1,1)).value = [[f'heading[{lang}]'] for lang in self.langs]
+        sht.range((1,1)).value = [[f'heading[{lang}]'] for lang in langs]
         nodeHeadings = node.findall("dcx:heading",ns)
         for h in nodeHeadings:
             lang = h.attrib['lang']
-            if lang in self.langs: 
-                sht.range((self.langs.index(lang)+1,2)).value = h.text
+            if lang in langs: 
+                sht.range((langs.index(lang)+1,2)).value = h.text
+    
+        rng = sht.range((1,1),(N,1))
+        rng.api.Borders.Weight = 2
+        rng.color = self.colors['gray']
+        rng = sht.range((1,2),(N,2))
+        rng.api.Borders.Weight = 2
+        rng.color = self.colors['blue']
+        rng.font.bold = True
+
+
+
+        #%%
             
         # Write the table column headings and set column widths
         
-        tblRowIdx = len(self.langs)+1
+        tblRowIdx = len(langs)*2+1
         sht.range((tblRowIdx,1)).value = heading
         sht.range((1,1),(N,len(heading))).columns.autofit()
 
@@ -360,10 +374,38 @@ class DccGuiTool():
         for i in bIdxs:
             sht.range((1,i+1)).column_width = 50
 
+        # Write human-readable column headings. 
+        #%%
+        if "List" in shtName: 
+            headings = self.headings
+            langs = self.langs
+            tblHeadings = headings[shtName]
+            n = len(tblHeadings)
+            humanHeadings = [[None]*n]*len(langs)
+            node = root.find(".//dcx:"+shtName,root.nsmap)
+            nodeColHead =  dcchf.xpath_query(node, "./dcx:columnHeadings")
+            if len(nodeColHead):
+                nodeColHead = nodeColHead[0]
+                for i,h in enumerate(tblHeadings):
+                    for j,l in enumerate(langs):
+                        n = nodeColHead.find(f".//*[@name='{h}']/*[@lang='{l}']")
+                        if not n is None:
+                            humanHeadings[j][i] = n.text
+                print(humanHeadings)
+            
+            sht.range((N+1,2)).value = humanHeadings
+            rng = sht.range((N+1,2),(N*2,len(tblHeadings)))
+            rng.api.Borders.Weight = 2
+            rng.color = self.colors['light_blue']
+            
+            rng = sht.range((N+1,1),(N*2,1))
+            rng.api.Borders.Weight = 2
+            rng.color = self.colors['light_gray']
+            rng.value = [[f"colHead[{l}]"] for l in langs]
+
         # load the information into the table
         tableData = []
         rows = node.findall(subNodeTag,ns)
-        issuerIdMap = {'client_id':'client', 'manufact_id': 'manufacturer', 'calLab_id': 'serviceProvider'}
         for idx, subNode in enumerate(rows):
             rowData = []
             for i, h in enumerate(heading):
@@ -379,20 +421,7 @@ class DccGuiTool():
                     rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subNode, h))
                 elif h.startswith('body['):
                     rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subNode, h))
-                elif nodeTag == "dcx:equipment" and any([x in issuerIdMap.keys() for x in h.split()]):  # For parsing equipment identifications
-                    who, what = h.split(' ')
-                    issuer = issuerIdMap[who]
-                    subSubNode = subNode.find(f'dcx:identification[@issuer="{issuer}"]', ns)
-                    if subSubNode is None: 
-                        rowData.append(None)
-                    elif what == 'value': 
-                        # print('subnode: ',subSubNode.attrib['issuer'])
-                        rowData.append(subSubNode.find('./dcx:value', ns).text)
-                    elif what.startswith('heading') or what.startswith('body'): 
-                        rowData.append(self.getHeadingOrBodyFromXlHeadingTag(subSubNode, what))
-                    else:
-                        rowData.append(None)
-                elif nodeTag == "dcx:quantityUnitDefs" and h.find("unit") >= 0: 
+                elif nodeTag == "dcx:quantityUnitDefList" and h.find("unit") >= 0: 
                     nodes =  subNode.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: rowData.append("'"+nodes[0].text)
                     else: rowData.append(None)
@@ -401,11 +430,13 @@ class DccGuiTool():
                     if len(nodes)>0: rowData.append(nodes[0].text)
                     else: rowData.append(None)
                 if nodeTag == "dcx:embeddedFiles" and h=="@id": 
+                    # save the embedded file to temporary folder. 
                     fileId = subNode.attrib[h.strip('@')]
                     filePath = self.embeddedFilesPath+fileId
                     fileData = subNode.find("dcx:fileContent", ns).text
                     fileIsSaved = self.saveEmbeddedFileToFolder(filePath, fileData)
                     cidx = len(heading)+1
+                    # show the file in the sheet if the files is an image. 
                     if fileId.split('.')[-1].lower() in ['png', 'emf', 'jpg'] and fileIsSaved:
                         sht.pictures.add(filePath, name=fileId, anchor=sht.range((4+idx,1+cidx+idx)))
                     sht.range((tblRowIdx+1+idx,cidx)).value = filePath
@@ -445,6 +476,8 @@ class DccGuiTool():
             #Apply equipmentId validator to the setting@refId column
             rng = sht.range("Table_"+shtName+"['@equipmentRef]")
             self.applyValidationToRange(rng, 'equipIdRange')
+            settingIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
+            settingIdRng.name = "settingIdRange"
 
         if shtName == 'measurementConfigList': 
             # Give a name to the measurementId column
@@ -456,7 +489,7 @@ class DccGuiTool():
 
         if shtName == "quantityUnitDefList":
             #Apply equipmentId validator to the setting@refId column
-            rng = sht.range("Table_"+shtName+"['@quantityCodeSystem]")
+            rng = sht.range("Table_"+shtName+"['quantityCodeSystem]")
             self.applyValidationToRange(rng, 'quantityCodeSystemType')
             quIdRng = sht.range("Table_"+shtName+"['@id]") 
             quIdRng.name = "quantityUnitDefIdRange"
@@ -539,13 +572,13 @@ class DccGuiTool():
                     rng = sht.range((idx,2))
                     rng.value = tblType
                     self.applyValidationToRange(rng, 'tableCategoryType')
-                elif h == '@serviceCategory':
-                    rng = sht.range((idx,2))
-                    try:
-                        rng.value = tbl.attrib['serviceCategory']
-                    except KeyError:
-                        rng.value = None
-                    self.applyValidationToRange(rng,'serviceCategoryType')
+                # elif h == '@serviceCategory':
+                #     rng = sht.range((idx,2))
+                #     try:
+                #         rng.value = tbl.attrib['serviceCategory']
+                #     except KeyError:
+                #         rng.value = None
+                #     self.applyValidationToRange(rng,'serviceCategoryType')
                 elif h == '@measurementConfigRef': 
                     rng = sht.range((idx,2))
                     rng.value = tbl.attrib['measurementConfigRef']
@@ -578,16 +611,18 @@ class DccGuiTool():
             numCols = int(tbl.attrib['numCols'])
 
             # Now load the columns
+            #----------------------------------
             columns = tbl.findall("dcx:column", ns)
-            columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
-            columnHeading = self.headings['columnHeading']
-            headingColorDefs = {'scope': 'yellow',
+            # columnHeading = ['scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'heading[1]', 'heading[2]', 'idx']
+            columnHeading = self.headings['column']
+            print(columnHeading)
+            headingColorDefs = {'@scope': 'yellow',
                                  'dataCategory': 'yellow', 
-                                 'dataCategoryRef': 'light_yellow',
-                                 'quantity': 'green',
-                                 'unit': 'green', 
-                                 'quantityUnitDefRef': 'light_green', 
-                                 'equipmentRef': 'blue', 
+                                 '@quantity': 'green',
+                                 '@unit': 'green', 
+                                 '@dataCategoryRef': 'light_yellow',
+                                 '@quantityUnitDefRef': 'light_green', 
+                                 '@settingRef': 'blue', 
                                  'heading': 'light_blue', 
                                  'idx': 'light_gray'
                                  }
@@ -607,7 +642,7 @@ class DccGuiTool():
                 # insert the metadata heading attribute values
                 cIdx = colIdx + 2
                 for k, a in col.attrib.items():
-                    rowIdx = colInitRowIdx + columnHeading.index(k)
+                    rowIdx = colInitRowIdx + columnHeading.index("@"+k)
                     sht.range((rowIdx,cIdx)).value = "'"+a 
 
                 # insert the dataCategory. 
@@ -655,7 +690,7 @@ class DccGuiTool():
                 idx = colInitRowIdx + i
                 rng = sht.range((idx,2)).expand('right')
                 rng.api.Validation.Delete()
-                formula = columnHeading[i] if not columnHeading[i][-3:] == "Ref" else 'dataCategory'
+                formula = columnHeading[i].strip('@') if not columnHeading[i][-3:] == "Ref" else 'dataCategory'
                 formula = '='+formula+'Type'
                 rng.api.Validation.Add(Type=xlValidateList, Formula1=formula) 
 
@@ -665,7 +700,7 @@ class DccGuiTool():
 
             rng = sht.range((colInitRowIdx+6,2),(colInitRowIdx+6,numCols+2))
             rng.api.Validation.Delete()
-            rng.api.Validation.Add(Type=xlValidateList, Formula1="=equipIdRange")
+            rng.api.Validation.Add(Type=xlValidateList, Formula1="=settingIdRange")
 
             
             # Set the column widths
@@ -735,7 +770,8 @@ class DccGuiTool():
         colors = self.colors
         langs = self.langs
         N = numLang = len(langs)
-        hlangIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading[')]
+        heading = self.headings['administrativeData']
+        hlangIdx = [i for i, elm in enumerate(heading) if elm.startswith('heading')]
         
         #%%
         # Prepare the administrativeData sheet 
@@ -1255,7 +1291,7 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     numRows = int(parentNode.attrib['numRows'])
     # print('numRows = ', numRows)
     global dccGuiTool
-    colHeading = dccGuiTool.headings['columnHeading']
+    colHeading = dccGuiTool.headings['column']
     dataInitRowIdx = rowInitIdx+len(colHeading)-1
     colAttrRange = tblSheet.range((rowInitIdx,colIdx),(dataInitRowIdx, colIdx))
     colAttrNameRange = tblSheet.range((rowInitIdx,1),(dataInitRowIdx, 1)) 

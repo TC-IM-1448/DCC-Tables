@@ -35,7 +35,7 @@ XSD_RESTRICTION_NAMES = [
                         'equipmentColumnHeadingNamesType',
                         'settingColumnHeadingNamesType',
                         'measurementConfigColumnHeadingNamesType',
-                        'quantityUnitDefsColumnHeadingNamesType',
+                        'quantityUnitDefColumnHeadingNamesType',
                         ]
 # et.register_namespace("si", SI.strip('{}'))
 # et.register_namespace("dcc", DCC.strip('{}'))
