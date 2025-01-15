@@ -611,7 +611,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0"/>
+            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="authorizingPerson" type="dcx:responsiblePersonType" minOccurs="1"/>
             <xs:element name="coSigner" type="dcx:responsiblePersonType" minOccurs="0"/>
             <xs:element name="coSigner2" type="dcx:responsiblePersonType" minOccurs="0"/>
