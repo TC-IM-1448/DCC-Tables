@@ -14,7 +14,7 @@
 				<dcx:heading lang="en">Order number</dcx:heading>
 				<dcx:heading lang="da">Ordrenummer</dcx:heading>
 			</dcx:clientTaskIdentifier>
-			<dcx:devicesForMeasurement value="item1"></dcx:devicesForMeasurement>
+			<dcx:devicesForMeasurement value="item1 item2 item3"></dcx:devicesForMeasurement>
 			<dcx:issueDate value="2023-05-12"/>
 			<dcx:beginPerformanceDate value="2023-05-02"/>
 			<dcx:endPerformanceDate value="2023-05-02"/>
@@ -52,13 +52,21 @@
 					<dcx:name value="Arnold Techna"></dcx:name>
 				</dcx:coSigner>
 		</dcx:documentAuthorization>
+		<dcx:contactColumnHeadings>
+			<dcx:column name="address">
+				<dcx:heading lang="en">Address</dcx:heading>
+				<dcx:heading lang="da">Addresse</dcx:heading>
+			</dcx:column>
+			<dcx:column name="contactInfo">
+				<dcx:heading lang="en">Contact info</dcx:heading>
+				<dcx:heading lang="da">Kontaktinformation</dcx:heading>
+			</dcx:column>
+		</dcx:contactColumnHeadings>
 		<dcx:client>
 			<dcx:heading lang="en">Customer</dcx:heading>
 			<dcx:heading lang="da">Kunde</dcx:heading>
 			<dcx:name>Novo Nordisk A/S</dcx:name>
 			<dcx:address>
-				<!--dcx:heading lang="en">Address</dcx:heading>
-				<dcx:heading lang="da">Addresse</dcx:heading-->
 				<dcx:city>Hillerød</dcx:city>
 				<dcx:country>DK</dcx:country>
 				<dcx:postalCode>3400</dcx:postalCode>
@@ -66,8 +74,6 @@
 				<dcx:streetNo>-</dcx:streetNo>
 			</dcx:address>
 			<dcx:contactInfo>
-				<!--dcx:heading lang="en">Contact person</dcx:heading>
-				<dcx:heading lang="da">Kontaktperson</dcx:heading-->
 				<dcx:attPerson>-</dcx:attPerson>
 				<dcx:email>-</dcx:email>
 				<dcx:phone>-</dcx:phone>
@@ -78,8 +84,6 @@
 			<dcx:heading lang="da">Kalibreringslaboratorium</dcx:heading>
 			<dcx:name>Dummy Metrology Lab GmBL</dcx:name>
 			<dcx:address>
-				<!--dcx:heading lang="en"> Address </dcx:heading>
-				<dcx:heading lang="da">Addresse</dcx:heading-->
 				<dcx:city>Metrology road</dcx:city>
 				<dcx:country>DK</dcx:country>
 				<dcx:postalCode>2970</dcx:postalCode>
@@ -87,8 +91,6 @@
 				<dcx:streetNo>15A</dcx:streetNo>
 			</dcx:address>
 			<dcx:contactInfo>
-				<!--dcx:heading lang="en">Contact info</dcx:heading>
-				<dcx:heading lang="da">Kontaktinformation</dcx:heading-->
 				<dcx:email>info@dummymet.dk</dcx:email>
 				<dcx:phone>+45 25459026</dcx:phone>
 			</dcx:contactInfo>
@@ -164,11 +166,8 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 			<dcx:heading lang="da">Temperature sensor</dcx:heading>
 			<dcx:heading lang="en">Temperatursensor</dcx:heading>
 			<dcx:serialNumber>
-				<!--dcx:heading lang="en">Serial number</dcx:heading>
-				<dcx:heading lang="da">Serienummer</dcx:heading-->
 				X34hwk4579
 			</dcx:serialNumber><dcx:clientId>1695550</dcx:clientId>
-			
 		</dcx:equipment>
 		<dcx:equipment id="item2" category="deviceForMeasurement">
 			<dcx:heading lang="da">display unit</dcx:heading>
@@ -177,7 +176,7 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 			<dcx:clientId>NN13</dcx:clientId>
 		</dcx:equipment>
 		<dcx:equipment id="item3" category="deviceForMeasurement">
-			<dcx:heading lang="da">another display unit</dcx:heading>
+			<dcx:heading lang="da">Another display unit</dcx:heading>
 			<dcx:heading lang="en">Ekstra visningsenhed</dcx:heading>
 			<dcx:serialNumber>lqmdu2498710</dcx:serialNumber>
 			<dcx:clientId>NN14</dcx:clientId>
@@ -186,12 +185,27 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 			<dcx:heading lang="da">Reference</dcx:heading>
 			<dcx:heading lang="en">Standard</dcx:heading>
 			<dcx:serialNumber>245</dcx:serialNumber>
-			<dcx:serviceProviderId>
-				<!--dcx:heading lang="en">Cal Lab Id</dcx:heading>
-				<dcx:heading lang="da">Kal lab id</dcx:heading-->
-				TN-0439
-			</dcx:serviceProviderId>
+			<dcx:serviceProviderId>TN-0439</dcx:serviceProviderId>
 		</dcx:equipment>
+		<dcx:columnHeadings>
+			<dcx:column name="heading">
+				<dcx:heading lang="en">Device description</dcx:heading>
+				<dcx:heading lang="da">Udstyrsbeskrivelse</dcx:heading>
+			</dcx:column>
+			<dcx:column name="serialNumber">
+				<dcx:heading lang="en">Serial number</dcx:heading>
+				<dcx:heading lang="da">Serienummer</dcx:heading>
+			</dcx:column>
+			<dcx:column name="clientId">
+				<dcx:heading lang="en">Client Id</dcx:heading>
+				<dcx:heading lang="da">Kundens id</dcx:heading>
+			</dcx:column>
+			<dcx:column name="serviceProviderId">
+				<dcx:heading lang="en">Cal Lab Id</dcx:heading>
+				<dcx:heading lang="da">Kal lab id</dcx:heading>
+			</dcx:column>
+		
+		</dcx:columnHeadings>
 	</dcx:equipmentList>
 	<dcx:settingList>
 		<dcx:heading lang="da">Indstillinger</dcx:heading>
