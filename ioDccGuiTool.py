@@ -5,7 +5,7 @@
 # https://docs.xlwings.org/en/stable/syntax_overview.html 
 # https://docs.xlwings.org/en/latest/ 
 
-__ver__ = "DCC-EXCEL-GUI v. 0.0.3"
+__ver__ = "v0.0.3"
 
 import os
 import re
@@ -166,14 +166,30 @@ class DccGuiTool():
         
     def loadDCCFile(self, xmlFileName="dcc-example.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
+        self.schemaVersion = self.dccRoot.attrib['schemaVersion']
         errors = dcchf.validate(xmlFileName, 'dcx.xsd')    
+        langs = dcchf.get_languages(self.dccRoot)
         
         for sht in self.wb.sheets: 
             if not sht.name == "Definitions": sht.delete()
+
+        sht = self.wb.sheets[0]
+        prog = os.path.basename(__file__)
+        sht.range((2,1)). value = [['Program File',prog],
+                                   ['Program Version', __ver__], 
+                                   ['SchemaFile', 'dcx.xsd'],
+                                   ['SchemaVersion', self.schemaVersion],
+                                   ['xml file name', os.path.basename(xmlFileName)],
+                                   ['xml file path', xmlFileName],
+                                   ['xml languages', " ".join(langs)]]
+
         self.loadSchemaRestrictions()
-        langs = dcchf.get_languages(self.dccRoot)
         self.chooseLanguages(langs + ['---']+self.xsdRestrictions['stringISO639Type'])
+        sht.range((9,1)).value =['selected Languages', " ".join(self.langs)]
+        self.selectedLangsRowIndex = 9
         # self.updateHeadingLanguages(self.langs)
+
+
         self.loadXSDTableHeadings()
         self.loadDccSequence()
         return errors
@@ -798,7 +814,7 @@ class DccGuiTool():
         rowIdx = 2
         
         # Get structure of the administrativeData from schema.  
-        xsdAdmStruct, xsdConLocStruct = dcchf.schemaGetAdministrativeDataStructure(xsd_root)
+        xsdAdmStruct, xsdConLocStruct = dcchf.schemaGetAdministrativeDataStructure(xsd_root,langs)
         
         # Get data from the xml and write it to rowData 2D list
         # ---------------------------------------------------------------------

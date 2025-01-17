@@ -409,7 +409,7 @@ def getNamesAndTypes(xsd_root: et._Element ,
     return attributeNames+elementNames, attributeTypes+elementTypes
 
 #%%
-def schemaGetAdministrativeDataStructure(xsd_root: et._Element) -> list:
+def schemaGetAdministrativeDataStructure(xsd_root: et._Element, langs) -> list:
     """schemaGetAdministrativeDataStructure is used for finding the structure
     of the administrative data in the schema.
 
@@ -476,8 +476,8 @@ def schemaGetAdministrativeDataStructure(xsd_root: et._Element) -> list:
                 discr = 'email'
                 path = subsecPath+'/dcx:email'
                 append_to_data(discr, level, path, xsdType)
-    values = [None]*len(discrs)
-    return list(map(list,zip(levels, discrs, values, values, values, xsdTypes, paths))), (adminElementNames[N:], adminElementTypes[N:])
+    values = [[None]*len(discrs) for l in range(1+len(langs))]
+    return list(map(list,zip(levels, discrs, *values, xsdTypes, paths))), (adminElementNames[N:], adminElementTypes[N:])
 
 # list(schemaGetAdministrativeDataStructure(xsd_root)[0])
 
