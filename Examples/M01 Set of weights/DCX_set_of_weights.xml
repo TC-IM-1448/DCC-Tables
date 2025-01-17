@@ -1,0 +1,348 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dcx:digitalCalibrationExchange xmlns:dcx="https://dfm.dk" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.0.0" xsi:schemaLocation="https://dfm.dk ../../dcx.xsd">
+	<dcx:title value="digitalCalibrationCertificate">
+	    <dcx:heading lang="en">Calibration Certificate</dcx:heading>
+	</dcx:title>
+	<dcx:administrativeData>
+		<dcx:coreData>
+			<dcx:uniqueDocumentIdentifier value="M2318">
+				<dcx:heading lang="en">Certificate number</dcx:heading>
+			</dcx:uniqueDocumentIdentifier>
+			<dcx:devicesForMeasurement value="item1 item2"></dcx:devicesForMeasurement>
+			<dcx:issueDate value="2023-08-19"/>
+			<dcx:beginPerformanceDate value="2023-08-18"/>
+			<dcx:endPerformanceDate value="2023-08-24"/>
+			<dcx:equipmentReceiptDate value="2023-08-14"/>
+			<dcx:performanceLocation value="atProvider"></dcx:performanceLocation>
+			<dcx:requestedLanguages value="en"/>
+		</dcx:coreData>
+		<dcx:accreditation>
+			<dcx:heading lang="en">Accreditation</dcx:heading>
+			<dcx:accreditationNorm value="ISO 17025"></dcx:accreditationNorm>
+			<dcx:accreditationLabId value="255"/>
+			<dcx:accreditationBody value="DANAK"/>
+			<dcx:accreditationCountry value="DK"/>
+			<dcx:accreditationApplicability value="wholly"/>
+		</dcx:accreditation>
+		<dcx:documentAuthorization>
+				<dcx:heading lang="en">Approved by:</dcx:heading>
+				<dcx:authorizingPerson>
+					<dcx:heading lang="en">Area manager, Ph.D.</dcx:heading>
+					<dcx:name value="Lars Nielsen"></dcx:name>
+				</dcx:authorizingPerson>
+		</dcx:documentAuthorization>
+		<!--dcx:contactColumnHeadings>
+		Not used in this certificate
+		</dcx:contactColumnHeadings-->
+		<dcx:client>
+			<dcx:heading lang="en">Customer</dcx:heading>
+			<dcx:name>VWR International A/S</dcx:name>
+			<dcx:address>
+				<dcx:city>Søborg</dcx:city>
+				<dcx:country>DK</dcx:country>
+				<dcx:postalCode>2860</dcx:postalCode>
+				<dcx:street>Tobaksvejen</dcx:street>
+				<dcx:streetNo>17</dcx:streetNo>
+			</dcx:address>
+			<dcx:contactInfo>
+				<dcx:attPerson>Dario Muga</dcx:attPerson>
+				<dcx:email>-</dcx:email>
+				<dcx:phone>-</dcx:phone>
+			</dcx:contactInfo>
+		</dcx:client>
+		<dcx:serviceProvider>
+			<dcx:heading lang="en">Calibration laboratory</dcx:heading>
+			<dcx:name>DFM A/S</dcx:name>
+			<dcx:address>
+				<dcx:city>Kogle Allé</dcx:city>
+				<dcx:country>DK</dcx:country>
+				<dcx:postalCode>2970</dcx:postalCode>
+				<dcx:street>Horsholm</dcx:street>
+				<dcx:streetNo>5</dcx:streetNo>
+			</dcx:address>
+		</dcx:serviceProvider>
+
+	</dcx:administrativeData>
+	<dcx:statementList>
+		<dcx:heading lang="en">Statements</dcx:heading>
+		<dcx:statement id="s01" category="general">
+			<dcx:heading lang="en">Reproduction</dcx:heading>
+			<dcx:body lang="en">This certificate shall not be reproduced except in full without the written approval of DFM</dcx:body>
+		</dcx:statement>
+		<dcx:statement id="s02" category="general">
+			<dcx:heading lang="en">Uncertainty</dcx:heading>
+			<dcx:heading lang="da">-</dcx:heading>
+			<dcx:body lang="en">The Uncertainty is multiplicated by a coverage factor = 2, providing a level of confidence of approximately 95% (EA-4/02)</dcx:body>
+			<dcx:body lang="da">-</dcx:body>
+			<dcx:externalReference>III-2</dcx:externalReference>
+		</dcx:statement>
+		<dcx:statement id="meth01" category="method">
+			<dcx:heading lang="en">Method</dcx:heading>
+			<dcx:body lang="en">The masses of the weights have been determined by weighing in air. The weighing in air including data analysis is performed according to DFM's internal method[1]. In this method, one or more weights of known masses are added to the weight set to be calibrated, and the mass differences between selected weight combinations are established by weighing according to Borda's substitution principle. Each mass difference observed is corrected for air buoyancy and differences in the vertical positions of the centres of gravity of the weights being compared. The air buoyancy correction is calculated from weight volumes known with a specified uncertainty and air densities calculated from continuous measurements of pressure, temperature, humidity and CO2-content using the formula recommended by BIPM[2]. From the observed, corrected mass differences, the unknown masses are calculated by the method of least squares using the known masses as restraints. The masses are converted to conventional values in accordance with the recommendation of.</dcx:body>
+			<dcx:externalReference>OIML D28, Conventional value of the result of weighing in air, (2004).</dcx:externalReference>
+		</dcx:statement>
+		<dcx:statement id="meth06" category="method">
+			<dcx:heading lang="en">Cleaning of weights</dcx:heading>
+			<dcx:body lang="en">The weights have been cleaned by brushing.</dcx:body>
+		</dcx:statement>
+		<dcx:statement id="t01" category="general">
+			<dcx:heading lang="en">Traceability</dcx:heading>
+			<dcx:body lang="en">The measurement of mass is traceable to the International System of Units (SI) through the national kilogram prototype no. 48 calibrated at the BIPM. 
+			The calibration reported in this certificate has been performed under DANAK accreditation no. 255. DANAK is one of the signatories to the EA Multilateral Agreement for the mutual recognition of calibration certificates.
+			This certificate is consistent with the capabilities that are included in Appendix C of the MRA drawn up by the CIPM. Under the MRA, all participating institutes recognize the validity of each other’s calibration and measurement certificates for the quantities, ranges and measurement uncertainties specified in Appendix C (for details see http://www.bipm.org).</dcx:body>
+			<dcx:externalReference>http://www.bipm.org</dcx:externalReference>
+		</dcx:statement>
+		<dcx:statement id="meth02" category="method">
+			<dcx:heading lang="en">Result of calibration</dcx:heading>
+			<dcx:body lang="en">The mass $m$ of a weight is found by adding the indicated mass correction $m$ to the nominal mass $M$ assigned to the weight: 
+			$$
+			m = \delta m + M.
+			$$ 
+			The conventional value $m_c$ of the weight is defined by 
+			$$
+			m_c \cdot ( 1 - \frac{a_0}{\rho_0} ) = m - a_0 V,
+			$$
+			where $V$ is the volume of the weight at 20 ^\circ C, and where $a_0 = 1.2 kg/m3$ and $\rho_0 = 8000 kg/m^3$ are the reference densities specified by OIML D28 for the air and the weight, respectively. The conventional value $m_c$ is normally used when the weight is used to calibrate a weighing instrument and is found by adding the correction \Delta m_c$ to the nominal mass $M$: 
+			$$ 
+			m_c = M + \Delta m_c. 
+			$$
+			</dcx:body>
+			<dcx:externalReference>OIML D28, Conventional value of the result of weighing in air, (2004).</dcx:externalReference>
+		</dcx:statement>
+		<dcx:statement id="meth03" category="method">
+			<dcx:heading lang="en">Uncertainty</dcx:heading>
+			<dcx:body lang="en"> The reported expanded uncertainty of measurement is stated as the standard uncertainty multiplied by the coverage factor k = 2, which for a normal distribution corresponds to a coverage probability of approximately 95 %. The standard uncertainty of measurement is determined in accordance with the GUM[4] and the guidelines of EA-4/02. The following uncertainty components are considered: Uncertainty in the reference mass, uncertainty in the weighing process and uncertainty in the air buoyancy and centre of gravity corrections.
+			</dcx:body>
+			<dcx:externalReference>EA-4/02, Expression of the uncertainty of measurement in calibration, (1997).</dcx:externalReference>
+		</dcx:statement>
+		<dcx:statement id="meth04" category="method">
+			<dcx:heading lang="en">Correlation coerricients</dcx:heading>
+			<dcx:body lang="en"> The correlation coefficient $r(m, V)$ between the mass $m$ and the volume $V$ indicated in the result tables is to be used when calculating the uncertainty of a quantity involving both $m$ and $V$, for example the gravitational force $F$ generated by the weight in air of density $a$,
+			$$
+			F=(m-aV)g.
+			$$
+			</dcx:body>
+		</dcx:statement>
+
+		<dcx:statement id="meth05" category="method">
+			<dcx:heading lang="en">Volume calculation</dcx:heading>
+			<dcx:body lang="en"> The volumes have been calculated assuming that the densities of the weights are (7950 +/- 140) kg/m3 as specified for stainless steel in OILM R111-1. 
+			</dcx:body>
+			<dcx:externalReference>OILM R111-1:2004, table B.7</dcx:externalReference>
+		</dcx:statement>
+	</dcx:statementList>
+	<dcx:equipmentList>
+		<dcx:heading lang="en"/>
+		<dcx:equipment id="item1" category="deviceForMeasurement">
+			<dcx:heading lang="en">Set of 6 weights of nominal weight 20 kg</dcx:heading>
+			<dcx:manufacturer>Satorius</dcx:manufacturer>
+			<dcx:productClass>F1</dcx:productClass>
+			<dcx:clientId>030</dcx:clientId>
+		</dcx:equipment>
+		<dcx:equipment id="item2" category="deviceForMeasurement">
+			<dcx:heading lang="en">Set of 6 weights of nominal weight 10 kg</dcx:heading>
+			<dcx:manufacturer>Satorius</dcx:manufacturer>
+			<dcx:productClass>F1</dcx:productClass>
+			<dcx:clientId>028</dcx:clientId>
+		</dcx:equipment>
+		<dcx:columnHeadings>
+			<dcx:column name="clientId">
+				<dcx:heading lang="en">Set Id</dcx:heading>
+			</dcx:column>
+			<dcx:column name="manufacturer">
+				<dcx:heading lang="en">Manufacturer</dcx:heading>
+			</dcx:column>
+			<dcx:column name="productClass">
+				<dcx:heading lang="en">Class</dcx:heading>
+			</dcx:column>
+		</dcx:columnHeadings>
+	</dcx:equipmentList>
+
+	<dcx:settingList>
+		<dcx:heading lang="en">Settings</dcx:heading>
+		<dcx:setting id="setting1" equipmentRef="item1">
+			<dcx:heading lang="en">Shape: cylindrical</dcx:heading>
+			<dcx:parameter>OILM_shape</dcx:parameter>
+			<dcx:value>CYLINDRICAL</dcx:value>
+		</dcx:setting>
+		<dcx:setting id="setting2" equipmentRef="item1">
+			<dcx:heading lang="en">Material: Steel</dcx:heading>
+			<dcx:parameter>OLIM_material</dcx:parameter>
+			<dcx:value>STEEL</dcx:value>
+		</dcx:setting>
+	</dcx:settingList>
+	<dcx:measurementConfigList>
+		<dcx:heading lang="en">Measuring Systems Under Calibration</dcx:heading>
+		<dcx:measurementConfig id="ms1">
+			<dcx:heading lang="en">Set of weights, ID: 030</dcx:heading>
+			<dcx:deviceForMeasurementRefs>item1</dcx:deviceForMeasurementRefs>
+			<dcx:settingRefs>setting1 setting2</dcx:settingRefs>
+		</dcx:measurementConfig>
+		<dcx:measurementConfig id="ms2">
+			<dcx:heading lang="en">Set of weights, ID: 030</dcx:heading>
+			<dcx:deviceForMeasurementRefs>item1</dcx:deviceForMeasurementRefs>
+			<dcx:settingRefs>setting1 setting2</dcx:settingRefs>
+		</dcx:measurementConfig>
+	</dcx:measurementConfigList>
+	<dcx:measurementResultList>
+		<dcx:calibrationResult tableId="WeightCal1"  measurementConfigRef="ms1" numRows="3" numCols="17">
+			<dcx:heading lang="en">CalibrationResult</dcx:heading>
+			<dcx:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
+				<dcx:heading lang="en">Weight Id</dcx:heading>
+				<dcx:rowTag>
+					<dcx:row idx="1">20_kg_1</dcx:row>
+					<dcx:row idx="2">20_kg_2</dcx:row>
+					<dcx:row idx="3">20_kg_3</dcx:row>
+					<dcx:row idx="4">20_kg_4</dcx:row>
+					<dcx:row idx="5">20_kg_5</dcx:row>
+					<dcx:row idx="6">20_kg_6</dcx:row>
+				</dcx:rowTag>
+			</dcx:column>
+			<dcx:column scope="reference" dataCategoryRef="-" quantity="3-4|volume|m3" unit="cm3">
+				<dcx:heading lang="en">Volume, $V$ (20 ℃)</dcx:heading>
+				<dcx:value>
+					<dcx:row idx="1">2516</dcx:row>
+					<dcx:row idx="2">2515</dcx:row>
+					<dcx:row idx="3">2516</dcx:row>
+					<dcx:row idx="4">2516</dcx:row>
+					<dcx:row idx="5">2519</dcx:row>
+					<dcx:row idx="6">2518</dcx:row>
+				</dcx:value>
+			</dcx:column>
+			<dcx:column scope="reference" dataCategoryRef="value" quantity="3-4|volume|m3" unit="cm3">
+				<dcx:expandedUncertainty>
+					<dcx:row idx="1">44</dcx:row>
+					<dcx:row idx="2">44</dcx:row>
+					<dcx:row idx="3">44</dcx:row>
+					<dcx:row idx="4">44</dcx:row>
+					<dcx:row idx="5">44</dcx:row>
+					<dcx:row idx="6">44</dcx:row>
+				</dcx:expandedUncertainty>
+			</dcx:column>
+			<dcx:column scope="reference" dataCategoryRef="value" quantity="3-4|volume|m3" unit="cm3">
+				<dcx:heading lang="en">Comment</dcx:heading>
+				<dcx:methodRef>
+					<dcx:row idx="1">meth05</dcx:row>
+					<dcx:row idx="2">meth05</dcx:row>
+					<dcx:row idx="3">meth05</dcx:row>
+					<dcx:row idx="4">meth05</dcx:row>
+					<dcx:row idx="5">meth05</dcx:row>
+					<dcx:row idx="6">meth05</dcx:row>
+				</dcx:methodRef>
+			</dcx:column>
+			<dcx:column scope="reference" dataCategoryRef="-" quantity="3-1.8|distance|m" unit="mm">
+				<dcx:heading lang="en">Centre of gravity, $z$</dcx:heading>
+				<dcx:value>
+					<dcx:row idx="1">95.8</dcx:row>
+					<dcx:row idx="2">95.8</dcx:row>
+					<dcx:row idx="3">95.8</dcx:row>
+					<dcx:row idx="4">95.8</dcx:row>
+					<dcx:row idx="5">95.8</dcx:row>
+					<dcx:row idx="6">95.8</dcx:row>
+				</dcx:value>
+			</dcx:column>
+			<dcx:column scope="reference" dataCategoryRef="value" quantity="3-1.8|distance|m" unit="mm">
+				<dcx:expandedUncertainty>
+					<dcx:row idx="1">3.4</dcx:row>
+					<dcx:row idx="2">3.4</dcx:row>
+					<dcx:row idx="3">3.4</dcx:row>
+					<dcx:row idx="4">3.4</dcx:row>
+					<dcx:row idx="5">3.4</dcx:row>
+					<dcx:row idx="6">3.4</dcx:row>
+				</dcx:expandedUncertainty>
+			</dcx:column>
+			<dcx:column scope="indication" dataCategoryRef="-" quantity="4-1|mass|kg" unit="kg">
+				<dcx:heading lang="en">Nominal mass</dcx:heading>
+				<dcx:value>
+					<dcx:row idx="1">20</dcx:row>
+					<dcx:row idx="2">20</dcx:row>
+					<dcx:row idx="3">20</dcx:row>
+					<dcx:row idx="4">20</dcx:row>
+					<dcx:row idx="5">20</dcx:row>
+					<dcx:row idx="6">20</dcx:row>
+				</dcx:value>
+			</dcx:column>
+			<dcx:column scope="indication" dataCategoryRef="-" quantity="quantityUnitDefRef" quantityUnitDefRef="conv_mass" unit="kg">
+				<dcx:heading lang="en">Nominal mass</dcx:heading>
+				<dcx:value>
+					<dcx:row idx="1">20</dcx:row>
+					<dcx:row idx="2">20</dcx:row>
+					<dcx:row idx="3">20</dcx:row>
+					<dcx:row idx="4">20</dcx:row>
+					<dcx:row idx="5">20</dcx:row>
+					<dcx:row idx="6">20</dcx:row>
+				</dcx:value>
+			</dcx:column>
+			<dcx:column scope="bias" dataCategoryRef="value" quantity="4-1|mass|kg" unit="mg">
+				<dcx:heading lang="en">Mass correction $\Delta m$</dcx:heading>
+				<dcx:correction>
+					<dcx:row idx="1">27</dcx:row>
+					<dcx:row idx="2">21</dcx:row>
+					<dcx:row idx="3">25</dcx:row>
+					<dcx:row idx="4">22</dcx:row>
+					<dcx:row idx="5">23</dcx:row>
+					<dcx:row idx="6">20</dcx:row>
+				</dcx:correction>
+			</dcx:column>
+			<dcx:column scope="bias" dataCategoryRef="value" quantity="4-1|mass|kg" unit="mg">
+				<dcx:expandedUncertainty>
+					<dcx:row idx="1">53</dcx:row>
+					<dcx:row idx="2">53</dcx:row>
+					<dcx:row idx="3">53</dcx:row>
+					<dcx:row idx="4">53</dcx:row>
+					<dcx:row idx="5">53</dcx:row>
+					<dcx:row idx="6">53</dcx:row>
+				</dcx:expandedUncertainty>
+			</dcx:column>
+			<dcx:column scope="bias" dataCategoryRef="value" quantity="quantityUnitDefRef" quantityUnitDefRef="conv_mass" unit="mg">
+				<dcx:heading lang="en">Conventional value $\Delta m_c$</dcx:heading>
+				<dcx:correction>
+					<dcx:row idx="1">7.3</dcx:row>
+					<dcx:row idx="2">2.7</dcx:row>
+					<dcx:row idx="3">5.4</dcx:row>
+					<dcx:row idx="4">3.2</dcx:row>
+					<dcx:row idx="5">-0.2</dcx:row>
+					<dcx:row idx="6">-1.0</dcx:row>
+				</dcx:correction>
+			</dcx:column>
+			<dcx:column scope="bias" dataCategoryRef="value"  quantity="quantityUnitDefRef" quantityUnitDefRef="conv_mass" unit="mg">
+				<dcx:expandedUncertainty>
+					<dcx:row idx="1">3.1</dcx:row>
+					<dcx:row idx="2">3.1</dcx:row>
+					<dcx:row idx="3">3.1</dcx:row>
+					<dcx:row idx="4">3.1</dcx:row>
+					<dcx:row idx="5">3.1</dcx:row>
+					<dcx:row idx="6">3.1</dcx:row>
+				</dcx:expandedUncertainty>
+			</dcx:column>
+			<dcx:column scope="bias" dataCategoryRef="value" quantity="quantityUnitDefRef" quantityUnitDefRef="mass_vol_cor" unit="1">
+				<dcx:heading lang="en">Correlation $r(m,V)$</dcx:heading>
+				<dcx:value>
+					<dcx:row idx="1">0.9983</dcx:row>
+					<dcx:row idx="2">0.9983</dcx:row>
+					<dcx:row idx="3">0.9983</dcx:row>
+					<dcx:row idx="4">0.9983</dcx:row>
+					<dcx:row idx="5">0.9983</dcx:row>
+					<dcx:row idx="6">0.9983</dcx:row>
+				</dcx:value>
+			</dcx:column>
+		</dcx:calibrationResult>
+	</dcx:measurementResultList>
+	<dcx:quantityUnitDefList>
+		<dcx:heading lang="en">Quantities and Units</dcx:heading>
+		<dcx:quantityUnitDef id="conv_mass" statementRefs="meth03">
+			<dcx:heading lang="en">Convetional value of weighing in air</dcx:heading>
+			<dcx:quantityCodeSystem>other</dcx:quantityCodeSystem>
+			<dcx:unitUsed>mg</dcx:unitUsed>
+			<dcx:functionToSIunit>0.000001*value</dcx:functionToSIunit>
+			<dcx:unitSI>kg</dcx:unitSI>
+		</dcx:quantityUnitDef>
+		<dcx:quantityUnitDef id="mass_vol_cor" statementRefs="meth04">
+			<dcx:heading lang="en">Correlation coefficient</dcx:heading>
+			<dcx:quantityCodeSystem>other</dcx:quantityCodeSystem>
+			<dcx:unitUsed>1</dcx:unitUsed>
+			<dcx:functionToSIunit>1.0*value</dcx:functionToSIunit>
+			<dcx:unitSI>1</dcx:unitSI>
+		</dcx:quantityUnitDef>
+	</dcx:quantityUnitDefList>
+</dcx:digitalCalibrationExchange>
