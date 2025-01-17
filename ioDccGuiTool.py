@@ -379,21 +379,30 @@ class DccGuiTool():
         if "List" in shtName: 
             headings = self.headings
             langs = self.langs
+            numLangs = len(langs)
             tblHeadings = headings[shtName]
             n = len(tblHeadings)
-            humanHeadings = [[None]*n]*len(langs)
+            humanHeadings = [[None]*n for i in range(numLangs)]
             node = root.find(".//dcx:"+shtName,root.nsmap)
             nodeColHead =  dcchf.xpath_query(node, "./dcx:columnHeadings")
+    
             if len(nodeColHead):
                 nodeColHead = nodeColHead[0]
-                for i,h in enumerate(tblHeadings):
-                    for j,l in enumerate(langs):
-                        n = nodeColHead.find(f".//*[@name='{h}']/*[@lang='{l}']")
-                        if not n is None:
-                            humanHeadings[j][i] = n.text
+                for j,l in enumerate(langs):
+                    for i,h in enumerate(tblHeadings):
+                        hNoLang = removeHeadingLang(h)
+                        n = dcchf.xpath_query(nodeColHead, f".//dcx:column[@name='{hNoLang}']/dcx:heading[@lang='{l}']")
+                        if len(n) > 0:
+                            txt = n[0].text
+                            humanHeadings[j][i] = txt
+                        else:
+                            txt = None
+                            humanHeadings[j][i] = txt
+                        print(i,j,l,h,txt)
+                print(shtName, langs)
                 print(humanHeadings)
             
-            sht.range((N+1,2)).value = humanHeadings
+            sht.range((N+1,1)).value = humanHeadings # column index is 1, because "in xml" is the first column in tblHeadings
             rng = sht.range((N+1,2),(N*2,len(tblHeadings)))
             rng.api.Borders.Weight = 2
             rng.color = self.colors['light_blue']
@@ -402,6 +411,8 @@ class DccGuiTool():
             rng.api.Borders.Weight = 2
             rng.color = self.colors['light_gray']
             rng.value = [[f"colHead[{l}]"] for l in langs]
+
+        #%%
 
         # load the information into the table
         tableData = []
@@ -462,7 +473,7 @@ class DccGuiTool():
             rng = sht.range("Table_"+shtName+"['@category]") 
             self.applyValidationToRange(rng, 'statementCategoryType')
             statementIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
-            statementIdRng.name = "statementsIdRange"
+            statementIdRng.name = "statementListIdRange"
         
         if shtName == "equipmentList":
             #Apply equipment category type validator to the equipment@category column
@@ -470,14 +481,14 @@ class DccGuiTool():
             self.applyValidationToRange(rng, 'equipmentCategoryType')
             # Give a name to the equipmentId column
             equipIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
-            equipIdRng.name = "equipIdRange"
+            equipIdRng.name = "equipmentListIdRange"
         
         if shtName == "settingList":
             #Apply equipmentId validator to the setting@refId column
             rng = sht.range("Table_"+shtName+"['@equipmentRef]")
-            self.applyValidationToRange(rng, 'equipIdRange')
+            self.applyValidationToRange(rng, 'equipmentListIdRange')
             settingIdRng = wb.sheets[shtName].range("Table_"+shtName+"['@id]")
-            settingIdRng.name = "settingIdRange"
+            settingIdRng.name = "settingListIdRange"
 
         if shtName == 'measurementConfigList': 
             # Give a name to the measurementId column
@@ -492,7 +503,7 @@ class DccGuiTool():
             rng = sht.range("Table_"+shtName+"['quantityCodeSystem]")
             self.applyValidationToRange(rng, 'quantityCodeSystemType')
             quIdRng = sht.range("Table_"+shtName+"['@id]") 
-            quIdRng.name = "quantityUnitDefIdRange"
+            quIdRng.name = "quantityUnitDefListIdRange"
 
         if shtName == 'embeddedFileList': 
             # Give a name to the measurementId column
@@ -600,7 +611,7 @@ class DccGuiTool():
                     if h+"Type" in dcchf.XSD_RESTRICTION_NAMES: 
                         self.applyValidationToRange(rng, h+'Type')
                     elif h in "conformityStatusRef": 
-                        self.applyValidationToRange(rng,'statementsIdRange' )
+                        self.applyValidationToRange(rng,'statementListIdRange' )
 
             rng = sht.range((1,2), (idx,2))
             rng.color = self.colors["light_yellow"]
@@ -696,11 +707,11 @@ class DccGuiTool():
 
             rng = sht.range((colInitRowIdx+5,2),(colInitRowIdx+5,numCols+2))
             rng.api.Validation.Delete()
-            rng.api.Validation.Add(Type=xlValidateList, Formula1="=quantityUnitDefIdRange")
+            rng.api.Validation.Add(Type=xlValidateList, Formula1="=quantityUnitDefListIdRange")
 
             rng = sht.range((colInitRowIdx+6,2),(colInitRowIdx+6,numCols+2))
             rng.api.Validation.Delete()
-            rng.api.Validation.Add(Type=xlValidateList, Formula1="=settingIdRange")
+            rng.api.Validation.Add(Type=xlValidateList, Formula1="=settingListIdRange")
 
             
             # Set the column widths
@@ -1042,6 +1053,11 @@ def extractHeadingLang(s):
     else:
         return re.findall(r'\[(.*?)\]', s)
 #%%    
+
+def removeHeadingLang(text):
+    # Remove content between "[xx]"
+    text = re.sub(r'\[\w{2}\]', '', text)
+    return text
 
 def exportToXmlFile(wb, fileName='output.xml'):
     # create an ElementMaker instance with multiple namespaces

@@ -412,6 +412,32 @@
             <dcx:body lang="en"> relative humidity: 59.4 %RH ±10 %RH</dcx:body>
             <dcx:body lang="da">Relativ luftfugtighed: 59,4 %RH ±10 %RH</dcx:body>
         </dcx:statement>
+        <dcx:columnHeadings>
+            <dcx:column name="@id">
+                <dcx:heading lang="en">Label</dcx:heading>
+                <dcx:heading lang="da">id</dcx:heading>
+            </dcx:column>
+            <dcx:column name="@category">
+                <dcx:heading lang="en">Category</dcx:heading>
+                <dcx:heading lang="da">Kategori</dcx:heading>
+            </dcx:column>
+            <dcx:column name="@imageRefs">
+                <dcx:heading lang="en">Reference to Image</dcx:heading>
+                <dcx:heading lang="da">Billed henvisning</dcx:heading>
+            </dcx:column>
+            <dcx:column name="heading">
+                <dcx:heading lang="en">Heading</dcx:heading>
+                <dcx:heading lang="da">Overskrift</dcx:heading>
+            </dcx:column>
+            <dcx:column name="body">
+                <dcx:heading lang="en">Statement</dcx:heading>
+                <dcx:heading lang="da">Bemærkning</dcx:heading>
+            </dcx:column>
+            <dcx:column name="externalReference">
+                <dcx:heading lang="en">External Reference</dcx:heading>
+                <dcx:heading lang="da">Ekstern reference</dcx:heading>
+            </dcx:column>
+        </dcx:columnHeadings>
     </dcx:statementList>
     <dcx:equipmentList>
         <dcx:heading lang="en">Used equipment</dcx:heading>
@@ -442,6 +468,14 @@
             <dcx:serviceProviderId>ID148</dcx:serviceProviderId>
         </dcx:equipment>
         <dcx:columnHeadings>
+            <dcx:column name="@id">
+                <dcx:heading lang="en">Label</dcx:heading>
+                <dcx:heading lang="da">ID</dcx:heading>
+            </dcx:column>
+            <dcx:column name="@category">   
+                <dcx:heading lang="en">Category</dcx:heading>
+                <dcx:heading lang="da">Kategori</dcx:heading>
+            </dcx:column>
             <dcx:column name='heading'>
                 <dcx:heading lang="en">Used equipment</dcx:heading>
                 <dcx:heading lang="da">Anvendt udstyr</dcx:heading>
@@ -458,13 +492,21 @@
                 <dcx:heading lang="en">Product number</dcx:heading>
                 <dcx:heading lang="da">Produkttype</dcx:heading>
             </dcx:column>
-            <dcx:column name='clientId'>
-                <dcx:heading lang="en">Customer ID</dcx:heading>
-                <dcx:heading lang="da">Kundens ID</dcx:heading>
-            </dcx:column>
             <dcx:column name='serialNumber'>
                 <dcx:heading lang="en">Serial number</dcx:heading>
                 <dcx:heading lang="da">Serienummer</dcx:heading>
+            </dcx:column>
+            <dcx:column name="lotNumber">
+                <dcx:heading lang="en">Lot. number</dcx:heading>
+                <dcx:heading lang="da">Batch number</dcx:heading>
+            </dcx:column>
+            <dcx:column name="productClass">
+                <dcx:heading lang="en">Product class</dcx:heading>
+                <dcx:heading lang="da">Produkt klasse</dcx:heading>
+            </dcx:column>
+            <dcx:column name='clientId'>
+                <dcx:heading lang="en">Customer ID</dcx:heading>
+                <dcx:heading lang="da">Kundens ID</dcx:heading>
             </dcx:column>
             <dcx:column name='serviceProviderId'>
                 <dcx:heading lang="en">DFM number</dcx:heading>
