@@ -1516,7 +1516,9 @@
 			<xs:enumeration value="value" />  <!-- used for measured quantities -->
 			<xs:enumeration value="targetValue" /> <!-- used for predefined calibration points, typically agreed with the client before calibration -->
 			<xs:enumeration value="expandedUncertainty" /> 
-			<xs:enumeration value="repeatability" /> 
+			<xs:enumeration value="statStd" /> 
+			<xs:enumeration value="statMax" /> 
+			<xs:enumeration value="statMin" /> 
 			<xs:enumeration value="correction" />   <!-- used together with the bias scope to express a correction for bias for material measures.-->
 			<xs:enumeration value="conformity" />   <!-- used for pass/fail assesment of the calibration. Typically used in conjunction with a meta data column refering to a statement with description of the assesment basis. --> 
 			<xs:enumeration value="correlation" /> 

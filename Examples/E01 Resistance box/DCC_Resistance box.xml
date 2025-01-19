@@ -1088,7 +1088,7 @@ Nominal value includes the measured zero Ω resistance.</dcx:body>
 				</dcx:acceptanceLimitUpper>
 			</dcx:column>
 		</dcx:calibrationResult>
-		<dcx:measurementSeries tableId="cal_ZERO" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measuringSystemRef="ms1" numRows="1" numCols="4">
+		<dcx:measurementSeries tableId="cal_ZERO" serviceCategory="EM/DC-2.1 DC resistance standards and sources" measurementConfigRef="ms1" numRows="1" numCols="4">
 			<dcx:heading lang="da">-</dcx:heading>
 			<dcx:heading lang="en">Absolute Resistance Accuracy</dcx:heading>
 			<dcx:column scope="-" dataCategoryRef="-" quantity="-" unit="-">
