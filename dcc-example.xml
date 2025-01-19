@@ -880,7 +880,7 @@
                         <dcx:row idx="3">2</dcx:row>
                     </dcx:uncertaintyCoverageFactor_k>
             </dcx:column>
-            <dcx:column dataCategoryRef="repeatability" quantity="3-4|volume|m3"  scope="bias" unit="µL">
+            <dcx:column dataCategoryRef="statStd" quantity="3-4|volume|m3"  scope="bias" unit="µL">
                 <dcx:heading lang="en">Repeatability</dcx:heading>
                 <dcx:heading lang="da">Repeterbarhed</dcx:heading>
                     <dcx:statStd>
@@ -889,7 +889,7 @@
                         <dcx:row idx="3">0.6</dcx:row>
                     </dcx:statStd>
             </dcx:column>
-            <dcx:column dataCategoryRef="repeatability" quantity="3-4|volume|m3"  scope="bias" unit="%">
+            <dcx:column dataCategoryRef="statStd" quantity="3-4|volume|m3"  scope="bias" unit="%">
                 <dcx:heading lang="en">Repeatability (relative)</dcx:heading>
                 <dcx:heading lang="da">Repeterbarhed (relativ)</dcx:heading>
                     <dcx:statStd>

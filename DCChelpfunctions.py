@@ -90,7 +90,7 @@ def match_table_attributes(att,searchAttrib,searchTableType='*'):
 def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
     ns = root.nsmap
     default_search_attrib = dict(tableId='*',
-                                 measuringSystemRef="*", 
+                                 measurementConfigRef="*", 
                                  serviceCategory="*", 
                                  customServiceCategory='*', 
                                  statementRef='*',
@@ -100,10 +100,11 @@ def getTables(root: et._Element,search_attrib={}, tableType='*') -> list:
     search_attrib = default_search_attrib
     # print(search_attrib)
     returntable=[]
-    tables=root.find('dcx:measurementResults',ns).getchildren() #findall('dcx:table',ns)
+    tables=root.find('dcx:measurementResultList',ns).getchildren() #findall('dcx:table',ns)
     for table in tables:
-        if (tableType == '*' or tableType == rev_ns_tag(table)) and match_table_attributes(table.attrib, search_attrib):
-            returntable.append(table)
+        if rev_ns_tag(table) != "dcx:heading" and (tableType == '*' or tableType == rev_ns_tag(table)):
+            if match_table_attributes(table.attrib, search_attrib):
+                returntable.append(table)
 
     # count = len(returntable)
     # if count==0:
@@ -204,8 +205,8 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcx:calibratio
         
     :NOTE: This function is not really necessary any more, as the following xpath expressions
           serve the same purpose, except that rowTags can be used directly in this function.: 
-            root.findall('*//dcx:calibrationResult[@measuringSystemRef="ms1"]/dcx:column[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcx:value/dcx:row[@idx="1"]',root.nsmap)
-            root.findall('*//*[@measuringSystemRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcx:value/*[@idx="1"]',root.nsmap)
+            root.findall('*//dcx:calibrationResult[@measurementConfigRef="ms1"]/dcx:column[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcx:value/dcx:row[@idx="1"]',root.nsmap)
+            root.findall('*//*[@measurementConfigRef="ms1"]/*[@scope="reference"][@dataCategoryRef="-"][@quantity="3-4|volume|m3"]/dcx:value/*[@idx="1"]',root.nsmap)
     """
     ns = root.nsmap
 
@@ -216,7 +217,7 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcx:calibratio
     cols=[]
 
     try:
-        """Find the right table using measuringSystemRef and tableId"""
+        """Find the right table using measurementConfigRef and tableId"""
         tbls=getTables(root, tableAttrib, tableType)
         # print(tbls)
         if len(tbls) != 1: 
@@ -252,7 +253,7 @@ def search(root, tableAttrib, colAttrib, dataCategory, tableType="dcx:calibratio
         warning=e.args[0]
     return searchValue
 
-# dtbl = dict(measuringSystemRef="ms1", tableId="MS120")
+# dtbl = dict(measurementConfigRef="ms1", tableId="MS120")
 # dcol = dict(dataCategory="Value", quantity="Measure.Volume", metaDataCategory="Data", scope="reference")
 # rowtag = "p5"
 # print_node(search(root,dtbl, dcol, "\micro\litre" )[0])
@@ -281,10 +282,10 @@ def get_statements(root, ID='*') -> list:
 
 # print_node(get_statement(root,'meth1')[0])
 #%%
-def get_measuringSystems(root, ID='*',lang='en', show=False) -> list:
+def get_measurementConfigs(root, ID='*',lang='en', show=False) -> list:
     ns = root.nsmap
-    # items=root.findall("./dcx:administrativeData/dcx:measuringSystemsUnderCalibration",ns)
-    items = root.findall(".//dcx:measuringSystem",ns)
+    # items=root.findall("./dcx:administrativeData/dcx:measurementConfigsUnderCalibration",ns)
+    items = root.findall(".//dcx:measurementConfig",ns)
     returnitem = []
     for item in items:
         if ID==item.attrib['id'] or ID=='*':
@@ -301,7 +302,7 @@ def get_measuringSystems(root, ID='*',lang='en', show=False) -> list:
                             print(heading.text)
                     print(identification.find("dcx:value").text)
     return returnitem
-# print_node(get_measuringSystem(root,show=True)[0])
+# print_node(get_measurementConfig(root,show=True)[0])
 #%%
 def get_setting(root, settingId='*', lang='en', show=False) -> list:
     """ Returns a list of elements fullfilling ID requirements"""
@@ -498,7 +499,7 @@ def getNodeById(root, ID:str):
 #     xpath_query is a wrapper around the lxml findall function.
 
 #     Example: 
-#         xpath_query(root, "//*[@measuringSystemRef='ms2' and @tableId]")
+#         xpath_query(root, "//*[@measurementConfigRef='ms2' and @tableId]")
 #         xpath_query(root, "//*[@measurementSetupRef='ms1'][@tableId='calRes0']")
         
 #     Note: special operators such 'and' is not supported by lxml. 
@@ -524,7 +525,7 @@ def xpath_query(node: et._Element, xpath_str: str) -> et._Element:
     xpath_query is a wrapper around the lxml findall function.
 
     Example: 
-        xpath_query(root, "//*[@measuringSystemRef='ms2' and @tableId]")
+        xpath_query(root, "//*[@measurementConfigRef='ms2' and @tableId]")
         xpath_query(root, "//*[@measurementSetupRef='ms1'][@tableId='calRes0']")
         
     Note: special operators such 'and' is not supported by lxml. 
@@ -611,12 +612,12 @@ def print_node(node):
 if False: 
     #%%    
     tree, root = load_xml("dcc-example.xml")
-    dtbl = dict(tableId='*',measuringSystemRef="ms1", serviceCategory="*")
+    dtbl = dict(tableId='*',measurementConfigRef="ms1", serviceCategory="*")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcx:calibrationResult")[0]
     print(tbl)
     #%%
-    # print_node(get_measuringSystem(root,show=True)[0])
+    # print_node(get_measurementConfig(root,show=True)[0])
     dcol = dict(quantity="3-4|volume|m3", dataCategoryRef="*", scope="reference", unit='µL')
     col = getColumnsFromTable(tbl,dcol, searchDataCategory="value")[0]
 
@@ -648,7 +649,7 @@ if False:
 
     #%%
     print("----------------------GET MeasuringSystem----------------")
-    for n in get_measuringSystems(root,"ms1"): print_node(n)
+    for n in get_measurementConfigs(root,"ms1"): print_node(n)
     #%%
     get_setting(root)
     print_node(get_setting(root)[0])
@@ -658,11 +659,11 @@ if False:
     statementIds = [elm.attrib['id'] for elm in get_statements(root)]
     statementIds
     #%%
-    dtbl = dict(tableId='*',measuringSystemRef="ms1")
+    dtbl = dict(tableId='*',measurementConfigRef="ms1")
     print("----------------------get_table----------------")
     tbl = getTables(root,dtbl,tableType="dcx:calibrationResult")[0]
     print(tbl)
-    # print_node(get_measuringSystem(root,show=True)[0])
+    # print_node(get_measurementConfig(root,show=True)[0])
     #%%
     dcol = dict( quantity="3-4|volume|m3", dataCategoryRef='*', scope='reference', unit="*")
     col = getColumnsFromTable(tbl,dcol,searchDataCategory="value")
