@@ -147,8 +147,8 @@ class DccQuerryTool():
             data_val = None
             if queryType == 'xpath':
                 xpath_str = sht.range((i,4)).value
-                # val = dcchf.xpath_query(root, xpath_str)
-                val = root.xpath(xpath_str, namespaces=root.nsmap)
+                val = dcchf.xpath_query(root, xpath_str)
+                # val = root.xpath(xpath_str, namespaces=root.nsmap)
                 print(vals[i-2], queryType, val)
                 if len(val)>0:
                     data_val = [val]

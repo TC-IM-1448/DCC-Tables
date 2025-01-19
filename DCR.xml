@@ -52,11 +52,11 @@
             </dcx:authorizingPerson>
         </dcx:documentAuthorization>
         <dcx:contactColumnHeadings>
-            <dcx:column name="address/.">
+            <dcx:column name="address">
                 <dcx:heading lang="en">Address</dcx:heading>
                 <dcx:heading lang="da">Addresse</dcx:heading>
             </dcx:column>
-            <dcx:column name="contact/.">
+            <dcx:column name="contactInfo">
                 <dcx:heading lang="en">Contact info</dcx:heading>
                 <dcx:heading lang="da">Kontaktoplysninger</dcx:heading>
             </dcx:column>
@@ -161,7 +161,7 @@
     <dcx:settingList>
         <dcx:heading lang="en">Settings</dcx:heading>
         <dcx:heading lang="da">Indstillinger</dcx:heading>
-        <dcx:setting settingId="set0" equipmentRef="item1">
+        <dcx:setting id="set0" equipmentRef="item1">
         </dcx:setting>
         <dcx:columnHeadings>
             <dcx:column name='parameter'>
@@ -190,7 +190,7 @@
             <dcx:operationalStatus>as found</dcx:operationalStatus>
         </dcx:measurementConfig>
         <dcx:columnHeadings>
-            <dcx:column name='deviceForMeasuremmentRefs'>
+            <dcx:column name='deviceForMeasurementRefs'>
                 <dcx:heading lang="en">Equipment ref.</dcx:heading>
                 <dcx:heading lang="da">Udstyrsref.</dcx:heading>
             </dcx:column>
@@ -280,7 +280,7 @@
             </dcx:column>
         </dcx:calibrationResult>
     </dcx:measurementResultList>
-    <dcx:embeddedFiles>
+    <dcx:embeddedFileList>
         <dcx:embeddedFile id="DCR_after_adjustment.xml">
             <dcx:heading lang="en"></dcx:heading>
             <dcx:heading lang="da"></dcx:heading>
@@ -290,5 +290,5 @@
             <dcx:fileContent>
             </dcx:fileContent>
         </dcx:embeddedFile>
-    </dcx:embeddedFiles>
+    </dcx:embeddedFileList>
 </dcx:digitalCalibrationExchange>
