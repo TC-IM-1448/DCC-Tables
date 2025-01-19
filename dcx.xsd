@@ -88,7 +88,7 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="title" type="dcx:transactionContentFieldType"/> 
-            <xs:element name="subtitle" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="subtitle" type="dcx:fieldType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="administrativeData" type="dcx:administrativeDataType"/>
             <xs:element name="statementList" type="dcx:statementListType" minOccurs="0"/>
             <xs:element name="equipmentList" type="dcx:equipmentListType"/>
@@ -173,7 +173,7 @@
             <xs:element name="coreData" type="dcx:coreDataType"/>
             <xs:element name="dcxSoftware" type="dcx:dcxSoftwareType" minOccurs="0"/> 
             <xs:element name="accreditation" type="dcx:accreditationType" minOccurs="0"/>
-            <xs:element name="conformityResult" type="dcx:conformityResultType" minOccurs="0"/> 
+            <xs:element name="conformitySummary" type="dcx:conformitySummaryType" minOccurs="0"/> 
             <xs:element name="documentAuthorization" type="dcx:documentAuthorizationType"/>
             <xs:element name="contactColumnHeadings" type="dcx:contactAndLocationColumnHeadingsType" minOccurs="0">
                 <xs:unique name="uniqueContactsColumnHeadings">
@@ -587,12 +587,12 @@
         </xs:complexContent>
     </xs:complexType>  
         
-    <!--    ================= conformityResultType ================================= -->
-    <xs:complexType name="conformityResultType">
+    <!--    ================= conformitySummaryType ================================= -->
+    <xs:complexType name="conformitySummaryType">
         <xs:annotation>
             <xs:documentation>
                 This type contain fields with field headings as well as sub-elements containing additional fieds..
-                The conformityResultType is for the overall conformity of all devices measured in the report. 
+                The conformitySummaryType is for the overall conformity of all devices measured in the report. 
                 A reference to a conformity statement explaining the criteria of the assessment is required.
             </xs:documentation>
         </xs:annotation>
@@ -668,6 +668,8 @@
                 <xs:enumeration value="@id" /> 
                 <xs:enumeration value="@imageRefs" /> 
                 <xs:enumeration value="name" /> 
+                <xs:enumeration value="VATIN" /> 
+                <xs:enumeration value="url" /> 
                 <xs:enumeration value="address" /> 
                 <xs:enumeration value="address/street" /> 
                 <xs:enumeration value="address/streetNo" /> 
@@ -677,8 +679,6 @@
                 <xs:enumeration value="address/state" /> 
                 <xs:enumeration value="address/postalCode" /> 
                 <xs:enumeration value="address/country" /> 
-                <xs:enumeration value="VATIN" /> 
-                <xs:enumeration value="url" /> 
                 <xs:enumeration value="contactInfo" /> 
                 <xs:enumeration value="contactInfo/attPerson" /> 
                 <xs:enumeration value="contactInfo/email" /> 
@@ -700,9 +700,9 @@
                 <xs:sequence>
                     <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="name" type="xs:string"/> 
-                    <xs:element name="address" type="dcx:addressType" minOccurs="1"/>
                     <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
                     <xs:element name="url" type="xs:string" minOccurs="0"/>
+                    <xs:element name="address" type="dcx:addressType" minOccurs="1"/>
                     <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
                     <xs:element name="geoPosition" type="dcx:geoPositionType" minOccurs="0"/>
                     <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
@@ -722,9 +722,9 @@
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="name" type="xs:string"/> 
-            <xs:element name="address" type="dcx:addressType" minOccurs="0"/>
             <xs:element name="VATIN" type="xs:string" minOccurs="0"/> 
             <xs:element name="url" type="xs:string" minOccurs="0"/>
+            <xs:element name="address" type="dcx:addressType" minOccurs="0"/>
             <xs:element name="contactInfo" type="dcx:contactInfoType" minOccurs="0"/>
             <xs:element name="geoPosition" type="dcx:geoPositionType" minOccurs="0"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
@@ -1966,6 +1966,12 @@
         <xs:sequence>
 			<xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="embeddedFile" type="dcx:embeddedFileType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="columnHeadings" type="dcx:embeddedFileColumnHeadingsType" minOccurs="0">
+                <xs:unique name="uniqueEmbeddedFileColumnHeadings">
+                    <xs:selector xpath="dcx:column"/>
+                    <xs:field xpath="@name"/>
+                </xs:unique>
+            </xs:element>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
@@ -1987,6 +1993,42 @@
     </xs:complexType>
 
 
+        <xs:complexType name="embeddedFileColumnHeadingsType">
+            <xs:sequence>
+                <xs:element name="column" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="dcx:embeddedFileColumnHeadingNamesType" use="required"/>
+                    </xs:complexType>
+                    <xs:unique name="uniqueLanguageEmbeddedFile">
+                        <xs:selector xpath="dcx:heading"/>
+                        <xs:field xpath="@lang"/>
+                    </xs:unique>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    
+        <xs:simpleType name="embeddedFileColumnHeadingNamesType">
+            <xs:annotation>
+                <xs:documentation>
+                </xs:documentation>
+            </xs:annotation>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="@id" /> 
+                    <xs:enumeration value="@idRef" /> 
+                    <xs:enumeration value="@quantityCodeSystem" /> 
+                    <xs:enumeration value="@statementRefs" /> 
+                    <xs:enumeration value="heading" /> 
+                    <xs:enumeration value="quantityCode" /> 
+                    <xs:enumeration value="unitUsed" /> 
+                    <xs:enumeration value="functionToSIunit" /> 
+                    <xs:enumeration value="unitSI" /> 
+                    <xs:enumeration value="externalRefs" />
+                </xs:restriction>
+        </xs:simpleType>
+        
 
     <!--=============================================================
             Other basic Types listed here due to length. 

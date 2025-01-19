@@ -44,79 +44,81 @@ SECTION_HEADINGS = {'statementList':[],
                     'geoPosition':[],
                     }
 
-HEADINGS = dict(statementList = ['in DCC', 
-                                    '@id', 
-                                    '@category', 
-                                    '@imageRefs',
-                                    'heading[1]',  
-                                    'body[1]', 
-                                    'externalReference'],
+HEADINGS = SECTION_HEADINGS.copy()
 
-    equipmentList = ['in DCC', '@id', '@statementRef', '@category',
-                        'heading[1]', 'manufacturer', 'modelName', 'modelNumber', 
-                        'serialNumber', 'lotNumber', 'productClass',
-                        'clientId', 'serviceProviderId',
-                        'prevCalibDate','calibDueDate', 'prevCertId', 'prevCertProviderName',
-                        ],
+# dict(statementList = ['in DCC', 
+#                                     '@id', 
+#                                     '@category', 
+#                                     '@imageRefs',
+#                                     'heading[1]',  
+#                                     'body[1]', 
+#                                     'externalReference'],
 
-    settingList = [ 'in DCC', '@id', '@equipmentRef', 
-                    'parameter', 'value', 'unit', 'softwareInstruction', 
-                    'heading[1]', 'body[1]', #'statementRefs',
-                    ],
+#     equipmentList = ['in DCC', '@id', '@statementRef', '@category',
+#                         'heading[1]', 'manufacturer', 'modelName', 'modelNumber', 
+#                         'serialNumber', 'lotNumber', 'productClass',
+#                         'clientId', 'serviceProviderId',
+#                         'prevCalibDate','calibDueDate', 'prevCertId', 'prevCertProviderName',
+#                         ],
 
-    measurementConfigList = [   'in DCC', '@id', 
-                                'heading[1]', 
-                                'equipmentRefs', 'settingRefs', 'statementRefs',
-                                'operationalStatus',
-                                'body[1]', 
-                                ], 
+#     settingList = [ 'in DCC', '@id', '@equipmentRef', 
+#                     'parameter', 'value', 'unit', 'softwareInstruction', 
+#                     'heading[1]', 'body[1]', #'statementRefs',
+#                     ],
 
-    embeddedFileList = ['in DCC', '@id', 
-                        'heading[1]',
-                        'body[1]',
-                        'fileExtension'],
+#     measurementConfigList = [   'in DCC', '@id', 
+#                                 'heading[1]', 
+#                                 'equipmentRefs', 'settingRefs', 'statementRefs',
+#                                 'operationalStatus',
+#                                 'body[1]', 
+#                                 ], 
 
-    quantityUnitDefList = [ 'in DCC', 
-                            '@id',
-                            '@quantityCodeSystem',
-                            'quantityCode',
-                            'unitUsed',
-                            'functionToSIunit',
-                            'unitSI',
-                            'externalRefs',
-                            'heading[1]',
-                            '@statementRefs'],
+#     embeddedFileList = ['in DCC', '@id', 
+#                         'heading[1]',
+#                         'body[1]',
+#                         'fileExtension'],
 
-    administrativeData = [  "level", 
-                            "description",
-                            "@value", 
-                            "heading[1]",  
-                            "xsdType",
-                            "xPath"], 
+#     quantityUnitDefList = [ 'in DCC', 
+#                             '@id',
+#                             '@quantityCodeSystem',
+#                             'quantityCode',
+#                             'unitUsed',
+#                             'functionToSIunit',
+#                             'unitSI',
+#                             'externalRefs',
+#                             'heading[1]',
+#                             '@statementRefs'],
 
-    table = [   'tableCategory', 
-                '@tableId', 
-                '@serviceCategory', 
-                '@measurementConfigRef', 
-                '@customServiceCategory', 
-                '@statementRefs',
-                '@embeddedFileRefs',
-                'heading[1]', 
-                'conformityStatus', 
-                'conformityStatusRef',
-                '@numRows', 
-                '@numCols'], 
+#     administrativeData = [  "level", 
+#                             "description",
+#                             "@value", 
+#                             "heading[1]",  
+#                             "xsdType",
+#                             "xPath"], 
 
-    column = [  'scope', 
-                'dataCategory', 
-                'dataCategoryRef', 
-                'quantity', 
-                'unit', 
-                'quantityUnitDefRef', 
-                'equipmentRef', 
-                'heading[1]', 
-                'idx']
-    )
+#     table = [   'tableCategory', 
+#                 '@tableId', 
+#                 '@serviceCategory', 
+#                 '@measurementConfigRef', 
+#                 '@customServiceCategory', 
+#                 '@statementRefs',
+#                 '@embeddedFileRefs',
+#                 'heading[1]', 
+#                 'conformityStatus', 
+#                 'conformityStatusRef',
+#                 '@numRows', 
+#                 '@numCols'], 
+
+#     column = [  'scope', 
+#                 'dataCategory', 
+#                 'dataCategoryRef', 
+#                 'quantity', 
+#                 'unit', 
+#                 'quantityUnitDefRef', 
+#                 'equipmentRef', 
+#                 'heading[1]', 
+#                 'idx']
+#     )
 
 
 class DccGuiTool(): 
@@ -144,9 +146,12 @@ class DccGuiTool():
                     red = '#f8cbad',
                     light_red = '#fce4d6')
 
+
     def loadExcelWorkbook(self, workBookFilePath: str):
         self.wb = xw.Book(workBookFilePath)
         wb = self.wb
+        if not "Definitions" in wb.sheet_names:
+            wb.sheets.add("Definitions")
         self.sheetDef = wb.sheets['Definitions']
         self.wb = wb
         self.loadSchemaFile()
@@ -155,24 +160,28 @@ class DccGuiTool():
         wb.activate(steal_focus=True)
         self.createEmbeddedFilesFolder(wb)
 
+
     def createEmbeddedFilesFolder(self, wb):
         wbpath = wb.fullname.replace(wb.name, '')
         if not os.path.exists(wbpath+'embeddedFiles'):
             os.mkdir(wbpath+'embeddedFiles')
         self.embeddedFilesPath = wbpath+'embeddedFiles'+os.sep
 
+
     def loadSchemaFile(self, xsdFileName="dcx.xsd"):
         self.xsdTree, self.xsdRoot  = dcchf.load_xml(xsdFileName)
         
+
     def loadDCCFile(self, xmlFileName="dcc-example.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
         self.schemaVersion = self.dccRoot.attrib['schemaVersion']
         errors = dcchf.validate(xmlFileName, 'dcx.xsd')    
         langs = dcchf.get_languages(self.dccRoot)
-        
+
         for sht in self.wb.sheets: 
             if not sht.name == "Definitions": sht.delete()
 
+        # stoere Metadata in the definitions sheet. 
         sht = self.wb.sheets[0]
         prog = os.path.basename(__file__)
         sht.range((2,1)). value = [['Program File',prog],
@@ -183,16 +192,22 @@ class DccGuiTool():
                                    ['xml file path', xmlFileName],
                                    ['xml languages', " ".join(langs)]]
 
+        # continue loading data
         self.loadSchemaRestrictions()
+
+        # Select languages
         self.chooseLanguages(langs + ['---']+self.xsdRestrictions['stringISO639Type'])
+            # note chooseLanguages stores the selected languages in self.langs 
         sht.range((9,1)).value =['selected Languages', " ".join(self.langs)]
         self.selectedLangsRowIndex = 9
-        # self.updateHeadingLanguages(self.langs)
 
-
+        # laod headings for tables from the xsd-schema. 
         self.loadXSDTableHeadings()
+
+        # load the data into the tables. 
         self.loadDccSequence()
         return errors
+
 
     def loadSchemaRestrictions(self): 
         xsd_root = self.xsdRoot
@@ -213,26 +228,27 @@ class DccGuiTool():
         self.wb.app.screen_updating = True
         return drestr
 
+
     def chooseLanguages(self, languages):
         global app
         languageDialog = MyLanguageDialog(app, languages)
         app.wait_window(languageDialog.top)
 
-    def updateHeadingLanguages(self, langs):
-        """ DBH: Probably obsolete function now. """
-        global HEADINGS
-        headings = {}
-        for k,v in HEADINGS.items():
-            new_v = v[:]
-            for l in ['heading[1]', 'body[1]']:
-                hidxs = [i for i,s in enumerate(new_v) if l in s]
-                for i in hidxs[::-1]:
-                    h = new_v[i] 
-                    new_h = [h.replace('1', lang) for lang in langs]
-                    new_v[i:i+1] = new_h
-            headings[k] = new_v
-        self.headings = headings
-        return self.headings
+    # def updateHeadingLanguages(self, langs):
+    #     """ DBH: Probably obsolete function now. """
+    #     global HEADINGS
+    #     headings = {}
+    #     for k,v in HEADINGS.items():
+    #         new_v = v[:]
+    #         for l in ['heading[1]', 'body[1]']:
+    #             hidxs = [i for i,s in enumerate(new_v) if l in s]
+    #             for i in hidxs[::-1]:
+    #                 h = new_v[i] 
+    #                 new_h = [h.replace('1', lang) for lang in langs]
+    #                 new_v[i:i+1] = new_h
+    #         headings[k] = new_v
+    #     self.headings = headings
+    #     return self.headings
 
     def resizeXlTable(self,rng,sht,tableName:str):
         if tableName not in [tbl.name for tbl in sht.tables]:
@@ -322,10 +338,13 @@ class DccGuiTool():
         headings['column'][1:1]=['dataCategory']
         i = headings['table'].index('column')
         headings['table'].pop(i)
+        headings['table'].insert(0,'tableCategory')
         headings['embeddedFileList'].pop(-1)
-        self.headings = headings
-         
+        
+        global HEADINGS
         HEADINGS = headings.copy()
+        #%%
+        self.headings = headings
 
 
         # print the constructed dictionary 
@@ -456,7 +475,7 @@ class DccGuiTool():
                     nodes =  subNode.findall(f'./dcx:{h}', ns)
                     if len(nodes)>0: rowData.append(nodes[0].text)
                     else: rowData.append(None)
-                if nodeTag == "dcx:embeddedFiles" and h=="@id": 
+                if nodeTag == "dcx:embeddedFileList" and h=="@id": 
                     # save the embedded file to temporary folder. 
                     fileId = subNode.attrib[h.strip('@')]
                     filePath = self.embeddedFilesPath+fileId
@@ -562,8 +581,6 @@ class DccGuiTool():
         root = self.dccRoot
         ns = root.nsmap
         wb = self.wb
-        lang1 = 'en'
-        lang2 = 'da'
 
         measurementResults = root.find(".//dcx:measurementResultList",ns) 
         print(measurementResults)
@@ -581,6 +598,7 @@ class DccGuiTool():
         sht = wb.sheets[resultId[0]]
         sht.activate()
 
+        # dbh3
         for tbl in resultNodes: 
             tblType = dcchf.rev_ns_tag(tbl).split(':')[-1]
             tableId = tbl.attrib[idTag]
@@ -1070,34 +1088,45 @@ def extractHeadingLang(s):
         return re.findall(r'\[(.*?)\]', s)
 #%%    
 
-def removeHeadingLang(text):
+def removeHeadingLang(text: str):
     # Remove content between "[xx]"
     text = re.sub(r'\[\w{2}\]', '', text)
     return text
 
+#%%
+
 def exportToXmlFile(wb, fileName='output.xml'):
     # create an ElementMaker instance with multiple namespaces
+    #%%
     myNameSpace = DCC.strip('{}')
-    ns = {'dcc': 'https://dfm.dk',
+    ns = {'dcx': 'https://dfm.dk',
             'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
-    elmMaker = ElementMaker(namespace=myNameSpace, 
-                        nsmap=ns)
+    elmMaker = ElementMaker(namespace=myNameSpace, nsmap=ns)
 
     # create the root element of the output tree  with attributes
-    exportRoot = elmMaker("digitalCalibrationCertificate", schemaVersion="3.0.0")
-    exportRoot.set("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation", myNameSpace+" dcc.xsd")
+    sht = wb.sheets[wb.sheet_names.index('Definitions')]
+    vals = sht.range((1,1)).expand('down').value
+    xsdVerIdx = vals.index('SchemaVersion')+1
+    xsdVer = sht.range((xsdVerIdx,2)).value
+    #%%
+    exportRoot = elmMaker("digitalCalibrationExchange", schemaVersion=xsdVer)
+    exportRoot.set("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation", myNameSpace+" dcx.xsd")
 
     # wb = xw.Book('DCC_pipette_blank.xlsx')
     
     adminSht = wb.sheets['administrativeData']
     global dccGuiTool 
-    adminHeading = dccGuiTool.headings['administrativeDataHeadings']
+    global HEADINGS
+    adminHeading = HEADINGS['administrativeData']
     
-    colIdxXpath = adminHeading.index('XPath')+1
+    colIdxXpath = adminHeading.index('xPath')+1
     rowInitXpath = 2
     rngXpath = adminSht.range((rowInitXpath,colIdxXpath)).expand('down')
-    rngDescription = adminSht.range((rowInitXpath,adminHeading.index('Description'))).expand('down')
+    rngDescription = adminSht.range((rowInitXpath,adminHeading.index('description'))).expand('down')
     descriptions = [c.value for c in rngDescription]
+
+    def my_date_handler(year, month, day, **kwargs):
+        return "%04i-%02i-%02i" % (year, month, day)
 
     def exportHeading(node, elmMaker, xlSheet, sheetHeading, rowIdx): 
         headingColIdxLang = [(idx, extractHeadingLang(h)) for idx,h in enumerate(sheetHeading) if h.startswith('heading[')]
@@ -1108,75 +1137,208 @@ def exportToXmlFile(wb, fileName='output.xml'):
                 node.append(elm)
 
     def add_subtree(parent, xpath_list: list):
+        valColIdx = adminHeading.index('@value')+1
         for idx, xpath in enumerate(xpath_list):
-            rowIdx = idx + rowInitXpath
-            data = adminSht.range((idx+rowInitXpath,colIdxXpath-1)).api.Text
+            data = adminSht.range((idx+rowInitXpath,valColIdx)).options(dates=my_date_handler).value
+            isSection = adminSht.range((idx+rowInitXpath,1)).font.bold
             data = "" if data is None else str(data)
-            descr = adminSht.range((idx+rowInitXpath, colIdxXpath-2)).api.Text
-            xpathTags = xpath.split('/')[1:]
-            current_node = parent
-            for i, nodeTag in enumerate(xpathTags):
+            descr = str(adminSht.range((idx+rowInitXpath, 2)).value)
+            rowIdx = idx + rowInitXpath
+            xpathTags = xpath.split('/')[1:]  # e.g. ['dcx:administrativeData', 'dcx:accreditation', '@statementRef']
+            current_node = parent             # e.g. dcx.digitalCalibrationExchange
+            lastTag = xpathTags[-1]
+            for i, nodeTag in enumerate(xpathTags[:-1]):
                 tag = nodeTag.replace('dcx:','')
-                tag = tag.split("[",1)[0]
+                tag = removeHeadingLang(tag)
+                # tag = tag.split("[",1)[0]
                 sub_nodes = current_node.findall(nodeTag, ns)
                 sub_node = sub_nodes[-1] if len(sub_nodes) > 0 else None
-                if i < len(xpathTags)-1:
+                if i < len(xpathTags)-1: # if not the last element
                     if sub_node == None: 
                         next_node = elmMaker(tag) 
                         current_node.append(next_node)
                         current_node = next_node
                     else:
                         current_node = sub_node
-                elif i == len(xpathTags)-1:
-                    if data == "":
-                        next_node = elmMaker(tag) 
-                        current_node.append(next_node)
-                        current_node = next_node
-                    elif descr.startswith('@'):
-                        print(f'tag is: {tag}  attrib[{descr}] = {data} ', current_node)
-                        sub_node.attrib[descr[1:]] = data
-                    else:
-                        print(f'tag is: {tag}  data:{data} ', current_node)
-                        next_node = elmMaker(tag, data)
-                        current_node.append(next_node)
-                        current_node = next_node
-            if adminSht.range((rowIdx,colIdxXpath-2)).font.bold :
-                exportHeading(current_node, elmMaker, adminSht, adminHeading, rowIdx) 
-                
-    s = '/dcx:digitalCalibrationCertificate'
-    xpath_list = [xpth.value.replace(s,'.') for xpth in rngXpath]
-    add_subtree(exportRoot, xpath_list)
-    # dcchf.print_node(exportRoot)
-    mainSignerNodes = exportRoot.findall('./dcx:administrativeData/dcx:respPersons/*/dcx:mainSigner', ns)
-    for mainSignerNode in mainSignerNodes: 
-        mainSignerNode.text = mainSignerNode.text.lower()
+                        
+            tag = lastTag
+            tag = tag.replace('dcx:','')
+            tag = removeHeadingLang(tag)
 
+            if tag.startswith('@'): # case it is an attribute
+                print(f'tag is: {tag}  attrib[{descr}] = {data} ', current_node)
+                sub_node.attrib[descr[1:]] = data
+            else:   
+                if tag == "title": 
+                    print(f'title is: {tag}  value: {data} ', current_node)
+                    next_node = elmMaker(tag, value=data)
+                    current_node.append(next_node)
+                    exportHeading(next_node, elmMaker, adminSht, adminHeading, rowIdx) 
+                    # next_node.attrib['value'] = data
+                elif isSection: 
+                    print(f'section is: {tag}  value: {data} ', current_node)
+                    next_node = elmMaker(tag)
+                    current_node.append(next_node)
+                    exportHeading(next_node, elmMaker, adminSht, adminHeading, rowIdx) 
+                # next_node.attrib['value'] = data
+                elif data:
+                    print(f'data is: {tag}  value: {data} ', current_node)
+                    next_node = elmMaker(tag, value=data)
+                    current_node.append(next_node)
+                    exportHeading(next_node, elmMaker, adminSht, adminHeading, rowIdx) 
+    
+    s = '/dcx:digitalCalibrationExchange'
+    xpath_list = [xpth.value.replace(s,'.') for xpth in rngXpath]
+
+    add_subtree(exportRoot, xpath_list)
+    adminNode = exportRoot.find('./dcx:administrativeData',ns)
+    #%%
+    # remove empty subnodes of administrativeData. 
+    tags = ['dcxSoftware', 'accreditation', 'conformitySummary', 'coSigner', 'coSigner2', 'coSigner3','authorizingPerson', 'documentAuthorization']
+    for tag in tags: 
+        daNodes = adminNode.findall('.//dcx:'+tag, ns)
+        for daNode in daNodes:
+            if not daNode.findall('.//*[@value]'):
+                daNode.getparent().remove(daNode)
+
+    dcchf.print_node(adminNode)
+    #%%
+
+    # ToDo: add routine to remove node sections without data. 
+    # use the etree remove method.
+
+
+    # export Contact and Locations TABLE
+    # -----------------------------------------------------
+    #%%
+    adminNode = exportRoot.find(".//dcx:administrativeData",ns)
+    rngConLoc = adminSht.range('ContactAndLocationsStartRow')
+    rngConLocHeading = rngConLoc.offset(1,0).expand('right') # Column Headings of the contact Location Table
+    conLocHeading = rngConLocHeading.value # ['level', 'schemaType', 'description',  'heading[da]', 'heading[en]', 'client',
+    rngXsdType = rngConLoc.offset(2,1).expand('down')
+    rngDescr = rngConLoc.offset(2,2).expand('down')
+    rngLevel = rngXsdType.offset(0,-1)
+
+    global NUM_LANGS
+    N = NUM_LANGS
+
+    # export Contact And Location ColumnHeadings. 
+    #-----------------------------------------
+    rngConLocColHeadingLang = rngConLoc.offset(1,3).resize(1,N)
+    conLocColHeading = rngConLocColHeadingLang.value
+    langs = [extractHeadingLang(h) for h in conLocColHeading]
+
+    rngConLocHeads = rngDescr.offset(0,1).resize(column_size=N)
+    conLocHeads = rngConLocHeads.value
+    if any(conLocHeads): 
+        conLocColHeadNode = elmMaker('contactColumnHeadings')
+        adminNode.append(conLocColHeadNode)
+
+        for i, cell in enumerate(rngDescr,start=1):
+            if i <= N or i > rngDescr.size - N:
+                continue
+            else: 
+                descr = cell.value
+                type = cell.offset(0,-1).value
+                level = cell.offset(0,-2).value
+                rngColHeadings = cell.offset(0,1).resize(1,N)
+                colHeading = rngColHeadings.value
+                if any(colHeading):
+                    l = level+"/" if level else ""
+                    conLocColNode = elmMaker('column', name=l+descr)
+                    conLocColHeadNode.append(conLocColNode)
+                    for h,l in zip(colHeading,langs):
+                        if h: 
+                            n = elmMaker('heading',h, lang=l)
+                            conLocColNode.append(n)
+
+    dcchf.print_node(adminNode)
+    # adminNode.remove(adminNode.find("./dcx:contactColumnHeadings",ns))
+
+    #%%
+    # export contact and locations
+    # -----------------------------
+    # find the subsetion names (as written in level column). 
+    subSecNames = []    #  = [None, 'address', 'contactInfo','geoPosition']
+    [subSecNames.append(val) for val in rngLevel.value if val not in subSecNames]
+    subSecNames.remove(None) # = ['address', 'contactInfo','geoPosition']
+
+    # find the client column and columns to the right. 
+    rngClient = rngDescr.offset(0,N+1)
+    rngColumns = rngClient.expand('right')
+    numConLoc = len(conLocHeading) - conLocHeading.index('client')
+    for i in range(numConLoc):
+        # get values from the selected column  
+        rngColumn = rngClient.offset(0,i)
+        colName = rngColumn.offset(-1,0).resize(1,1).value
+        rngColumn.number_format = "@"
+        colValues = rngColumn.options(numbers=str).value
+        
+        if any(colValues): # if the column has content then add it to the nodetree. 
+            colNode = elmMaker(colName) 
+            adminNode.append(colNode)
+
+            subSecNodes = {None:colNode}
+            for subsec, d, value in zip(rngLevel.value, rngDescr.value, colValues):
+                # d = descr.value     # description value e.g. heading[en], @id, @imageRefs, name, ...
+                # rowIdx = descr.row
+                # subsec = adminSht.range(rowIdx,1).value # level value
+                if d in subSecNames:  # if in subsectionNames = ['address', 'contactInfor', 'geoPosition']
+                    n = elmMaker(d)  # create the node.
+                    subSecNodes[d] = n
+                    colNode.append(n)
+                elif not value: 
+                    continue
+                elif d.startswith('@'):
+                    subSecNodes[subsec].attrib[d.strip('@')] = value
+                elif d.startswith('heading[') or d.startswith('body['):
+                    l = extractHeadingLang(d)
+                    d = removeHeadingLang(d)
+                    newNode = elmMaker(d,value, lang=l) 
+                    subSecNodes[subsec].append(newNode)
+                else: 
+                    newNode = elmMaker(d,value)
+                    subSecNodes[subsec].append(newNode)
+        
+            for sc in subSecNames:
+                n = subSecNodes[sc]
+                if not n.getchildren(): 
+                    colNode.remove(n)
+
+    dcchf.print_node(adminNode)
+
+
+    #%%
+    # dcchf.print_node(exportRoot)
     
 
     # set TRUE/FALSE to true/false
 
     adminNode = exportRoot.find('./dcx:administrativeData', ns)
-    print(adminNode)
-    dcchf.print_node(exportRoot)
+    # print(adminNode)
 
-    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'statements')
-    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'equipment')
-    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'settings')
-    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'measuringSystems')
-    msIdx = wb.sheet_names.index('quantityUnitDefs')+1
-    measurementResultsNode = elmMaker('measurementResults')
+    #%%
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'statementList')
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'equipmentList')
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'settingList')
+    exportInfoTable(exportRoot, elmMaker, wb, nodeName = 'measurementConfigList')
+    msIdx = wb.sheet_names.index('quantityUnitDefList')+1
+    measurementResultsNode = elmMaker('measurementResultList')
     exportRoot.append(measurementResultsNode)
     for tblId in wb.sheet_names[msIdx:]:
         print(tblId)
         exportDataTable(measurementResultsNode, elmMaker, wb, tblId)
     
-    quDefNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='quantityUnitDefs')
-    exportEmbeddedFiles(exportRoot, elmMaker, wb, quDefNode)
-    efNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='embeddedFiles')
+    quDefNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='quantityUnitDefList')
+    # exportEmbeddedFiles(exportRoot, elmMaker, wb, quDefNode)
+
+    efNode = exportInfoTable(exportRoot, elmMaker, wb, nodeName='embeddedFileList')
     exportEmbeddedFiles(exportRoot, elmMaker, wb, efNode)
+    dcchf.print_node(exportRoot)
 
     # measurementResultsNode = elmMaker("measurementResults", name="test")
 
+    #%% dbh
     # write the XML to file with pretty print
     with open(fileName, 'wb') as f:
         # xml_str = et.tostring(exportRoot, pretty_print=True, xml_declaration=True, encoding='utf-8').decode()
@@ -1184,7 +1346,8 @@ def exportToXmlFile(wb, fileName='output.xml'):
         # f.write(xml_str_crlf.encode())
         f.write(et.tostring(exportRoot, pretty_print=True, xml_declaration=True, encoding='utf-8'))
 
-    dcchf.validate(fileName, 'dcc.xsd')
+    dcchf.validate(fileName, 'dcx.xsd')
+    #%%
 
 def exportSheetHeading(parentNode, sht, elmMaker): 
     global NUM_LANGS
@@ -1196,9 +1359,54 @@ def exportSheetHeading(parentNode, sht, elmMaker):
         elm = elmMaker("heading", txt, lang=lang)
         parentNode.append(elm)
 
+def exportSheetColumnHeading(parentNode, sht, rngHeader, elmMaker):
+    """
+    INPUT
+    --------------
+        parentNode: should be the node of 'statementList', 'equipmentList', ...
+        sht: xlwings sheet for the corresponding data
+        rngHeader: header row of the corresponding table in the sheet. 
+        elmMaker : ...
+    """
+    global NUM_LANGS
+    N = NUM_LANGS
+    headings = rngHeader.value
+    rngColHeading = sht.range((N+1,2)).resize(N,len(headings)-1)
+    rngColHeadingLang = sht.range((N+1,1)).resize(N,1)
+    
+    langs = [extractHeadingLang(h) for h in rngColHeadingLang.value]
+    langByRow = {h.row: extractHeadingLang(h.value) for h in rngColHeadingLang}
+
+    colHeads = rngColHeading.value
+    if rngColHeading.shape[0] > 1: #flatten the list
+        colHeads = [x for xs in colHeads for x in xs]
+    if any(colHeads): 
+        colHeadNode = elmMaker('columnHeadings')
+        parentNode.append(colHeadNode)
+
+        for cell in rngHeader[1:]:
+            lang = extractHeadingLang(cell.value)
+            tag = removeHeadingLang(cell.value)
+            rngColHeadings = cell.offset(-N,0).resize(N,1)
+            colHeading = rngColHeadings.value
+            if any(colHeading):
+                c = colHeadNode.findall(f"./*[@name='{tag}']",parentNode.nsmap)
+                colNode = c[0] if len(c) > 0 else elmMaker('column', name=tag)
+                colHeadNode.append(colNode)
+                for h,l in zip(colHeading,langs):
+                    if h: 
+                        tmp = colNode.findall(f"./*[@lang='{l}']",colNode.nsmap)
+                        n = tmp[0] if len(tmp) > 0 else elmMaker('heading',h, lang=l)
+                        # n = elmMaker('heading',h, lang=l)
+                        colNode.append(n)
+
+    #workinghere
+    #dcchf.print_node(parentNode)
+
+
 def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
     ns = exportRoot.nsmap
-    shtIdx = wb.sheet_names.index('embeddedFiles')
+    shtIdx = wb.sheet_names.index('embeddedFileList')
     sht = wb.sheets[shtIdx]
     
     def encode_file_to_base64(file_path):
@@ -1211,7 +1419,7 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
             print(f"Error: File '{file_path}' not found.")
             return None
 
-    tbl = sht.tables['Table_embeddedFiles']      
+    tbl = sht.tables['Table_embeddedFileList']      
     rng_header = tbl.data_body_range  #xlwings function
     nrow, ncols = rng_header.shape
     print(rng_header.shape)
@@ -1220,14 +1428,14 @@ def exportEmbeddedFiles(exportRoot, elmMaker, wb, embeddedFilesNode):
     global NUM_LANGS
 
     for i, efn in enumerate(embeddedFilesNode.findall("./dcx:embeddedFile",ns)): 
-        filepath = sht.range((NUM_LANGS+2+i,ncols+1)).value
+        filepath = sht.range((NUM_LANGS*2+2+i,ncols+1)).value
         print(f"loading file: {filepath}")
         base64str = encode_file_to_base64(filepath)
         node = elmMaker('fileContent',base64str)
         efn.append(node)
 
 
-def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'): 
+def exportInfoTable(parentNode, elmMaker,wb, nodeName = 'settingList'): 
     shtIdx = wb.sheet_names.index(nodeName)
     sht = wb.sheets[shtIdx]
     statementsNode = elmMaker(nodeName)
@@ -1235,8 +1443,8 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
     exportSheetHeading(statementsNode, sht, elmMaker)
     tbl = sht.tables['Table_'+nodeName]
     rng = tbl.data_body_range
-    rng_header = tbl.header_row_range
-    headings = rng_header.value
+    rngHeader = tbl.header_row_range
+    headings = rngHeader.value
     if rng != None: 
         nrow, ncols = rng.shape
         tbl_data = rng.value
@@ -1246,10 +1454,9 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
             if row[0].startswith('y'):
                 a = {h[1:]:  row[i] for i,h in enumerate(headings) if h.startswith('@')}
                 a = {k:v for k,v in a.items() if v != None}
+                subNodeName = nodeName.replace("List","")
                 if nodeName != 'equipment':
-                    node = elmMaker(nodeName[:-1], **a)
-                else: 
-                    node = elmMaker('equipmentItem', **a)
+                    node = elmMaker(subNodeName, **a)
                 for i, h in enumerate(headings):
                     if i == 0 or row[i] == None: 
                         continue
@@ -1261,28 +1468,14 @@ def exportInfoTable(adminNode, elmMaker,wb, nodeName = 'settings'):
                     elif h.startswith('body['):
                         lang = extractHeadingLang(h)
                         elm = elmMaker('body', str(row[i]),lang=lang)
-                    elif len(h.split('_id')) > 1: #this elif handles equipment. 
-                        issuer, what = h.split('_id ')
-                        if issuer.startswith('client'): issuer = 'client'
-                        if issuer.startswith('manufac'): issuer = 'manufacturer'
-                        if issuer.startswith('calLab'): issuer = 'serviceProvider'
-                        if what.startswith('heading'):
-                            lang = extractHeadingLang(what)
-                            elm = elmMaker('heading',row[i], lang=lang)
-                        else: 
-                            elm = elmMaker('value',str(row[i]))
-                        idNode = node.find(f'./dcx:identification[@issuer="{issuer}"]', node.nsmap)
-                        if idNode is None:
-                            idNode = elmMaker('identification',issuer=issuer)
-                            node.append(idNode)
-                        idNode.append(elm)
-                        continue
                     else: 
                         elm = elmMaker(h,str(row[i]))
                     node.append(elm)
             statementsNode.append(node)
-    adminNode.append(statementsNode)
+    exportSheetColumnHeading(statementsNode, sht, rngHeader, elmMaker)
+    parentNode.append(statementsNode)
     return statementsNode
+
 
 def exportDataTable(parentNode, elmMaker, wb, tableId): 
     shtIdx = wb.sheet_names.index(tableId)
@@ -1322,8 +1515,8 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
     typecast_dict = {'int': int, 'real': float, 'string': str, 'bool': bool, 'conformityStatus': str, 'ref': str} # Deprecated 
     numRows = int(parentNode.attrib['numRows'])
     # print('numRows = ', numRows)
-    global dccGuiTool
-    colHeading = dccGuiTool.headings['column']
+    global HEADINGS
+    colHeading = HEADINGS['column']
     dataInitRowIdx = rowInitIdx+len(colHeading)-1
     colAttrRange = tblSheet.range((rowInitIdx,colIdx),(dataInitRowIdx, colIdx))
     colAttrNameRange = tblSheet.range((rowInitIdx,1),(dataInitRowIdx, 1)) 
@@ -1338,8 +1531,9 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
 
     colHeadDict = dict(zip(colAttrNames,colAttrValues))
 
-    colAttrKeys = ['scope', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'equipmentRef'] 
-    colAttr = {k: colHeadDict[k] for k in colAttrKeys if colHeadDict[k]!=None}
+    colAttrKeys = ['scope', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'settingRef'] 
+    colAttrKeys = [k for k in colHeading if k.startswith("@")]
+    colAttr = {k.strip('@'): colHeadDict[k] for k in colAttrKeys if colHeadDict[k]!=None}
     # colNode = elmMaker('column', **dict(zip(colAttrNames[:4], colAttrValues[:4])))
     colNode = elmMaker('column', **colAttr)
 
@@ -1349,24 +1543,8 @@ def exportDataColumn(parentNode, tblSheet, elmMaker, wb, rowInitIdx, colIdx):
             lang = extractHeadingLang(k)
             elm = elmMaker('heading', v,lang=lang)
             colNode.append(elm)
-    # I AM HERE
-    # unitNode = elmMaker('unit', colHeadDict['unit'])
-    # colNode.append(unitNode)
 
-    # print(colAttrNames)
-    # print(colAttrValues)
-    # print(colHeading)
-    # print(colIndex)
-    # print(colData)
-    # print(len(colData))
-    # dataType = colAttrValues[-1]
-    # typecast = typecast_dict[dataType]
-    # dataList = elmMaker('dataList')
     dataCategoryNode = elmMaker(colHeadDict['dataCategory'])
-    # dataList.append(dataCategoryNode)
-    
-
-
     
     for i, data in enumerate(colData):
         if not data == "":
@@ -1413,7 +1591,7 @@ class MainApp(tk.Tk):
         # exportToXmlFile('output.xml')
 
     def setup_gui(self,app):
-        self.wm_title("DCC EXCEL UI Tool")
+        self.wm_title("DCX EXCEL UI Tool")
         # self.canvas = tk.Canvas(self, width = 1851, height = 1041)
         self.geometry('400x200')
         self.attributes('-topmost', True)

@@ -8,8 +8,10 @@
         <dcx:heading lang="da">Kalibreringscertifikat</dcx:heading>
         <dcx:heading lang="en">Calibration certificate</dcx:heading>
     </dcx:title>
-    <dcx:subtitle lang="en">Pippettes</dcx:subtitle>
-    <dcx:subtitle lang="da">Volumen pipetter</dcx:subtitle>
+    <dcx:subtitle>
+        <dcx:heading lang="en">Pippettes</dcx:heading>
+        <dcx:heading lang="da">Volumen pipetter</dcx:heading>
+    </dcx:subtitle>
     <dcx:administrativeData>
         <dcx:heading lang="en">Administrative data</dcx:heading>
         <dcx:heading lang="da">Administrative data</dcx:heading>
@@ -85,12 +87,12 @@
                 <dcx:heading lang="en">accreditation applicability</dcx:heading>
             </dcx:accreditationApplicability>
         </dcx:accreditation>
-        <dcx:conformityResult>
+        <dcx:conformitySummary>
             <dcx:heading lang="en">Conformity Result</dcx:heading>
             <dcx:heading lang="da">Overensstemmelsesvurdering</dcx:heading>
             <dcx:conformityResult value="pass"/>
             <dcx:decisionRuleRef value="meth2"/>
-        </dcx:conformityResult>
+        </dcx:conformitySummary>
         <dcx:documentAuthorization>
             <dcx:heading lang="en">Document authorization</dcx:heading>
             <dcx:authorizingPerson>
@@ -232,6 +234,8 @@
             <dcx:heading lang="en">Billing Information</dcx:heading>
             <dcx:heading lang="da">Fakturerings Information</dcx:heading>
             <dcx:name>John Doe</dcx:name>
+            <dcx:VATIN>US123456789</dcx:VATIN>
+            <dcx:url>http://example.com</dcx:url>
             <dcx:address>
                 <dcx:street>Main Street</dcx:street>
                 <dcx:streetNo>123</dcx:streetNo>
@@ -242,8 +246,6 @@
                 <dcx:postalCode>7890</dcx:postalCode>
                 <dcx:country>US</dcx:country>
             </dcx:address>
-            <dcx:VATIN>US123456789</dcx:VATIN>
-            <dcx:url>http://example.com</dcx:url>
             <dcx:contactInfo>
                 <dcx:attPerson>Jane Smith</dcx:attPerson>
                 <dcx:email>jane.smith@example.com</dcx:email>
@@ -263,6 +265,8 @@
             <dcx:heading lang="en">Billing Information</dcx:heading>
             <dcx:heading lang="da">Fakturerings Information</dcx:heading>
             <dcx:name>John Doe</dcx:name>
+            <dcx:VATIN>US123456789</dcx:VATIN>
+            <dcx:url>http://example.com</dcx:url>
             <dcx:address>
                 <dcx:street>Main Street</dcx:street>
                 <dcx:streetNo>123</dcx:streetNo>
@@ -273,8 +277,6 @@
                 <dcx:postalCode>7890</dcx:postalCode>
                 <dcx:country>US</dcx:country>
             </dcx:address>
-            <dcx:VATIN>US123456789</dcx:VATIN>
-            <dcx:url>http://example.com</dcx:url>
             <dcx:contactInfo>
                 <dcx:attPerson>Jane Smith</dcx:attPerson>
                 <dcx:email>jane.smith@example.com</dcx:email>
@@ -294,6 +296,8 @@
             <dcx:heading lang="en">Billing Information</dcx:heading>
             <dcx:heading lang="da">Fakturerings Information</dcx:heading>
             <dcx:name>Jane Doe</dcx:name>
+            <dcx:VATIN>US987654321</dcx:VATIN>
+            <dcx:url>http://example.org</dcx:url>
             <dcx:address>
                 <dcx:street>Elm Street</dcx:street>
                 <dcx:streetNo>456</dcx:streetNo>
@@ -304,8 +308,6 @@
                 <dcx:postalCode>12345</dcx:postalCode>
                 <dcx:country>US</dcx:country>
             </dcx:address>
-            <dcx:VATIN>US987654321</dcx:VATIN>
-            <dcx:url>http://example.org</dcx:url>
             <dcx:contactInfo>
                 <dcx:attPerson>John Smith</dcx:attPerson>
                 <dcx:email>john.smith@example.org</dcx:email>
