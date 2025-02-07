@@ -22,7 +22,7 @@ def lookupFromMappingFile(mapFileName:str, dccFileName:str):
 class DccQuerryTool(): 
     mapperHeading =['Client DB ref', 'client description', 'queryType', 
                     'xpath', 
-                    'measuringSystemRef', 'serviceCategory', 'tableId', 
+                    'measurementConfigRef', 'serviceCategory', 'tableId', 
                     'scope', 'dataCategory', 'dataCategoryRef', 'quantity', 'unit', 'quantityUnitDefRef', 'idx', 
                     'query result']
     xsdDefInitCol = 3  
@@ -37,10 +37,10 @@ class DccQuerryTool():
         self.loadSchemaRestrictions()
         wb.activate(steal_focus=True)
 
-    def loadSchemaFile(self, xsdFileName="dcc.xsd"):
+    def loadSchemaFile(self, xsdFileName="dcx.xsd"):
         self.xsdTree, self.xsdRoot  = dcchf.load_xml(xsdFileName)
         
-    def loadDCCFile(self, xmlFileName="SKH_10112_2.xml"):
+    def loadDCCFile(self, xmlFileName="dcc-example.xml"):
         self.dccTree, self.dccRoot = dcchf.load_xml(xmlFileName)
         
     def loadSchemaRestrictions(self): 
@@ -78,14 +78,14 @@ class DccQuerryTool():
         sht_def.range((2,i)).expand('down').name = 'statementId' 
         
         i+=1 
-        msucIds = [elm.attrib['id'] for elm in dcchf.get_measuringSystems(root)]
-        sht_def.range((1,i)).value = 'measuringSystemId'
+        msucIds = [elm.attrib['id'] for elm in dcchf.get_measurementConfigs(root)]
+        sht_def.range((1,i)).value = 'measurementConfigId'
         sht_def.range((2,i)).value = [[ms] for ms in msucIds]
-        sht_def.range((2,i)).expand('down').name = 'measuringSystemId'
-        cidx = self.mapperHeading.index('measuringSystemRef')+1
+        sht_def.range((2,i)).expand('down').name = 'measurementConfigId'
+        cidx = self.mapperHeading.index('measurementConfigRef')+1
         rng = sht_map.range((2,cidx),(1024,cidx))
         rng.api.Validation.Delete()
-        rng.api.Validation.Add(Type=xlValidateList, Formula1='=measuringSystemId')
+        rng.api.Validation.Add(Type=xlValidateList, Formula1='=measurementConfigId')
 
         cidx = self.mapperHeading.index('serviceCategory')+1
         rng = sht_map.range((2,cidx),(1024,cidx))
@@ -103,7 +103,7 @@ class DccQuerryTool():
         rng.api.Validation.Add(Type=xlValidateList, Formula1='=tableId') 
 
         i+=1
-        units = ["'"+elm.attrib['unit'] for elm in root.findall('*//dcc:column',root.nsmap)]
+        units = ["'"+u for u in dcchf.xpath_query(root,'*//dcx:column/@unit')]
         units = list(set(units))
         sht_def.range((1,i)).value = 'units'
         sht_def.range((2,i)).value = [[tbl] for tbl in units]
@@ -114,7 +114,7 @@ class DccQuerryTool():
         rng.api.Validation.Add(Type=xlValidateList, Formula1='=units') 
 
         i+=1
-        quDefs = [elm.attrib['id'] for elm in root.findall("*//dcc:quantityUnitDef",root.nsmap)]
+        quDefs = [elm.attrib['id'] for elm in root.findall("*//dcx:quantityUnitDef",root.nsmap)]
         sht_def.range((1,i)).value = 'quantityUnitsDefs'
         sht_def.range((2,i)).value = [[tbl] for tbl in quDefs]
         sht_def.range((2,i)).expand('down').name = 'quantityUnitDefRefs'
@@ -147,16 +147,16 @@ class DccQuerryTool():
             data_val = None
             if queryType == 'xpath':
                 xpath_str = sht.range((i,4)).value
-                # val = dcchf.xpath_query(root, xpath_str)
-                val = root.xpath(xpath_str, namespaces=root.nsmap)
+                val = dcchf.xpath_query(root, xpath_str)
+                # val = root.xpath(xpath_str, namespaces=root.nsmap)
                 print(vals[i-2], queryType, val)
                 if len(val)>0:
                     data_val = [val]
                 else:
                     data_val = "ERROR not Found"
             elif queryType == 'data':
-                cidx = self.mapperHeading.index("measuringSystemRef")+1
-                dtbl = dict(zip(["measuringSystemRef", "serviceCategory", "tableId"], sht.range((i,cidx),(i,cidx+3)).value))
+                cidx = self.mapperHeading.index("measurementConfigRef")+1
+                dtbl = dict(zip(["measurementConfigRef", "serviceCategory", "tableId"], sht.range((i,cidx),(i,cidx+3)).value))
                 dtbl = {k:v for k,v in dtbl.items() if v != None}
                 dcol = dict(zip(["scope", "dataCategoryRef", "measurand"], [sht.range((i,cidx+3)).value]+sht.range((i,cidx+3+2), (i,cidx+3+4)).value))
                 dcol = {k:v for k,v in dcol.items() if v != None}
@@ -227,11 +227,11 @@ class MainApp(tk.Tk):
         excelFileName = 'SKH_10112_2_Mapping.xlsx'
         self.queryTool.loadExcelWorkbook(excelFileName)
         self.label1.config(text=excelFileName)
-        self.queryTool.loadSchemaFile(xsdFileName='dcc.xsd')
+        self.queryTool.loadSchemaFile(xsdFileName='dcx.xsd')
         self.queryTool.loadSchemaRestrictions()
-        self.queryTool.loadDCCFile('SKH_10112_2.xml')
+        self.queryTool.loadDCCFile('dcc-example.xml')
         self.queryTool.loadDccAttributes()
-        self.label2.config(text='SKH_10112_2.xml')
+        self.label2.config(text='dcc-example.xml')
 
     def loadExcelBook(self):
         file_path = tkfd.askopenfilename(initialdir=os.getcwd())
