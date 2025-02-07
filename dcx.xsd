@@ -1115,9 +1115,9 @@
             <xs:element name="deviceForMeasurementRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="referenceStandardRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="settingRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="referenceStandardSettingRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="operationalStatus" type="dcx:operationalStatusType" minOccurs="0" maxOccurs="1"/>
-            <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
     </xs:complexType>
