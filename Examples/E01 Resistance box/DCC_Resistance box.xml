@@ -237,11 +237,11 @@ Nominal value includes the measured zero Ω resistance.</dcx:body>
 		<dcx:heading lang="en">Measuring Systems Under Calibration</dcx:heading>
 		<dcx:measurementConfig id="ms1">
 			<dcx:heading lang="en">Relative Resistance Setup</dcx:heading>
-			<dcx:referenceStandardRefs>item1 refInst1</dcx:referenceStandardRefs>
-			<dcx:settingRefs>dial</dcx:settingRefs>
+			<dcx:devForMeasRefs>item1</dcx:devForMeasRefs>
+			<dcx:devForMeasSettingRefs>dial</dcx:devForMeasSettingRefs>
+			<dcx:referenceStandardRefs>refInst1</dcx:referenceStandardRefs>
 			<dcx:statementRefs>methAbs</dcx:statementRefs>
 			<dcx:operationalStatus>as found</dcx:operationalStatus>
-			<dcx:body lang="en">-</dcx:body>
 		</dcx:measurementConfig>
 	</dcx:measurementConfigList>
 	<dcx:measurementResultList>

@@ -31,10 +31,10 @@
             <dcx:accreditationCountry value="DK"/>
             <dcx:accreditationApplicability value="wholly"/>
         </dcx:accreditation>
-        <dcx:conformityResult>
+        <dcx:conformitySummary>
             <dcx:conformityResult value="pass"/>
             <dcx:decisionRuleRef value="meth2"/>
-        </dcx:conformityResult>
+        </dcx:conformitySummary>
         <dcx:documentAuthorization>
             <dcx:authorizingPerson>
                 <dcx:name value="Erling T. Nielsen"/>
@@ -197,22 +197,22 @@
     <dcx:settingList>
         <dcx:heading lang="en">Settings</dcx:heading>
         <dcx:heading lang="da">Indstillinger</dcx:heading>
-        <dcx:setting settingId="ch1" equipmentRef="item1">
+        <dcx:setting id="ch1" equipmentRef="item1">
             <dcx:heading lang="en">Channel</dcx:heading>
             <dcx:heading lang="da">Kanal</dcx:heading>
             <dcx:value>1</dcx:value>
         </dcx:setting>
-        <dcx:setting settingId="ch2" equipmentRef="item1">
+        <dcx:setting id="ch2" equipmentRef="item1">
             <dcx:heading lang="en">Channel</dcx:heading>
             <dcx:heading lang="da">Kanal</dcx:heading>
             <dcx:value>2</dcx:value>
         </dcx:setting>
-        <dcx:setting settingId="ch3" equipmentRef="item1">
+        <dcx:setting id="ch3" equipmentRef="item1">
             <dcx:heading lang="en">Channel</dcx:heading>
             <dcx:heading lang="da">Kanal</dcx:heading>
             <dcx:value>3</dcx:value>
         </dcx:setting>
-        <dcx:setting settingId="sin" equipmentRef="item1">
+        <dcx:setting id="sin" equipmentRef="item1">
             <dcx:heading lang="en">Speed in</dcx:heading>
             <dcx:heading lang="da">Hastighed ind</dcx:heading>
             <dcx:body lang="en">Same speed is used in all measurements</dcx:body>
@@ -220,7 +220,7 @@
             <dcx:parameter>speed-in</dcx:parameter>
             <dcx:value>5</dcx:value>
         </dcx:setting>
-        <dcx:setting settingId="sout" equipmentRef="item1">
+        <dcx:setting id="sout" equipmentRef="item1">
             <dcx:heading lang="en">speed out</dcx:heading>
             <dcx:heading lang="da">Hastighed ud</dcx:heading>
             <dcx:body lang="en">Same speed is used in all measurements</dcx:body>
@@ -235,13 +235,11 @@
         <dcx:measurementConfig id="ms1">
             <dcx:heading lang="en">Channel 1</dcx:heading>
             <dcx:heading lang="da">Kanal 1</dcx:heading>
-            <dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
+            <dcx:devForMeasRefs>item1 item2</dcx:devForMeasRefs>
+            <dcx:devForMeasSettingRefs>ch1 sin sout</dcx:devForMeasSettingRefs>
             <dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
-            <dcx:settingRefs>ch1 sin sout</dcx:settingRefs>
             <dcx:statementRefs>meth2</dcx:statementRefs>
             <dcx:operationalStatus>as found</dcx:operationalStatus>
-            <dcx:body lang="da">-</dcx:body>
-            <dcx:body lang="en">-</dcx:body>
         </dcx:measurementConfig>
     </dcx:measurementConfigList>
     <dcx:measurementResultList>
@@ -268,11 +266,11 @@
         </dcx:calibrationResult>
     </dcx:measurementResultList>
     <dcx:quantityUnitDefList/>
-    <dcx:embeddedFiles>
+    <dcx:embeddedFileList>
       <dcx:embeddedFile id="logo.png">
           <dcx:fileExtension>png</dcx:fileExtension>
           <dcx:fileContent>iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAIAAACR5s1WAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANQSURBVFhH7ZddSFNhHMZfV47MQQsquwoSAvsg6UKDNKeZGSL0oRd92GVX3mmEqd2kXkXadzazQommTU2nmZoKfmBqKZQg5FJoE5WpWa2m5ly/7WQNPy7UiwUdeDj8n/f8n/P+9o73PRwxa7dbzWaryeQRfftkslksYnJ8/KFKlatQaD2hWwrFy9hYJ0SeUnlHiHue0HUhXkRHOyHy16/H3/eEbgpRHRMjQ8gQfyVDzEmGmJMMMadlQ9BzV4jcBeOr0bIh8n19H6nV2jVr5o2vRsuA4Nfzmu0vLbONjpbs23d7QcOKtWyIoeYWh8PxfP9+T0IMNjQCURYUJEPIEP8JhG1sjHNQguB6Q4hbrlrrmhjLFTsPAixuIalz0SCPpWaEcSwRakTN3FJnjhDloaFiZnKyIy3tvpcXySfbtnVlZDYmnOOhzFQRFtadmVV+IITaHYJH5K9b15ma1n4xRfpceOrvT7D+1CkmxlZFHiZYFhws4TadP991JaNgix+38ryVHZcuvU6+wMmLLdy+faCkRPDcSYuF7xAADeHh2JHWVsIwdmVmYd+kX6Z2h6Dz8caN1LOzjnyVyvXtcBRrfvUKPuz7nBxsW3IyQbA+9/Zi9YGBBOmnnrHZ8ry96ayMjMQ6Ib709QFBvjwkBGuqrgaCjo7UNCzU1PMh1Orpr19tllFeKNjKQ85nDZSWSivfneWkb0lMJAjESFsb9tmePc4l9PWdmpj4PjgIBJ0sNrdkCBliUQij0fMQDAHBkEGjwQ43NwPB7np7JQPbmZq+1Ba1T//8vUWPRGPNNTVAYN9lZ2PbkpKkLTre04N136I/rVYJwhARgRX8oAqNJtfLiwOqYNPmhjNnDZpwasLFu3Y3nE0oDtgJgTsEMz1QKuvi42tPnNSuXUtnod9WghWhB6Wgfm8gQd2OHdQcVlVRUfWnzzzaoMbSXxcXV3PsOD+bZq1a3Z6S4jy26cNzjnKFjmWQzlQmxnKlwR2CBkZYWyR1ugeRFHRO6bLSf0REuvsniFg2ll9+i8oQf/WvQfj4eBiCLQoBWwW/lNhg2UKYauuAKA4IuLagYcW66jo0hX1qql+vN+qKPhYtKWNRUZ9O92N4BAhzbS31vIYV64NON9TU9AseRWu+49nYaQAAAABJRU5ErkJggg==
           </dcx:fileContent>
         </dcx:embeddedFile>
-    </dcx:embeddedFiles>
+    </dcx:embeddedFileList>
 </dcx:digitalCalibrationExchange>

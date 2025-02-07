@@ -147,12 +147,11 @@ covers the calibrated items.</dcx:body>
     <dcx:heading lang="da">Målesystemer</dcx:heading>
     <dcx:measurementConfig id="ms1">
       <dcx:heading lang="en">Data logger measuring system</dcx:heading>
-      <dcx:deviceForMeasurementRefs>item1</dcx:deviceForMeasurementRefs>
+      <dcx:devForMeasRefs>item1</dcx:devForMeasRefs>
+      <dcx:devForMeasSettingRefs>ch2 ch2_type</dcx:devForMeasSettingRefs>
       <dcx:referenceStandardRefs>refInst1</dcx:referenceStandardRefs>
-      <dcx:settingRefs>ch2 ch2_type</dcx:settingRefs>
       <dcx:statementRefs>meth1</dcx:statementRefs>
       <dcx:operationalStatus>as found</dcx:operationalStatus>
-      <dcx:body lang="en">-</dcx:body>
     </dcx:measurementConfig>
   </dcx:measurementConfigList>
   <dcx:measurementResultList>

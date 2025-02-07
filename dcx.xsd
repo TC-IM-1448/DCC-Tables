@@ -766,8 +766,8 @@
             <xs:element name="phone" type="xs:string" minOccurs="0"/>
             <xs:element name="fax" type="xs:string" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="optional"/>
-        <xs:attribute name="idRef" type="xs:IDREF" use="optional"/>
+        <!-- <xs:attribute name="id" type="xs:ID" use="optional"/>
+        <xs:attribute name="idRef" type="xs:IDREF" use="optional"/> -->
     </xs:complexType>
 
     <xs:complexType name="geoPositionType">
@@ -973,6 +973,7 @@
             <xs:restriction base="xs:string">
                 <xs:enumeration value="@id" /> 
                 <xs:enumeration value="@category" /> 
+                <xs:enumeration value="@statementRef" /> 
                 <xs:enumeration value="heading" /> 
                 <xs:enumeration value="manufacturer" /> 
                 <xs:enumeration value="modelName" /> 
@@ -1026,6 +1027,7 @@
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="body" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>	
             <xs:element name="parameter" type="dcx:notEmptyStringType" minOccurs="0"/>
+            <xs:element name="connectedTo" type="xs:IDREF" minOccurs="0"/> <!-- keyref til equipment -->
             <xs:element name="value" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="unit" type="dcx:notEmptyStringType" minOccurs="0"/>
             <xs:element name="softwareInstruction" type="dcx:notEmptyStringType" minOccurs="0"/>
@@ -1063,6 +1065,7 @@
                 <xs:enumeration value="heading" /> 
                 <xs:enumeration value="body" /> 
                 <xs:enumeration value="parameter" /> 
+                <xs:enumeration value="connectedTo" /> 
                 <xs:enumeration value="value" /> 
                 <xs:enumeration value="unit" /> 
                 <xs:enumeration value="softwareInstruction" /> 
@@ -1112,11 +1115,11 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="heading" type="dcx:stringWithLangType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="deviceForMeasurementRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="referenceStandardRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="settingRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="referenceStandardSettingRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="devForMeasRefs" type="xs:IDREFS"/>
+            <xs:element name="devForMeasSettingRefs" type="xs:IDREFS" minOccurs="0"/>
+            <xs:element name="referenceStandardRefs" type="xs:IDREFS" minOccurs="0"/>
+            <xs:element name="referenceStandardSettingRefs" type="xs:IDREFS" minOccurs="0"/>
+            <xs:element name="statementRefs" type="xs:IDREFS" minOccurs="0"/>
             <xs:element name="operationalStatus" type="dcx:operationalStatusType" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID" use="required"/>
@@ -1157,12 +1160,12 @@
             <xs:restriction base="xs:string">
                 <xs:enumeration value="@id" /> 
                 <xs:enumeration value="heading" /> 
-                <xs:enumeration value="deviceForMeasurementRefs" /> 
-                <xs:enumeration value="settingRefs" /> 
-                <xs:enumeration value="referenceRefs" /> 
+                <xs:enumeration value="devForMeasRefs" /> 
+                <xs:enumeration value="devForMeasSettingRefs" /> 
+                <xs:enumeration value="referenceStandardRefs" /> 
+                <xs:enumeration value="referenceStandardSettingRefs" /> 
                 <xs:enumeration value="statementRefs" />
                 <xs:enumeration value="operationalStatus" /> 
-                <xs:enumeration value="body" /> 
             </xs:restriction>
     </xs:simpleType>
 
@@ -1274,15 +1277,14 @@
             </xs:annotation>
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="@id" /> 
-                    <xs:enumeration value="@idRef" /> 
-                    <xs:enumeration value="@quantityCodeSystem" /> 
                     <xs:enumeration value="@statementRefs" /> 
                     <xs:enumeration value="heading" /> 
+                    <xs:enumeration value="quantityCodeSystem" /> 
                     <xs:enumeration value="quantityCode" /> 
                     <xs:enumeration value="unitUsed" /> 
                     <xs:enumeration value="functionToSIunit" /> 
                     <xs:enumeration value="unitSI" /> 
-                    <xs:enumeration value="externalRefs" />
+                    <!-- <xs:enumeration value="externalRefs" /> -->
                 </xs:restriction>
         </xs:simpleType>
         

@@ -181,13 +181,13 @@
 		<dcx:heading lang="en">Measuring Systems Under Calibration</dcx:heading>
 		<dcx:measurementConfig id="ms1">
 			<dcx:heading lang="en">Set of weights, ID: 030</dcx:heading>
-			<dcx:deviceForMeasurementRefs>item1</dcx:deviceForMeasurementRefs>
-			<dcx:settingRefs>setting1 setting2</dcx:settingRefs>
+			<dcx:devForMeasRefs>item1</dcx:devForMeasRefs>
+			<dcx:devForMeasSettingRefs>setting1 setting2</dcx:devForMeasSettingRefs>
 		</dcx:measurementConfig>
 		<dcx:measurementConfig id="ms2">
 			<dcx:heading lang="en">Set of weights, ID: 030</dcx:heading>
-			<dcx:deviceForMeasurementRefs>item1</dcx:deviceForMeasurementRefs>
-			<dcx:settingRefs>setting1 setting2</dcx:settingRefs>
+			<dcx:devForMeasRefs>item1</dcx:devForMeasRefs>
+			<dcx:devForMeasSettingRefs>setting1 setting2</dcx:devForMeasSettingRefs>
 		</dcx:measurementConfig>
 	</dcx:measurementConfigList>
 	<dcx:measurementResultList>

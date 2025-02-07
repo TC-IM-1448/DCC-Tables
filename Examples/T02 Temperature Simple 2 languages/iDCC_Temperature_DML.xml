@@ -233,9 +233,9 @@ NAB er ikke omfattet af de multilaterale aftaler for prøvning, medicinsk unders
 		<dcx:measurementConfig id="ms1">
 			<dcx:heading lang="en">Data logger</dcx:heading>
 			<dcx:heading lang="en">Data logger</dcx:heading>
-			<dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
+			<dcx:devForMeasRefs>item1 item2</dcx:devForMeasRefs>
+			<dcx:devForMeasSettingRefs>setting1 setting2</dcx:devForMeasSettingRefs>
 			<dcx:referenceStandardRefs>equip1</dcx:referenceStandardRefs>
-			<dcx:settingRefs>setting1 setting2</dcx:settingRefs>
 			<dcx:operationalStatus>as found</dcx:operationalStatus>
 		</dcx:measurementConfig>
 	</dcx:measurementConfigList>

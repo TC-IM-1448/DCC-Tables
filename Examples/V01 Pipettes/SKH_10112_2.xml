@@ -249,24 +249,19 @@
 		<dcx:measurementConfig id="ms1">
 			<dcx:heading lang="en">Channel 1</dcx:heading>
 			<dcx:heading lang="da">Kanal 1</dcx:heading>
-			<dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
-			<dcx:settingRefs>ch1 sin sout</dcx:settingRefs>
+			<dcx:devForMeasRefs>item1 item2</dcx:devForMeasRefs>
+			<dcx:devForMeasSettingRefs>ch1 sin sout</dcx:devForMeasSettingRefs>
+			<dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
 			<dcx:operationalStatus>as found</dcx:operationalStatus>
-			<dcx:body lang="en">-</dcx:body>
-			<dcx:body lang="da">-</dcx:body>
 		</dcx:measurementConfig>
 		<dcx:measurementConfig id="ms2">
 			<dcx:heading lang="en">Channel 2</dcx:heading>
 			<dcx:heading lang="da">Kanal 2</dcx:heading>
-			<dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
-			<dcx:settingRefs>ch2 sin sout</dcx:settingRefs>
-			<dcx:operationalStatus>as found</dcx:operationalStatus>
-			<dcx:body lang="en">-</dcx:body>
-			<dcx:body lang="da">-</dcx:body>
-		</dcx:measurementConfig>
-		<dcx:measurementConfig id="refernece1">
+			<dcx:devForMeasRefs>item1 item2</dcx:devForMeasRefs>
+			<dcx:devForMeasSettingRefs>ch2 sin sout</dcx:devForMeasSettingRefs>
 			<dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
 			<dcx:statementRefs>meth2</dcx:statementRefs>
+			<dcx:operationalStatus>as found</dcx:operationalStatus>
 		</dcx:measurementConfig>
 	</dcx:measurementConfigList>
 	<dcx:measurementResultList>

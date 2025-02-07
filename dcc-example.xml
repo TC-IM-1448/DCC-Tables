@@ -583,35 +583,31 @@
         <dcx:measurementConfig id="ms1">
             <dcx:heading lang="en">Channel 1</dcx:heading>
             <dcx:heading lang="da">Kanal 1</dcx:heading>
-            <dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
+            <dcx:devForMeasRefs>item1 item2</dcx:devForMeasRefs>
+            <dcx:devForMeasSettingRefs>ch1 sin sout</dcx:devForMeasSettingRefs>
             <dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
-            <dcx:settingRefs>ch1 sin sout</dcx:settingRefs>
             <dcx:statementRefs>meth2</dcx:statementRefs>
             <dcx:operationalStatus>as found</dcx:operationalStatus>
-            <dcx:body lang="da">-</dcx:body>
-            <dcx:body lang="en">-</dcx:body>
         </dcx:measurementConfig>
         <dcx:measurementConfig id="ms2">
             <dcx:heading lang="en">Channel 2</dcx:heading>
             <dcx:heading lang="da">Kanal 2</dcx:heading>
-            <dcx:deviceForMeasurementRefs>item1 item2</dcx:deviceForMeasurementRefs>
+            <dcx:devForMeasRefs>item1 item2</dcx:devForMeasRefs>
+            <dcx:devForMeasSettingRefs>ch2 sin sout</dcx:devForMeasSettingRefs>
             <dcx:referenceStandardRefs>ref1</dcx:referenceStandardRefs>
-            <dcx:settingRefs>ch2 sin sout</dcx:settingRefs>
             <dcx:statementRefs>meth2</dcx:statementRefs>
             <dcx:operationalStatus>as found</dcx:operationalStatus>
-            <dcx:body lang="da">-</dcx:body>
-            <dcx:body lang="en">-</dcx:body>
         </dcx:measurementConfig>
         <dcx:columnHeadings>
             <dcx:column name='heading'>
                 <dcx:heading lang="en">Measuring system</dcx:heading>
                 <dcx:heading lang="da">Målesystem</dcx:heading>
             </dcx:column>
-            <dcx:column name='deviceForMeasurementRefs'>
+            <dcx:column name='devForMeasRefs'>
                 <dcx:heading lang="en">Equipment ref.</dcx:heading>
                 <dcx:heading lang="da">Udstyrsref.</dcx:heading>
             </dcx:column>
-            <dcx:column name='settingRefs'>
+            <dcx:column name='devForMeasSettingRefs'>
                 <dcx:heading lang="en">Setting ref.</dcx:heading>
                 <dcx:heading lang="da">Indstillingsref.</dcx:heading>
             </dcx:column>
